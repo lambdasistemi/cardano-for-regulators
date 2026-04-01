@@ -1,0 +1,8 @@
+# Build artifacts
+site/
+
+# LLM investigation notes (local only)
+.llm/
+
+# WIP checkpoints
+WIP.md
