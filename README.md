@@ -1,10 +1,10 @@
-# Blockchain for Regulators
+# Cardano for Regulators
 
-Framework for analyzing multi-party regulations and mapping them to blockchain compliance infrastructure.
+Framework for analyzing multi-party regulations and mapping them to Cardano compliance infrastructure.
 
 ## Documentation
 
-[lambdasistemi.github.io/blockchain-for-regulators](https://lambdasistemi.github.io/blockchain-for-regulators/)
+[lambdasistemi.github.io/cardano-for-regulators](https://lambdasistemi.github.io/cardano-for-regulators/)
 
 ## License
 

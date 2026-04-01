@@ -1,4 +1,4 @@
-# Blockchain for Regulators
+# Cardano for Regulators
 
 A framework for analyzing multi-party regulations and determining whether
 blockchain infrastructure can improve compliance, transparency, and citizen

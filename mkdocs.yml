@@ -1,8 +1,8 @@
-site_name: Blockchain for Regulators
-site_description: Framework for analyzing multi-party regulations and mapping them to blockchain compliance infrastructure
-site_url: https://lambdasistemi.github.io/blockchain-for-regulators/
-repo_url: https://github.com/lambdasistemi/blockchain-for-regulators
-repo_name: lambdasistemi/blockchain-for-regulators
+site_name: Cardano for Regulators
+site_description: Framework for analyzing multi-party regulations and mapping them to Cardano compliance infrastructure
+site_url: https://lambdasistemi.github.io/cardano-for-regulators/
+repo_url: https://github.com/lambdasistemi/cardano-for-regulators
+repo_name: lambdasistemi/cardano-for-regulators
 
 theme:
   name: material
