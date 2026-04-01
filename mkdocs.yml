@@ -37,6 +37,7 @@ plugins:
 nav:
   - Home: index.md
   - Framework:
+      - The Regulator Schema: framework/schema.md
       - The Five Constraints: framework/constraints.md
       - Analysis Methodology: framework/methodology.md
       - Architecture Patterns: framework/patterns.md

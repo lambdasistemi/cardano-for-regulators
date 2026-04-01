@@ -37,11 +37,17 @@ Regulation.
 
 ## Structure
 
-- [**The Five Constraints**](framework/constraints.md) — detailed analysis of
-  each constraint with examples and counter-examples
+- [**The Regulator Schema**](framework/schema.md) — the core architecture:
+  three roles (regulator, operator, user), signing functions, double
+  signatures, the commitment protocol, the baton pattern, and the two modes
+  (physical and process)
+- [**The Five Constraints**](framework/constraints.md) — what makes a
+  regulation a good fit: data cadence, sequential access, liveness, fee
+  alignment, identity delegation
 - [**Analysis Methodology**](framework/methodology.md) — step-by-step process
-  for decomposing a regulation into blockchain-ready patterns
-- [**Architecture Patterns**](framework/patterns.md) — reusable on-chain
-  patterns (MPT-per-operator, commitment protocols, reward distribution)
+  for decomposing a regulation into on-chain patterns
+- [**Architecture Patterns**](framework/patterns.md) — reusable patterns
+  (MPT-per-operator, commitment protocols, relay state machines, reward
+  distribution)
 - [**Case Studies**](cases/battery-regulation.md) — regulations analyzed
   through this framework
