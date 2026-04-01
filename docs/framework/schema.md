@@ -285,3 +285,38 @@ The user's workflow:
 No blockchain knowledge required at any level. The regulator writes
 rules. The operator follows them. The user participates. The chain
 enforces.
+
+## Why Cardano
+
+This analysis is based on Cardano's capabilities. The design patterns
+described here — signing functions, double signatures, commitment
+protocols, the baton pattern — are conceptual and other blockchains are
+free to find their own way to implement them.
+
+That said, the on-chain requirements are non-trivial:
+
+- **Merkle Patricia Trie verification in the validator** — the smart
+  contract must verify that a leaf update produces the correct new root
+  hash. This is Merkle proof verification at every transaction.
+- **Native signature verification** — Ed25519 and secp256k1 must be
+  available as cheap built-in operations, not expensive general-purpose
+  computation.
+- **Full transaction context** — the validator must see the previous state,
+  the new state, all signatures, and the current slot range in a single
+  evaluation.
+- **Deterministic payload parsing** — CBOR/COSE decoding inside the
+  validator to check that signed data matches the state update.
+- **Economically viable validator complexity** — all of the above must
+  fit within the execution budget of a single transaction at reasonable
+  cost.
+
+Cardano's eUTxO model and Plutus built-ins meet these requirements. The
+UTxO model naturally maps to the operator-owns-their-trie pattern — one
+UTxO per operator, the validator sees the full spend-and-produce context,
+and native built-ins for Ed25519 and secp256k1 make signature verification
+practical.
+
+Other chains may offer equivalent primitives. The schema does not depend
+on Cardano-specific features at the design level — but the implementation
+does depend on a chain that can handle non-trivial smart contract logic
+at reasonable cost.
