@@ -1,0 +1,44 @@
+site_name: Blockchain for Regulators
+site_description: Framework for analyzing multi-party regulations and mapping them to blockchain compliance infrastructure
+site_url: https://lambdasistemi.github.io/blockchain-for-regulators/
+repo_url: https://github.com/lambdasistemi/blockchain-for-regulators
+repo_name: lambdasistemi/blockchain-for-regulators
+
+theme:
+  name: material
+  palette:
+    scheme: slate
+    primary: deep purple
+    accent: amber
+  features:
+    - navigation.sections
+    - navigation.expand
+    - toc.integrate
+    - content.tabs.link
+
+markdown_extensions:
+  - tables
+  - admonitions
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:mermaid2.fence_mermaid_custom
+  - pymdownx.tabbed:
+      alternate_style: true
+  - attr_list
+  - md_in_html
+
+plugins:
+  - search
+  - mermaid2
+
+nav:
+  - Home: index.md
+  - Framework:
+      - The Five Constraints: framework/constraints.md
+      - Analysis Methodology: framework/methodology.md
+      - Architecture Patterns: framework/patterns.md
+  - Case Studies:
+      - EU Battery Regulation: cases/battery-regulation.md
