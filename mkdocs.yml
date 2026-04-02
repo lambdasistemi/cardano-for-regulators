@@ -24,7 +24,7 @@ markdown_extensions:
       custom_fences:
         - name: mermaid
           class: mermaid
-          format: !!python/name:mermaid2.fence_mermaid_custom
+          format: !!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.tabbed:
       alternate_style: true
   - attr_list
@@ -34,13 +34,10 @@ extra_css:
   - stylesheets/extra.css
 
 extra_javascript:
-  - javascripts/mermaid-config.js
+  - javascripts/mermaid.mjs
 
 plugins:
   - search
-  - mermaid2:
-      arguments:
-        securityLevel: loose
 
 nav:
   - Home: index.md
