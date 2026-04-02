@@ -103,7 +103,7 @@ Privacy requires splitting verification across two layers:
 
 ```mermaid
 graph TD
-    subgraph On-chain — Smart Contract
+    subgraph On-chain - Smart Contract
         SIG[Signature verification<br/><i>public keys, actor signatures</i>]
         KYC_CHECK[KYC trie membership<br/><i>actor key present?</i>]
         REG_CHECK[Regulation trie membership<br/><i>actor qualified?</i>]
@@ -111,7 +111,7 @@ graph TD
         SLOT[Slot window<br/><i>commitment timing</i>]
     end
 
-    subgraph Off-chain — Operator
+    subgraph Off-chain - Operator
         LEAF[Leaf data verification<br/><i>actual claims behind hashes</i>]
         PAYLOAD[Payload content<br/><i>what the user actually submitted</i>]
         MATCH[Claim matches attestation<br/><i>user's claims vs trie leaves</i>]
@@ -149,12 +149,12 @@ institutions — not with the operator.
 
 ```mermaid
 graph TD
-    subgraph Institutions — responsible
+    subgraph Institutions
         KP[KYC Provider<br/><i>attests identities<br/>revokes keys</i>]
         RG[Regulator<br/><i>qualifies actors<br/>defines rules</i>]
     end
 
-    subgraph Operator — leverages
+    subgraph Operator
         OP[Operator<br/><i>cannot add keys to KYC trie<br/>cannot add qualifications<br/>to regulation trie</i>]
     end
 
