@@ -11,46 +11,57 @@ concern and trusts no other party beyond what the chain enforces.
 ```mermaid
 graph TB
     KYC[KYC Provider<br/><i>identity trie</i>]
-    REG[Regulator<br/><i>smart contract</i>]
+    REG[Regulator<br/><i>smart contract + data trie</i>]
     OP[Operator<br/><i>process trie</i>]
-    U[User<br/><i>signing function</i>]
+    U[User<br/><i>key sovereignty + data holder</i>]
 
     REG -->|writes| SC{Smart Contract}
     REG -->|trusts| KYC
+    REG -->|maintains| DT[Data Trie]
     SC -->|governs| OP
     KYC -->|reference input| SC
+    DT -->|reference input| SC
     OP -->|distributes signing functions| U
-    U -->|double-signed payloads| OP
+    U -->|double-signed payloads + data proofs| OP
     OP -->|submits transactions| SC
 ```
 
 | Party | Manages | Trusts |
 |-------|---------|--------|
-| **KYC provider** | Identity trie — attested actor public keys | Their own verification process |
-| **Regulator** | Smart contract — the rules of the game | The KYC provider's UTxO |
+| **KYC provider** | Identity trie — attested keys, identity data hashes, attestation lifecycle | Their own verification process |
+| **Regulator** | Smart contract + data trie — rules and regulation-specific user attributes | The KYC provider's UTxO |
 | **Operator** | Process trie — items and processes | The smart contract — cannot deviate |
-| **User** | Nothing — just acts | The signing function they received |
+| **User** | Their own key (rotation) and their own data (selective disclosure) | The signing function they received |
 
 No overlap. The KYC provider doesn't know about processes. The regulator
-doesn't run infrastructure. The operator can't fake users. The user doesn't
-need to trust anyone.
+doesn't run infrastructure. The operator can't fake users. The user controls
+their own key and chooses what data to disclose.
 
 ## The on-chain architecture
 
-Three Merkle Patricia Tries, three UTxOs, three owners.
+Four Merkle Patricia Tries, four UTxOs, three owners.
 
 ```mermaid
 graph LR
-    subgraph Regulator's Trust Anchor
+    subgraph KYC Provider
         KYC_UTxO[KYC UTxO<br/>root hash]
         KYC_T[KYC Trie]
         KYC_UTxO --- KYC_T
-        KYC_T --- K1[Actor Key A]
-        KYC_T --- K2[Actor Key B]
-        KYC_T --- K3[Actor Key N]
+        KYC_T --- K1[User A Leaf<br/><i>key + status +<br/>identity data root</i>]
+        KYC_T --- K2[User B Leaf<br/><i>key + status +<br/>identity data root</i>]
+        KYC_T --- K3[User N Leaf]
     end
 
-    subgraph Operator's Data
+    subgraph Regulator
+        REG_UTxO[Data UTxO<br/>root hash]
+        REG_T[Data Trie]
+        REG_UTxO --- REG_T
+        REG_T --- D1[User A Data<br/><i>regulation-specific<br/>attribute hashes</i>]
+        REG_T --- D2[User B Data]
+        SC[Smart Contract<br/>Plutus Validator]
+    end
+
+    subgraph Operator
         OP_UTxO[Process UTxO<br/>root hash]
         OP_T[Process Trie]
         OP_UTxO --- OP_T
@@ -59,24 +70,23 @@ graph LR
         OP_T --- L3[Leaf N<br/>item/process]
     end
 
-    subgraph Regulator's Rules
-        SC[Smart Contract<br/>Plutus Validator]
-    end
-
     SC -->|governs| OP_UTxO
     KYC_UTxO -.->|reference input| SC
+    REG_UTxO -.->|reference input| SC
 ```
 
 | Trie | Owner | Contains | Role |
 |------|-------|----------|------|
-| **KYC trie** | KYC provider (trusted by regulator) | Attested actor public keys | Who is allowed to participate |
+| **KYC trie** | KYC provider (trusted by regulator) | Per-user leaf: current public key, attestation status, identity data root hash | Who is allowed to participate |
+| **Regulator data trie** | Regulator | Per-user leaf: regulation-specific attribute hashes (licenses, certifications, roles) | What the user is qualified to do |
 | **Process trie** | Operator | Items, processes, leaves with state | What is happening |
 | **Commitment** | Inside each process leaf | Slot windows, expected actions | When and how actions occur |
 
-The KYC trie is a **reference input** — read-only from the operator's
-perspective. The operator never spends it. The regulator's smart contract
-reads it at validation time to verify that the actor submitting a state
-transition is an attested, real-world entity.
+The KYC trie and regulator data trie are both **reference inputs** — read-only
+from the operator's perspective. The operator never spends them. The
+regulator's smart contract reads both at validation time: the KYC trie to
+verify the actor is attested, the data trie to verify the actor has the
+required attributes for the action they are performing.
 
 ## How a transaction works
 
@@ -93,7 +103,7 @@ sequenceDiagram
 
     Note over KP: Independently maintains<br/>identity trie
 
-    R->>C: Deploy smart contract<br/>(references KYC UTxO)
+    R->>C: Deploy smart contract<br/>(references KYC UTxO + data trie UTxO)
 
     O->>C: Deploy process trie<br/>(governed by smart contract)
     O->>SF: Mint signing function<br/>(register pubkey on-chain)
@@ -125,8 +135,12 @@ evaluation: the process trie UTxO (spent input), the KYC trie UTxO
 
 ## What the regulator produces
 
-The regulator writes a **smart contract** — the regulation in executable
-form:
+The regulator has two on-chain responsibilities: the smart contract and
+the data trie.
+
+### The smart contract
+
+The regulation in executable form:
 
 ```mermaid
 graph TD
@@ -137,6 +151,7 @@ graph TD
     SC --> CP[Commitment Protocol<br/><i>how time windows work,<br/>what must be signed</i>]
     SC --> AR[Authorization Rules<br/><i>how the baton is assigned<br/>and passed</i>]
     SC --> KR[KYC Reference<br/><i>which UTxO is the trusted<br/>source of attested actors</i>]
+    SC --> DR[Data Reference<br/><i>which UTxO is the regulator's<br/>data trie</i>]
 ```
 
 The regulator deploys this contract once. Every operator in the market
@@ -153,39 +168,162 @@ The eUTxO model ensures the validator is evaluated at every transaction.
 Non-compliant updates are rejected by the chain itself. The regulation is
 enforced at the transaction level, not by inspectors after the fact.
 
-## What the KYC provider does
+### The regulator data trie
 
-The KYC provider maintains a Merkle Patricia Trie of verified actors.
+The KYC trie holds regulation-agnostic identity data — who you are. The
+regulator data trie holds regulation-specific attributes — what you are
+qualified to do under this particular regulation.
 
 ```mermaid
 graph TD
-    subgraph Off-chain Verification
-        V1[Identity check]
-        V2[Document verification]
-        V3[Institutional accreditation]
-    end
+    REG[Regulator] -->|maintains| DT[Data Trie UTxO<br/>root hash]
+    DT --- U1[User A Data Leaf]
+    DT --- U2[User B Data Leaf]
 
-    subgraph On-chain KYC Trie
-        ROOT[KYC UTxO<br/>root hash]
-        ROOT --- A1[Actor Key A<br/><i>verified manufacturer</i>]
-        ROOT --- A2[Actor Key B<br/><i>verified inspector</i>]
-        ROOT --- A3[Actor Key C<br/><i>verified importer</i>]
-        ROOT --- A4[Actor Key N<br/><i>revoked</i>]
-    end
-
-    V1 --> ROOT
-    V2 --> ROOT
-    V3 --> ROOT
+    U1 --> MT1[Attribute Merkle Tree]
+    MT1 --> A1[hash — license type]
+    MT1 --> A2[hash — certification level]
+    MT1 --> A3[hash — jurisdiction]
+    MT1 --> A4[hash — role assignment]
+    MT1 --> A5[hash — expiry date]
 ```
 
-The KYC provider:
+Examples of regulation-specific data:
 
-1. **Verifies real-world entities** — through whatever process they use
-   (government ID, corporate registration, professional accreditation)
-2. **Adds public keys to their trie** — each verified entity gets a leaf
-3. **Revokes keys** — when an entity's status changes, their leaf is
-   updated or removed
-4. **Maintains the UTxO** — independent of any specific regulation
+- Battery regulation: manufacturer license, recycler certification, importer
+  permit number
+- Financial regulation: accreditation level, jurisdictional scope, compliance
+  tier
+- Supply chain: producer registration, transport authorization, customs
+  clearance class
+
+This data belongs to the regulation, not to the user's identity. A user
+participating in two different regulations has two different data leaves —
+one per regulator — with different attributes. Their KYC identity leaf is
+shared across both.
+
+The regulator pays for on-chain transactions when updating user data
+hashes. This gives the regulator skin in the game — they pay for the
+attestations they make. The user can always request their current
+attestation from the regulator.
+
+### Regulation-specific data and selective disclosure
+
+The same disclosure pattern applies: the user holds the actual data, the
+chain holds the hashes. When the operator needs to verify a user's
+qualifications:
+
+1. The user obtains their data from the regulator (they have a right to it)
+2. The user reveals the relevant attributes to the operator
+3. The operator hashes each attribute and verifies against the regulator's
+   data trie via reference input
+
+The user controls what to disclose. The operator can verify it is genuine
+without contacting the regulator. The regulator never knows which operators
+the user works with.
+
+## What the KYC provider does
+
+The KYC provider maintains a Merkle Patricia Trie of verified actors —
+a reusable identity service independent of any specific regulation.
+
+### The KYC leaf
+
+Each user gets a leaf in the KYC trie. The leaf contains three concerns,
+controlled by two different parties:
+
+```mermaid
+graph TD
+    LEAF[User Leaf in KYC Trie]
+
+    LEAF --> KEY[Current Public Key<br/><i>controlled by USER</i>]
+    LEAF --> STATUS[Attestation Status<br/><i>controlled by KYC PROVIDER</i>]
+    LEAF --> DATA[Identity Data Root<br/><i>controlled by KYC PROVIDER</i>]
+
+    DATA --> DT[Identity Data Merkle Tree]
+    DT --> H1[hash — name]
+    DT --> H2[hash — address]
+    DT --> H3[hash — email]
+    DT --> H4[hash — home address]
+    DT --> H5[hash — ...]
+```
+
+| Field | Controlled by | Purpose |
+|-------|--------------|---------|
+| **Current public key** | User | The key the operator uses for commitments. Updated by the user on rotation. |
+| **Attestation status** | KYC provider | Whether this identity is active, suspended, or revoked. |
+| **Identity data root** | KYC provider | Root hash of a Merkle tree of identity attributes. The user holds the data. |
+
+### Key sovereignty
+
+The user controls their own key. When a user needs to rotate their key —
+compromised device, routine rotation, migration to new hardware — they do
+it themselves. No KYC provider involvement, no operator involvement, no
+off-chain process.
+
+The smart contract validates the rotation: the previous key signs the
+rotation event, the new key goes into the leaf. That's it. Everything
+downstream keeps working because the operator's commitments reference the
+leaf, not the key directly.
+
+### The KYC event model
+
+The KYC leaf evolves through a small, fixed set of events. Each event has
+a clear authorization rule — who must sign — and a clear state transition.
+
+```mermaid
+stateDiagram-v2
+    [*] --> Attested: Attest (KYC provider)
+    Attested --> Attested: Rotate (User)
+    Attested --> Suspended: Suspend (KYC provider)
+    Suspended --> Attested: Reinstate (KYC provider)
+    Attested --> Revoked: Revoke (KYC provider)
+    Suspended --> Revoked: Revoke (KYC provider)
+    Revoked --> [*]
+```
+
+| Event | Who signs | What it does |
+|-------|-----------|-------------|
+| **Attest** | KYC provider | Creates the leaf. Links an AID to an initial public key. "This entity is verified." |
+| **Rotate** | User (previous key) | Updates the public key. No KYC involvement. Sovereignty. |
+| **Suspend** | KYC provider | Temporarily disables participation. Key stays, attestation paused. |
+| **Reinstate** | KYC provider | Lifts a suspension. |
+| **Revoke** | KYC provider | Permanent. The AID is dead. |
+
+Five events. Two actors. The user's sovereignty is exactly one event type:
+**Rotate**. The KYC provider's power is the attestation lifecycle: attest,
+suspend, reinstate, revoke. The two concerns never overlap.
+
+The smart contract validates one step at a time: previous leaf state + new
+event → new leaf state. No full history replay. The trie leaf is a
+materialized view of the current state. Each update is incremental —
+exactly what fits in a Plutus execution budget.
+
+### Identity data and selective disclosure
+
+The identity data root in the KYC leaf is itself a Merkle tree. Each
+attribute (name, address, email, etc.) is stored as a separate hash. The
+user holds the actual data off-chain.
+
+When a user needs to prove an identity attribute to an operator:
+
+1. The user reveals the attribute value to the operator
+2. The operator hashes it
+3. The operator verifies the hash against the identity data Merkle tree
+   using the root from the KYC leaf (available via reference input)
+
+The user chooses which attributes to reveal. Unrevealed attributes remain
+opaque hashes. This is not cryptographic zero-knowledge — it is hash
+preimage disclosure with Merkle proof verification. Simple, auditable,
+and within Plutus budget.
+
+The KYC provider updates identity data hashes when the user brings changed
+information. The framework does not prescribe how the KYC provider verifies
+that information — government ID, document check, self-attestation — that
+is the KYC provider's business. The on-chain result is the same: a root
+hash update in the leaf.
+
+### Reusability
 
 The same KYC trie can serve multiple regulators and multiple regulations.
 One identity infrastructure, many smart contracts referencing it. Or
@@ -247,21 +385,33 @@ They don't have a wallet, don't hold ADA, don't know what Cardano is.
 ```mermaid
 graph LR
     U[User] -->|1. receive| SF[Signing<br/>Function]
-    U -->|2. use| ACT[Tap / Scan / Click]
+    U -->|2. disclose| DATA[Selective Data<br/>+ Merkle Proofs]
+    U -->|3. use| ACT[Tap / Scan / Click]
     ACT --> DS[Double-Signed<br/>Payload]
-    U -->|3. pass on| NEXT[Next Actor's<br/>Public Key]
-    DS --> OP[Operator]
+    U -->|4. pass on| NEXT[Next Actor's<br/>Public Key]
+    DATA --> OP[Operator]
+    DS --> OP
     NEXT --> OP
 ```
 
 1. **Receive a signing capability** — a physical device, an app, or access
    to a signing service
-2. **Perform the regulated action** — tap an NFC chip, scan a QR code,
+2. **Disclose data** — selectively reveal identity or regulation attributes
+   to the operator, with Merkle proofs the operator can verify against
+   on-chain roots
+3. **Perform the regulated action** — tap an NFC chip, scan a QR code,
    press a button in an app
-3. **Pass the baton** — the final action designates the next authorized key
+4. **Pass the baton** — the final action designates the next authorized key
 
-From the user's perspective: tap, use, pass on. The cryptography is
-invisible.
+The user also controls their own key. When they need to rotate — compromised
+device, routine security, hardware migration — they sign the rotation with
+their current key. No KYC provider, no operator, no off-chain process. The
+new key propagates automatically because operators reference the KYC leaf,
+not the key directly.
+
+From the user's perspective: receive, disclose what's needed, use, pass on.
+The cryptography is invisible. Key rotation is the one sovereign act — and
+even that can be mediated by whatever wallet or agent the user prefers.
 
 ## The signing function
 
@@ -534,43 +684,51 @@ enforcement. Physical mode is strictly stronger (you get process
 guarantees *plus* physical attestation), but process mode covers
 regulations that have no physical component.
 
-## Privacy
+## Privacy and data sovereignty
 
 No single party has the full picture:
 
 ```mermaid
 graph TD
     subgraph Knowledge Boundaries
-        OP[Operator<br/><i>knows key mapping<br/>doesn't know who uses it</i>]
-        U[User<br/><i>knows they acted<br/>doesn't know the private key</i>]
-        CH[Chain<br/><i>knows pubkeys + signatures<br/>no real-world link</i>]
+        OP[Operator<br/><i>sees only disclosed attributes<br/>+ process data</i>]
+        U[User<br/><i>holds all their data<br/>chooses what to reveal</i>]
+        CH[Chain<br/><i>sees only hashes<br/>no plaintext, no real-world link</i>]
         SV[Server<br/><i>sees requests<br/>can't attribute them</i>]
         KP[KYC Provider<br/><i>knows identities<br/>doesn't know which process</i>]
-        RG[Regulator<br/><i>knows rules were followed<br/>nothing beyond that</i>]
+        RG[Regulator<br/><i>knows regulation attributes<br/>doesn't know which operator</i>]
     end
 
     OP -.-|no link| U
     U -.-|no link| CH
     KP -.-|no link| OP
+    RG -.-|no link| OP
     SV -.-|no link| RG
 ```
 
 | Party | Knows | Doesn't know |
 |-------|-------|-------------|
-| **KYC provider** | Real-world identity behind each attested key | Which processes the key participates in |
-| **Operator** | Public-private key mapping | Who uses the signing function, when, or why |
-| **User** | That they interacted with a signing function | The private key |
-| **Chain** | Public keys and valid signatures | Any link to real-world identities |
+| **KYC provider** | Identity data behind each attested key | Which processes the key participates in, which operators |
+| **Regulator** | Regulation-specific attributes for each user | Which operators the user works with |
+| **Operator** | Only the attributes the user chose to disclose | Full identity, undisclosed attributes |
+| **User** | All their own data — identity and regulation attributes | The private key of the signing function |
+| **Chain** | Hashes and signatures | Any plaintext data or real-world identities |
 | **Server** (process mode) | That signing requests came in | Who made them or what they mean |
-| **Regulator** | That the smart contract was followed | Anything beyond what the contract requires |
 
-The KYC provider knows identities but not processes. The operator knows
-processes but not identities. The chain sees only public keys and
-signatures. No single party can reconstruct the full picture.
+The user is the **data holder**. The KYC provider and regulator publish
+hashes on-chain. The user holds the preimages. Disclosure is always
+user-initiated and selective — the user presents specific attributes with
+Merkle proofs, and the operator can verify without seeing anything else.
 
-Privacy is structural, not policy-based. There is no personal data to
-protect because no single party collects enough to identify anyone in
-context.
+The KYC provider knows identities but not processes or operators. The
+regulator knows regulation attributes but not which operators the user
+works with. The operator sees only what the user reveals. The chain sees
+only hashes and signatures. No single party can reconstruct the full
+picture.
+
+Privacy is structural, not policy-based. There is no personal data on-chain
+to protect because the chain holds only hashes. Off-chain, the user
+controls their own data and decides who sees what.
 
 ## The full picture
 
@@ -583,10 +741,13 @@ graph TB
     end
 
     subgraph Regulator Layer
-        REG[Regulator<br/><i>writes rules once</i>]
+        REG[Regulator<br/><i>writes rules, maintains data</i>]
         SC[Smart Contract<br/><i>Plutus validator</i>]
+        DT[Data Trie UTxO<br/><i>regulation attributes</i>]
         REG -->|deploys| SC
+        REG -->|maintains| DT
         SC -->|references| KYC_UTxO
+        SC -->|references| DT
     end
 
     subgraph Operator Layer
@@ -603,7 +764,7 @@ graph TB
     end
 
     subgraph User Layer
-        U1[User A<br/><i>holds baton</i>]
+        U1[User A<br/><i>holds baton + data</i>]
         U2[User B<br/><i>next in line</i>]
         U3[User N<br/><i>future actor</i>]
     end
@@ -612,7 +773,7 @@ graph TB
     SF2 -.->|signing capability| U2
     SF3 -.->|signing capability| U3
 
-    U1 -->|double-signed payload| OP
+    U1 -->|double-signed payload<br/>+ data proofs| OP
     U1 -->|passes baton to| U2
 ```
 
@@ -624,16 +785,19 @@ The regulator's workflow:
    parties, and deadlines
 2. **Choose a KYC provider** — decide which identity infrastructure to
    trust, reference its UTxO
-3. **Write the smart contract** — encode the regulation as a Plutus
-   validator that governs the Merkle Patricia Trie and checks actors
-   against the KYC trie
-4. **Publish the contract** — operators deploy their tries under it
-5. **Audit** — verify any operator's trie against the contract at any time
+3. **Deploy the data trie** — maintain regulation-specific user attributes,
+   pay for on-chain attestation updates
+4. **Write the smart contract** — encode the regulation as a Plutus
+   validator that governs the process trie and checks actors against the
+   KYC trie and data trie
+5. **Publish the contract** — operators deploy their tries under it
+6. **Audit** — verify any operator's trie against the contract at any time
 
 The KYC provider's workflow:
 
-1. **Verify entities** — through off-chain identity checks
-2. **Maintain the trie** — add, update, or revoke actor keys
+1. **Verify entities** — through whatever off-chain process they use
+2. **Maintain the trie** — attest, suspend, reinstate, or revoke actors;
+   update identity data hashes when users bring changed information
 3. **Serve multiple regulators** — the same trie can be referenced by
    many smart contracts
 
@@ -641,19 +805,87 @@ The operator's workflow:
 
 1. **Deploy a trie** — create a UTxO governed by the regulator's contract
 2. **Mint signing functions** — generate keys, register on-chain, distribute
-3. **Collect and submit** — receive double-signed payloads, batch into
+3. **Verify user data** — receive disclosed attributes + Merkle proofs from
+   users, verify against on-chain roots
+4. **Collect and submit** — receive double-signed payloads, batch into
    transactions
-4. **Pay fees** — compliance is cheaper than non-compliance
+5. **Pay fees** — compliance is cheaper than non-compliance
 
 The user's workflow:
 
 1. **Receive** — get a device or access to a signing function
-2. **Use** — tap, scan, click
-3. **Pass on** — designate the next actor in your final submission
+2. **Disclose** — selectively reveal identity or regulation attributes to
+   the operator with Merkle proofs
+3. **Use** — tap, scan, click
+4. **Pass on** — designate the next actor in your final submission
+5. **Rotate** — update your own key when needed, without anyone's permission
 
 No blockchain knowledge required at any level. The regulator writes
-rules. The KYC provider attests actors. The operator follows the rules.
-The user participates. The chain enforces.
+rules and attests qualifications. The KYC provider attests identities.
+The operator follows the rules. The user holds their data, controls their
+key, and participates. The chain enforces.
+
+## Open question: operator honesty and user data
+
+The selective disclosure model has a gap. The user reveals data to the
+operator off-chain. The operator verifies it against on-chain hashes. But
+the smart contract never sees the data — only the trie root via reference
+input. Nothing on-chain proves the operator actually performed the
+verification.
+
+This means:
+
+- The operator could accept a user who didn't provide valid data
+- The operator could let a user participate without the required
+  qualifications
+- The operator could ignore the data requirements entirely
+
+The chain enforces process integrity (signatures, commitments, state
+transitions) but cannot enforce that the operator checked the user's
+disclosed data before creating a commitment.
+
+### Why this matters
+
+The regulator's contract governs the process trie. Every state transition
+is validated. But the data verification step — "does this user actually
+hold a valid inspector license?" — happens off-chain between the user and
+the operator. A dishonest operator could collude with unqualified users
+or simply skip the check.
+
+### Possible approaches
+
+**After-the-fact audit.** The regulator can request data from any user and
+verify it against the on-chain hashes. If the operator accepted users
+without valid data, this is detectable — but only after the fact.
+
+**Zero-knowledge proofs.** The user generates a ZK proof: "I know data
+whose hash matches my leaf in the trie, and this data satisfies predicate
+P" — without revealing the data. The proof is submitted on-chain. The
+smart contract verifies it.
+
+Plutus V3 has BLS12-381 built-ins (G1/G2 point operations, pairing
+checks) which enable Groth16 SNARK verification on-chain. In principle,
+the user could prove they satisfy the regulation's requirements and the
+smart contract could verify the proof at transaction time — making the
+data check enforceable on-chain.
+
+**Status:** The BLS12-381 primitives exist in Plutus V3. The practical
+feasibility — execution budget cost, proof generation tooling targeting
+Cardano, circuit complexity for Merkle proof + predicate satisfaction —
+is not yet established. This is an active area of development in the
+Cardano ecosystem.
+
+### Current position
+
+Without ZK, the operator is trusted to check user data. The contract
+enforces everything else — signatures, commitments, state transitions,
+baton passing — but data verification is a trust assumption on the
+operator. ZK would close this gap but adds significant complexity and
+depends on tooling maturity.
+
+This is an open design question. The framework works without ZK (the
+operator has economic incentives and audit exposure), but the gap exists
+and should be acknowledged.
 
 ## Why Cardano
 
@@ -667,9 +899,12 @@ That said, the on-chain requirements are non-trivial:
 - **Merkle Patricia Trie verification in the validator** — the smart
   contract must verify that a leaf update produces the correct new root
   hash. This is Merkle proof verification at every transaction.
-- **Reference inputs** — the validator must read the KYC trie UTxO
-  without spending it. This is a Cardano-native feature (CIP-31) that
-  enables cross-trie verification without coordination.
+- **Reference inputs** — the validator must read the KYC trie UTxO and
+  the regulator data trie UTxO without spending them. This is a
+  Cardano-native feature (CIP-31) that enables cross-trie verification
+  without coordination. Multiple reference inputs in a single transaction
+  allow the validator to check identity, qualifications, and process state
+  together.
 - **Native signature verification** — Ed25519 and secp256k1 must be
   available as cheap built-in operations, not expensive general-purpose
   computation.
