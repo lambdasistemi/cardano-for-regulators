@@ -30,9 +30,14 @@ markdown_extensions:
   - attr_list
   - md_in_html
 
+extra_css:
+  - stylesheets/extra.css
+
 plugins:
   - search
-  - mermaid2
+  - mermaid2:
+      arguments:
+        securityLevel: loose
 
 nav:
   - Home: index.md

@@ -3,8 +3,6 @@ name: Build and deploy documentation
 on:
   workflow_dispatch:
   push:
-    branches:
-      - main
   pull_request:
 
 permissions:
@@ -22,5 +20,4 @@ jobs:
       - name: Build docs
         run: nix develop github:paolino/dev-assets?dir=mkdocs --quiet -c mkdocs build --strict
       - name: Deploy docs
-        if: github.ref == 'refs/heads/main'
         run: nix develop github:paolino/dev-assets?dir=mkdocs --quiet -c mkdocs gh-deploy --force
