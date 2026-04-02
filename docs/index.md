@@ -11,58 +11,53 @@ concern and trusts no other party beyond what the chain enforces.
 ```mermaid
 graph TB
     KYC[KYC Provider<br/><i>identity trie</i>]
-    REG[Regulator<br/><i>smart contract</i>]
+    REG[Regulator<br/><i>regulation trie</i>]
     OP[Operator<br/><i>process trie</i>]
     U[User<br/><i>signing function</i>]
 
-    REG -->|writes| SC{Smart Contract}
+    REG -->|publishes| SC{Smart Contract}
     REG -->|trusts| KYC
     SC -->|governs| OP
-    KYC -->|reference input| SC
+    KYC -.->|reference input| SC
+    REG -.->|reference input| SC
     OP -->|distributes signing functions| U
     U -->|double-signed payloads| OP
     OP -->|submits transactions| SC
 ```
 
-| Party | Manages | Trusts |
-|-------|---------|--------|
-| **Regulator** | Smart contract — the rules of the game | The KYC provider's UTxO |
-| **KYC provider** | Identity trie — attested actor public keys | Their own verification process |
-| **Operator** | Process trie — items and processes | The smart contract — cannot deviate |
-| **User** | Nothing — just acts | The signing function they received |
+| Party | Trie | Contains |
+|-------|------|----------|
+| **KYC provider** | Identity trie | Attested actor public keys |
+| **Regulator** | Regulation trie | Actor qualifications for this regulation |
+| **Operator** | Process trie | Items, processes, state |
+| **User** | — | Just acts via signing function |
 
-## On-chain architecture
+## On-chain and off-chain verification
 
-Three Merkle Patricia Tries, three UTxOs, three owners. The regulator's
-smart contract governs the operator's trie and reads the KYC provider's
-trie as a reference input.
+Privacy requires splitting verification across two layers. The chain
+verifies signatures, trie membership, and hash consistency. The operator
+verifies the actual data behind the hashes off-chain.
 
 ```mermaid
 graph LR
-    subgraph Regulator's Trust Anchor
-        KYC_UTxO[KYC UTxO<br/>root hash]
-        KYC_T[KYC Trie]
-        KYC_UTxO --- KYC_T
+    subgraph On-chain
+        SIG[Signatures]
+        KYC_C[KYC trie<br/>membership]
+        REG_C[Regulation trie<br/>membership]
+        HASH[Root hash<br/>consistency]
     end
 
-    subgraph Operator's Data
-        OP_UTxO[Process UTxO<br/>root hash]
-        OP_T[Process Trie]
-        OP_UTxO --- OP_T
+    subgraph Off-chain
+        LEAF[Leaf data<br/>verification]
+        CLAIMS[User claims<br/>vs attestations]
     end
-
-    subgraph Regulator's Rules
-        SC[Smart Contract<br/>Plutus Validator]
-    end
-
-    SC -->|governs| OP_UTxO
-    KYC_UTxO -.->|reference input| SC
 ```
 
-## Two modes, same architecture
+Institutions (KYC provider + regulator) are responsible for identity and
+qualifications. The operator leverages their attestations but cannot
+invent fake users or qualifications.
 
-The framework supports two fundamentally different modes under the same
-on-chain architecture:
+## Two modes, same architecture
 
 ```mermaid
 graph TB
