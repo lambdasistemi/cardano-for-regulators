@@ -21,33 +21,33 @@ The edges show what flows between them — data, trust, and value.
 
 ```mermaid
 graph TB
-    KYC[<b>KYC Provider</b><br/><i>identity trie</i>]
-    REG[<b>Regulator</b><br/><i>smart contract + data trie</i>]
-    OP[<b>Operator</b><br/><i>process trie</i>]
-    U[<b>User</b><br/><i>key holder + data holder</i>]
-    CHAIN[<b>Cardano</b><br/><i>enforcement layer</i>]
+    KYC["KYC Provider\nidentity trie"]
+    REG["Regulator\nsmart contract + data trie"]
+    OP["Operator\nprocess trie"]
+    U["User\nkey holder + data holder"]
+    CHAIN["Cardano\nenforcement layer"]
 
-    REG -->|trust delegation:<br/>chooses which KYC to accept| KYC
-    REG -->|deploys rules +<br/>pays for data attestations| CHAIN
-    KYC -->|attests identity,<br/>publishes key + data hashes| CHAIN
-    OP -->|submits transactions,<br/>pays tx fees| CHAIN
-    CHAIN -->|validates every transition:<br/>signatures, commitments,<br/>KYC status, data proofs| OP
+    REG -->|trust delegation| KYC
+    REG -->|deploys rules, pays for attestations| CHAIN
+    KYC -->|publishes key + identity hashes| CHAIN
+    OP -->|submits transactions, pays fees| CHAIN
+    CHAIN -->|validates signatures, commitments, KYC| OP
 
-    U -->|key rotation:<br/>signs with previous key,<br/>no permission needed| KYC
-    U -->|requests data updates,<br/>provides documents| REG
-    U -->|selective disclosure:<br/>reveals attributes +<br/>Merkle proofs| OP
-    OP -->|distributes<br/>signing functions| U
-    U -->|double-signed payloads:<br/>process sig + actor sig| OP
-    REG -->|regulation-specific<br/>attribute hashes| CHAIN
+    U -->|rotates own key, no permission needed| KYC
+    U -->|requests data updates| REG
+    U -->|discloses attributes + Merkle proofs| OP
+    OP -->|distributes signing functions| U
+    U -->|double-signed payloads| OP
+    REG -->|regulation attribute hashes| CHAIN
 ```
 
 ```mermaid
 graph LR
     subgraph On-chain State
-        KT[KYC Trie<br/><i>identity + keys</i>]
-        DT[Data Trie<br/><i>regulation attributes</i>]
-        PT[Process Trie<br/><i>items + processes</i>]
-        SC[Smart Contract<br/><i>Plutus validator</i>]
+        KT["KYC Trie\nidentity + keys"]
+        DT["Data Trie\nregulation attributes"]
+        PT["Process Trie\nitems + processes"]
+        SC["Smart Contract\nPlutus validator"]
     end
 
     SC -.->|references| KT
