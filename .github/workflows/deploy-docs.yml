@@ -5,16 +5,11 @@ on:
   push:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 jobs:
   deploy:
     runs-on: nixos
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
       - uses: cachix/cachix-action@v15
@@ -23,8 +18,5 @@ jobs:
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
       - name: Build docs
         run: nix develop github:paolino/dev-assets?dir=mkdocs --quiet -c mkdocs build --strict
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: site
-      - uses: actions/deploy-pages@v4
-        id: deployment
+      - name: Deploy docs
+        run: nix develop github:paolino/dev-assets?dir=mkdocs --quiet -c mkdocs gh-deploy --force
