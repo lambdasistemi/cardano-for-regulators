@@ -10,15 +10,15 @@ concern and trusts no other party beyond what the chain enforces.
 
 ```mermaid
 graph TB
-    KYC[KYC Provider<br/><i>identity trie</i>]
+    IDP[Identity Provider<br/><i>identity trie</i>]
     REG[Regulator<br/><i>regulation trie</i>]
     OP[Operator<br/><i>process trie</i>]
     U[User<br/><i>signing function</i>]
 
     REG -->|publishes| SC{Smart Contract}
-    REG -->|trusts| KYC
+    REG -->|trusts| IDP
     SC -->|governs| OP
-    KYC -.->|reference input| SC
+    IDP -.->|reference input| SC
     REG -.->|reference input| SC
     OP -->|distributes signing functions| U
     U -->|double-signed payloads| OP
@@ -27,17 +27,17 @@ graph TB
 
 | Party | Trie | Contains | Responsibility |
 |-------|------|----------|----------------|
-| **KYC provider** | Identity trie | Attested actor public keys | Who exists as a verified entity |
+| **Identity provider** | Identity trie | Attested actor public keys | Who exists as a verified entity |
 | **Regulator** | Regulation trie | Actor qualifications for this regulation | Who is qualified to participate |
 | **Operator** | Process trie | Items, processes, state | What is happening |
 | **User** | — | Just acts via signing function | Performing regulated actions |
 
-No overlap. The KYC provider doesn't know about processes. The regulator
+No overlap. The identity provider doesn't know about processes. The regulator
 doesn't run infrastructure. The operator can't fake users. The user doesn't
 need to trust anyone.
 
 The **smart contract** is the regulation in executable form — published by
-the regulator, it governs the operator's trie and reads both the KYC trie
+the regulator, it governs the operator's trie and reads both the identity trie
 and regulation trie as reference inputs. The regulator audits that operators
 use the correct smart contract and follows the transactions over it.
 
@@ -48,13 +48,13 @@ them together.
 
 ```mermaid
 graph LR
-    subgraph KYC Provider
-        KYC_UTxO[KYC UTxO<br/>root hash]
-        KYC_T[Identity Trie]
-        KYC_UTxO --- KYC_T
-        KYC_T --- K1[Actor Key A]
-        KYC_T --- K2[Actor Key B]
-        KYC_T --- K3[Actor Key N]
+    subgraph Identity Provider
+        IDP_UTxO[Identity UTxO<br/>root hash]
+        IDP_T[Identity Trie]
+        IDP_UTxO --- IDP_T
+        IDP_T --- K1[Actor Key A]
+        IDP_T --- K2[Actor Key B]
+        IDP_T --- K3[Actor Key N]
     end
 
     subgraph Regulator
@@ -80,21 +80,21 @@ graph LR
     end
 
     SC -->|governs| OP_UTxO
-    KYC_UTxO -.->|reference input| SC
+    IDP_UTxO -.->|reference input| SC
     REG_UTxO -.->|reference input| SC
 ```
 
 | Trie | Owner | Contains | Role |
 |------|-------|----------|------|
-| **Identity trie** | KYC provider | Attested actor public keys | Who exists as a verified real-world entity |
+| **Identity trie** | identity provider | Attested actor public keys | Who exists as a verified real-world entity |
 | **Regulation trie** | Regulator | Actor qualifications specific to this regulation | Who is qualified to act in this regulated process |
 | **Process trie** | Operator | Items, processes, leaves with state | What is happening |
 | **Commitment** | Inside each process leaf | Slot windows, expected actions | When and how actions occur |
 
-Both the KYC trie and the regulation trie are **reference inputs** —
+Both the identity trie and the regulation trie are **reference inputs** —
 read-only from the operator's perspective. The operator never spends them.
 The smart contract reads them at validation time to verify that the actor
-submitting a state transition is both an attested real-world entity (KYC)
+submitting a state transition is both an attested real-world entity (identity)
 and qualified for this specific regulation (regulation trie).
 
 ## On-chain and off-chain verification
@@ -105,7 +105,7 @@ Privacy requires splitting verification across two layers:
 graph TD
     subgraph On-chain - Smart Contract
         SIG[Signature verification<br/><i>public keys, actor signatures</i>]
-        KYC_CHECK[KYC trie membership<br/><i>actor key present?</i>]
+        IDP_CHECK[identity trie membership<br/><i>actor key present?</i>]
         REG_CHECK[Regulation trie membership<br/><i>actor qualified?</i>]
         HASH[Root hash consistency<br/><i>MPT integrity</i>]
         SLOT[Slot window<br/><i>commitment timing</i>]
@@ -118,7 +118,7 @@ graph TD
     end
 
     SIG --> ACCEPT{Transaction<br/>accepted}
-    KYC_CHECK --> ACCEPT
+    IDP_CHECK --> ACCEPT
     REG_CHECK --> ACCEPT
     HASH --> ACCEPT
     SLOT --> ACCEPT
@@ -129,7 +129,7 @@ graph TD
 ```
 
 **On-chain**: the smart contract verifies what's public — signatures, public
-keys (actor in KYC trie, actor qualified in regulation trie), commitment
+keys (actor in identity trie, actor qualified in regulation trie), commitment
 windows, root hash consistency. All it sees are hashes and signatures.
 
 **Off-chain**: the operator verifies the actual leaf data — the claims behind
@@ -150,12 +150,12 @@ institutions — not with the operator.
 ```mermaid
 graph TD
     subgraph Institutions
-        KP[KYC Provider<br/><i>attests identities<br/>revokes keys</i>]
+        KP[Identity Provider<br/><i>attests identities<br/>revokes keys</i>]
         RG[Regulator<br/><i>qualifies actors<br/>defines rules</i>]
     end
 
     subgraph Operator
-        OP[Operator<br/><i>cannot add keys to KYC trie<br/>cannot add qualifications<br/>to regulation trie</i>]
+        OP[Operator<br/><i>cannot add keys to identity trie<br/>cannot add qualifications<br/>to regulation trie</i>]
     end
 
     KP -.->|attestation| OP
@@ -171,14 +171,14 @@ graph TD
     subgraph What the operator CANNOT do
         X1[Fake users]
         X2[Invent qualifications]
-        X3[Bypass KYC or regulation trie]
+        X3[Bypass identity or regulation trie]
     end
 ```
 
 The operator can verify attestations from the institutions and be sure they
 are operating with attested, qualified users. But they cannot invent fake
 processes involving non-attested users — the smart contract will reject any
-transaction where the actor's key is missing from the KYC or regulation trie.
+transaction where the actor's key is missing from the identity or regulation trie.
 
 ## How a transaction works
 
@@ -186,7 +186,7 @@ Every state transition follows this flow:
 
 ```mermaid
 sequenceDiagram
-    participant KP as KYC Provider
+    participant KP as Identity Provider
     participant R as Regulator
     participant O as Operator
     participant SF as Signing Function
@@ -197,7 +197,7 @@ sequenceDiagram
 
     Note over R: Independently maintains<br/>regulation trie
 
-    R->>C: Publish smart contract<br/>(references KYC + regulation UTxOs)
+    R->>C: Publish smart contract<br/>(references identity + regulation UTxOs)
 
     O->>C: Deploy process trie<br/>(governed by smart contract)
     O->>SF: Mint signing function<br/>(register pubkey on-chain)
@@ -214,7 +214,7 @@ sequenceDiagram
     O->>C: Submit transaction
 
     Note over C: Validator checks:
-    Note over C: 1. Actor key in KYC trie?<br/>(reference input)
+    Note over C: 1. Actor key in identity trie?<br/>(reference input)
     Note over C: 2. Actor qualified in regulation trie?<br/>(reference input)
     Note over C: 3. Commitment exists?<br/>(expected action)
     Note over C: 4. Slot in window?<br/>(timely)
@@ -227,7 +227,7 @@ sequenceDiagram
 ```
 
 The validator has access to all the information it needs in a single
-evaluation: the process trie UTxO (spent input), the KYC trie UTxO and
+evaluation: the process trie UTxO (spent input), the identity trie UTxO and
 regulation trie UTxO (reference inputs), the signatures, and the slot range.
 
 ## What the regulator produces
@@ -249,11 +249,11 @@ graph TD
     SC --> VT[Valid Transitions<br/><i>what updates are allowed,<br/>in what order, by whom</i>]
     SC --> CP[Commitment Protocol<br/><i>how time windows work,<br/>what must be signed</i>]
     SC --> AR[Authorization Rules<br/><i>how the baton is assigned<br/>and passed</i>]
-    SC --> REF[Reference Inputs<br/><i>which KYC and regulation<br/>UTxOs to read</i>]
+    SC --> REF[Reference Inputs<br/><i>which identity and regulation<br/>UTxOs to read</i>]
 ```
 
 The **regulation trie** contains process-specific actor qualifications —
-not generic identity (that's the KYC provider's job), but credentials
+not generic identity (that's the identity provider's job), but credentials
 specific to what this regulation requires. A traceability regulation might
 qualify actors as licensed carriers, authorized dispatchers, or certified
 inspectors.
@@ -263,8 +263,8 @@ regulator publishes it once. Every operator in the market operates under it.
 The regulator audits that operators use the correct smart contract and
 follows the transactions over it.
 
-The regulator does not run the KYC infrastructure. They decide **which
-KYC provider to trust** — a government identity agency, eIDAS, a private
+The regulator does not run the identity infrastructure. They decide **which
+identity provider to trust** — a government identity agency, eIDAS, a private
 service — and reference that provider's UTxO in their smart contract
 alongside their own regulation trie UTxO.
 
@@ -272,9 +272,9 @@ The eUTxO model ensures the validator is evaluated at every transaction.
 Non-compliant updates are rejected by the chain itself. The regulation is
 enforced at the transaction level, not by inspectors after the fact.
 
-## What the KYC provider does
+## What the identity provider does
 
-The KYC provider maintains a Merkle Patricia Trie of verified actors.
+The identity provider maintains a Merkle Patricia Trie of verified actors.
 
 ```mermaid
 graph TD
@@ -285,7 +285,7 @@ graph TD
     end
 
     subgraph On-chain Identity Trie
-        ROOT[KYC UTxO<br/>root hash]
+        ROOT[Identity UTxO<br/>root hash]
         ROOT --- A1[Actor Key A<br/><i>verified manufacturer</i>]
         ROOT --- A2[Actor Key B<br/><i>verified inspector</i>]
         ROOT --- A3[Actor Key C<br/><i>verified importer</i>]
@@ -297,7 +297,7 @@ graph TD
     V3 --> ROOT
 ```
 
-The KYC provider:
+The identity provider:
 
 1. **Verifies real-world entities** — through whatever process they use
    (government ID, corporate registration, professional accreditation)
@@ -306,15 +306,15 @@ The KYC provider:
    updated or removed
 4. **Maintains the UTxO** — independent of any specific regulation
 
-The same KYC trie can serve multiple regulators and multiple regulations.
+The same identity trie can serve multiple regulators and multiple regulations.
 One identity infrastructure, many smart contracts referencing it. Or
 different regulators can trust different providers — each contract points
 to its own.
 
 This is what prevents the operator from faking users. The operator can
 mint signing functions and simulate processes, but they cannot add keys to
-the KYC provider's trie. Every actor in a regulated process must have a
-key that appears in the trusted KYC trie. The validator checks this via
+the identity provider's trie. Every actor in a regulated process must have a
+key that appears in the trusted identity trie. The validator checks this via
 reference input at every transaction.
 
 ## What the operator does
@@ -338,7 +338,7 @@ the output, and the contract verifies they match.
 
 The operator **verifies off-chain** what the smart contract cannot see:
 the actual data behind the hashes. This is the operator's added value —
-they leverage institutional attestations (from KYC and regulation tries)
+they leverage institutional attestations (from identity and regulation tries)
 to be sure they are operating with attested, qualified users, and they
 verify the actual claims before submitting the transaction.
 
@@ -479,7 +479,7 @@ graph TD
 
     PS --> V{Validator}
     AS --> V
-    V -->|both valid +<br/>actor in KYC trie +<br/>actor in regulation trie| OK[State transition accepted]
+    V -->|both valid +<br/>actor in identity trie +<br/>actor in regulation trie| OK[State transition accepted]
 ```
 
 1. **The process signature** — the signing function signs the payload,
@@ -526,7 +526,7 @@ sequenceDiagram
 
     O->>C: 5. Submit transaction
 
-    Note over C: Validator checks:<br/>commitment exists ✓<br/>slot in window ✓<br/>process sig valid ✓<br/>actor in KYC trie ✓<br/>actor in regulation trie ✓<br/>actor authorized ✓<br/>leaf update matches ✓
+    Note over C: Validator checks:<br/>commitment exists ✓<br/>slot in window ✓<br/>process sig valid ✓<br/>actor in identity trie ✓<br/>actor in regulation trie ✓<br/>actor authorized ✓<br/>leaf update matches ✓
 
     C->>C: 6. Clear commitment
     Note over C: Single-use — no replay
@@ -638,7 +638,7 @@ graph TD
         DSIG[Double Signature]
         BATON[Baton Pattern]
         SC[Smart Contract Validation]
-        KYCC[KYC Trie Reference]
+        IDPC[Identity Trie Reference]
         REGC[Regulation Trie Reference]
     end
 
@@ -652,8 +652,8 @@ graph TD
     PROC --> BATON
     PHYS --> SC
     PROC --> SC
-    PHYS --> KYCC
-    PROC --> KYCC
+    PHYS --> IDPC
+    PROC --> IDPC
     PHYS --> REGC
     PROC --> REGC
 ```
@@ -673,7 +673,7 @@ graph TD
         OP[Operator<br/><i>verifies claims off-chain<br/>doesn't know real identities</i>]
         U[User<br/><i>knows they acted<br/>doesn't know the private key</i>]
         CH[Chain<br/><i>knows pubkeys + hashes<br/>no real-world data</i>]
-        KP[KYC Provider<br/><i>knows identities<br/>doesn't know which process</i>]
+        KP[Identity Provider<br/><i>knows identities<br/>doesn't know which process</i>]
         RG[Regulator<br/><i>knows qualifications<br/>doesn't see process data</i>]
     end
 
@@ -685,13 +685,13 @@ graph TD
 
 | Party | Knows | Doesn't know |
 |-------|-------|-------------|
-| **KYC provider** | Real-world identity behind each attested key | Which processes the key participates in |
+| **Identity provider** | Real-world identity behind each attested key | Which processes the key participates in |
 | **Regulator** | Which actors are qualified for their regulation | Process data, operator activity |
 | **Operator** | Claims and leaf data (verified off-chain) | Real-world identity behind the keys |
 | **User** | That they interacted with a signing function | The private key |
 | **Chain** | Public keys, hashes, and valid signatures | Any actual data or real-world identities |
 
-The KYC provider knows identities but not processes. The regulator knows
+The identity provider knows identities but not processes. The regulator knows
 qualifications but not process data. The operator verifies claims but
 doesn't know identities. The chain sees only hashes and signatures. No
 single party can reconstruct the full picture.
@@ -705,10 +705,10 @@ right things happened without revealing *what* the actual content is.
 
 ```mermaid
 graph TB
-    subgraph KYC Layer
-        KYC_P[KYC Provider<br/><i>off-chain verification</i>]
-        KYC_UTxO[KYC UTxO<br/><i>identity trie root</i>]
-        KYC_P -->|maintains| KYC_UTxO
+    subgraph Identity Layer
+        IDP_P[Identity Provider<br/><i>off-chain verification</i>]
+        IDP_UTxO[Identity UTxO<br/><i>identity trie root</i>]
+        IDP_P -->|maintains| IDP_UTxO
     end
 
     subgraph Regulator Layer
@@ -717,7 +717,7 @@ graph TB
         SC[Smart Contract<br/><i>Plutus validator</i>]
         REG -->|maintains| REG_UTxO
         REG -->|publishes| SC
-        SC -->|references| KYC_UTxO
+        SC -->|references| IDP_UTxO
         SC -->|references| REG_UTxO
     end
 
@@ -756,14 +756,14 @@ The regulator's workflow:
    parties, qualifications, and deadlines
 2. **Maintain a regulation trie** — qualify actors with process-specific
    credentials (licensed carrier, authorized dispatcher, etc.)
-3. **Choose a KYC provider** — decide which identity infrastructure to
+3. **Choose a identity provider** — decide which identity infrastructure to
    trust, reference its UTxO
 4. **Publish the smart contract** — encode the regulation as a Plutus
-   validator that references both the KYC and regulation tries
+   validator that references both the identity and regulation tries
 5. **Audit** — verify that operators use the correct smart contract and
    follow the transactions over it
 
-The KYC provider's workflow:
+The identity provider's workflow:
 
 1. **Verify entities** — through off-chain identity checks
 2. **Maintain the trie** — add, update, or revoke actor keys
@@ -787,7 +787,7 @@ The user's workflow:
 3. **Pass on** — designate the next actor in your final submission
 
 No blockchain knowledge required at any level. The regulator qualifies
-actors and publishes rules. The KYC provider attests identities. The
+actors and publishes rules. The identity provider attests identities. The
 operator leverages institutional attestations and follows the rules.
 The user participates. The chain enforces.
 
@@ -803,7 +803,7 @@ That said, the on-chain requirements are non-trivial:
 - **Merkle Patricia Trie verification in the validator** — the smart
   contract must verify that a leaf update produces the correct new root
   hash. This is Merkle proof verification at every transaction.
-- **Reference inputs** — the validator must read the KYC and regulation
+- **Reference inputs** — the validator must read the identity and regulation
   trie UTxOs without spending them. This is a Cardano-native feature
   (CIP-31) that enables cross-trie verification without coordination.
 - **Native signature verification** — Ed25519 and secp256k1 must be
@@ -821,7 +821,7 @@ That said, the on-chain requirements are non-trivial:
 Cardano's eUTxO model and Plutus built-ins meet these requirements. The
 UTxO model naturally maps to the operator-owns-their-trie pattern — one
 UTxO per operator, the validator sees the full spend-and-produce context,
-reference inputs enable cross-trie KYC and regulation checks, and native
+reference inputs enable cross-trie identity and regulation checks, and native
 built-ins for Ed25519 and secp256k1 make signature verification practical.
 
 Other chains may offer equivalent primitives. The schema does not depend

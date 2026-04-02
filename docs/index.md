@@ -10,15 +10,15 @@ concern and trusts no other party beyond what the chain enforces.
 
 ```mermaid
 graph TB
-    KYC[KYC Provider<br/><i>identity trie</i>]
+    IDP[Identity Provider<br/><i>identity trie</i>]
     REG[Regulator<br/><i>regulation trie</i>]
     OP[Operator<br/><i>process trie</i>]
     U[User<br/><i>signing function</i>]
 
     REG -->|publishes| SC{Smart Contract}
-    REG -->|trusts| KYC
+    REG -->|trusts| IDP
     SC -->|governs| OP
-    KYC -.->|reference input| SC
+    IDP -.->|reference input| SC
     REG -.->|reference input| SC
     OP -->|distributes signing functions| U
     U -->|double-signed payloads| OP
@@ -27,7 +27,7 @@ graph TB
 
 | Party | Trie | Contains |
 |-------|------|----------|
-| **KYC provider** | Identity trie | Attested actor public keys |
+| **Identity provider** | Identity trie | Attested actor public keys |
 | **Regulator** | Regulation trie | Actor qualifications for this regulation |
 | **Operator** | Process trie | Items, processes, state |
 | **User** | — | Just acts via signing function |
@@ -42,7 +42,7 @@ verifies the actual data behind the hashes off-chain.
 graph LR
     subgraph On-chain
         SIG[Signatures]
-        KYC_C[KYC trie<br/>membership]
+        IDP_C[Identity trie<br/>membership]
         REG_C[Regulation trie<br/>membership]
         HASH[Root hash<br/>consistency]
     end
@@ -53,7 +53,7 @@ graph LR
     end
 ```
 
-Institutions (KYC provider + regulator) are responsible for identity and
+Institutions (identity provider + regulator) are responsible for identity and
 qualifications. The operator leverages their attestations but cannot
 invent fake users or qualifications.
 
