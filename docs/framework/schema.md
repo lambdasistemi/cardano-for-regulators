@@ -10,10 +10,10 @@ concern and trusts no other party beyond what the chain enforces.
 
 ```mermaid
 graph TB
-    KYC[KYC Provider<br/><i>identity trie</i>]
-    REG[Regulator<br/><i>smart contract + data trie</i>]
-    OP[Operator<br/><i>process trie</i>]
-    U[User<br/><i>key sovereignty + data holder</i>]
+    KYC["KYC Provider — identity trie"]
+    REG["Regulator — smart contract + data trie"]
+    OP["Operator — process trie"]
+    U["User — key sovereignty + data holder"]
 
     REG -->|writes| SC{Smart Contract}
     REG -->|trusts| KYC
@@ -44,30 +44,30 @@ Four Merkle Patricia Tries, four UTxOs, three owners.
 ```mermaid
 graph LR
     subgraph KYC Provider
-        KYC_UTxO[KYC UTxO<br/>root hash]
+        KYC_UTxO["KYC UTxO — root hash"]
         KYC_T[KYC Trie]
         KYC_UTxO --- KYC_T
-        KYC_T --- K1[User A Leaf<br/><i>key + status +<br/>identity data root</i>]
-        KYC_T --- K2[User B Leaf<br/><i>key + status +<br/>identity data root</i>]
+        KYC_T --- K1["User A Leaf — key + status + identity data root"]
+        KYC_T --- K2["User B Leaf — key + status + identity data root"]
         KYC_T --- K3[User N Leaf]
     end
 
     subgraph Regulator
-        REG_UTxO[Data UTxO<br/>root hash]
+        REG_UTxO["Data UTxO — root hash"]
         REG_T[Data Trie]
         REG_UTxO --- REG_T
-        REG_T --- D1[User A Data<br/><i>regulation-specific<br/>attribute hashes</i>]
+        REG_T --- D1["User A Data — regulation-specific attribute hashes"]
         REG_T --- D2[User B Data]
-        SC[Smart Contract<br/>Plutus Validator]
+        SC["Smart Contract — Plutus Validator"]
     end
 
     subgraph Operator
-        OP_UTxO[Process UTxO<br/>root hash]
+        OP_UTxO["Process UTxO — root hash"]
         OP_T[Process Trie]
         OP_UTxO --- OP_T
-        OP_T --- L1[Leaf 1<br/>item/process]
-        OP_T --- L2[Leaf 2<br/>item/process]
-        OP_T --- L3[Leaf N<br/>item/process]
+        OP_T --- L1["Leaf 1 — item/process"]
+        OP_T --- L2["Leaf 2 — item/process"]
+        OP_T --- L3["Leaf N — item/process"]
     end
 
     SC -->|governs| OP_UTxO
@@ -146,12 +146,12 @@ The regulation in executable form:
 graph TD
     REG[Regulator] -->|writes| SC[Smart Contract]
 
-    SC --> DS[Data Schema<br/><i>what fields a leaf must contain</i>]
-    SC --> VT[Valid Transitions<br/><i>what updates are allowed,<br/>in what order, by whom</i>]
-    SC --> CP[Commitment Protocol<br/><i>how time windows work,<br/>what must be signed</i>]
-    SC --> AR[Authorization Rules<br/><i>how the baton is assigned<br/>and passed</i>]
-    SC --> KR[KYC Reference<br/><i>which UTxO is the trusted<br/>source of attested actors</i>]
-    SC --> DR[Data Reference<br/><i>which UTxO is the regulator's<br/>data trie</i>]
+    SC --> DS["Data Schema — what fields a leaf must contain"]
+    SC --> VT["Valid Transitions — what updates are allowed, by whom"]
+    SC --> CP["Commitment Protocol — time windows, what must be signed"]
+    SC --> AR["Authorization Rules — baton assignment and passing"]
+    SC --> KR["KYC Reference — trusted source of attested actors"]
+    SC --> DR["Data Reference — regulator's data trie UTxO"]
 ```
 
 The regulator deploys this contract once. Every operator in the market
@@ -176,7 +176,7 @@ qualified to do under this particular regulation.
 
 ```mermaid
 graph TD
-    REG[Regulator] -->|maintains| DT[Data Trie UTxO<br/>root hash]
+    REG[Regulator] -->|maintains| DT["Data Trie UTxO — root hash"]
     DT --- U1[User A Data Leaf]
     DT --- U2[User B Data Leaf]
 
@@ -236,9 +236,9 @@ controlled by two different parties:
 graph TD
     LEAF[User Leaf in KYC Trie]
 
-    LEAF --> KEY[Current Public Key<br/><i>controlled by USER</i>]
-    LEAF --> STATUS[Attestation Status<br/><i>controlled by KYC PROVIDER</i>]
-    LEAF --> DATA[Identity Data Root<br/><i>controlled by KYC PROVIDER</i>]
+    LEAF --> KEY["Current Public Key — controlled by USER"]
+    LEAF --> STATUS["Attestation Status — controlled by KYC PROVIDER"]
+    LEAF --> DATA["Identity Data Root — controlled by KYC PROVIDER"]
 
     DATA --> DT[Identity Data Merkle Tree]
     DT --> H1[hash — name]
@@ -344,11 +344,11 @@ under their responsibility.
 
 ```mermaid
 graph TD
-    OP[Operator] -->|1| MK[Mint signing functions<br/><i>generate keys, register on-chain,<br/>distribute capability</i>]
-    OP -->|2| CC[Create commitments<br/><i>set time-bounded windows<br/>in trie leaves</i>]
-    OP -->|3| CS[Collect submissions<br/><i>receive double-signed<br/>payloads from users</i>]
-    OP -->|4| ST[Submit transactions<br/><i>batch updates to trie,<br/>pay all fees</i>]
-    OP -->|5| PC[Prove computation<br/><i>smart contract verifies<br/>payload matches update</i>]
+    OP[Operator] -->|1| MK["Mint signing functions — generate keys, register, distribute"]
+    OP -->|2| CC["Create commitments — time-bounded windows in trie leaves"]
+    OP -->|3| CS["Collect submissions — double-signed payloads from users"]
+    OP -->|4| ST["Submit transactions — batch updates to trie, pay fees"]
+    OP -->|5| PC["Prove computation — smart contract verifies payload matches update"]
 ```
 
 The operator is a **transparent pipe**. They choose *when* to batch, but
@@ -367,9 +367,9 @@ graph LR
         V -->|no| REJECT[Rejected]
     end
 
-    C[Commitment<br/><i>defined by smart contract</i>] -->|constrains| TX
-    S[Signature<br/><i>invalidated if modified</i>] -->|protects| P
-    R[Root Hash<br/><i>must be consistent</i>] -->|constrains| TX
+    C["Commitment — defined by smart contract"] -->|constrains| TX
+    S["Signature — invalidated if modified"] -->|protects| P
+    R["Root Hash — must be consistent"] -->|constrains| TX
 ```
 
 - The commitment is defined by the smart contract
@@ -384,11 +384,11 @@ They don't have a wallet, don't hold ADA, don't know what Cardano is.
 
 ```mermaid
 graph LR
-    U[User] -->|1. receive| SF[Signing<br/>Function]
-    U -->|2. disclose| DATA[Selective Data<br/>+ Merkle Proofs]
+    U[User] -->|1. receive| SF[Signing Function]
+    U -->|2. disclose| DATA["Selective Data + Merkle Proofs"]
     U -->|3. use| ACT[Tap / Scan / Click]
-    ACT --> DS[Double-Signed<br/>Payload]
-    U -->|4. pass on| NEXT[Next Actor's<br/>Public Key]
+    ACT --> DS[Double-Signed Payload]
+    U -->|4. pass on| NEXT["Next Actor's Public Key"]
     DATA --> OP[Operator]
     DS --> OP
     NEXT --> OP
@@ -426,11 +426,11 @@ graph TB
     SF -->|capability| WORLD[Physical or Digital World]
 
     subgraph Substrates
-        HW[Hardware SE<br/><i>physical isolation</i>]
-        PH[Phone Enclave<br/><i>OS isolation</i>]
-        SV[Server Endpoint<br/><i>access control</i>]
-        TEE[TEE / Enclave<br/><i>HW-assisted SW</i>]
-        ZK[ZK Circuit<br/><i>cryptographic isolation</i>]
+        HW["Hardware SE — physical isolation"]
+        PH["Phone Enclave — OS isolation"]
+        SV["Server Endpoint — access control"]
+        TEE["TEE / Enclave — HW-assisted SW"]
+        ZK["ZK Circuit — cryptographic isolation"]
     end
 
     WORLD --- HW
@@ -463,12 +463,12 @@ Each slot is an independent signing capability.
 ```mermaid
 graph TD
     DEV[Signing Device]
-    DEV --> S1[Slot 1<br/><i>Battery Regulation<br/>Operator A</i>]
-    DEV --> S2[Slot 2<br/><i>Logistics Tracking<br/>Operator B</i>]
-    DEV --> S3[Slot 3<br/><i>Empty — available<br/>for future use</i>]
+    DEV --> S1["Slot 1 — Battery Regulation, Operator A"]
+    DEV --> S2["Slot 2 — Logistics Tracking, Operator B"]
+    DEV --> S3["Slot 3 — empty, available for future use"]
 
-    S1 -.->|registered in| L1[Operator A's Trie<br/>Leaf #4721]
-    S2 -.->|registered in| L2[Operator B's Trie<br/>Leaf #89]
+    S1 -.->|registered in| L1["Operator A's Trie — Leaf #4721"]
+    S2 -.->|registered in| L2["Operator B's Trie — Leaf #89"]
 ```
 
 - **One slot, one purpose** — cheap, disposable. Lost? The on-chain key is
@@ -493,18 +493,18 @@ graph TD
     subgraph Process Signature
         SF[Signing Function] -->|signs| PL[Payload + Commitment]
         PL --> PS[Process Signature]
-        PS -->|proves| ID[This process produced<br/>this data at this time]
+        PS -->|proves| ID["This process produced this data at this time"]
     end
 
     subgraph Actor Signature
         AK[Actor's Key] -->|signs| SUB[Submission]
         SUB --> AS[Actor Signature]
-        AS -->|proves| AUTH[The authorized party<br/>requests this transition]
+        AS -->|proves| AUTH["The authorized party requests this transition"]
     end
 
     PS --> V{Validator}
     AS --> V
-    V -->|both valid +<br/>actor in KYC trie| OK[State transition accepted]
+    V -->|both valid + actor in KYC trie| OK[State transition accepted]
 ```
 
 1. **The process signature** — the signing function signs the payload,
@@ -570,13 +570,13 @@ the real world — physical or digital.
 ```mermaid
 graph LR
     subgraph Lifecycle
-        O[Operator creates leaf<br/><i>no actor assigned</i>]
-        O --> A1[First tap<br/><i>Actor A becomes<br/>baton holder</i>]
-        A1 --> U1[Actor A uses<br/><i>submits readings,<br/>progresses state</i>]
-        U1 --> P1[Actor A passes<br/><i>final submission includes<br/>Actor B's pubkey</i>]
-        P1 --> A2[Actor B holds baton<br/><i>Actor A locked out</i>]
+        O["Operator creates leaf — no actor assigned"]
+        O --> A1["First tap — Actor A becomes baton holder"]
+        A1 --> U1["Actor A uses — submits readings, progresses state"]
+        U1 --> P1["Actor A passes — includes Actor B's pubkey"]
+        P1 --> A2["Actor B holds baton — Actor A locked out"]
         A2 --> U2[Actor B uses]
-        U2 --> P2[Actor B passes<br/><i>to Actor C</i>]
+        U2 --> P2["Actor B passes — to Actor C"]
         P2 --> A3[Actor C holds baton]
         A3 --> END[End of lifecycle]
     end
@@ -603,7 +603,7 @@ graph TB
         PHONE -->|payload| OP1[Operator]
         OP1 -->|tx| CHAIN1[Chain]
 
-        NOTE1[Object is the identity<br/>AND the witness]
+        NOTE1["Object is the identity AND the witness"]
     end
 
     subgraph Process Mode
@@ -612,7 +612,7 @@ graph TB
         SFUNC -->|signed payload| OP2[Operator]
         OP2 -->|tx| CHAIN2[Chain]
 
-        NOTE2[Identity is abstract<br/>Protocol is the witness]
+        NOTE2["Identity is abstract — protocol is the witness"]
     end
 ```
 
@@ -691,12 +691,12 @@ No single party has the full picture:
 ```mermaid
 graph TD
     subgraph Knowledge Boundaries
-        OP[Operator<br/><i>sees only disclosed attributes<br/>+ process data</i>]
-        U[User<br/><i>holds all their data<br/>chooses what to reveal</i>]
-        CH[Chain<br/><i>sees only hashes<br/>no plaintext, no real-world link</i>]
-        SV[Server<br/><i>sees requests<br/>can't attribute them</i>]
-        KP[KYC Provider<br/><i>knows identities<br/>doesn't know which process</i>]
-        RG[Regulator<br/><i>knows regulation attributes<br/>doesn't know which operator</i>]
+        OP["Operator — sees only disclosed attributes"]
+        U["User — holds all data, chooses what to reveal"]
+        CH["Chain — sees only hashes, no real-world link"]
+        SV["Server — sees requests, can't attribute them"]
+        KP["KYC Provider — knows identities, not processes"]
+        RG["Regulator — knows attributes, not which operator"]
     end
 
     OP -.-|no link| U
@@ -735,15 +735,15 @@ controls their own data and decides who sees what.
 ```mermaid
 graph TB
     subgraph KYC Layer
-        KYC_P[KYC Provider<br/><i>off-chain verification</i>]
-        KYC_UTxO[KYC UTxO<br/><i>identity trie root</i>]
+        KYC_P["KYC Provider — off-chain verification"]
+        KYC_UTxO["KYC UTxO — identity trie root"]
         KYC_P -->|maintains| KYC_UTxO
     end
 
     subgraph Regulator Layer
-        REG[Regulator<br/><i>writes rules, maintains data</i>]
-        SC[Smart Contract<br/><i>Plutus validator</i>]
-        DT[Data Trie UTxO<br/><i>regulation attributes</i>]
+        REG["Regulator — writes rules, maintains data"]
+        SC["Smart Contract — Plutus validator"]
+        DT["Data Trie UTxO — regulation attributes"]
         REG -->|deploys| SC
         REG -->|maintains| DT
         SC -->|references| KYC_UTxO
@@ -751,8 +751,8 @@ graph TB
     end
 
     subgraph Operator Layer
-        OP[Operator<br/><i>transparent pipe</i>]
-        TRIE[Process Trie UTxO<br/><i>items / processes</i>]
+        OP["Operator — transparent pipe"]
+        TRIE["Process Trie UTxO — items / processes"]
         SF1[Signing Function 1]
         SF2[Signing Function 2]
         SF3[Signing Function N]
@@ -764,16 +764,16 @@ graph TB
     end
 
     subgraph User Layer
-        U1[User A<br/><i>holds baton + data</i>]
-        U2[User B<br/><i>next in line</i>]
-        U3[User N<br/><i>future actor</i>]
+        U1["User A — holds baton + data"]
+        U2["User B — next in line"]
+        U3["User N — future actor"]
     end
 
     SF1 -.->|signing capability| U1
     SF2 -.->|signing capability| U2
     SF3 -.->|signing capability| U3
 
-    U1 -->|double-signed payload<br/>+ data proofs| OP
+    U1 -->|double-signed payload + data proofs| OP
     U1 -->|passes baton to| U2
 ```
 

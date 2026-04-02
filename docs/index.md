@@ -21,11 +21,11 @@ The edges show what flows between them — data, trust, and value.
 
 ```mermaid
 graph TB
-    KYC["KYC Provider\nidentity trie"]
-    REG["Regulator\nsmart contract + data trie"]
-    OP["Operator\nprocess trie"]
-    U["User\nkey holder + data holder"]
-    CHAIN["Cardano\nenforcement layer"]
+    KYC["KYC Provider — identity trie"]
+    REG["Regulator — smart contract + data trie"]
+    OP["Operator — process trie"]
+    U["User — key holder + data holder"]
+    CHAIN["Cardano — enforcement layer"]
 
     REG -->|trust delegation| KYC
     REG -->|deploys rules, pays for attestations| CHAIN
@@ -44,10 +44,10 @@ graph TB
 ```mermaid
 graph LR
     subgraph On-chain State
-        KT["KYC Trie\nidentity + keys"]
-        DT["Data Trie\nregulation attributes"]
-        PT["Process Trie\nitems + processes"]
-        SC["Smart Contract\nPlutus validator"]
+        KT["KYC Trie — identity + keys"]
+        DT["Data Trie — regulation attributes"]
+        PT["Process Trie — items + processes"]
+        SC["Smart Contract — Plutus validator"]
     end
 
     SC -.->|references| KT
