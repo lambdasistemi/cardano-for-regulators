@@ -16,7 +16,47 @@ decide which ones do, and how to architect the solution.
 
 ## The four-party model
 
-The architecture separates concerns across four independent parties:
+The architecture separates concerns across four independent parties.
+The edges show what flows between them — data, trust, and value.
+
+```mermaid
+graph TB
+    KYC[<b>KYC Provider</b><br/><i>identity trie</i>]
+    REG[<b>Regulator</b><br/><i>smart contract + data trie</i>]
+    OP[<b>Operator</b><br/><i>process trie</i>]
+    U[<b>User</b><br/><i>key holder + data holder</i>]
+    CHAIN[<b>Cardano</b><br/><i>enforcement layer</i>]
+
+    REG -->|trust delegation:<br/>chooses which KYC to accept| KYC
+    REG -->|deploys rules +<br/>pays for data attestations| CHAIN
+    KYC -->|attests identity,<br/>publishes key + data hashes| CHAIN
+    OP -->|submits transactions,<br/>pays tx fees| CHAIN
+    CHAIN -->|validates every transition:<br/>signatures, commitments,<br/>KYC status, data proofs| OP
+
+    U -->|key rotation:<br/>signs with previous key,<br/>no permission needed| KYC
+    U -->|requests data updates,<br/>provides documents| REG
+    U -->|selective disclosure:<br/>reveals attributes +<br/>Merkle proofs| OP
+    OP -->|distributes<br/>signing functions| U
+    U -->|double-signed payloads:<br/>process sig + actor sig| OP
+    REG -->|regulation-specific<br/>attribute hashes| CHAIN
+```
+
+```mermaid
+graph LR
+    subgraph On-chain State
+        KT[KYC Trie<br/><i>identity + keys</i>]
+        DT[Data Trie<br/><i>regulation attributes</i>]
+        PT[Process Trie<br/><i>items + processes</i>]
+        SC[Smart Contract<br/><i>Plutus validator</i>]
+    end
+
+    SC -.->|references| KT
+    SC -.->|references| DT
+    SC -->|governs| PT
+```
+
+Three Merkle Patricia Tries on-chain — each owned by a different party,
+each serving a different concern:
 
 | Party | Role | Sovereignty |
 |-------|------|-------------|
@@ -24,10 +64,6 @@ The architecture separates concerns across four independent parties:
 | **Regulator** | Writes the smart contract (the regulation in executable form) and maintains a data trie of regulation-specific user attributes. | Defines the rules, pays for data attestations |
 | **Operator** | Manages the process trie — items and processes governed by the smart contract. Mints signing functions, collects submissions, submits transactions. | Transparent pipe — cannot deviate from the contract |
 | **User** | Participates in regulated processes. Holds their own data and discloses it selectively to operators via Merkle proofs. | Controls their own key rotation. Chooses what to disclose. |
-
-Three Merkle Patricia Tries on-chain — KYC identity trie, regulator data
-trie, operator process trie — each owned by a different party. The smart
-contract references the first two and governs the third.
 
 ## Key design principles
 
