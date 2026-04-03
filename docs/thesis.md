@@ -153,6 +153,25 @@ The operator pays for this entire cycle because it initiated it — the
 batch serves the operator's need to certify its own compliance through
 user attestations.
 
+### The beacon is on-chain, not off-chain
+
+The vetting itself is an off-chain operation — the regulator evaluates
+the operator through whatever process it uses. But the result is
+anchored on-chain. The regulator maintains its own Merkle Patricia Trie
+where each operator has a leaf containing the hash of the regulator's
+current view — scores, compliance status, flags.
+
+When the regulator issues a beacon, it mints this view on-chain. The
+beacon the user receives is not some opaque off-chain token — it is
+verifiable against the regulator's on-chain trie root. Anyone looking at
+the blockchain can attest that the beacon is the regulator's actual
+current assessment of the operator, not something fabricated for the
+occasion.
+
+This is what makes the beacon trustworthy without trusting the operator
+as a relay. The data is public, the hash is on-chain, the smart contract
+checks the match.
+
 The operator **cannot filter the beacon**. If it says "this operator
 failed audit last year," the operator still has to relay it — because
 without the user's signature over the real beacon, the batch won't
