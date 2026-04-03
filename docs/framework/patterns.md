@@ -173,6 +173,38 @@ sequenceDiagram
 - The trie serializes access naturally — no contention because the
   regulation already requires sequential processing
 
+## Beacon-gated attestation
+
+**When:** The regulation requires the user to see the operator's current
+compliance status before contributing data.
+
+```mermaid
+sequenceDiagram
+    participant R as Regulator
+    participant C as Chain
+    participant O as Operator
+    participant U as User
+
+    R->>C: Update standing in regulation trie
+    O->>C: Mint beacon (policy reads standing)
+    O->>U: Relay beacon + query
+    U->>U: Verify beacon, sign data + beacon
+    U->>O: Return signed payload
+    O->>C: Submit batch (contract validates beacon)
+```
+
+**Properties:**
+
+- Operator cannot collect attestations without a current beacon
+- Minting policy forces inclusion of operator's standing from regulation trie
+- Beacon has bounded validity — no stale reputation
+- User signs over the beacon — informed consent by construction
+- The user needs only the regulator's public key to verify the beacon
+
+**Invariant:** A batch submission is rejected if it includes a beacon whose
+expiry has passed or whose standing hash doesn't match the regulation trie
+at mint time.
+
 ## Identity delegation via hardware
 
 **When:** Non-crypto actors must make on-chain state transitions.

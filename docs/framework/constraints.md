@@ -110,10 +110,13 @@ On-chain mechanisms can complement regulatory penalties:
 ## 4. Fee alignment
 
 **There must be an actor who benefits enough from on-chain compliance to
-pay for it.**
+pay for it — the sponsor.**
 
-Blockchain transactions cost money. Someone must pay. The regulation
-creates the economic incentive.
+Users will not pay per action. Blockchain transactions cost money, but the
+cost must not leak through to the user. The entity that benefits from the
+on-chain guarantees sponsors the transactions. The regulation creates this
+economic incentive — compliance is compulsory, and sponsoring on-chain
+activity is the cheapest way to comply.
 
 ### Who pays and why
 
