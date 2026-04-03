@@ -3,6 +3,9 @@
 How a regulator can use Cardano to enforce a multi-party regulation without
 running infrastructure, managing identities, or trusting any single operator.
 
+Start with [**The Thesis**](thesis.md) — why blockchain is the right tool
+for regulated multi-party systems, and why the economics work.
+
 ## Four parties, zero trust
 
 A regulated process involves four independent parties. Each manages one
@@ -86,6 +89,8 @@ graph TB
 
 ## What you'll find here
 
+- [**The Thesis**](thesis.md) — the economic and philosophical case for
+  blockchain as regulated compliance infrastructure
 - [**The Regulator Schema**](framework/schema.md) — the full architecture:
   four parties, signing functions, double signatures, the commitment
   protocol, the baton pattern, and the two modes
