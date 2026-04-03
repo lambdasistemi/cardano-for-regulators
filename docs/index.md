@@ -4,6 +4,9 @@ A framework for analyzing multi-party regulations and determining whether
 blockchain infrastructure can improve compliance, transparency, and citizen
 understanding.
 
+Start with [**The Thesis**](thesis.md) — why blockchain is the right tool
+for regulated multi-party systems, and why the economics work.
+
 ## The premise
 
 When a regulation involves an **institution** setting rules for **multiple
@@ -37,6 +40,8 @@ Regulation.
 
 ## Structure
 
+- [**The Thesis**](thesis.md) — the economic and philosophical case for
+  blockchain as regulated compliance infrastructure
 - [**The Regulator Schema**](framework/schema.md) — the core architecture:
   three roles (regulator, operator, user), signing functions, double
   signatures, the commitment protocol, the baton pattern, and the two modes
