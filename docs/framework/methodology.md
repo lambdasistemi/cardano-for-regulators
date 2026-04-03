@@ -99,6 +99,7 @@ or as fields in MPT leaves.
 | **Lifecycle state machine** | "Status changes on events" | Leaf enum field |
 | **Tiered access** | "Different access levels" | On-chain root, off-chain encrypted layers |
 | **Reward distribution** | "Incentivize data collection" | Monotonic accumulator in leaf |
+| **Beacon-gated attestation** | "User must see operator status" | Mint beacon with standing, user signs over it |
 | **Cross-operator handoff** | "Responsibility transfers" | New leaf in new trie, back-link |
 
 ## Phase 5: Economics
@@ -134,6 +135,7 @@ For each protocol pattern, state what must hold:
 | Reward distribution | Rewards never decrease |
 | MPT update | Tree remains consistent |
 | Lifecycle | No backward transitions |
+| Beacon-gated attestation | Beacon not expired at submission |
 | Cross-operator handoff | Old leaf becomes read-only |
 
 **Rule:** If you can't state the invariant precisely, the protocol design

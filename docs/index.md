@@ -1,51 +1,99 @@
 # Cardano for Regulators
 
-A framework for analyzing multi-party regulations and determining whether
-blockchain infrastructure can improve compliance, transparency, and citizen
-understanding.
+How a regulator can use Cardano to enforce a multi-party regulation without
+running infrastructure, managing identities, or trusting any single operator.
 
 Start with [**The Thesis**](thesis.md) — why blockchain is the right tool
 for regulated multi-party systems, and why the economics work.
 
-## The premise
+## Four parties, zero trust
 
-When a regulation involves an **institution** setting rules for **multiple
-parties** who exchange value, credentials, or obligations — and **citizens**
-need to trust the outcome — blockchain can serve as neutral compliance
-infrastructure that no single party controls.
+A regulated process involves four independent parties. Each manages one
+concern and trusts no other party beyond what the chain enforces.
 
-Not every regulation fits. This framework provides a systematic method to
-decide which ones do, and how to architect the solution.
+```mermaid
+graph TB
+    IDP[Identity Provider<br/><i>identity trie</i>]
+    REG[Regulator<br/><i>regulation trie</i>]
+    OP[Operator<br/><i>process trie</i>]
+    U[User<br/><i>signing function</i>]
 
-## The five constraints
+    REG -->|publishes| SC{Smart Contract}
+    REG -->|trusts| IDP
+    SC -->|governs| OP
+    IDP -.->|reference input| SC
+    REG -.->|reference input| SC
+    OP -->|distributes signing functions| U
+    U -->|double-signed payloads| OP
+    OP -->|submits transactions| SC
+```
 
-For a regulation to be a good candidate for blockchain-based compliance, five
-constraints must be satisfied:
+| Party | Trie | Contains |
+|-------|------|----------|
+| **Identity provider** | Identity trie | Attested actor public keys |
+| **Regulator** | Regulation trie | Actor qualifications for this regulation |
+| **Operator** | Process trie | Items, processes, state |
+| **User** | — | Just acts via signing function |
 
-1. **Data cadence** — the regulation's update rhythm is compatible with L1
-   settlement (periodic, event-driven, not real-time streaming)
-2. **Sequential access** — writes to the shared state are naturally serialized,
-   whether by a single operator or a relay of actors taking turns
-3. **Liveness** — the regulation itself provides deadlines and penalties that
-   incentivize participation, or the protocol has timeout/escalation paths
-4. **Fee alignment** — an actor exists who benefits enough from on-chain
-   compliance to pay transaction costs (usually the obligated party)
-5. **Identity delegation** — actors who will never have wallets can still
-   make meaningful state transitions through cryptographic proxies (hardware,
-   institutional credentials, delegated keys)
+## On-chain and off-chain verification
 
-These constraints were extracted from the
-[EU Digital Product Passport](cases/battery-regulation.md) work on the Battery
-Regulation.
+Privacy requires splitting verification across two layers. The chain
+verifies signatures, trie membership, and hash consistency. The operator
+verifies the actual data behind the hashes off-chain.
 
-## Structure
+```mermaid
+graph LR
+    subgraph On-chain
+        SIG[Signatures]
+        IDP_C[Identity trie<br/>membership]
+        REG_C[Regulation trie<br/>membership]
+        HASH[Root hash<br/>consistency]
+    end
+
+    subgraph Off-chain
+        LEAF[Leaf data<br/>verification]
+        CLAIMS[User claims<br/>vs attestations]
+    end
+```
+
+Institutions (identity provider + regulator) are responsible for identity and
+qualifications. The operator leverages their attestations but cannot
+invent fake users or qualifications.
+
+## Two modes, same architecture
+
+```mermaid
+graph TB
+    subgraph Physical Mode
+        SENSOR[Physical Sensor] -->|I2C| SE[Secure Element]
+        SE -->|COSE_Sign1| NFC[NFC Interface]
+        NFC -->|tap| PHONE[Phone]
+        PHONE -->|payload| OP1[Operator]
+
+        NOTE1[Object is the identity<br/>AND the witness]
+    end
+
+    subgraph Process Mode
+        SERVER[Server] -->|hosts| SFUNC[Signing Function]
+        APP[App / API] -->|invokes| SFUNC
+        SFUNC -->|signed payload| OP2[Operator]
+
+        NOTE2[Identity is abstract<br/>Protocol is the witness]
+    end
+```
+
+- **Physical mode** — a battery, a sensor, a chip. The object carries its
+  own identity and attests its own state.
+- **Process mode** — a permit, a certification, a supply chain declaration.
+  The signing function lives on a server, the identity is abstract.
+
+## What you'll find here
 
 - [**The Thesis**](thesis.md) — the economic and philosophical case for
   blockchain as regulated compliance infrastructure
-- [**The Regulator Schema**](framework/schema.md) — the core architecture:
-  three roles (regulator, operator, user), signing functions, double
-  signatures, the commitment protocol, the baton pattern, and the two modes
-  (physical and process)
+- [**The Regulator Schema**](framework/schema.md) — the full architecture:
+  four parties, signing functions, double signatures, the commitment
+  protocol, the baton pattern, and the two modes
 - [**The Five Constraints**](framework/constraints.md) — what makes a
   regulation a good fit: data cadence, sequential access, liveness, fee
   alignment, identity delegation

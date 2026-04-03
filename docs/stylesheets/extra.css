@@ -1,0 +1,11 @@
+/* Fix smashed text in Mermaid diagram nodes */
+.mermaid .nodeLabel {
+    padding: 8px 12px;
+    line-height: 1.4;
+}
+
+.mermaid .node foreignObject div {
+    padding: 8px 12px;
+    line-height: 1.4;
+    text-align: center;
+}
