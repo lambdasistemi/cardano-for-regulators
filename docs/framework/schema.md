@@ -28,7 +28,7 @@ graph TB
 | Party | Trie | Contains | Responsibility |
 |-------|------|----------|----------------|
 | **Identity provider** | Identity trie | Attested actor public keys | Who exists as a verified entity |
-| **Regulator** | Regulation trie | Actor qualifications for this regulation | Who is qualified to participate |
+| **Regulator** | Regulation trie | Actor qualifications + operator standing | Who is qualified, how operators perform |
 | **Operator** | Process trie | Items, processes, state | What is happening |
 | **User** | — | Just acts via signing function | Performing regulated actions |
 
@@ -63,7 +63,8 @@ graph LR
         REG_UTxO --- REG_T
         REG_T --- R1[Actor A<br/>licensed carrier]
         REG_T --- R2[Actor B<br/>authorized dispatcher]
-        REG_T --- R3[Actor N<br/>revoked]
+        REG_T --- R3[Operator X<br/>standing: compliant]
+        REG_T --- R4[Operator Y<br/>standing: under review]
     end
 
     subgraph Operator
@@ -87,7 +88,7 @@ graph LR
 | Trie | Owner | Contains | Role |
 |------|-------|----------|------|
 | **Identity trie** | identity provider | Attested actor public keys | Who exists as a verified real-world entity |
-| **Regulation trie** | Regulator | Actor qualifications specific to this regulation | Who is qualified to act in this regulated process |
+| **Regulation trie** | Regulator | Actor qualifications + operator standing | Who is qualified to act, how operators are assessed |
 | **Process trie** | Operator | Items, processes, leaves with state | What is happening |
 | **Commitment** | Inside each process leaf | Slot windows, expected actions | When and how actions occur |
 
@@ -202,12 +203,16 @@ sequenceDiagram
     O->>C: Deploy process trie<br/>(governed by smart contract)
     O->>SF: Mint signing function<br/>(register pubkey on-chain)
 
+    O->>C: Mint beacon<br/>(samples operator standing)
+
     O->>C: Create commitment in leaf<br/>(slot window)
 
-    U->>SF: Request signature<br/>(payload + commitment)
+    O->>U: Relay beacon + query
+
+    U->>SF: Request signature<br/>(payload + commitment + beacon)
     SF->>U: Signed payload
 
-    U->>O: Submit double-signed payload<br/>(process sig + actor sig)
+    U->>O: Submit double-signed payload<br/>(process sig + actor sig + beacon sig)
 
     Note over O: Off-chain verification:<br/>leaf data matches claims
 
@@ -216,12 +221,13 @@ sequenceDiagram
     Note over C: Validator checks:
     Note over C: 1. Actor key in identity trie?<br/>(reference input)
     Note over C: 2. Actor qualified in regulation trie?<br/>(reference input)
-    Note over C: 3. Commitment exists?<br/>(expected action)
-    Note over C: 4. Slot in window?<br/>(timely)
-    Note over C: 5. Process signature valid?<br/>(authentic)
-    Note over C: 6. Actor key authorized?<br/>(baton holder)
-    Note over C: 7. Leaf update matches payload?<br/>(untampered)
-    Note over C: 8. New root hash consistent?<br/>(MPT integrity)
+    Note over C: 3. Beacon genuine and not expired?<br/>(minting policy)
+    Note over C: 4. Commitment exists?<br/>(expected action)
+    Note over C: 5. Slot in window?<br/>(timely)
+    Note over C: 6. Process signature valid?<br/>(authentic)
+    Note over C: 7. Actor key authorized?<br/>(baton holder)
+    Note over C: 8. Leaf update matches payload?<br/>(untampered)
+    Note over C: 9. New root hash consistent?<br/>(MPT integrity)
 
     C->>C: Clear commitment<br/>(no replay)
 ```
@@ -232,17 +238,16 @@ regulation trie UTxO (reference inputs), the signatures, and the slot range.
 
 ## What the regulator produces
 
-The regulator does two things: maintains a **regulation trie** and publishes
-a **smart contract**.
+The regulator does three things: maintains a **regulation trie**, publishes
+a **smart contract**, and defines the **beacon minting policy**.
 
 ```mermaid
 graph TD
     REG[Regulator]
 
-    REG -->|maintains| RT[Regulation Trie<br/><i>actor qualifications</i>]
-    RT --> Q1[Licensed carrier A]
-    RT --> Q2[Authorized dispatcher B]
-    RT --> Q3[Certified inspector C]
+    REG -->|maintains| RT[Regulation Trie]
+    RT --> Q1[Actor qualifications<br/><i>licensed carrier,<br/>authorized dispatcher</i>]
+    RT --> Q2[Operator standing<br/><i>compliance scores,<br/>flags, warnings</i>]
 
     REG -->|publishes| SC[Smart Contract]
     SC --> DS[Data Schema<br/><i>what fields a leaf must contain</i>]
@@ -250,18 +255,30 @@ graph TD
     SC --> CP[Commitment Protocol<br/><i>how time windows work,<br/>what must be signed</i>]
     SC --> AR[Authorization Rules<br/><i>how the baton is assigned<br/>and passed</i>]
     SC --> REF[Reference Inputs<br/><i>which identity and regulation<br/>UTxOs to read</i>]
+
+    REG -->|defines| MP[Beacon Minting Policy<br/><i>forces inclusion of<br/>operator standing</i>]
 ```
 
-The **regulation trie** contains process-specific actor qualifications —
-not generic identity (that's the identity provider's job), but credentials
-specific to what this regulation requires. A traceability regulation might
-qualify actors as licensed carriers, authorized dispatchers, or certified
-inspectors.
+The **regulation trie** serves two purposes:
+
+- **Actor qualifications** — process-specific credentials, not generic
+  identity (that's the identity provider's job). A traceability regulation
+  might qualify actors as licensed carriers, authorized dispatchers, or
+  certified inspectors.
+- **Operator standing** — the regulator's current assessment of each
+  operator: compliance scores, flags, warnings. The regulator updates this
+  whenever their off-chain evaluation changes. The standing inputs are
+  heterogeneous: on-chain data (inspecting operator trees), off-chain data
+  (audits, inspections, complaints), and cross-operator aggregations.
 
 The **smart contract** encodes the regulation as a Plutus validator. The
 regulator publishes it once. Every operator in the market operates under it.
 The regulator audits that operators use the correct smart contract and
 follows the transactions over it.
+
+The **beacon minting policy** forces the operator to sample their current
+standing from the regulation trie before collecting user attestations. See
+[The beacon protocol](#the-beacon-protocol).
 
 The regulator does not run the identity infrastructure. They decide **which
 identity provider to trust** — a government identity agency, eIDAS, a private
@@ -271,6 +288,16 @@ alongside their own regulation trie UTxO.
 The eUTxO model ensures the validator is evaluated at every transaction.
 Non-compliant updates are rejected by the chain itself. The regulation is
 enforced at the transaction level, not by inspectors after the fact.
+
+### Regulator accountability
+
+The standing is the regulator's judgment — it cannot be independently
+recomputed because it fuses on-chain and off-chain inputs. This is the
+irreducible trust point in the system. But the chain guarantees
+**accountability**: every assessment is timestamped, public, and immutable.
+If the methodology is later shown to be flawed or biased, the historical
+record is there for everyone — operators, users, courts — to examine. The
+regulator cannot retroactively revise its own history.
 
 ## What the identity provider does
 
@@ -526,7 +553,7 @@ sequenceDiagram
 
     O->>C: 5. Submit transaction
 
-    Note over C: Validator checks:<br/>commitment exists ✓<br/>slot in window ✓<br/>process sig valid ✓<br/>actor in identity trie ✓<br/>actor in regulation trie ✓<br/>actor authorized ✓<br/>leaf update matches ✓
+    Note over C: Validator checks:<br/>beacon valid ✓<br/>commitment exists ✓<br/>slot in window ✓<br/>process sig valid ✓<br/>actor in identity trie ✓<br/>actor in regulation trie ✓<br/>actor authorized ✓<br/>leaf update matches ✓
 
     C->>C: 6. Clear commitment
     Note over C: Single-use — no replay
@@ -537,6 +564,73 @@ into a one-shot, time-bounded, authorized action. Because the signing
 function signs the commitment as part of the payload, and the smart
 contract defines what a valid commitment looks like, the operator has no
 room to manipulate timing or replay old submissions.
+
+### Time as the neutral witness
+
+If the user signs a timestamp, the regulator must trust the user's clock.
+If the operator signs it, the regulator must trust the operator's clock.
+Neither is neutral.
+
+The blockchain provides time certificates that neither party produced.
+When data is included in a block, it receives a temporal proof that is a
+consequence of consensus, not of anyone's claim. The on-chain anchor
+provides not just integrity but **temporal integrity** — verifiable proof
+of *when* something was committed, without trusting either party.
+
+## The beacon protocol
+
+The beacon is what bridges the regulator's on-chain assessment to the user.
+The operator cannot collect user attestations without first minting a
+beacon, and the minting policy won't produce one without reading the
+operator's current standing from the regulation trie.
+
+```mermaid
+sequenceDiagram
+    participant R as Regulator
+    participant C as Chain
+    participant O as Operator
+    participant U as User
+
+    R->>C: Update standing in regulation trie
+
+    O->>C: Mint beacon<br/>(minting policy reads standing<br/>from regulation trie)
+    Note over C: Beacon includes:<br/>operator standing + expiry
+
+    O->>U: Relay beacon + query
+
+    Note over U: Verifies beacon:<br/>- minting policy matches regulator<br/>- not expired<br/>- standing is current
+
+    U->>U: Sign data + beacon<br/>(informed consent)
+
+    U->>O: Return signed payload
+
+    O->>C: Submit batch<br/>(contract validates beacon<br/>is genuine and not expired)
+```
+
+The beacon carries the regulator's assessment to the user — not because the
+operator chose to include it, but because the smart contract forced it.
+
+### Informed consent by construction
+
+The user signs over the beacon as part of their payload. This is
+cryptographic proof of awareness: the user cannot claim ignorance of the
+operator's standing or the regulator's disclosed information. Informed
+consent is enforced by protocol, not by policy.
+
+### No stale reputation
+
+The beacon expires. An operator whose compliance status just dropped
+cannot keep presenting yesterday's clean beacon. The minting policy reads
+the current state of the regulation trie — if the regulator has updated the
+leaf, the next beacon reflects it. Transparency is bounded by the beacon's
+expiry window.
+
+### The user's one requirement
+
+The user needs one thing: the regulator's public key. With it, they can
+verify that the beacon actually comes from the regulator's minting policy
+before signing over it. This key is public by definition — published on
+official channels, embedded in the smart contract, verifiable on-chain.
 
 ## The baton pattern
 
@@ -637,6 +731,7 @@ graph TD
         COMMIT[Commitment Protocol]
         DSIG[Double Signature]
         BATON[Baton Pattern]
+        BEACON[Beacon Protocol]
         SC[Smart Contract Validation]
         IDPC[Identity Trie Reference]
         REGC[Regulation Trie Reference]
@@ -650,6 +745,8 @@ graph TD
     PROC --> DSIG
     PHYS --> BATON
     PROC --> BATON
+    PHYS --> BEACON
+    PROC --> BEACON
     PHYS --> SC
     PROC --> SC
     PHYS --> IDPC
@@ -700,6 +797,25 @@ Privacy is structural, not policy-based. The chain only stores hashes —
 the actual data behind the leaves is verified off-chain by the operator.
 The on-chain proofs (signatures, trie membership) establish *that* the
 right things happened without revealing *what* the actual content is.
+
+## Data availability and the burden of proof
+
+The tries store hashes on-chain, not full content. There is no guarantee
+that the pre-image behind a leaf hash can be reconstructed from the chain
+alone. This is a deliberate trade-off — storing full data on-chain would
+be prohibitively expensive.
+
+The auditability burden falls on the party that wants to challenge:
+
+- **The operator** received every assessment the regulator issued. To
+  challenge in court, the operator must have kept its history.
+- **The user** signed over beacons containing the operator's standing. To
+  challenge the operator, the user must have kept the beacons.
+
+The chain serves as the arbiter of *whether* presented data matches the
+on-chain hash — not as the archive itself. If a challenger produces data
+and its hash matches the leaf at that point in time, the content is proved
+authentic.
 
 ## The full picture
 
@@ -755,12 +871,14 @@ The regulator's workflow:
 1. **Analyze the regulation** — extract the data schema, valid transitions,
    parties, qualifications, and deadlines
 2. **Maintain a regulation trie** — qualify actors with process-specific
-   credentials (licensed carrier, authorized dispatcher, etc.)
-3. **Choose a identity provider** — decide which identity infrastructure to
+   credentials and maintain operator standing (compliance scores, flags)
+3. **Choose an identity provider** — decide which identity infrastructure to
    trust, reference its UTxO
 4. **Publish the smart contract** — encode the regulation as a Plutus
    validator that references both the identity and regulation tries
-5. **Audit** — verify that operators use the correct smart contract and
+5. **Define the beacon minting policy** — force operators to sample their
+   standing before collecting user attestations
+6. **Audit** — verify that operators use the correct smart contract and
    follow the transactions over it
 
 The identity provider's workflow:
@@ -774,11 +892,12 @@ The operator's workflow:
 
 1. **Deploy a trie** — create a UTxO governed by the regulator's contract
 2. **Mint signing functions** — generate keys, register on-chain, distribute
-3. **Verify off-chain** — check user claims against leaf data before
+3. **Mint beacons** — sample standing from regulation trie, relay to users
+4. **Verify off-chain** — check user claims against leaf data before
    submitting
-4. **Collect and submit** — receive double-signed payloads, batch into
+5. **Collect and submit** — receive double-signed payloads, batch into
    transactions
-5. **Pay fees** — compliance is cheaper than non-compliance
+6. **Pay fees** — compliance is cheaper than non-compliance
 
 The user's workflow:
 
