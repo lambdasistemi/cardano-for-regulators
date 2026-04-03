@@ -123,70 +123,145 @@ The on-chain anchor provides not just integrity but **temporal
 integrity** — verifiable proof of *when* something was committed,
 without trusting either party.
 
-## The beacon: regulator-to-user transparency
+## The standing: the regulator's public assessment
 
-The most powerful mechanism is the **beacon**. The smart contract can
-require that every batch the operator submits includes a commitment from
-the regulator — a beacon scoped to that batch, that operator, that time
-window.
+The regulator maintains an on-chain Merkle Patricia Trie — the
+**standing trie** — where each operator has a leaf. The leaf contains
+the hash of the regulator's current assessment: scores, compliance
+status, flags, warnings. The regulator updates this trie whenever its
+off-chain evaluation of an operator changes.
+
+This is public data on a public chain. Anyone can read it. The standing
+trie is the regulator's official, verifiable record of every operator
+under its jurisdiction.
+
+## The beacon: sampling the standing
+
+When the operator needs user attestations, it must produce a **beacon**
+— a minted token that carries the operator's query to the user. The
+minting policy enforces that the beacon includes the operator's current
+standing, sampled from the regulator's trie as a reference input at mint
+time. The beacon also carries an expiry — a bounded validity window.
 
 The operator has its own questions for the user — "attest this data,
-sign that claim." But it cannot ask them directly. It must submit its
-questions to the regulator first. The regulator vets the request and
-wraps it in a beacon — adding whatever disclosures the regulation
-requires: compliance status, warnings, policy updates. The operator's
-question reaches the user only after being validated and enriched by the
-regulator.
+sign that claim." But it cannot present them without first minting a
+beacon, and the minting policy won't produce one without reading the
+operator's current quality certificate from the regulator's trie. The
+operator's questions reach the user wrapped in the regulator's
+assessment — not because the operator chose to include it, but because
+the smart contract forced it.
 
 The protocol works as follows:
 
-1. The operator submits its questions to the regulator: "I need the user
-   to attest these items — vet my request"
-2. The regulator validates the request and issues a beacon — the
-   operator's questions wrapped in the regulator's disclosures
+1. The regulator maintains the standing trie on-chain — each operator
+   has a leaf with the regulator's current assessment
+2. The operator mints a beacon — the minting policy reads the operator's
+   leaf from the standing trie (reference input), validates query
+   parameters (timestamp, scope), and produces a token that includes the
+   standing and an expiry
 3. The operator relays the beacon to the user
-4. The user signs their data **together with the beacon**
-5. The smart contract validates that the beacon the user signed matches
-   the regulator's current issuance
+4. The user verifies the beacon is current (not expired) and authentic
+   (matches the regulator's known minting policy), then signs their data
+   **together with the beacon**
+5. At batch submission, the smart contract validates that the beacon the
+   user signed is genuine and not expired
 
-The operator pays for this entire cycle because it initiated it — the
-batch serves the operator's need to certify its own compliance through
-user attestations.
+The operator pays for the mint and the batch because it initiated the
+cycle — the batch serves the operator's need to certify its own
+compliance through user attestations.
 
-### The beacon is on-chain, not off-chain
+### Why minting matters
 
-The vetting itself is an off-chain operation — the regulator evaluates
-the operator through whatever process it uses. But the result is
-anchored on-chain. The regulator maintains its own Merkle Patricia Trie
-where each operator has a leaf containing the hash of the regulator's
-current view — scores, compliance status, flags.
+The standing trie is always on-chain, readable by anyone. But the user
+doesn't read the chain — they receive the beacon from the operator. The
+mint is what bridges this gap. It produces a verifiable artifact that
+attests: "at mint time, this was the regulator's assessment of this
+operator." The expiry ensures the artifact cannot be hoarded and
+replayed after the assessment changes.
 
-When the regulator issues a beacon, it mints this view on-chain. The
-beacon the user receives is not some opaque off-chain token — it is
-verifiable against the regulator's on-chain trie root. Anyone looking at
-the blockchain can attest that the beacon is the regulator's actual
-current assessment of the operator, not something fabricated for the
-occasion.
+Without the mint, the user would have to query the chain directly to
+verify the operator's standing. With it, the minted token is
+self-contained proof of currency.
 
-This is what makes the beacon trustworthy without trusting the operator
-as a relay. The data is public, the hash is on-chain, the smart contract
-checks the match.
+### No stale reputation
 
-The operator **cannot filter the beacon**. If it says "this operator
-failed audit last year," the operator still has to relay it — because
-without the user's signature over the real beacon, the batch won't
-validate on-chain.
+The beacon expires. An operator whose compliance status just dropped
+cannot keep presenting yesterday's clean beacon to collect more user
+attestations before the bad news surfaces. The minting policy reads the
+current state of the standing trie — if the regulator has updated the
+leaf, the next beacon reflects it. Transparency is not eventual — it is
+bounded by the beacon's expiry window.
 
-And crucially, the operator cannot coast on past reputation. There is no
-window to hide behind a stale score — the beacon is refreshed per batch.
-An operator whose compliance status just dropped cannot keep presenting
-yesterday's clean beacon to collect a few more rounds of user
-attestations before the bad news surfaces. The smart contract rejects
-any batch that doesn't carry the current beacon. Transparency is not
-eventual — it is immediate.
+### The operator as a transparent pipe
 
-The operator is forced into a transparent pipe between regulator and
-user. Not by trust, but by construction.
+The operator **cannot filter the standing**. If the regulator's
+assessment says "this operator failed audit last year," the beacon
+carries it — because the minting policy included it, and the user
+signed over it. The operator relays the regulator's judgment to the
+user not by choice, but by construction.
+
+### The standing is the regulator's judgment
+
+The standing trie is entirely under the regulator's control. Its inputs
+are heterogeneous: some are derived from on-chain data (inspecting
+operator trees, computing compliance metrics from chain history), some
+are off-chain (audits, inspections, complaints, legal proceedings), and
+some are cross-operator (aggregations across multiple operator trees,
+comparative metrics, systemic risk flags). The regulator fuses all of
+these into a single leaf per operator.
+
+This means the standing is not a mechanical derivation that anyone can
+independently recompute. The operator and the user can see *what* the
+regulator committed to — the hash is on-chain, immutable, timestamped —
+but not *how* it was computed. The methodology, the weighting, the
+off-chain inputs that went into the assessment are all inside the
+regulator's process.
+
+This is the irreducible trust point in the system. The blockchain
+removes the need to trust the operator. It guarantees data integrity and
+temporal integrity. But the regulator's judgment itself — the content of
+the standing — must be trusted, or challenged through external
+mechanisms: courts, appeals, competing regulators, public scrutiny of
+the methodology.
+
+What the chain does guarantee is **accountability**. Every assessment is
+timestamped, public, and immutable. If the methodology is later shown to
+be flawed or biased, the historical record of what was assessed and when
+is there for everyone — operators, users, courts — to examine. The
+regulator cannot retroactively revise its own history. The chain doesn't
+make the regulator fair, but it makes the regulator answerable.
+
+### Data availability and the burden of proof
+
+The standing trie stores hashes on-chain, not the full certificate
+content. There is no guarantee that the pre-image behind a leaf hash can
+be reconstructed from the chain alone. This is a deliberate trade-off —
+storing full certificates on-chain would be prohibitively expensive.
+
+The auditability burden falls on the party that wants to challenge. The
+chain guarantees the *existence* and *timing* of every certificate — the
+hashes are immutable — but reconstructing the content is the
+challenger's responsibility.
+
+This works because each party naturally holds the data they need:
+
+- **The operator** received every certificate the regulator issued for
+  it. If the operator wants to challenge the regulator's assessment in
+  court, the operator must have kept its certificate history.
+- **The user** signed over beacons that contained the operator's
+  standing. If the user wants to challenge the operator, the user must
+  have kept the beacons.
+
+In both cases, the chain serves as the arbiter of *whether* the
+presented data matches the on-chain hash — not as the archive itself.
+The hash settles disputes: if the challenger produces a certificate and
+its hash matches the leaf at that point in time, the content is proven
+authentic.
+
+The only gap is a third party wanting to audit without having
+participated. This is an edge case that could be addressed by regulatory
+archiving mandates or content-addressed storage, but the core protocol
+does not depend on it.
 
 ## The user's one requirement
 
