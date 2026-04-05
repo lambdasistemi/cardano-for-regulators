@@ -1,0 +1,15 @@
+{
+  "title": "Cardano for Regulators",
+  "description": "Framework for analyzing multi-party regulations and mapping them to Cardano compliance infrastructure — thesis, schema, constraints, patterns, and case studies.",
+  "sourceUrl": "https://github.com/lambdasistemi/cardano-for-regulators",
+  "kinds": {
+    "party": { "label": "Party", "color": "#58a6ff", "shape": "round-octagon" },
+    "protocol": { "label": "Protocol Pattern", "color": "#f778ba", "shape": "diamond" },
+    "concept": { "label": "Concept", "color": "#56d364", "shape": "star" },
+    "artifact": { "label": "On-chain Artifact", "color": "#d2a8ff", "shape": "round-rectangle" },
+    "constraint": { "label": "Constraint", "color": "#e3b341", "shape": "round-pentagon" },
+    "case-study": { "label": "Case Study", "color": "#f0883e", "shape": "barrel" },
+    "gdpr-element": { "label": "GDPR Element", "color": "#79c0ff", "shape": "ellipse" },
+    "risk": { "label": "Risk / Tension", "color": "#f85149", "shape": "triangle" }
+  }
+}

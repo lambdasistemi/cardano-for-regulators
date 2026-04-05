@@ -1,0 +1,32 @@
+[
+  {
+    "id": "framework-overview",
+    "title": "Framework Overview",
+    "description": "The thesis, four parties, five constraints, and architecture patterns — the complete conceptual foundation.",
+    "file": "data/tutorials/framework-overview.json"
+  },
+  {
+    "id": "on-chain-architecture",
+    "title": "The On-Chain Architecture",
+    "description": "Follow the data through tries, signatures, commitments, and beacons — how the protocol actually works.",
+    "file": "data/tutorials/on-chain-architecture.json"
+  },
+  {
+    "id": "gdpr-case-study",
+    "title": "GDPR on Cardano",
+    "description": "How GDPR maps to the framework — the bright line, breach notifications, consent lifecycle, and why the blockchain tensions don't apply.",
+    "file": "data/tutorials/gdpr-case-study.json"
+  },
+  {
+    "id": "battery-to-gdpr",
+    "title": "From Batteries to Data Protection",
+    "description": "Comparing the two case studies — physical mode vs process mode, same architecture, different trust basis.",
+    "file": "data/tutorials/battery-to-gdpr.json"
+  },
+  {
+    "id": "constraints-deep-dive",
+    "title": "The Five Constraints",
+    "description": "Why each constraint exists, what breaks when it fails, and how both case studies satisfy them.",
+    "file": "data/tutorials/constraints-deep-dive.json"
+  }
+]

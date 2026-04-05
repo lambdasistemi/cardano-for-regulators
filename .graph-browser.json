@@ -1,0 +1,5 @@
+{
+  "config": "data/config.json",
+  "graph": "data/graph.json",
+  "tutorials": "data/tutorials/index.json"
+}
