@@ -1,0 +1,49 @@
+{
+  "id": "battery-to-gdpr",
+  "title": "From Batteries to Data Protection",
+  "description": "Comparing the two case studies — physical mode vs process mode, same architecture, different trust basis.",
+  "stops": [
+    {
+      "node": "battery-regulation",
+      "depth": 2,
+      "title": "The Reference Case",
+      "narrative": "The [EU Battery Regulation](node:battery-regulation) was the first case study — and the source from which the entire framework was extracted. [Physical mode](node:physical-mode): NFC secure elements sign SoH readings. ~200 manufacturers, ~5M batteries/year. Hardware cost $1.91 per module.\n\nThe [commitment protocol](node:commitment-protocol) proves readings are timely. The [lifecycle state machine](node:lifecycle-state-machine) tracks Virgin to Active to Repurposed to Recycled. [Cross-operator handoff](node:cross-operator-handoff) handles repurposing."
+    },
+    {
+      "node": "gdpr",
+      "depth": 2,
+      "title": "The Second Case",
+      "narrative": "[GDPR](node:gdpr) is fundamentally different in domain — data protection instead of product traceability — but structurally similar. [Process mode](node:process-mode): server-side signing functions, no hardware. ~100K+ controllers, millions of compliance events.\n\nThe same [commitment protocol](node:commitment-protocol) proves breach notifications and rights responses are timely. The same [lifecycle state machine](node:lifecycle-state-machine) models consent (None to Given to Withdrawn). But the trust basis shifts from hardware attestation to protocol enforcement."
+    },
+    {
+      "node": "physical-mode",
+      "depth": 2,
+      "title": "Physical vs Process Mode",
+      "narrative": "In [physical mode](node:physical-mode), the object IS the identity and the witness. A battery with a sensor signs 'my state of health is 87%.' Trust comes from hardware: the sensor measured reality, the secure element signed it.\n\nIn [process mode](node:process-mode), there is no physical object. A compliance record, a consent event, a breach notification. The [signing function](node:signing-function) lives on a server. Trust comes from the [double signature](node:double-signature), the [commitment protocol](node:commitment-protocol), and the [smart contract](node:smart-contract). Physical mode is strictly stronger, but process mode covers regulations with no physical component."
+    },
+    {
+      "node": "commitment-protocol",
+      "depth": 2,
+      "title": "Same Protocol, Different Deadlines",
+      "narrative": "The [commitment-then-submit](node:commitment-protocol) protocol is the workhorse of both cases. For batteries: the operator sets a commitment, the consumer taps the NFC, the reading clears it.\n\nFor GDPR: the controller creates a commitment when a [breach is detected](node:gdpr-breach-notification) (72-hour window) or a [rights request arrives](node:gdpr-rights-requests) (1-month window). Same mechanism, different slot ranges. [Temporal integrity](node:temporal-integrity) is the neutral witness in both."
+    },
+    {
+      "node": "lifecycle-state-machine",
+      "depth": 2,
+      "title": "Same State Machine, Different States",
+      "narrative": "The [lifecycle state machine](node:lifecycle-state-machine) pattern appears in both cases with different state spaces.\n\nBatteries: Virgin to Active to Repurposed to Recycled. Each transition may trigger [cross-operator handoff](node:cross-operator-handoff). [GDPR consent](node:gdpr-consent): None to Given to Withdrawn. Withdrawal may trigger data erasure obligations off-chain.\n\nBoth enforce the same invariant on-chain: no backward transitions unless explicitly allowed. The pattern is regulation-agnostic."
+    },
+    {
+      "node": "bright-line",
+      "depth": 2,
+      "title": "What GDPR Adds to the Framework",
+      "narrative": "GDPR introduced something the Battery Regulation did not need: the [bright line](node:bright-line) principle. Battery data (SoH, composition, carbon footprint) is not personal data. But GDPR is entirely about personal data.\n\nThe bright line — personal data off-chain, compliance evidence on-chain — is GDPR's unique contribution to the framework. It resolves the [erasure tension](node:tension-erasure), the [controller designation](node:tension-controller-designation) problem, and the [minimisation concern](node:tension-minimisation). It also validates [process mode](node:process-mode) as a first-class pattern, not just a fallback from physical mode."
+    },
+    {
+      "node": "gdpr-fines",
+      "depth": 2,
+      "title": "Comparative Economics",
+      "narrative": "Battery Regulation: annual on-chain cost ~$1,800-3,600 for the entire market. GDPR: ~50-100 EUR/year per controller.\n\n[GDPR fines](node:gdpr-fines) are far larger — up to 4% global turnover vs the Battery Regulation's Art. 77 penalties. This means the [fee alignment](node:constraint-fee-alignment) argument is even stronger for GDPR. The cost of non-compliance so far exceeds the cost of on-chain compliance that the economic case is overwhelming."
+    }
+  ]
+}

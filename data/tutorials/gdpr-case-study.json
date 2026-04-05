@@ -1,0 +1,61 @@
+{
+  "id": "gdpr-case-study",
+  "title": "GDPR on Cardano",
+  "description": "How GDPR maps to the framework — the bright line, breach notifications, consent lifecycle, and why the blockchain tensions don't apply.",
+  "stops": [
+    {
+      "node": "gdpr",
+      "depth": 2,
+      "title": "The Reframing",
+      "narrative": "The natural question is 'can we put personal data on a blockchain?' The answer is no, and it is the wrong question.\n\n[GDPR](node:gdpr) on Cardano is not about storing personal data on-chain. It is about storing **compliance evidence** on-chain: consent hashes, breach notification timestamps, rights-request response proofs. The chain proves the controller did what GDPR requires, when GDPR requires it. This is pure [process mode](node:process-mode)."
+    },
+    {
+      "node": "bright-line",
+      "depth": 2,
+      "title": "The Bright Line",
+      "narrative": "The [bright line](node:bright-line) is the architectural principle that makes everything work: personal data off-chain, compliance evidence on-chain. No names, identifiers, health data, location, or behavioural profiles ever touch the chain — not even encrypted.\n\nThe chain stores hashes of compliance records. Under [Recital 26](https://gdpr-info.eu/recitals/no-26/)'s 'means reasonably likely' test, properly segregated hashes are not personal data. This resolves [erasure](node:tension-erasure), [controller designation](node:tension-controller-designation), and [data minimisation](node:tension-minimisation) tensions."
+    },
+    {
+      "node": "gdpr-supervisory-authority",
+      "depth": 2,
+      "title": "The Schema Mapping",
+      "narrative": "GDPR parties map cleanly to the four-party schema. The [supervisory authority](node:gdpr-supervisory-authority) maps to the [regulator](node:regulator) — maintains the regulation trie with controller standing. The [data controller](node:gdpr-controller) maps to the [operator](node:operator) — manages their compliance trie.\n\nThe [data subject](node:gdpr-data-subject) maps to the [user](node:user) — exercises rights via signing function. The [data processor](node:gdpr-processor) is a secondary operator with cross-referenced Art 28 agreements."
+    },
+    {
+      "node": "gdpr-breach-notification",
+      "depth": 2,
+      "title": "72-Hour Breach Notification",
+      "narrative": "The flagship on-chain use case. [Art 33](https://gdpr-info.eu/art-33-gdpr/) requires notifying the SA within 72 hours of becoming aware of a breach. Today, controllers self-report timing — there is no neutral witness.\n\nThe [commitment-then-submit](node:commitment-protocol) protocol turns this into a verifiable fact. The controller creates a commitment when the breach is detected (slot recorded). Notification clears it. The chain proves exactly how many slots elapsed. [Temporal integrity](node:temporal-integrity) replaces self-reported claims."
+    },
+    {
+      "node": "gdpr-rights-requests",
+      "depth": 2,
+      "title": "Data Subject Rights (1 Month)",
+      "narrative": "[Data subject rights](node:gdpr-rights-requests) — access, rectification, erasure, portability, objection — must be responded to within one month ([Art 12](https://gdpr-info.eu/art-12-gdpr/)), extendable to three months for complex requests.\n\nSame pattern as breach notification: the [commitment protocol](node:commitment-protocol) creates a slot-bounded window. Timeout without submission is provable non-compliance. The [data subject](node:gdpr-data-subject) never needs a wallet — they interact through the controller's portal."
+    },
+    {
+      "node": "gdpr-consent",
+      "depth": 2,
+      "title": "Consent Lifecycle",
+      "narrative": "[Consent](node:gdpr-consent) is modelled as a [lifecycle state machine](node:lifecycle-state-machine): None to Given to Withdrawn. Each transition is a leaf update with a timestamped hash.\n\nThe chain proves when consent was given, for what purpose (hash of description), when it was withdrawn, and that processing stopped after withdrawal. The [data controller](node:gdpr-controller) must demonstrate consent existed ([Art 7(1)](https://gdpr-info.eu/art-7-gdpr/)). The on-chain record is that demonstration."
+    },
+    {
+      "node": "gdpr-certification",
+      "depth": 2,
+      "title": "Certification as a Token",
+      "narrative": "[GDPR certification](node:gdpr-certification) ([Art 42](https://gdpr-info.eu/art-42-gdpr/)) is voluntary, 3-year validity, issued by accredited bodies. On-chain, it maps naturally to a token — like a [beacon](node:beacon) but with a longer validity window.\n\nThe certification body is an authorised party in the [regulation trie](node:regulation-trie). The token carries an expiry slot. Expired or revoked tokens cannot be referenced in compliance submissions. Adherence to certification demonstrates compliance."
+    },
+    {
+      "node": "tension-erasure",
+      "depth": 2,
+      "title": "Why the Tensions Don't Apply",
+      "narrative": "The literature identifies fundamental conflicts between GDPR and blockchain. Every one of them concerns storing personal data on-chain.\n\n[Immutability vs erasure](node:tension-erasure): no personal data to erase — compliance records prove accountability. [Controller designation](node:tension-controller-designation): clear — the controller operates their own trie. [Data minimisation](node:tension-minimisation): only hashes on-chain, minimal by design.\n\nThe [bright line](node:bright-line) resolves all three. [CNIL's 2018 guidance](https://www.cnil.fr/en/blockchain-and-gdpr-solutions-responsible-use-blockchain-context-personal-data) supports this approach."
+    },
+    {
+      "node": "gdpr-fines",
+      "depth": 2,
+      "title": "The Economics",
+      "narrative": "[GDPR fines](node:gdpr-fines) provide the strongest [liveness](node:constraint-liveness) incentive of any regulation analysed — up to 4% of global turnover. A medium-sized controller would spend ~50-100 EUR/year in on-chain fees. A single fine (median ~50,000 EUR for SMEs, millions for large companies) dwarfs lifetime costs.\n\nThe value proposition is not cost savings — it is **proof**. The controller can prove to any court, SA, or data subject exactly when every compliance action occurred, with a neutral timestamp. This also strongly satisfies [fee alignment](node:constraint-fee-alignment)."
+    }
+  ]
+}

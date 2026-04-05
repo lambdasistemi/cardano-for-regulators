@@ -1,0 +1,560 @@
+{
+  "nodes": [
+    {
+      "id": "thesis",
+      "label": "The Thesis",
+      "kind": "concept",
+      "group": "foundation",
+      "description": "The economic and philosophical foundation. Web3 is expensive because it is honest — the cost buys guarantees Web2 cannot provide. Users will not pay per action, so a sponsor must absorb the cost. Regulation is the forcing function that compels businesses to need blockchain guarantees, making sponsorship the cheapest way to comply.",
+      "links": [
+        { "label": "Full text", "url": "https://lambdasistemi.github.io/cardano-for-regulators/thesis/" }
+      ]
+    },
+    {
+      "id": "sponsor-pays",
+      "label": "Sponsor Pays",
+      "kind": "concept",
+      "group": "foundation",
+      "description": "The entity that benefits from on-chain guarantees pays for them — not the user. In regulated industries, the obligated party (manufacturer, importer, controller) already pays for compliance infrastructure. Sponsoring blockchain transactions is a different line item, potentially cheaper than proprietary audit systems or manual inspections.",
+      "links": [
+        { "label": "Thesis section", "url": "https://lambdasistemi.github.io/cardano-for-regulators/thesis/#the-sponsor-pays" }
+      ]
+    },
+    {
+      "id": "temporal-integrity",
+      "label": "Temporal Integrity",
+      "kind": "concept",
+      "group": "foundation",
+      "description": "The blockchain provides time certificates that neither party produced. When data is included in a block, it receives a temporal proof that is a consequence of consensus, not of anyone's claim. This is critical for regulations with deadlines — the 72-hour breach notification, the 1-month rights response — where self-reported timestamps are not neutral.",
+      "links": [
+        { "label": "Thesis section", "url": "https://lambdasistemi.github.io/cardano-for-regulators/thesis/#time-as-the-neutral-witness" }
+      ]
+    },
+    {
+      "id": "informed-consent",
+      "label": "Informed Consent by Construction",
+      "kind": "concept",
+      "group": "foundation",
+      "description": "The beacon turns the blockchain into a disclosure channel. The user signs over the beacon — which includes the regulator's assessment of the operator — as part of their payload. This is cryptographic proof of awareness. The user cannot claim ignorance when the chain shows they signed over the disclosure. Consent enforced by protocol, not by policy.",
+      "links": [
+        { "label": "Thesis section", "url": "https://lambdasistemi.github.io/cardano-for-regulators/thesis/#informed-consent-by-construction" }
+      ]
+    },
+    {
+      "id": "regulator",
+      "label": "Regulator",
+      "kind": "party",
+      "group": "schema",
+      "description": "The institution that defines the rules. Maintains the regulation trie (actor qualifications, operator standing), publishes the smart contract encoding the regulation, and defines the beacon minting policy. Does not run infrastructure or manage identities. Audits that operators use the correct smart contract. Cannot retroactively revise its own history — the chain makes the regulator answerable.",
+      "links": [
+        { "label": "Schema: what the regulator produces", "url": "https://lambdasistemi.github.io/cardano-for-regulators/framework/schema/#what-the-regulator-produces" }
+      ]
+    },
+    {
+      "id": "identity-provider",
+      "label": "Identity Provider",
+      "kind": "party",
+      "group": "schema",
+      "description": "Maintains a Merkle Patricia Trie of verified real-world entities. Each verified entity gets a leaf with their attested public key. The same identity trie can serve multiple regulators and multiple regulations. Prevents the operator from faking users — every actor in a regulated process must have a key in the trusted identity trie.",
+      "links": [
+        { "label": "Schema section", "url": "https://lambdasistemi.github.io/cardano-for-regulators/framework/schema/#what-the-identity-provider-does" }
+      ]
+    },
+    {
+      "id": "operator",
+      "label": "Operator",
+      "kind": "party",
+      "group": "schema",
+      "description": "Participates in the regulated market. Manages a process trie containing items or processes under their responsibility. A transparent pipe: chooses when to batch, but not what goes in. Mints signing functions, creates commitments, verifies off-chain claims against leaf data, collects double-signed payloads, submits transactions, and pays all fees.",
+      "links": [
+        { "label": "Schema section", "url": "https://lambdasistemi.github.io/cardano-for-regulators/framework/schema/#what-the-operator-does" }
+      ]
+    },
+    {
+      "id": "user",
+      "label": "User",
+      "kind": "party",
+      "group": "schema",
+      "description": "Interacts with a regulated process without any blockchain knowledge. No wallet, no ADA, no keys. Receives a signing capability (device or app), performs the regulated action (tap, scan, click), and passes the baton to the next actor. From the user's perspective: receive, use, pass on. The cryptography is invisible.",
+      "links": [
+        { "label": "Schema section", "url": "https://lambdasistemi.github.io/cardano-for-regulators/framework/schema/#what-the-user-does" }
+      ]
+    },
+    {
+      "id": "smart-contract",
+      "label": "Smart Contract",
+      "kind": "artifact",
+      "group": "schema",
+      "description": "The regulation in executable form. Published by the regulator as a Plutus validator. Governs the operator's trie and reads both the identity trie and regulation trie as reference inputs. Validates every state transition: actor key in identity trie, actor qualified in regulation trie, beacon genuine, commitment exists, slot in window, signatures valid, leaf update matches payload, root hash consistent.",
+      "links": [
+        { "label": "Schema section", "url": "https://lambdasistemi.github.io/cardano-for-regulators/framework/schema/#the-on-chain-architecture" }
+      ]
+    },
+    {
+      "id": "identity-trie",
+      "label": "Identity Trie",
+      "kind": "artifact",
+      "group": "schema",
+      "description": "A Merkle Patricia Trie maintained by the identity provider. Contains attested actor public keys. Used as a reference input by the smart contract — read-only from the operator's perspective. Prevents the operator from inventing fake actors. The validator checks membership at every transaction.",
+      "links": [
+        { "label": "Schema section", "url": "https://lambdasistemi.github.io/cardano-for-regulators/framework/schema/#what-the-identity-provider-does" }
+      ]
+    },
+    {
+      "id": "regulation-trie",
+      "label": "Regulation Trie",
+      "kind": "artifact",
+      "group": "schema",
+      "description": "A Merkle Patricia Trie maintained by the regulator. Serves two purposes: actor qualifications (process-specific credentials like licensed carrier, authorized dispatcher) and operator standing (compliance scores, flags, warnings). The standing is the regulator's judgment — it fuses on-chain and off-chain inputs and cannot be independently recomputed.",
+      "links": [
+        { "label": "Schema section", "url": "https://lambdasistemi.github.io/cardano-for-regulators/framework/schema/#what-the-regulator-produces" }
+      ]
+    },
+    {
+      "id": "process-trie",
+      "label": "Process Trie",
+      "kind": "artifact",
+      "group": "schema",
+      "description": "A Merkle Patricia Trie maintained by each operator. Contains items, processes, and state — one UTxO per operator regardless of item count. Governed by the regulator's smart contract. The operator is the sole writer, eliminating contention. Items are leaves; updates recompute the root hash.",
+      "links": [
+        { "label": "Schema section", "url": "https://lambdasistemi.github.io/cardano-for-regulators/framework/schema/#what-the-operator-does" }
+      ]
+    },
+    {
+      "id": "signing-function",
+      "label": "Signing Function",
+      "kind": "artifact",
+      "group": "schema",
+      "description": "The atomic unit of the system — an opaque capability that produces signatures when invoked without exposing the private key. Can live on different substrates: hardware secure element (physical isolation), phone enclave (OS isolation), server endpoint (access control), TEE (hardware-assisted software), or ZK circuit (cryptographic isolation). All present the same interface to the chain.",
+      "links": [
+        { "label": "Schema section", "url": "https://lambdasistemi.github.io/cardano-for-regulators/framework/schema/#the-signing-function" }
+      ]
+    },
+    {
+      "id": "beacon",
+      "label": "Beacon",
+      "kind": "artifact",
+      "group": "schema",
+      "description": "A minted token that bridges the regulator's on-chain assessment to the user. The minting policy forces inclusion of the operator's current standing from the regulation trie. Carries an expiry — no stale reputation. The operator cannot collect user attestations without first minting a beacon. The user signs over the beacon as proof of informed awareness.",
+      "links": [
+        { "label": "Schema section", "url": "https://lambdasistemi.github.io/cardano-for-regulators/framework/schema/#the-beacon-protocol" }
+      ]
+    },
+    {
+      "id": "double-signature",
+      "label": "Double Signature",
+      "kind": "protocol",
+      "group": "protocols",
+      "description": "Every state transition requires two signatures. The process signature proves this specific process produced this data at this time (authentication). The actor signature proves the authorized party requests this transition (authorization). Neither alone is sufficient — together they prove an authorized, attested, qualified actor interacted with a specific process.",
+      "links": [
+        { "label": "Schema section", "url": "https://lambdasistemi.github.io/cardano-for-regulators/framework/schema/#the-double-signature" }
+      ]
+    },
+    {
+      "id": "commitment-protocol",
+      "label": "Commitment-then-Submit",
+      "kind": "protocol",
+      "group": "protocols",
+      "description": "Proves that an action occurred within a specific time window. The operator creates a commitment in a trie leaf with validFrom and validUntil slots. The user's reading or response clears the commitment. Single-use (prevents replay), slot-bounded (validator checks the window), and requires no off-chain timestamp trust. The core mechanism for GDPR's 72h breach notification and 1-month rights response.",
+      "links": [
+        { "label": "Pattern docs", "url": "https://lambdasistemi.github.io/cardano-for-regulators/framework/patterns/#commitment-then-submit" }
+      ]
+    },
+    {
+      "id": "mpt-per-operator",
+      "label": "MPT-per-Operator",
+      "kind": "protocol",
+      "group": "protocols",
+      "description": "The primary storage pattern. One UTxO per operator, items as leaves. Cost scales with operators (hundreds) not items (millions). The operator is the sole writer — no contention by design. A manufacturer updating 10,000 batteries or a controller recording 10,000 consent events pays for one root hash update, not 10,000 individual transactions.",
+      "links": [
+        { "label": "Pattern docs", "url": "https://lambdasistemi.github.io/cardano-for-regulators/framework/patterns/#mpt-per-operator" }
+      ]
+    },
+    {
+      "id": "baton-pattern",
+      "label": "Baton Pattern",
+      "kind": "protocol",
+      "group": "protocols",
+      "description": "Authorization to act on a process travels as a baton through the real world. The first tap makes Actor A the holder. Actor A's final submission includes Actor B's pubkey, atomically transferring the baton. No gap where nobody holds authorization — the transfer is part of the state transition. No user registration, no identity database, no login.",
+      "links": [
+        { "label": "Schema section", "url": "https://lambdasistemi.github.io/cardano-for-regulators/framework/schema/#the-baton-pattern" }
+      ]
+    },
+    {
+      "id": "beacon-protocol",
+      "label": "Beacon-Gated Attestation",
+      "kind": "protocol",
+      "group": "protocols",
+      "description": "The operator mints a beacon (policy reads standing from regulation trie), relays it to the user with a query. The user verifies the beacon is current and authentic, then signs their data together with the beacon. At batch submission, the smart contract validates the beacon. Forces transparency: the operator cannot filter the regulator's assessment.",
+      "links": [
+        { "label": "Pattern docs", "url": "https://lambdasistemi.github.io/cardano-for-regulators/framework/patterns/#beacon-gated-attestation" }
+      ]
+    },
+    {
+      "id": "lifecycle-state-machine",
+      "label": "Lifecycle State Machine",
+      "kind": "protocol",
+      "group": "protocols",
+      "description": "Status is a field in the MPT leaf. Transitions are validated on-chain with the invariant that no backward transitions occur unless explicitly allowed. Each transition may change the responsible operator. For the Battery Regulation: Virgin to Active to Repurposed to Recycled. For GDPR consent: None to Given to Withdrawn.",
+      "links": [
+        { "label": "Pattern docs", "url": "https://lambdasistemi.github.io/cardano-for-regulators/framework/patterns/#lifecycle-state-machine" }
+      ]
+    },
+    {
+      "id": "cross-operator-handoff",
+      "label": "Cross-Operator Handoff",
+      "kind": "protocol",
+      "group": "protocols",
+      "description": "Transfers responsibility between parties. Old leaf becomes read-only in the originating trie. New leaf is created in the receiving operator's trie with a back-link to the original root, preserving full provenance. Used in Battery Regulation for repurposing and in GDPR for data portability between controllers.",
+      "links": [
+        { "label": "Pattern docs", "url": "https://lambdasistemi.github.io/cardano-for-regulators/framework/patterns/#cross-operator-handoff" }
+      ]
+    },
+    {
+      "id": "relay-state-machine",
+      "label": "Relay State Machine",
+      "kind": "protocol",
+      "group": "protocols",
+      "description": "Multiple actors act in sequence, each contributing their part. The regulation defines the ordering. Each actor can only act when it is their turn. Timeout or escalation if an actor misses the deadline. The trie serializes access naturally — no contention because the regulation already requires sequential processing.",
+      "links": [
+        { "label": "Pattern docs", "url": "https://lambdasistemi.github.io/cardano-for-regulators/framework/patterns/#relay-state-machine" }
+      ]
+    },
+    {
+      "id": "reward-distribution",
+      "label": "Reward Distribution",
+      "kind": "protocol",
+      "group": "protocols",
+      "description": "Incentivizes third-party data collection. Reporters accumulate rewards in a monotonically increasing counter stored in the MPT alongside item data. Each valid reading adds to the reporter's accumulated total. Withdrawal is a separate transaction. The invariant is formally proved: rewards never decrease.",
+      "links": [
+        { "label": "Pattern docs", "url": "https://lambdasistemi.github.io/cardano-for-regulators/framework/patterns/#reward-distribution" }
+      ]
+    },
+    {
+      "id": "physical-mode",
+      "label": "Physical Mode",
+      "kind": "concept",
+      "group": "modes",
+      "description": "The object carries its own identity and attests its own state. A battery with a sensor and secure element signs its state of health. The data comes from the thing itself — a physical measurement. Trust comes from hardware: the sensor measured reality, the secure element signed it, the chain anchored it. Strictly stronger than process mode.",
+      "links": [
+        { "label": "Schema section", "url": "https://lambdasistemi.github.io/cardano-for-regulators/framework/schema/#physical-mode" }
+      ]
+    },
+    {
+      "id": "process-mode",
+      "label": "Process Mode",
+      "kind": "concept",
+      "group": "modes",
+      "description": "No physical object — just a logical process advancing through stages. A permit application, a certification workflow, a supply chain declaration, or a GDPR compliance record. The signing function lives on a server. Trust comes from protocol: double signature proves the right actor performed the right action, commitment proves timeliness, smart contract proves correctness.",
+      "links": [
+        { "label": "Schema section", "url": "https://lambdasistemi.github.io/cardano-for-regulators/framework/schema/#process-mode" }
+      ]
+    },
+    {
+      "id": "constraint-data-cadence",
+      "label": "Data Cadence",
+      "kind": "constraint",
+      "group": "constraints",
+      "description": "The regulation's data update rhythm must be compatible with L1 settlement. Periodic reporting, event-driven updates, and batch submissions all fit. Real-time sensor telemetry at 100ms intervals does not. The MPT-per-operator pattern means each operator submits one transaction per batch regardless of how many items were updated.",
+      "links": [
+        { "label": "Constraint docs", "url": "https://lambdasistemi.github.io/cardano-for-regulators/framework/constraints/#1-data-cadence" }
+      ]
+    },
+    {
+      "id": "constraint-sequential-access",
+      "label": "Sequential Access",
+      "kind": "constraint",
+      "group": "constraints",
+      "description": "Writes to the shared state must be naturally serialized — no concurrent contention. Either a single operator writes (most common), or multiple actors relay in sequence where the regulation defines the ordering. The MPT stored in a single UTxO is inherently sequential: only one transaction can consume and recreate it per block.",
+      "links": [
+        { "label": "Constraint docs", "url": "https://lambdasistemi.github.io/cardano-for-regulators/framework/constraints/#2-sequential-access" }
+      ]
+    },
+    {
+      "id": "constraint-liveness",
+      "label": "Liveness",
+      "kind": "constraint",
+      "group": "constraints",
+      "description": "The regulation must provide deadlines and penalties that incentivize continued participation. If one actor in a relay stops, the chain stalls. External liveness comes from the legal system (fines, market withdrawal, license loss). Protocol escalation adds on-chain mechanisms: slot-based timeouts, bond/deposit slashing, fallback operators.",
+      "links": [
+        { "label": "Constraint docs", "url": "https://lambdasistemi.github.io/cardano-for-regulators/framework/constraints/#3-liveness" }
+      ]
+    },
+    {
+      "id": "constraint-fee-alignment",
+      "label": "Fee Alignment",
+      "kind": "constraint",
+      "group": "constraints",
+      "description": "There must be an actor who benefits enough from on-chain compliance to pay — the sponsor. Users do not pay. The regulation mandates the obligated party, and the cost per operation is negligible at scale. Happy path: operator pays willingly. Sad path: user has leverage via escrow, bond, or direct submission.",
+      "links": [
+        { "label": "Constraint docs", "url": "https://lambdasistemi.github.io/cardano-for-regulators/framework/constraints/#4-fee-alignment" }
+      ]
+    },
+    {
+      "id": "constraint-identity-delegation",
+      "label": "Identity Delegation",
+      "kind": "constraint",
+      "group": "constraints",
+      "description": "Actors who will never have wallets must make meaningful on-chain state transitions through cryptographic proxies. A secure element in a product, an institutional smart card, a mobile credential, or a QR challenge. The proxy bridges the physical world to the chain: proving who, what, and when without blockchain knowledge.",
+      "links": [
+        { "label": "Constraint docs", "url": "https://lambdasistemi.github.io/cardano-for-regulators/framework/constraints/#5-identity-delegation" }
+      ]
+    },
+    {
+      "id": "three-question-test",
+      "label": "Three-Question Pre-filter",
+      "kind": "constraint",
+      "group": "constraints",
+      "description": "Quick assessment before running the full five constraints. All three must hold: (1) Multi-party data — multiple independent parties share a common data set. (2) Institutional anchor — an institution defines what is valid but does not want to run infrastructure. (3) Verifiable history — historical integrity matters, parties must not rewrite past records. If only 1-2 hold, a traditional database suffices.",
+      "links": [
+        { "label": "Constraint docs", "url": "https://lambdasistemi.github.io/cardano-for-regulators/framework/constraints/#the-three-question-pre-filter" }
+      ]
+    },
+    {
+      "id": "battery-regulation",
+      "label": "EU Battery Regulation",
+      "kind": "case-study",
+      "group": "cases",
+      "description": "The reference case — (EU) 2023/1542 on batteries and waste batteries. All five constraints pass. Physical mode with NFC secure element signing SoH readings. MPT-per-operator with ~200 manufacturers, ~5M batteries/year. Commitment-then-submit for authenticated readings. Hardware cost $1.91 per module at volume. Annual on-chain cost ~$1,800-3,600 for the entire market.",
+      "links": [
+        { "label": "Case study", "url": "https://lambdasistemi.github.io/cardano-for-regulators/cases/battery-regulation/" }
+      ]
+    },
+    {
+      "id": "gdpr",
+      "label": "GDPR",
+      "kind": "case-study",
+      "group": "cases",
+      "description": "GDPR (EU 2016/679) analysed through the framework. The key reframing: personal data never touches the chain — only compliance evidence (consent hashes, breach notification timestamps, rights-request response proofs). Pure process mode. All five constraints pass. Strongest penalties of any regulation analysed (up to 4% global turnover). Flagship protocol: 72-hour breach notification via commitment-then-submit.",
+      "links": [
+        { "label": "Case study", "url": "https://lambdasistemi.github.io/cardano-for-regulators/cases/gdpr/" },
+        { "label": "GDPR full text (EUR-Lex)", "url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj" }
+      ]
+    },
+    {
+      "id": "gdpr-controller",
+      "label": "Data Controller",
+      "kind": "gdpr-element",
+      "group": "gdpr",
+      "description": "The natural or legal person that determines the purposes and means of processing personal data (Art 4(7)). Maps to the operator role in the schema — maintains their own compliance trie governed by the SA's smart contract. Bears primary accountability. Must demonstrate compliance via the accountability principle (Art 5(2)). Joint controllers (Art 26) may share or cross-reference tries.",
+      "links": [
+        { "label": "GDPR Art 4", "url": "https://gdpr-info.eu/art-4-gdpr/" },
+        { "label": "GDPR Art 24", "url": "https://gdpr-info.eu/art-24-gdpr/" }
+      ]
+    },
+    {
+      "id": "gdpr-processor",
+      "label": "Data Processor",
+      "kind": "gdpr-element",
+      "group": "gdpr",
+      "description": "Processes personal data on behalf of the controller (Art 4(8)). A secondary operator maintaining their own compliance trie, constrained by the controller's documented instructions. The Art 28 processing agreement is a static leaf in both tries. Sub-processors create multi-level trie references — a chain of accountability.",
+      "links": [
+        { "label": "GDPR Art 28", "url": "https://gdpr-info.eu/art-28-gdpr/" }
+      ]
+    },
+    {
+      "id": "gdpr-data-subject",
+      "label": "Data Subject",
+      "kind": "gdpr-element",
+      "group": "gdpr",
+      "description": "Any identified or identifiable natural person. Maps to the user role — exercises rights via signing function in process mode. No wallet needed. Interacts through the controller's portal. The signing function is the authenticated session. Has extensive rights (access, rectification, erasure, portability, objection) that create commitment-then-submit obligations for the controller.",
+      "links": [
+        { "label": "GDPR Art 4(1)", "url": "https://gdpr-info.eu/art-4-gdpr/" },
+        { "label": "GDPR Chapter III", "url": "https://gdpr-info.eu/chapter-3/" }
+      ]
+    },
+    {
+      "id": "gdpr-supervisory-authority",
+      "label": "Supervisory Authority",
+      "kind": "gdpr-element",
+      "group": "gdpr",
+      "description": "Independent public authority monitoring GDPR application (Art 51). Maps to the regulator role — maintains the regulation trie with controller standing and certification status. Has investigative, corrective, and advisory powers (Art 58). 27+ national DPAs with EDPB for cross-border consistency. Lead authority mechanism (Art 56) for cross-border processing.",
+      "links": [
+        { "label": "GDPR Art 51-59", "url": "https://gdpr-info.eu/art-51-gdpr/" },
+        { "label": "GDPR Art 58", "url": "https://gdpr-info.eu/art-58-gdpr/" }
+      ]
+    },
+    {
+      "id": "gdpr-consent",
+      "label": "Consent",
+      "kind": "gdpr-element",
+      "group": "gdpr",
+      "description": "Freely given, specific, informed, and unambiguous indication of the data subject's wishes (Art 4(11)). On-chain representation: lifecycle state machine (None to Given to Withdrawn). Each transition is a leaf update with timestamped hash. The controller must demonstrate consent existed (Art 7(1)). Withdrawal must be as easy as giving (Art 7(3)) — maps to a single leaf update.",
+      "links": [
+        { "label": "GDPR Art 7", "url": "https://gdpr-info.eu/art-7-gdpr/" }
+      ]
+    },
+    {
+      "id": "gdpr-breach-notification",
+      "label": "Breach Notification (72h)",
+      "kind": "gdpr-element",
+      "group": "gdpr",
+      "description": "Controller must notify the supervisory authority within 72 hours of becoming aware of a personal data breach (Art 33). The flagship on-chain use case. Currently self-reported with no neutral witness. Commitment-then-submit turns this into a verifiable on-chain fact. Absence of a timely commitment, when a breach becomes known through other channels, is evidence of non-compliance.",
+      "links": [
+        { "label": "GDPR Art 33", "url": "https://gdpr-info.eu/art-33-gdpr/" },
+        { "label": "GDPR Art 34", "url": "https://gdpr-info.eu/art-34-gdpr/" }
+      ]
+    },
+    {
+      "id": "gdpr-rights-requests",
+      "label": "Data Subject Rights (1 month)",
+      "kind": "gdpr-element",
+      "group": "gdpr",
+      "description": "Data subjects may exercise rights of access (Art 15), rectification (Art 16), erasure (Art 17), restriction (Art 18), portability (Art 20), and objection (Art 21). Controller must respond within one month (Art 12(3)), extendable to three months for complex requests. On-chain: commitment-then-submit with slot-bounded window. Timeout without submission is provable non-compliance.",
+      "links": [
+        { "label": "GDPR Art 12", "url": "https://gdpr-info.eu/art-12-gdpr/" },
+        { "label": "GDPR Art 15-22", "url": "https://gdpr-info.eu/art-15-gdpr/" }
+      ]
+    },
+    {
+      "id": "gdpr-processing-records",
+      "label": "Processing Records (Art 30)",
+      "kind": "gdpr-element",
+      "group": "gdpr",
+      "description": "Controllers must maintain records of processing activities: purposes, data categories, recipients, transfers, retention periods, security measures. On-chain: leaves in the controller's trie, all stored as hashes. The SA queries via reference input. On audit, the controller produces pre-images. Hash match proves authenticity and timestamp.",
+      "links": [
+        { "label": "GDPR Art 30", "url": "https://gdpr-info.eu/art-30-gdpr/" }
+      ]
+    },
+    {
+      "id": "gdpr-certification",
+      "label": "GDPR Certification (Art 42)",
+      "kind": "gdpr-element",
+      "group": "gdpr",
+      "description": "Voluntary data protection certification mechanisms, valid for maximum three years, renewable. Issued by accredited certification bodies or by the SA. On-chain: token with enforced expiry minted by an authorised party in the regulation trie. Expired or revoked tokens cannot be referenced in new compliance submissions. Adherence demonstrates compliance (Art 24(3)).",
+      "links": [
+        { "label": "GDPR Art 42", "url": "https://gdpr-info.eu/art-42-gdpr/" }
+      ]
+    },
+    {
+      "id": "gdpr-dpia",
+      "label": "Data Protection Impact Assessment",
+      "kind": "gdpr-element",
+      "group": "gdpr",
+      "description": "Mandatory when processing is likely to result in high risk (Art 35). Must assess necessity, proportionality, risks, and mitigating measures. On-chain: attestation hash with timestamp proving when the DPIA was conducted relative to processing start. If the SA requires prior consultation (Art 36), the consultation record is also anchored.",
+      "links": [
+        { "label": "GDPR Art 35", "url": "https://gdpr-info.eu/art-35-gdpr/" }
+      ]
+    },
+    {
+      "id": "gdpr-cross-border",
+      "label": "Cross-Border Transfers",
+      "kind": "gdpr-element",
+      "group": "gdpr",
+      "description": "Any transfer to a third country requires safeguards: adequacy decisions (Art 45), Standard Contractual Clauses (Art 46), Binding Corporate Rules (Art 47), or derogations (Art 49). On-chain: hash of the transfer safeguard referenced in the controller's trie. Critical nuance: the on-chain hashes themselves do not constitute a cross-border transfer because they are not personal data.",
+      "links": [
+        { "label": "GDPR Art 44-49", "url": "https://gdpr-info.eu/art-44-gdpr/" }
+      ]
+    },
+    {
+      "id": "gdpr-fines",
+      "label": "GDPR Fines",
+      "kind": "gdpr-element",
+      "group": "gdpr",
+      "description": "Two-tier penalty system. Tier 1: up to 10M EUR or 2% global turnover for controller/processor obligation breaches. Tier 2: up to 20M EUR or 4% global turnover for violations of processing principles, data subject rights, and cross-border transfer rules (Art 83). Plus right to compensation (Art 82) and criminal penalties (Art 84). The strongest liveness incentive of any regulation analysed.",
+      "links": [
+        { "label": "GDPR Art 83", "url": "https://gdpr-info.eu/art-83-gdpr/" },
+        { "label": "Enforcement Tracker", "url": "https://www.enforcementtracker.com/" }
+      ]
+    },
+    {
+      "id": "bright-line",
+      "label": "The Bright Line",
+      "kind": "concept",
+      "group": "gdpr",
+      "description": "The architectural principle that resolves every GDPR-blockchain tension: personal data off-chain, compliance evidence on-chain. No names, identifiers, health data, location, or behavioural profiles ever touch the chain — not even encrypted. The chain stores hashes of compliance records. Under Recital 26's 'means reasonably likely' test, properly segregated hashes are not personal data.",
+      "links": [
+        { "label": "GDPR Recital 26", "url": "https://gdpr-info.eu/recitals/no-26/" },
+        { "label": "CNIL blockchain guidance", "url": "https://www.cnil.fr/en/blockchain-and-gdpr-solutions-responsible-use-blockchain-context-personal-data" }
+      ]
+    },
+    {
+      "id": "tension-erasure",
+      "label": "Immutability vs Erasure",
+      "kind": "risk",
+      "group": "tensions",
+      "description": "The most cited GDPR-blockchain conflict. Art 17 grants the right to erasure — but blockchain data cannot be deleted. Resolution: no personal data on-chain. Compliance records are not subject to erasure — they are the controller's proof of accountability. The right to erasure applies to the off-chain personal data, which remains under the controller's custody.",
+      "links": [
+        { "label": "GDPR Art 17", "url": "https://gdpr-info.eu/art-17-gdpr/" }
+      ]
+    },
+    {
+      "id": "tension-controller-designation",
+      "label": "Controller Designation",
+      "kind": "risk",
+      "group": "tensions",
+      "description": "GDPR requires identifiable controllers and processors. Public blockchains have no central controller. Resolution: the data controller is the operator of their own trie — clearly identifiable. The identity provider, SA, and chain validators are not controllers of the compliance data. CNIL's 2018 guidance supports this: smart contract deployers who determine purposes and means are controllers.",
+      "links": [
+        { "label": "CNIL blockchain guidance", "url": "https://www.cnil.fr/en/blockchain-and-gdpr-solutions-responsible-use-blockchain-context-personal-data" }
+      ]
+    },
+    {
+      "id": "tension-minimisation",
+      "label": "Data Minimisation vs Replication",
+      "kind": "risk",
+      "group": "tensions",
+      "description": "GDPR requires collecting only what is necessary (Art 5(1)(c)). Blockchain replicates all data to every full node. Resolution: only hashes on-chain — minimal by design. The actual data behind the leaves is verified off-chain by the operator. The on-chain footprint per compliance record is a single hash, which is the minimum required to prove integrity.",
+      "links": [
+        { "label": "GDPR Art 5", "url": "https://gdpr-info.eu/art-5-gdpr/" }
+      ]
+    }
+  ],
+  "edges": [
+    { "source": "thesis", "target": "sponsor-pays", "label": "derives", "description": "The thesis establishes that users will not pay per action, leading to the sponsor-pays model where the regulated entity absorbs blockchain costs as a compliance expense." },
+    { "source": "thesis", "target": "temporal-integrity", "label": "argues for", "description": "The thesis identifies that neither the user's nor the operator's clock is neutral, arguing for blockchain-provided time certificates as the foundation of verifiable compliance." },
+    { "source": "sponsor-pays", "target": "constraint-fee-alignment", "label": "formalised as", "description": "The sponsor-pays economic model from the thesis is formalised as the fee alignment constraint: there must always be an actor who benefits enough from on-chain compliance to pay." },
+    { "source": "temporal-integrity", "target": "commitment-protocol", "label": "implemented by", "description": "Temporal integrity — the need for a neutral timestamp — is implemented by the commitment-then-submit protocol, where the chain's slot number serves as the trusted clock." },
+    { "source": "informed-consent", "target": "beacon", "label": "enforced via", "description": "Informed consent by construction is enforced via the beacon mechanism: the user signs over the beacon (which includes the regulator's assessment), making the signature cryptographic proof of awareness." },
+    { "source": "regulator", "target": "regulation-trie", "label": "maintains", "description": "The regulator maintains the regulation trie containing actor qualifications and operator standing. This is the regulator's official, verifiable, public record of every operator's compliance status." },
+    { "source": "regulator", "target": "smart-contract", "label": "publishes", "description": "The regulator publishes the smart contract — the regulation in executable form. Every operator in the market operates under it. The regulator audits that operators use the correct contract." },
+    { "source": "regulator", "target": "identity-provider", "label": "trusts", "description": "The regulator decides which identity provider to trust (government agency, eIDAS, private service) and references that provider's UTxO in the smart contract alongside the regulation trie." },
+    { "source": "identity-provider", "target": "identity-trie", "label": "maintains", "description": "The identity provider verifies real-world entities and adds their public keys to the identity trie. The same trie can serve multiple regulators and regulations." },
+    { "source": "operator", "target": "process-trie", "label": "manages", "description": "Each operator manages their own process trie — one UTxO holding the root hash. Contains all items or processes under their responsibility. Governed by the regulator's smart contract." },
+    { "source": "operator", "target": "signing-function", "label": "mints", "description": "The operator generates key pairs, registers public keys on-chain, and distributes signing capabilities as physical devices or digital credentials to users." },
+    { "source": "operator", "target": "beacon", "label": "mints", "description": "The operator mints beacons by sampling their standing from the regulation trie. Cannot collect user attestations without a current, valid beacon." },
+    { "source": "user", "target": "signing-function", "label": "uses", "description": "The user performs regulated actions via the signing function — tap, scan, or click. The signing function produces signatures without exposing the private key. The user never interacts with blockchain directly." },
+    { "source": "user", "target": "beacon", "label": "signs over", "description": "The user verifies the beacon is current and authentic (using the regulator's public key), then signs their data together with the beacon. This creates cryptographic proof of informed awareness." },
+    { "source": "smart-contract", "target": "process-trie", "label": "governs", "description": "The smart contract validates every state transition on the process trie: checking signatures, trie membership, beacon validity, commitment windows, and root hash consistency." },
+    { "source": "smart-contract", "target": "identity-trie", "label": "reads", "description": "The smart contract reads the identity trie as a reference input at validation time, verifying that the actor submitting a state transition is an attested real-world entity." },
+    { "source": "smart-contract", "target": "regulation-trie", "label": "reads", "description": "The smart contract reads the regulation trie as a reference input, verifying that the actor is qualified for the specific regulation and checking operator standing." },
+    { "source": "three-question-test", "target": "constraint-data-cadence", "label": "gates", "description": "The three-question pre-filter (multi-party data, institutional anchor, verifiable history) must pass before running the five constraints. It is the quick screening step." },
+    { "source": "three-question-test", "target": "constraint-sequential-access", "label": "gates", "description": "If the three-question test fails (only 1-2 hold), a traditional database with audit logs suffices and the five constraints need not be evaluated." },
+    { "source": "mpt-per-operator", "target": "constraint-sequential-access", "label": "satisfies", "description": "MPT-per-operator inherently satisfies sequential access: one writer per trie, no contention. The UTxO model naturally enforces this — only one transaction can consume and recreate it per block." },
+    { "source": "mpt-per-operator", "target": "constraint-data-cadence", "label": "satisfies", "description": "Each operator submits one transaction per batch regardless of item count. This decouples the on-chain data rate from the number of items, making even high-volume regulations fit L1 settlement." },
+    { "source": "mpt-per-operator", "target": "process-trie", "label": "implements", "description": "The MPT-per-operator pattern is the concrete implementation of the process trie concept. Each operator's trie is a Merkle Patricia Trie stored in a single UTxO." },
+    { "source": "commitment-protocol", "target": "gdpr-breach-notification", "label": "proves timeliness of", "description": "The commitment-then-submit protocol turns the 72-hour breach notification deadline from a self-reported claim into a verifiable on-chain fact with neutral timestamps." },
+    { "source": "commitment-protocol", "target": "gdpr-rights-requests", "label": "proves timeliness of", "description": "The commitment protocol proves that rights-request responses were submitted within the 1-month (or 3-month extended) window, with timeout as provable non-compliance." },
+    { "source": "lifecycle-state-machine", "target": "gdpr-consent", "label": "models", "description": "GDPR consent follows a lifecycle state machine: None to Given to Withdrawn. Each transition is a leaf update in the controller's trie with an immutable timestamped hash." },
+    { "source": "lifecycle-state-machine", "target": "battery-regulation", "label": "models", "description": "Battery lifecycle follows: Virgin to Active to Repurposed to Recycled. Each transition may change the responsible operator via cross-operator handoff." },
+    { "source": "beacon-protocol", "target": "beacon", "label": "defines minting of", "description": "The beacon-gated attestation pattern defines how beacons are minted (policy reads standing), relayed to users, signed over, and validated at batch submission." },
+    { "source": "beacon-protocol", "target": "informed-consent", "label": "enforces", "description": "By requiring the user to sign over the beacon, the protocol enforces informed consent by construction. The user cannot interact without seeing the regulator's disclosure." },
+    { "source": "double-signature", "target": "signing-function", "label": "uses", "description": "The process signature comes from the signing function (authentication — this process produced this data). Combined with the actor signature (authorization — this actor requests this transition)." },
+    { "source": "double-signature", "target": "smart-contract", "label": "verified by", "description": "The smart contract validates both signatures at every transaction. Neither alone is sufficient — together they prove an authorized, attested actor interacted with a specific process." },
+    { "source": "cross-operator-handoff", "target": "battery-regulation", "label": "used in", "description": "Battery repurposing triggers a cross-operator handoff: old leaf becomes read-only, new leaf in the receiving operator's trie with a back-link to the original." },
+    { "source": "cross-operator-handoff", "target": "gdpr", "label": "used in", "description": "GDPR data portability (Art 20) maps to cross-operator handoff: the originating controller's record becomes read-only, the receiving controller gets a new leaf with provenance." },
+    { "source": "relay-state-machine", "target": "gdpr-rights-requests", "label": "models", "description": "A rights request follows a relay: data subject submits request, controller processes it, response is submitted. The regulation defines the ordering and the deadline." },
+    { "source": "gdpr", "target": "bright-line", "label": "depends on", "description": "The entire GDPR case study depends on the bright line principle: personal data off-chain, compliance evidence on-chain. Without this separation, every GDPR-blockchain tension applies." },
+    { "source": "bright-line", "target": "tension-erasure", "label": "resolves", "description": "The bright line resolves the erasure tension: there is no personal data on-chain to erase. Compliance records are the controller's proof of accountability, not subject to Art 17." },
+    { "source": "bright-line", "target": "tension-controller-designation", "label": "resolves", "description": "With the bright line, controller designation is clear: the data controller is the operator of their own trie. No ambiguity about who determines purposes and means." },
+    { "source": "bright-line", "target": "tension-minimisation", "label": "resolves", "description": "Only hashes on-chain — the minimum required to prove integrity. The bright line ensures data minimisation is satisfied by design, not by policy." },
+    { "source": "gdpr-controller", "target": "operator", "label": "maps to", "description": "The GDPR data controller maps to the operator role in the schema: maintains their own compliance trie, pays fees, submits transactions. Bears primary accountability." },
+    { "source": "gdpr-processor", "target": "operator", "label": "maps to", "description": "The GDPR processor is a secondary operator with their own compliance trie, constrained by the controller's instructions. The Art 28 agreement is a cross-referenced static leaf." },
+    { "source": "gdpr-data-subject", "target": "user", "label": "maps to", "description": "The data subject maps to the user role: exercises rights via signing function in process mode. No wallet, no blockchain knowledge. The authenticated session is the signing function." },
+    { "source": "gdpr-supervisory-authority", "target": "regulator", "label": "maps to", "description": "The supervisory authority maps to the regulator role: maintains the regulation trie, publishes the smart contract, audits operators. 27+ national DPAs in the EU." },
+    { "source": "gdpr-certification", "target": "beacon", "label": "on-chain as", "description": "GDPR certifications are represented on-chain as tokens with enforced expiry, minted by authorised certification bodies qualified in the regulation trie." },
+    { "source": "gdpr-fines", "target": "constraint-liveness", "label": "provides", "description": "GDPR fines (up to 4% global turnover) provide the strongest liveness incentive of any regulation analysed. Controllers are powerfully motivated to participate in on-chain compliance." },
+    { "source": "gdpr-fines", "target": "constraint-fee-alignment", "label": "justifies", "description": "The magnitude of GDPR fines makes on-chain compliance costs (~50-100 EUR/year) negligible by comparison, strongly justifying fee alignment." },
+    { "source": "gdpr-processing-records", "target": "process-trie", "label": "stored in", "description": "Art 30 processing records are leaves in the controller's compliance trie: purposes, data categories, recipients, transfers, retention periods — all as hashes." },
+    { "source": "gdpr-breach-notification", "target": "temporal-integrity", "label": "requires", "description": "The 72-hour breach notification deadline is the strongest example of why temporal integrity matters. Self-reported timestamps are not neutral evidence in enforcement proceedings." },
+    { "source": "gdpr-cross-border", "target": "bright-line", "label": "resolved by", "description": "On-chain hashes are not personal data, so they do not constitute a cross-border transfer regardless of where blockchain nodes are located. The bright line eliminates this tension entirely." },
+    { "source": "gdpr-dpia", "target": "process-trie", "label": "attested in", "description": "DPIA attestation hashes are stored in the process trie with timestamps, proving when the assessment was conducted relative to processing start." },
+    { "source": "gdpr-consent", "target": "gdpr-rights-requests", "label": "withdrawal triggers", "description": "Consent withdrawal (Art 7(3)) may trigger a cascade of rights: erasure of data processed under that consent, cessation of processing. The on-chain timeline proves the sequence." },
+    { "source": "battery-regulation", "target": "physical-mode", "label": "uses", "description": "The Battery Regulation is the reference case for physical mode: NFC secure element signs SoH readings, the object carries its own identity and attests its own state." },
+    { "source": "gdpr", "target": "process-mode", "label": "uses", "description": "GDPR compliance is pure process mode: no sensors, no physical objects. Server-side signing functions, digital workflows, and abstract compliance records." },
+    { "source": "physical-mode", "target": "signing-function", "label": "substrate is hardware", "description": "In physical mode, the signing function lives in a hardware secure element (SE050). The key never leaves the chip. NFC energy harvesting powers the signing operation." },
+    { "source": "process-mode", "target": "signing-function", "label": "substrate is server", "description": "In process mode, the signing function lives on a server endpoint or phone enclave. The identity is abstract — it represents a process, not a physical thing." },
+    { "source": "constraint-liveness", "target": "relay-state-machine", "label": "critical for", "description": "Liveness is critical for relay state machines: if one actor stops participating, the chain stalls. The regulation's penalties and on-chain timeouts provide the escalation path." },
+    { "source": "constraint-identity-delegation", "target": "signing-function", "label": "implemented via", "description": "Identity delegation is implemented via signing functions — cryptographic proxies that allow non-crypto actors to make meaningful on-chain state transitions." },
+    { "source": "reward-distribution", "target": "battery-regulation", "label": "used in", "description": "The Battery Regulation uses reward distribution to incentivise third-party SoH data collection. Reporters accumulate rewards stored monotonically in the MPT alongside item data." }
+  ]
+}

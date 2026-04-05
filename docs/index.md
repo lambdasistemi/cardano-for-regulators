@@ -87,6 +87,13 @@ graph TB
 - **Process mode** — a permit, a certification, a supply chain declaration.
   The signing function lives on a server, the identity is abstract.
 
+## Knowledge graph
+
+Explore the framework interactively — nodes, edges, and guided tours
+covering the thesis, architecture, constraints, and both case studies.
+
+[**Open the knowledge graph**](https://lambdasistemi.github.io/graph-browser/?repo=lambdasistemi/cardano-for-regulators){ .md-button .md-button--primary }
+
 ## What you'll find here
 
 - [**The Thesis**](thesis.md) — the economic and philosophical case for

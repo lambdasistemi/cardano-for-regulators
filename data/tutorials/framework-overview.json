@@ -1,0 +1,55 @@
+{
+  "id": "framework-overview",
+  "title": "Framework Overview",
+  "description": "The thesis, four parties, five constraints, and architecture patterns — the complete conceptual foundation.",
+  "stops": [
+    {
+      "node": "thesis",
+      "depth": 2,
+      "title": "The Economic Foundation",
+      "narrative": "Everything starts with [the thesis](node:thesis). Web3 is expensive because it is honest — the cost buys decentralized consensus, immutability, and trustless execution. But users will not pay per action.\n\nThe thesis derives two key principles: [sponsor pays](node:sponsor-pays) (the regulated entity absorbs blockchain costs) and [temporal integrity](node:temporal-integrity) (the chain provides neutral timestamps that neither party produced). These are not aspirational — they are architectural requirements."
+    },
+    {
+      "node": "sponsor-pays",
+      "depth": 2,
+      "title": "Who Pays and Why",
+      "narrative": "[Sponsor pays](node:sponsor-pays) answers the economic question. In regulated industries, the obligated party already pays for compliance infrastructure — audit systems, certifiers, inspections. Sponsoring blockchain transactions is a different line item, at ~0.10-0.15 EUR per operation.\n\nThis principle is formalised as the [fee alignment](node:constraint-fee-alignment) constraint. Without it, blockchain is a solution in search of a problem."
+    },
+    {
+      "node": "regulator",
+      "depth": 2,
+      "title": "The Four Parties",
+      "narrative": "A regulated process involves four independent parties, each managing one concern. The [regulator](node:regulator) defines rules and maintains the [regulation trie](node:regulation-trie). The [identity provider](node:identity-provider) attests real-world entities. The [operator](node:operator) manages the [process trie](node:process-trie). The [user](node:user) acts via [signing functions](node:signing-function).\n\nNo overlap. The identity provider does not know about processes. The regulator does not run infrastructure. The operator cannot fake users. The user does not need to trust anyone."
+    },
+    {
+      "node": "smart-contract",
+      "depth": 2,
+      "title": "The Regulation in Code",
+      "narrative": "The [smart contract](node:smart-contract) is the regulation in executable form. Published once by the regulator, it governs every operator's trie. It reads the [identity trie](node:identity-trie) and [regulation trie](node:regulation-trie) as reference inputs — a Cardano-native feature (CIP-31) that enables cross-trie verification without coordination.\n\nNon-compliant updates are rejected by the chain itself. The regulation is enforced at the transaction level, not by inspectors after the fact."
+    },
+    {
+      "node": "three-question-test",
+      "depth": 2,
+      "title": "Does It Fit?",
+      "narrative": "Before detailed analysis, the [three-question pre-filter](node:three-question-test) screens a regulation for blockchain fit. All three must hold: multi-party data (no single party should control it), institutional anchor (regulator defines validity but does not run infrastructure), and verifiable history (no rewriting the past).\n\nIf only 1-2 hold, a traditional database with audit logs suffices. Both the [Battery Regulation](node:battery-regulation) and [GDPR](node:gdpr) pass all three."
+    },
+    {
+      "node": "constraint-data-cadence",
+      "depth": 2,
+      "title": "The Five Constraints",
+      "narrative": "If the pre-filter passes, five constraints determine fitness. [Data cadence](node:constraint-data-cadence) — compatible with L1 settlement? [Sequential access](node:constraint-sequential-access) — no concurrent contention? [Liveness](node:constraint-liveness) — deadlines and penalties to incentivise participation? [Fee alignment](node:constraint-fee-alignment) — someone benefits enough to pay? [Identity delegation](node:constraint-identity-delegation) — non-crypto actors can participate?\n\nAll five must hold. If any fails, blockchain is likely not the right tool."
+    },
+    {
+      "node": "mpt-per-operator",
+      "depth": 2,
+      "title": "The Architecture Patterns",
+      "narrative": "The framework provides reusable patterns. [MPT-per-operator](node:mpt-per-operator) is the primary storage pattern — one UTxO per operator, items as leaves, cost scales with operators not items.\n\nProtocol patterns include [commitment-then-submit](node:commitment-protocol) (proves timeliness), [lifecycle state machine](node:lifecycle-state-machine) (models status transitions), [beacon-gated attestation](node:beacon-protocol) (forces transparency), [relay state machine](node:relay-state-machine) (sequential multi-party workflows), and [cross-operator handoff](node:cross-operator-handoff) (responsibility transfers)."
+    },
+    {
+      "node": "battery-regulation",
+      "depth": 2,
+      "title": "Two Case Studies",
+      "narrative": "The framework has been applied to two regulations. The [EU Battery Regulation](node:battery-regulation) is the reference case — [physical mode](node:physical-mode) with NFC secure elements, 5M batteries/year, $1,800/year for the entire market.\n\n[GDPR](node:gdpr) is the second case — [process mode](node:process-mode) with server-side signing functions, compliance evidence on-chain, and the critical [bright line](node:bright-line) principle that resolves every blockchain-GDPR tension."
+    }
+  ]
+}

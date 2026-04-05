@@ -1,0 +1,49 @@
+{
+  "id": "constraints-deep-dive",
+  "title": "The Five Constraints",
+  "description": "Why each constraint exists, what breaks when it fails, and how both case studies satisfy them.",
+  "stops": [
+    {
+      "node": "three-question-test",
+      "depth": 2,
+      "title": "Start with the Pre-filter",
+      "narrative": "Before running the five constraints, the [three-question pre-filter](node:three-question-test) screens for basic blockchain fit. Multi-party data? Institutional anchor? Verifiable history?\n\nBoth case studies pass all three. The [Battery Regulation](node:battery-regulation) has manufacturers, consumers, and authorities sharing product data, with the European Commission as anchor. [GDPR](node:gdpr) has controllers, subjects, and SAs sharing compliance evidence, with supervisory authorities as anchor. If only 1-2 hold, stop here — use a database."
+    },
+    {
+      "node": "constraint-data-cadence",
+      "depth": 2,
+      "title": "1. Data Cadence",
+      "narrative": "[Data cadence](node:constraint-data-cadence): the regulation's update rhythm must fit L1 settlement. No real-time streaming at 100ms intervals.\n\nBattery SoH readings: monthly at most. GDPR consent events: sporadic. [Breach notifications](node:gdpr-breach-notification): rare, 72h window. [Rights requests](node:gdpr-rights-requests): 1-month window. Both are event-driven or periodic — perfectly compatible.\n\nThe [MPT-per-operator](node:mpt-per-operator) pattern decouples item volume from on-chain rate. 10,000 items in one batch transaction."
+    },
+    {
+      "node": "constraint-sequential-access",
+      "depth": 2,
+      "title": "2. Sequential Access",
+      "narrative": "[Sequential access](node:constraint-sequential-access): no concurrent contention on the same data structure. The MPT in a single UTxO is inherently sequential — one transaction per block.\n\nThis is a feature, not a limitation, when the regulation serializes access. Batteries: one manufacturer per trie. GDPR: one [controller](node:gdpr-controller) per compliance trie. [Relay patterns](node:relay-state-machine) (subject to controller to SA) follow the regulation's own ordering."
+    },
+    {
+      "node": "constraint-liveness",
+      "depth": 2,
+      "title": "3. Liveness",
+      "narrative": "[Liveness](node:constraint-liveness): if one actor stops, the chain stalls. The regulation must provide deadlines and penalties as external incentive.\n\nBattery Regulation: Art. 77 penalties, market withdrawal. GDPR: [fines up to 4% global turnover](node:gdpr-fines), the strongest penalties of any regulation analysed. The 72-hour and 1-month deadlines are themselves liveness mechanisms — they impose time pressure that prevents indefinite stalling.\n\nProtocol escalation (slot-based timeouts, bond slashing) can supplement regulatory penalties."
+    },
+    {
+      "node": "constraint-fee-alignment",
+      "depth": 2,
+      "title": "4. Fee Alignment",
+      "narrative": "[Fee alignment](node:constraint-fee-alignment): someone must benefit enough from on-chain compliance to pay. The [sponsor-pays](node:sponsor-pays) principle from the thesis.\n\nBattery manufacturers: compliance costs ~$0.10-0.15 per reading vs fines and market withdrawal. GDPR [controllers](node:gdpr-controller): ~50-100 EUR/year vs median fines of 50,000+ EUR. In both cases, the obligated party pays because compliance is cheaper than non-compliance. The [user](node:user) never pays — no wallet, no ADA, no friction."
+    },
+    {
+      "node": "constraint-identity-delegation",
+      "depth": 2,
+      "title": "5. Identity Delegation",
+      "narrative": "[Identity delegation](node:constraint-identity-delegation): non-crypto actors must make meaningful on-chain state transitions via cryptographic proxies.\n\nBatteries use [physical mode](node:physical-mode): NFC secure element in the product. The consumer taps a phone — the SE050 signs — no wallet needed. GDPR uses [process mode](node:process-mode): the [data subject](node:gdpr-data-subject) interacts through the controller's web portal. The authenticated session IS the [signing function](node:signing-function).\n\nDifferent substrates, same principle: the user never sees the blockchain."
+    },
+    {
+      "node": "mpt-per-operator",
+      "depth": 2,
+      "title": "Everything Connects",
+      "narrative": "The five constraints are not independent — they reinforce each other through the architecture.\n\n[MPT-per-operator](node:mpt-per-operator) satisfies both [data cadence](node:constraint-data-cadence) and [sequential access](node:constraint-sequential-access). The [signing function](node:signing-function) implements [identity delegation](node:constraint-identity-delegation). [Fines](node:gdpr-fines) and penalties provide [liveness](node:constraint-liveness) and justify [fee alignment](node:constraint-fee-alignment).\n\nWhen all five hold, the regulation and the architecture are working together rather than fighting each other."
+    }
+  ]
+}

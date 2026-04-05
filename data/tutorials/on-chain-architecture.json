@@ -1,0 +1,55 @@
+{
+  "id": "on-chain-architecture",
+  "title": "The On-Chain Architecture",
+  "description": "Follow the data through tries, signatures, commitments, and beacons — how the protocol actually works.",
+  "stops": [
+    {
+      "node": "process-trie",
+      "depth": 2,
+      "title": "Three Tries, Three Concerns",
+      "narrative": "The on-chain architecture is built around three Merkle Patricia Tries, each owned by a different party.\n\nThe [identity trie](node:identity-trie) holds attested actor public keys (owned by the [identity provider](node:identity-provider)). The [regulation trie](node:regulation-trie) holds qualifications and standing (owned by the [regulator](node:regulator)). The [process trie](node:process-trie) holds items and state (owned by the [operator](node:operator)).\n\nThe [smart contract](node:smart-contract) ties them together, reading identity and regulation tries as reference inputs while governing the process trie."
+    },
+    {
+      "node": "mpt-per-operator",
+      "depth": 2,
+      "title": "MPT-per-Operator: The Storage Pattern",
+      "narrative": "[MPT-per-operator](node:mpt-per-operator) is what makes scale economically viable. One UTxO per operator, regardless of item count. A manufacturer updating 10,000 batteries pays for one root hash update, not 10,000 transactions.\n\nThis satisfies [sequential access](node:constraint-sequential-access) by design — one writer per trie, no contention — and [data cadence](node:constraint-data-cadence) because the on-chain rate decouples from item volume."
+    },
+    {
+      "node": "signing-function",
+      "depth": 2,
+      "title": "The Signing Function",
+      "narrative": "The atomic unit is the [signing function](node:signing-function) — an opaque capability that produces signatures without exposing the private key. It can live on hardware (SE050 secure element for [physical mode](node:physical-mode)) or software (server endpoint for [process mode](node:process-mode)).\n\nThe [operator](node:operator) mints signing functions and distributes them. The [user](node:user) uses them. All substrates present the same interface to the chain: a public key and valid signatures."
+    },
+    {
+      "node": "double-signature",
+      "depth": 2,
+      "title": "The Double Signature",
+      "narrative": "Every state transition requires two signatures via the [double signature](node:double-signature) pattern.\n\nThe process signature (from the [signing function](node:signing-function)) proves authentication: this specific process produced this data at this time. The actor signature proves authorization: this party requests this transition.\n\nThe [smart contract](node:smart-contract) verifies both. Without the process signature, anyone could claim anything. Without the actor signature, anyone could trigger the signing function."
+    },
+    {
+      "node": "commitment-protocol",
+      "depth": 2,
+      "title": "Commitment-then-Submit",
+      "narrative": "[Commitment-then-submit](node:commitment-protocol) is the mechanism that proves timeliness. The operator creates a commitment in a trie leaf with a slot window (validFrom, validUntil). The action clears the commitment. Single-use, slot-bounded, no off-chain timestamp trust.\n\nThis pattern is critical for GDPR's [72-hour breach notification](node:gdpr-breach-notification) and [1-month rights response](node:gdpr-rights-requests). It turns self-reported deadlines into verifiable on-chain facts via [temporal integrity](node:temporal-integrity)."
+    },
+    {
+      "node": "beacon",
+      "depth": 2,
+      "title": "The Beacon Protocol",
+      "narrative": "The [beacon](node:beacon) bridges the regulator's assessment to the user. The [operator](node:operator) mints it — the minting policy forces inclusion of the operator's current standing from the [regulation trie](node:regulation-trie).\n\nThe [user](node:user) verifies it is current and authentic (using the regulator's public key), then signs their data over it. This is [informed consent by construction](node:informed-consent) — the user cannot claim ignorance of disclosed information. The beacon expires, preventing stale reputation."
+    },
+    {
+      "node": "baton-pattern",
+      "depth": 2,
+      "title": "The Baton Pattern",
+      "narrative": "The [baton pattern](node:baton-pattern) handles authorization transfer. Actor A's final submission includes Actor B's public key, atomically transferring the right to act. No gap, no registration, no login.\n\nIn the [Battery Regulation](node:battery-regulation), the baton passes from manufacturer to transporter to consumer. In [GDPR](node:gdpr), the controller creates a commitment when a [rights request](node:gdpr-rights-requests) arrives and the baton designates who responds."
+    },
+    {
+      "node": "lifecycle-state-machine",
+      "depth": 2,
+      "title": "Lifecycle State Machine",
+      "narrative": "The [lifecycle state machine](node:lifecycle-state-machine) models status transitions as a field in the MPT leaf, validated on-chain with the invariant that no backward transitions occur unless explicitly allowed.\n\nFor [batteries](node:battery-regulation): Virgin to Active to Repurposed to Recycled. For [GDPR consent](node:gdpr-consent): None to Given to Withdrawn. Same pattern, different domain — the architecture does not change."
+    }
+  ]
+}
