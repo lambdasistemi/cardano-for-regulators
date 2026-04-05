@@ -49,3 +49,4 @@ nav:
       - Architecture Patterns: framework/patterns.md
   - Case Studies:
       - EU Battery Regulation: cases/battery-regulation.md
+      - GDPR: cases/gdpr.md
