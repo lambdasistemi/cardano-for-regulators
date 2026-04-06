@@ -6,6 +6,7 @@
 framework was extracted.
 
 **Full implementation:** [eu-digital-product-passport](https://github.com/lambdasistemi/eu-digital-product-passport)
+**Smart contract:** [Battery Smart Contract](battery-contract.md) — UTxO diagrams, guard table, lifecycle state machines, hardware signing flow.
 
 ## Constraint check
 
