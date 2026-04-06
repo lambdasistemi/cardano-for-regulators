@@ -49,5 +49,6 @@ nav:
       - Architecture Patterns: framework/patterns.md
   - Case Studies:
       - EU Battery Regulation: cases/battery-regulation.md
+      - Battery Smart Contract: cases/battery-contract.md
       - GDPR: cases/gdpr.md
       - GDPR Smart Contract: cases/gdpr-contract.md
