@@ -3,6 +3,7 @@
 **Regulation:** [(EU) 2016/679][gdpr-full] — General Data Protection Regulation
 
 **Status:** Candidate case — constraint check passed, architecture mapped.
+**Smart contract:** [GDPR Smart Contract](gdpr-contract.md) — UTxO diagrams, guard table, lifecycle state machines.
 
 [gdpr-full]: https://eur-lex.europa.eu/eli/reg/2016/679/oj
 
