@@ -15,6 +15,9 @@ jobs:
     name: Build Gate
     runs-on: nixos
     steps:
+      - name: Clean workspace
+        run: chmod -R u+w . 2>/dev/null || true
+
       - uses: actions/checkout@v6
 
       - name: Validate RDF ontology
