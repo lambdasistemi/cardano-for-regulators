@@ -13,7 +13,13 @@
     "battery-party": { "label": "Battery Party", "color": "#79c0ff", "shape": "ellipse" },
     "obligation": { "label": "Obligation", "color": "#f778ba", "shape": "round-rectangle" },
     "tension": { "label": "Tension", "color": "#f85149", "shape": "triangle" },
-    "concept": { "label": "Concept", "color": "#56d364", "shape": "ellipse" }
+    "concept": { "label": "Concept", "color": "#56d364", "shape": "ellipse" },
+    "assessment": { "label": "Constraint Check", "color": "#3fb950", "shape": "round-hexagon" },
+    "trust": { "label": "Trust Relationship", "color": "#e3b341", "shape": "diamond" },
+    "action": { "label": "Redeemer Action", "color": "#f0883e", "shape": "round-rectangle" },
+    "guard": { "label": "Guard", "color": "#8b949e", "shape": "rectangle" },
+    "invariant": { "label": "Formal Invariant", "color": "#d2a8ff", "shape": "round-pentagon" },
+    "record": { "label": "Compliance Record", "color": "#79c0ff", "shape": "ellipse" }
   },
   "graphSource": {
     "format": "text/turtle",

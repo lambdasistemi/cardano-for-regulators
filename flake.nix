@@ -27,16 +27,26 @@
       packages.${system}.ontology-viewer = pkgs.runCommand "ontology-viewer"
         {
           src = self;
+          nativeBuildInputs = [ python ];
         }
         ''
           mkdir -p $out/data
+
+          # Generate instance display annotations + views
+          cd $src
+          python3 ontology/generate_display.py \
+            --output $out/data/generated-display.ttl \
+            --views-dir $out/data/views
+
           cp ${viewer}/index.html $out/
           cp ${viewer}/index.js $out/
           cp $src/ontology/viewer-config.json $out/data/config.json
           cat $src/ontology/cfr.ttl \
               $src/ontology/instances/*.ttl \
               $src/ontology/display.ttl \
+              $out/data/generated-display.ttl \
               > $out/data/ontology.ttl
+          rm $out/data/generated-display.ttl
         '';
 
       devShells.${system}.default = pkgs.mkShell {

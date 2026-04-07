@@ -14,6 +14,9 @@ jobs:
   deploy:
     runs-on: nixos
     steps:
+      - name: Clean workspace
+        run: chmod -R u+w . 2>/dev/null || true
+
       - uses: actions/checkout@v6
       - uses: cachix/cachix-action@v15
         with:
@@ -22,6 +25,10 @@ jobs:
 
       - name: Build site
         run: |
+          # 0. Clean stale build artifacts (nix store files are read-only)
+          chmod -R u+w site 2>/dev/null || true
+          rm -rf site
+
           # 1. Generate markdown pages from ontology
           nix develop .#default --quiet -c python3 ontology/render.py
 
@@ -30,9 +37,9 @@ jobs:
 
           # 3. Copy ontology viewer into the built site
           nix build .#ontology-viewer
-          mkdir -p site/viewer/data
-          cp result/index.html result/index.js site/viewer/
-          cp result/data/* site/viewer/data/
+          mkdir -p site/viewer
+          cp -rL result/index.html result/index.js result/data site/viewer/
+          chmod -R u+w site/viewer
 
       - name: Deploy site
         run: nix develop github:paolino/dev-assets?dir=mkdocs --quiet -c ghp-import site --push --force --no-jekyll
