@@ -19,6 +19,10 @@ jobs:
         with:
           name: paolino
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
+
+      - name: Generate pages from ontology
+        run: nix develop .#default --quiet -c python3 ontology/render.py
+
       - name: Build docs
         run: nix develop github:paolino/dev-assets?dir=mkdocs --quiet -c mkdocs build --strict
       - name: Deploy docs

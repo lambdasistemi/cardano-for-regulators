@@ -1,5 +1,6 @@
 # Build artifacts
 site/
+docs/generated/
 
 # LLM investigation notes (local only)
 .llm/
