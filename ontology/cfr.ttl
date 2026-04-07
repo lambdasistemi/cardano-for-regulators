@@ -1,0 +1,791 @@
+@prefix cfr:    <https://lambdasistemi.github.io/cardano-for-regulators/ontology#> .
+@prefix owl:    <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix skos:   <http://www.w3.org/2004/02/skos/core#> .
+
+# =============================================================================
+# Ontology metadata
+# =============================================================================
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology>
+    a owl:Ontology ;
+    dcterms:title "Cardano for Regulators Ontology" ;
+    dcterms:description """Framework ontology for analyzing multi-party regulations
+        and mapping them to Cardano compliance infrastructure. Each regulation
+        case study is an instance of this ontology.""" ;
+    dcterms:source <https://github.com/lambdasistemi/cardano-for-regulators> .
+
+# =============================================================================
+# Core classes
+# =============================================================================
+
+# --- Regulation ---
+
+cfr:Regulation
+    a owl:Class ;
+    rdfs:label "Regulation" ;
+    rdfs:comment """A regulation, directive, standard, or certification scheme
+        analyzed through the framework. The top-level entity for each case study.""" .
+
+cfr:EURegulation
+    a owl:Class ;
+    rdfs:subClassOf cfr:Regulation ;
+    rdfs:label "EU Regulation" ;
+    rdfs:comment "A regulation or directive issued by the European Union." .
+
+cfr:ISOStandard
+    a owl:Class ;
+    rdfs:subClassOf cfr:Regulation ;
+    rdfs:label "ISO Standard" ;
+    rdfs:comment "An ISO/IEC management system or product standard." .
+
+cfr:IndustryCertification
+    a owl:Class ;
+    rdfs:subClassOf cfr:Regulation ;
+    rdfs:label "Industry Certification" ;
+    rdfs:comment "A sector-specific certification scheme (TISAX, PCI DSS, etc.)." .
+
+# --- Parties (schema roles) ---
+
+cfr:Party
+    a owl:Class ;
+    rdfs:label "Party" ;
+    rdfs:comment """An actor in a regulated process. The schema defines four
+        canonical roles; each regulation maps its actors to these roles.""" .
+
+cfr:RegulatorRole
+    a owl:Class ;
+    rdfs:subClassOf cfr:Party ;
+    rdfs:label "Regulator" ;
+    rdfs:comment """The institution that defines the rules. Maintains the
+        regulation trie, publishes the smart contract, defines the beacon
+        minting policy. Does not run infrastructure.""" .
+
+cfr:IdentityProviderRole
+    a owl:Class ;
+    rdfs:subClassOf cfr:Party ;
+    rdfs:label "Identity Provider" ;
+    rdfs:comment """Maintains the identity trie of verified real-world entities.
+        Attests actor public keys. Can serve multiple regulators.""" .
+
+cfr:OperatorRole
+    a owl:Class ;
+    rdfs:subClassOf cfr:Party ;
+    rdfs:label "Operator" ;
+    rdfs:comment """Participates in the regulated market. Manages a process trie.
+        A transparent pipe: collects user payloads, verifies off-chain, submits
+        transactions, pays fees.""" .
+
+cfr:UserRole
+    a owl:Class ;
+    rdfs:subClassOf cfr:Party ;
+    rdfs:label "User" ;
+    rdfs:comment """Interacts with the process via a signing function. No wallet,
+        no ADA, no blockchain knowledge. Receive, use, pass on.""" .
+
+cfr:VerificationBody
+    a owl:Class ;
+    rdfs:subClassOf cfr:Party ;
+    rdfs:label "Verification Body" ;
+    rdfs:comment """An entity that checks compliance — auditors, notified bodies,
+        certification bodies, market surveillance authorities.""" .
+
+cfr:Beneficiary
+    a owl:Class ;
+    rdfs:subClassOf cfr:Party ;
+    rdfs:label "Beneficiary" ;
+    rdfs:comment "A party that benefits from the transparency the regulation creates." .
+
+# --- Party instances (concrete actors in regulations) ---
+
+cfr:ConcreteParty
+    a owl:Class ;
+    rdfs:label "Concrete Party" ;
+    rdfs:comment """A specific real-world actor type in a regulation, mapped to
+        a schema role. E.g., 'Data Controller' maps to OperatorRole.""" .
+
+# --- On-chain artifacts ---
+
+cfr:Artifact
+    a owl:Class ;
+    rdfs:label "On-chain Artifact" ;
+    rdfs:comment "An on-chain data structure or mechanism in the architecture." .
+
+cfr:Trie
+    a owl:Class ;
+    rdfs:subClassOf cfr:Artifact ;
+    rdfs:label "Merkle Patricia Trie" ;
+    rdfs:comment """An MPT stored in a single UTxO. Three types: identity trie,
+        regulation trie, process trie.""" .
+
+cfr:IdentityTrie
+    a owl:Class ;
+    rdfs:subClassOf cfr:Trie ;
+    rdfs:label "Identity Trie" ;
+    rdfs:comment "Attested actor public keys. Maintained by the identity provider." .
+
+cfr:RegulationTrie
+    a owl:Class ;
+    rdfs:subClassOf cfr:Trie ;
+    rdfs:label "Regulation Trie" ;
+    rdfs:comment """Actor qualifications and operator standing. Maintained by the
+        regulator. Reference input for the smart contract.""" .
+
+cfr:ProcessTrie
+    a owl:Class ;
+    rdfs:subClassOf cfr:Trie ;
+    rdfs:label "Process Trie" ;
+    rdfs:comment """Items, processes, and state. One per operator. Governed by the
+        smart contract.""" .
+
+cfr:SmartContract
+    a owl:Class ;
+    rdfs:subClassOf cfr:Artifact ;
+    rdfs:label "Smart Contract" ;
+    rdfs:comment """The regulation in executable form. A Plutus validator published
+        by the regulator. Governs the process trie, reads identity and regulation
+        tries as reference inputs.""" .
+
+cfr:Beacon
+    a owl:Class ;
+    rdfs:subClassOf cfr:Artifact ;
+    rdfs:label "Beacon" ;
+    rdfs:comment """A minted token carrying the operator's current standing from the
+        regulation trie. Expires. The user signs over it as proof of informed
+        awareness.""" .
+
+cfr:SigningFunction
+    a owl:Class ;
+    rdfs:subClassOf cfr:Artifact ;
+    rdfs:label "Signing Function" ;
+    rdfs:comment """An opaque capability that produces signatures. Substrates:
+        hardware secure element, phone enclave, server endpoint, TEE, ZK circuit.""" .
+
+# --- Protocol patterns ---
+
+cfr:ProtocolPattern
+    a owl:Class ;
+    rdfs:label "Protocol Pattern" ;
+    rdfs:comment """A reusable on-chain pattern extracted from the framework.
+        Each addresses a specific class of regulatory requirement.""" .
+
+cfr:CommitmentThenSubmit
+    a owl:Class ;
+    rdfs:subClassOf cfr:ProtocolPattern ;
+    rdfs:label "Commitment-then-Submit" ;
+    rdfs:comment """Proves an action occurred within a time window. Single-use,
+        slot-bounded, no off-chain timestamp trust.""" .
+
+cfr:LifecycleStateMachine
+    a owl:Class ;
+    rdfs:subClassOf cfr:ProtocolPattern ;
+    rdfs:label "Lifecycle State Machine" ;
+    rdfs:comment """Status field in MPT leaf with on-chain validated transitions.
+        No backward transitions unless explicitly allowed.""" .
+
+cfr:MPTPerOperator
+    a owl:Class ;
+    rdfs:subClassOf cfr:ProtocolPattern ;
+    rdfs:label "MPT-per-Operator" ;
+    rdfs:comment """One UTxO per operator, items as leaves. Cost scales with
+        operators not items.""" .
+
+cfr:OperatorAsAggregator
+    a owl:Class ;
+    rdfs:subClassOf cfr:ProtocolPattern ;
+    rdfs:label "Operator-as-Aggregator" ;
+    rdfs:comment """Users have no wallet. Operator collects and batches actions
+        into transactions, pays all fees.""" .
+
+cfr:BeaconGatedAttestation
+    a owl:Class ;
+    rdfs:subClassOf cfr:ProtocolPattern ;
+    rdfs:label "Beacon-Gated Attestation" ;
+    rdfs:comment """Operator must mint a beacon (sampling standing from regulation
+        trie) before collecting user attestations. Forces transparency.""" .
+
+cfr:DoubleSignature
+    a owl:Class ;
+    rdfs:subClassOf cfr:ProtocolPattern ;
+    rdfs:label "Double Signature" ;
+    rdfs:comment """Every transition requires two signatures: process (authentication)
+        and actor (authorization).""" .
+
+cfr:BatonPattern
+    a owl:Class ;
+    rdfs:subClassOf cfr:ProtocolPattern ;
+    rdfs:label "Baton Pattern" ;
+    rdfs:comment """Authorization travels as a baton. Actor A's final submission
+        includes Actor B's pubkey. Atomic transfer, no gap.""" .
+
+cfr:CrossOperatorHandoff
+    a owl:Class ;
+    rdfs:subClassOf cfr:ProtocolPattern ;
+    rdfs:label "Cross-Operator Handoff" ;
+    rdfs:comment """Responsibility transfer. Old leaf read-only, new leaf in
+        receiving operator's trie with back-link to original root.""" .
+
+cfr:RelayStateMachine
+    a owl:Class ;
+    rdfs:subClassOf cfr:ProtocolPattern ;
+    rdfs:label "Relay State Machine" ;
+    rdfs:comment """Multiple actors act in sequence. The regulation defines the
+        ordering. Timeout/escalation if an actor stalls.""" .
+
+cfr:RewardDistribution
+    a owl:Class ;
+    rdfs:subClassOf cfr:ProtocolPattern ;
+    rdfs:label "Reward Distribution" ;
+    rdfs:comment """Monotonically increasing reward accumulator in MPT leaf.
+        Each valid action adds to the reporter's total.""" .
+
+cfr:TieredAccess
+    a owl:Class ;
+    rdfs:subClassOf cfr:ProtocolPattern ;
+    rdfs:label "Tiered Access" ;
+    rdfs:comment """On-chain: root hash only. Off-chain: encrypted layers per
+        access tier (public, authorized, authority-only).""" .
+
+cfr:UpstreamVerification
+    a owl:Class ;
+    rdfs:subClassOf cfr:ProtocolPattern ;
+    rdfs:label "Upstream Verification" ;
+    rdfs:comment """One operator's compliance depends on reading another operator's
+        trie. Supply chain cascading.""" .
+
+# --- Constraints ---
+
+cfr:Constraint
+    a owl:Class ;
+    rdfs:label "Constraint" ;
+    rdfs:comment """A constraint that must hold for a regulation to be a good
+        blockchain candidate. All five must pass.""" .
+
+cfr:DataCadence          a cfr:Constraint ; rdfs:label "Data Cadence" ;
+    rdfs:comment "Update rhythm compatible with L1 settlement." .
+cfr:SequentialAccess     a cfr:Constraint ; rdfs:label "Sequential Access" ;
+    rdfs:comment "No concurrent contention on the same data structure." .
+cfr:Liveness             a cfr:Constraint ; rdfs:label "Liveness" ;
+    rdfs:comment "Deadlines and penalties incentivize participation." .
+cfr:FeeAlignment         a cfr:Constraint ; rdfs:label "Fee Alignment" ;
+    rdfs:comment "An actor benefits enough to sponsor on-chain activity." .
+cfr:IdentityDelegation   a cfr:Constraint ; rdfs:label "Identity Delegation" ;
+    rdfs:comment "Non-crypto actors participate via cryptographic proxies." .
+
+cfr:ThreeQuestionTest
+    a owl:Class ;
+    rdfs:label "Three-Question Pre-filter" ;
+    rdfs:comment """Quick screening: multi-party data, institutional anchor,
+        verifiable history. All three must hold.""" .
+
+# --- Constraint assessment ---
+
+cfr:ConstraintAssessment
+    a owl:Class ;
+    rdfs:label "Constraint Assessment" ;
+    rdfs:comment """The result of evaluating a constraint against a specific
+        regulation: pass or fail with justification.""" .
+
+# --- Obligation ---
+
+cfr:Obligation
+    a owl:Class ;
+    rdfs:label "Obligation" ;
+    rdfs:comment """A specific reporting or compliance obligation within a
+        regulation, mapped to a protocol pattern.""" .
+
+# --- Data classification ---
+
+cfr:DataType
+    a owl:Class ;
+    rdfs:label "Data Type" ;
+    rdfs:comment "Classification of a data element in a regulation." .
+
+cfr:StaticData    a cfr:DataType ; rdfs:label "Static" ;
+    rdfs:comment "Set once at creation." .
+cfr:DynamicData   a cfr:DataType ; rdfs:label "Dynamic" ;
+    rdfs:comment "Changes over lifetime." .
+cfr:EventDrivenData a cfr:DataType ; rdfs:label "Event-driven" ;
+    rdfs:comment "Triggered by lifecycle events." .
+
+cfr:AccessTier
+    a owl:Class ;
+    rdfs:label "Access Tier" ;
+    rdfs:comment "Visibility level for a data element." .
+
+cfr:PublicAccess      a cfr:AccessTier ; rdfs:label "Public" .
+cfr:AuthorizedAccess  a cfr:AccessTier ; rdfs:label "Authorized Operators" .
+cfr:AuthorityAccess   a cfr:AccessTier ; rdfs:label "Authorities Only" .
+
+# --- Compliance record ---
+
+cfr:ComplianceRecord
+    a owl:Class ;
+    rdfs:label "Compliance Record" ;
+    rdfs:comment """A specific record type stored as a leaf in the process trie.
+        The on-chain representation of an obligation.""" .
+
+# --- Trust relationship ---
+
+cfr:TrustRelationship
+    a owl:Class ;
+    rdfs:label "Trust Relationship" ;
+    rdfs:comment """The trust level between two parties, the risk if trust is
+        misplaced, and whether blockchain mitigates it.""" .
+
+cfr:TrustLevel
+    a owl:Class ;
+    rdfs:label "Trust Level" .
+
+cfr:LowTrust     a cfr:TrustLevel ; rdfs:label "Low" .
+cfr:MediumTrust  a cfr:TrustLevel ; rdfs:label "Medium" .
+cfr:HighTrust    a cfr:TrustLevel ; rdfs:label "High" .
+cfr:NoTrust      a cfr:TrustLevel ; rdfs:label "None" .
+
+# --- Token type ---
+
+cfr:TokenType
+    a owl:Class ;
+    rdfs:label "Token Type" ;
+    rdfs:comment "Something that behaves like a token in the regulation." .
+
+cfr:Certificate    a cfr:TokenType ; rdfs:label "Certificate" ;
+    rdfs:comment "Issued, transferred, surrendered." .
+cfr:Credit         a cfr:TokenType ; rdfs:label "Credit" ;
+    rdfs:comment "Accumulated, tradeable." .
+cfr:Right          a cfr:TokenType ; rdfs:label "Right" ;
+    rdfs:comment "Granted, revoked." .
+cfr:ObligationToken a cfr:TokenType ; rdfs:label "Obligation" ;
+    rdfs:comment "Created, discharged." .
+cfr:Reward         a cfr:TokenType ; rdfs:label "Reward" ;
+    rdfs:comment "Earned through participation." .
+
+# --- Validator ---
+
+cfr:RedeemerAction
+    a owl:Class ;
+    rdfs:label "Redeemer Action" ;
+    rdfs:comment """A specific action the smart contract recognises. Each
+        action has guards (conditions the validator checks).""" .
+
+cfr:Guard
+    a owl:Class ;
+    rdfs:label "Guard" ;
+    rdfs:comment """A condition the validator checks for a specific redeemer
+        action. Universal guards apply to all actions.""" .
+
+cfr:LifecycleState
+    a owl:Class ;
+    rdfs:label "Lifecycle State" ;
+    rdfs:comment "A state in a lifecycle state machine." .
+
+cfr:StateTransition
+    a owl:Class ;
+    rdfs:label "State Transition" ;
+    rdfs:comment """A valid transition between lifecycle states, triggered by
+        a redeemer action.""" .
+
+# --- Invariant ---
+
+cfr:FormalInvariant
+    a owl:Class ;
+    rdfs:label "Formal Invariant" ;
+    rdfs:comment """A property that must hold for a protocol pattern. If it
+        cannot be stated precisely, the design is incomplete.""" .
+
+# --- Mode ---
+
+cfr:Mode
+    a owl:Class ;
+    rdfs:label "Mode" ;
+    rdfs:comment "Physical mode (hardware attestation) or process mode (protocol enforcement)." .
+
+cfr:PhysicalMode  a cfr:Mode ; rdfs:label "Physical Mode" ;
+    rdfs:comment "Object carries its own identity and attests its own state." .
+cfr:ProcessMode   a cfr:Mode ; rdfs:label "Process Mode" ;
+    rdfs:comment "No physical object. Signing function on a server. Identity is abstract." .
+
+# --- Penalty ---
+
+cfr:Penalty
+    a owl:Class ;
+    rdfs:label "Penalty" ;
+    rdfs:comment "The consequence of non-compliance." .
+
+# --- Fit assessment ---
+
+cfr:FitAssessment
+    a owl:Class ;
+    rdfs:label "Fit Assessment" ;
+    rdfs:comment "Overall blockchain fit assessment for a regulation." .
+
+cfr:StrongFit     a cfr:FitAssessment ; rdfs:label "Strong" .
+cfr:GoodFit       a cfr:FitAssessment ; rdfs:label "Good" .
+cfr:MediumFit     a cfr:FitAssessment ; rdfs:label "Medium" .
+cfr:WeakFit       a cfr:FitAssessment ; rdfs:label "Weak" .
+
+# =============================================================================
+# Properties
+# =============================================================================
+
+# --- Regulation properties ---
+
+cfr:officialReference
+    a owl:DatatypeProperty ;
+    rdfs:domain cfr:Regulation ;
+    rdfs:range xsd:string ;
+    rdfs:label "official reference" ;
+    rdfs:comment "Official identifier, e.g., '(EU) 2016/679'." .
+
+cfr:fullTextURL
+    a owl:DatatypeProperty ;
+    rdfs:domain cfr:Regulation ;
+    rdfs:range xsd:anyURI ;
+    rdfs:label "full text URL" ;
+    rdfs:comment "Link to the official regulation text (EUR-Lex, ISO, etc.)." .
+
+cfr:inForceDate
+    a owl:DatatypeProperty ;
+    rdfs:domain cfr:Regulation ;
+    rdfs:range xsd:date ;
+    rdfs:label "in force date" .
+
+cfr:hasFitAssessment
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:Regulation ;
+    rdfs:range cfr:FitAssessment ;
+    rdfs:label "has fit assessment" .
+
+cfr:hasMode
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:Regulation ;
+    rdfs:range cfr:Mode ;
+    rdfs:label "uses mode" .
+
+# --- Party mapping ---
+
+cfr:hasParty
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:Regulation ;
+    rdfs:range cfr:ConcreteParty ;
+    rdfs:label "has party" ;
+    rdfs:comment "A concrete actor type in this regulation." .
+
+cfr:mapsToRole
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:ConcreteParty ;
+    rdfs:range cfr:Party ;
+    rdfs:label "maps to role" ;
+    rdfs:comment "The schema role this concrete party maps to." .
+
+cfr:partyLabel
+    a owl:DatatypeProperty ;
+    rdfs:domain cfr:ConcreteParty ;
+    rdfs:range xsd:string ;
+    rdfs:label "party label" ;
+    rdfs:comment "E.g., 'Data Controller', 'Manufacturer', 'Supervisory Authority'." .
+
+# --- Obligation mapping ---
+
+cfr:hasObligation
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:Regulation ;
+    rdfs:range cfr:Obligation ;
+    rdfs:label "has obligation" .
+
+cfr:obligationLabel
+    a owl:DatatypeProperty ;
+    rdfs:domain cfr:Obligation ;
+    rdfs:range xsd:string ;
+    rdfs:label "obligation label" .
+
+cfr:deadline
+    a owl:DatatypeProperty ;
+    rdfs:domain cfr:Obligation ;
+    rdfs:range xsd:string ;
+    rdfs:label "deadline" ;
+    rdfs:comment "E.g., '72 hours', '1 month', '3-year cycle'." .
+
+cfr:legalBasis
+    a owl:DatatypeProperty ;
+    rdfs:domain cfr:Obligation ;
+    rdfs:range xsd:string ;
+    rdfs:label "legal basis" ;
+    rdfs:comment "Article reference, e.g., 'Art 33'." .
+
+cfr:implementedBy
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:Obligation ;
+    rdfs:range cfr:ProtocolPattern ;
+    rdfs:label "implemented by" ;
+    rdfs:comment "The protocol pattern that realises this obligation on-chain." .
+
+cfr:hasDataType
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:Obligation ;
+    rdfs:range cfr:DataType ;
+    rdfs:label "has data type" .
+
+cfr:hasAccessTier
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:Obligation ;
+    rdfs:range cfr:AccessTier ;
+    rdfs:label "has access tier" .
+
+cfr:producesRecord
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:Obligation ;
+    rdfs:range cfr:ComplianceRecord ;
+    rdfs:label "produces record" ;
+    rdfs:comment "The on-chain compliance record type this obligation creates." .
+
+cfr:onChainRepresentation
+    a owl:DatatypeProperty ;
+    rdfs:domain cfr:ComplianceRecord ;
+    rdfs:range xsd:string ;
+    rdfs:label "on-chain representation" ;
+    rdfs:comment "What is stored on-chain, e.g., 'hash of consent record + timestamp'." .
+
+# --- Constraint assessment ---
+
+cfr:hasConstraintAssessment
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:Regulation ;
+    rdfs:range cfr:ConstraintAssessment ;
+    rdfs:label "has constraint assessment" .
+
+cfr:assessesConstraint
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:ConstraintAssessment ;
+    rdfs:range cfr:Constraint ;
+    rdfs:label "assesses constraint" .
+
+cfr:assessmentResult
+    a owl:DatatypeProperty ;
+    rdfs:domain cfr:ConstraintAssessment ;
+    rdfs:range xsd:string ;
+    rdfs:label "result" ;
+    rdfs:comment "'Pass' or 'Fail'." .
+
+cfr:assessmentJustification
+    a owl:DatatypeProperty ;
+    rdfs:domain cfr:ConstraintAssessment ;
+    rdfs:range xsd:string ;
+    rdfs:label "justification" .
+
+# --- Trust model ---
+
+cfr:hasTrustRelationship
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:Regulation ;
+    rdfs:range cfr:TrustRelationship ;
+    rdfs:label "has trust relationship" .
+
+cfr:trustPartyA
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:TrustRelationship ;
+    rdfs:range cfr:ConcreteParty ;
+    rdfs:label "party A" .
+
+cfr:trustPartyB
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:TrustRelationship ;
+    rdfs:range cfr:ConcreteParty ;
+    rdfs:label "party B" .
+
+cfr:hasTrustLevel
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:TrustRelationship ;
+    rdfs:range cfr:TrustLevel ;
+    rdfs:label "has trust level" .
+
+cfr:trustRisk
+    a owl:DatatypeProperty ;
+    rdfs:domain cfr:TrustRelationship ;
+    rdfs:range xsd:string ;
+    rdfs:label "risk" .
+
+cfr:blockchainMitigates
+    a owl:DatatypeProperty ;
+    rdfs:domain cfr:TrustRelationship ;
+    rdfs:range xsd:string ;
+    rdfs:label "mitigation" .
+
+# --- Token identification ---
+
+cfr:hasToken
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:Regulation ;
+    rdfs:range cfr:TokenType ;
+    rdfs:label "has token" .
+
+cfr:tokenLabel
+    a owl:DatatypeProperty ;
+    rdfs:domain cfr:TokenType ;
+    rdfs:range xsd:string ;
+    rdfs:label "token label" .
+
+cfr:tokenBehavior
+    a owl:DatatypeProperty ;
+    rdfs:domain cfr:TokenType ;
+    rdfs:range xsd:string ;
+    rdfs:label "behavior" .
+
+# --- Penalty ---
+
+cfr:hasPenalty
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:Regulation ;
+    rdfs:range cfr:Penalty ;
+    rdfs:label "has penalty" .
+
+cfr:penaltyDescription
+    a owl:DatatypeProperty ;
+    rdfs:domain cfr:Penalty ;
+    rdfs:range xsd:string ;
+    rdfs:label "description" .
+
+cfr:maxFine
+    a owl:DatatypeProperty ;
+    rdfs:domain cfr:Penalty ;
+    rdfs:range xsd:string ;
+    rdfs:label "maximum fine" ;
+    rdfs:comment "E.g., '€20M / 4% global turnover'." .
+
+# --- Pattern properties ---
+
+cfr:usesPattern
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:Regulation ;
+    rdfs:range cfr:ProtocolPattern ;
+    rdfs:label "uses pattern" .
+
+cfr:hasInvariant
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:ProtocolPattern ;
+    rdfs:range cfr:FormalInvariant ;
+    rdfs:label "has invariant" .
+
+cfr:invariantStatement
+    a owl:DatatypeProperty ;
+    rdfs:domain cfr:FormalInvariant ;
+    rdfs:range xsd:string ;
+    rdfs:label "formal statement" .
+
+cfr:proofStatus
+    a owl:DatatypeProperty ;
+    rdfs:domain cfr:FormalInvariant ;
+    rdfs:range xsd:string ;
+    rdfs:label "proof status" ;
+    rdfs:comment "'Proved', 'Conjectured', 'Open'." .
+
+# --- Validator properties ---
+
+cfr:hasRedeemerAction
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:Regulation ;
+    rdfs:range cfr:RedeemerAction ;
+    rdfs:label "has redeemer action" .
+
+cfr:actionLabel
+    a owl:DatatypeProperty ;
+    rdfs:domain cfr:RedeemerAction ;
+    rdfs:range xsd:string ;
+    rdfs:label "action label" .
+
+cfr:hasGuard
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:RedeemerAction ;
+    rdfs:range cfr:Guard ;
+    rdfs:label "has guard" .
+
+cfr:guardDescription
+    a owl:DatatypeProperty ;
+    rdfs:domain cfr:Guard ;
+    rdfs:range xsd:string ;
+    rdfs:label "description" .
+
+cfr:isUniversalGuard
+    a owl:DatatypeProperty ;
+    rdfs:domain cfr:Guard ;
+    rdfs:range xsd:boolean ;
+    rdfs:label "is universal" ;
+    rdfs:comment "True if this guard applies to every redeemer action." .
+
+# --- Lifecycle ---
+
+cfr:hasLifecycle
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:Regulation ;
+    rdfs:range cfr:LifecycleStateMachine ;
+    rdfs:label "has lifecycle" .
+
+cfr:hasState
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:LifecycleStateMachine ;
+    rdfs:range cfr:LifecycleState ;
+    rdfs:label "has state" .
+
+cfr:hasTransition
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:LifecycleStateMachine ;
+    rdfs:range cfr:StateTransition ;
+    rdfs:label "has transition" .
+
+cfr:fromState
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:StateTransition ;
+    rdfs:range cfr:LifecycleState ;
+    rdfs:label "from state" .
+
+cfr:toState
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:StateTransition ;
+    rdfs:range cfr:LifecycleState ;
+    rdfs:label "to state" .
+
+cfr:triggeredBy
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:StateTransition ;
+    rdfs:range cfr:RedeemerAction ;
+    rdfs:label "triggered by" .
+
+# --- Artifact relationships ---
+
+cfr:maintainedBy
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:Artifact ;
+    rdfs:range cfr:Party ;
+    rdfs:label "maintained by" .
+
+cfr:governedBy
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:Trie ;
+    rdfs:range cfr:SmartContract ;
+    rdfs:label "governed by" .
+
+cfr:readsAsReference
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:SmartContract ;
+    rdfs:range cfr:Trie ;
+    rdfs:label "reads as reference input" .
+
+# --- Cross-regulation ---
+
+cfr:convergsWith
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:Regulation ;
+    rdfs:range cfr:Regulation ;
+    rdfs:label "converges with" ;
+    rdfs:comment """Compliance evidence from one regulation satisfies requirements
+        of another. The same trie serves multiple smart contracts.""" .
+
+cfr:complementedBy
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:Regulation ;
+    rdfs:range cfr:Regulation ;
+    rdfs:label "complemented by" ;
+    rdfs:comment "A standard that operationalises a regulation (e.g., ISO 27001 for NIS2)." .

@@ -1,0 +1,398 @@
+@prefix cfr:    <https://lambdasistemi.github.io/cardano-for-regulators/ontology#> .
+@prefix gdpr:   <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+
+# =============================================================================
+# GDPR — (EU) 2016/679
+# =============================================================================
+
+gdpr:GDPR
+    a cfr:EURegulation ;
+    rdfs:label "GDPR" ;
+    cfr:officialReference "(EU) 2016/679" ;
+    cfr:fullTextURL "https://eur-lex.europa.eu/eli/reg/2016/679/oj"^^xsd:anyURI ;
+    cfr:inForceDate "2018-05-25"^^xsd:date ;
+    cfr:hasFitAssessment cfr:StrongFit ;
+    cfr:hasMode cfr:ProcessMode ;
+
+    # Parties
+    cfr:hasParty gdpr:SupervisoryAuthority, gdpr:DataController,
+                 gdpr:DataProcessor, gdpr:DataSubject,
+                 gdpr:CertificationBody, gdpr:EDPB ;
+
+    # Obligations
+    cfr:hasObligation gdpr:BreachNotification72h, gdpr:RightsResponse1m,
+                      gdpr:ConsentRecord, gdpr:ProcessingRecordArt30,
+                      gdpr:DPIAObligation, gdpr:CertificationObligation,
+                      gdpr:ProcessorAgreement, gdpr:CrossBorderSafeguard,
+                      gdpr:BreachNotificationToSubjects ;
+
+    # Patterns
+    cfr:usesPattern cfr:CommitmentThenSubmit, cfr:LifecycleStateMachine,
+                    cfr:MPTPerOperator, cfr:OperatorAsAggregator,
+                    cfr:RelayStateMachine, cfr:CrossOperatorHandoff,
+                    cfr:TieredAccess ;
+
+    # Constraint assessments
+    cfr:hasConstraintAssessment gdpr:CA_DataCadence, gdpr:CA_Sequential,
+                               gdpr:CA_Liveness, gdpr:CA_Fee,
+                               gdpr:CA_Identity ;
+
+    # Trust model
+    cfr:hasTrustRelationship gdpr:TR_ControllerSubject,
+                            gdpr:TR_ControllerSA,
+                            gdpr:TR_ControllerProcessor,
+                            gdpr:TR_SubjectController,
+                            gdpr:TR_SAController,
+                            gdpr:TR_ControllerController ;
+
+    # Redeemer actions
+    cfr:hasRedeemerAction gdpr:CommitBreach, gdpr:SubmitBreachNotification,
+                          gdpr:CommitRightsRequest, gdpr:SubmitRightsResponse,
+                          gdpr:ExtendRightsDeadline, gdpr:RecordConsent,
+                          gdpr:WithdrawConsent, gdpr:UpdateProcessingRecord,
+                          gdpr:ReferenceCertification, gdpr:RecordDPIA ;
+
+    # Penalty
+    cfr:hasPenalty gdpr:Tier1Fine, gdpr:Tier2Fine ;
+
+    # Cross-regulation
+    cfr:convergsWith gdpr:NIS2_ref .
+
+# =============================================================================
+# Parties
+# =============================================================================
+
+gdpr:SupervisoryAuthority
+    a cfr:ConcreteParty ;
+    cfr:partyLabel "Supervisory Authority (DPA)" ;
+    cfr:mapsToRole cfr:RegulatorRole ;
+    rdfs:comment "National data protection authorities. 27+ in the EU. Art 51-59." .
+
+gdpr:DataController
+    a cfr:ConcreteParty ;
+    cfr:partyLabel "Data Controller" ;
+    cfr:mapsToRole cfr:OperatorRole ;
+    rdfs:comment "Determines purposes and means of processing. Art 4(7). Primary operator." .
+
+gdpr:DataProcessor
+    a cfr:ConcreteParty ;
+    cfr:partyLabel "Data Processor" ;
+    cfr:mapsToRole cfr:OperatorRole ;
+    rdfs:comment "Processes on behalf of controller. Art 4(8). Secondary operator." .
+
+gdpr:DataSubject
+    a cfr:ConcreteParty ;
+    cfr:partyLabel "Data Subject" ;
+    cfr:mapsToRole cfr:UserRole ;
+    rdfs:comment "Identified or identifiable natural person. Art 4(1). No wallet needed." .
+
+gdpr:CertificationBody
+    a cfr:ConcreteParty ;
+    cfr:partyLabel "Certification Body" ;
+    cfr:mapsToRole cfr:VerificationBody ;
+    rdfs:comment "Accredited body issuing Art 42 certifications." .
+
+gdpr:EDPB
+    a cfr:ConcreteParty ;
+    cfr:partyLabel "European Data Protection Board" ;
+    cfr:mapsToRole cfr:RegulatorRole ;
+    rdfs:comment "Cross-border consistency mechanism. Art 68-76." .
+
+# =============================================================================
+# Constraint assessments
+# =============================================================================
+
+gdpr:CA_DataCadence
+    a cfr:ConstraintAssessment ;
+    cfr:assessesConstraint cfr:DataCadence ;
+    cfr:assessmentResult "Pass" ;
+    cfr:assessmentJustification "Consent events, breach notifications (72h), rights requests (1 month), DPIAs — all event-driven or periodic. No real-time streaming." .
+
+gdpr:CA_Sequential
+    a cfr:ConstraintAssessment ;
+    cfr:assessesConstraint cfr:SequentialAccess ;
+    cfr:assessmentResult "Pass" ;
+    cfr:assessmentJustification "Single controller per trie. Rights requests follow a relay: subject → controller → response." .
+
+gdpr:CA_Liveness
+    a cfr:ConstraintAssessment ;
+    cfr:assessesConstraint cfr:Liveness ;
+    cfr:assessmentResult "Pass" ;
+    cfr:assessmentJustification "Up to €20M / 4% global turnover. 72h breach deadline. 1-month rights response. Strongest penalties of any regulation analysed." .
+
+gdpr:CA_Fee
+    a cfr:ConstraintAssessment ;
+    cfr:assessesConstraint cfr:FeeAlignment ;
+    cfr:assessmentResult "Pass" ;
+    cfr:assessmentJustification "Controllers pay. Compliance cost (~€0.10-0.15 per record) negligible vs fine exposure." .
+
+gdpr:CA_Identity
+    a cfr:ConstraintAssessment ;
+    cfr:assessesConstraint cfr:IdentityDelegation ;
+    cfr:assessmentResult "Pass" ;
+    cfr:assessmentJustification "Process mode. Data subjects exercise rights through digital channels. The signing function maps to the authenticated request." .
+
+# =============================================================================
+# Obligations
+# =============================================================================
+
+gdpr:BreachNotification72h
+    a cfr:Obligation ;
+    cfr:obligationLabel "Breach notification to SA" ;
+    cfr:legalBasis "Art 33" ;
+    cfr:deadline "72 hours" ;
+    cfr:implementedBy cfr:CommitmentThenSubmit ;
+    cfr:hasDataType cfr:EventDrivenData ;
+    cfr:hasAccessTier cfr:AuthorityAccess ;
+    cfr:producesRecord gdpr:BreachRecord ;
+    rdfs:comment "Controller notifies SA within 72h of becoming aware. Flagship on-chain use case." .
+
+gdpr:BreachRecord
+    a cfr:ComplianceRecord ;
+    cfr:onChainRepresentation "Commitment-then-submit: commit_slot, submit_slot, notification_hash, timely flag" .
+
+gdpr:RightsResponse1m
+    a cfr:Obligation ;
+    cfr:obligationLabel "Data subject rights response" ;
+    cfr:legalBasis "Art 12-22" ;
+    cfr:deadline "1 month (extendable to 3 months)" ;
+    cfr:implementedBy cfr:CommitmentThenSubmit ;
+    cfr:hasDataType cfr:EventDrivenData ;
+    cfr:hasAccessTier cfr:AuthorizedAccess ;
+    cfr:producesRecord gdpr:RightsRecord .
+
+gdpr:RightsRecord
+    a cfr:ComplianceRecord ;
+    cfr:onChainRepresentation "Commitment-then-submit: commit_slot, response_slot, request_type, response_hash, timely flag" .
+
+gdpr:ConsentRecord
+    a cfr:Obligation ;
+    cfr:obligationLabel "Consent given/withdrawn" ;
+    cfr:legalBasis "Art 7" ;
+    cfr:deadline "N/A — event-driven" ;
+    cfr:implementedBy cfr:LifecycleStateMachine ;
+    cfr:hasDataType cfr:EventDrivenData ;
+    cfr:hasAccessTier cfr:AuthorizedAccess ;
+    cfr:producesRecord gdpr:ConsentLeaf .
+
+gdpr:ConsentLeaf
+    a cfr:ComplianceRecord ;
+    cfr:onChainRepresentation "Lifecycle state machine: consent_state, purpose_hash, given_slot, withdrawn_slot" .
+
+gdpr:ProcessingRecordArt30
+    a cfr:Obligation ;
+    cfr:obligationLabel "Processing activity records" ;
+    cfr:legalBasis "Art 30" ;
+    cfr:deadline "Ongoing — maintained continuously" ;
+    cfr:implementedBy cfr:MPTPerOperator ;
+    cfr:hasDataType cfr:StaticData ;
+    cfr:hasAccessTier cfr:AuthorityAccess ;
+    cfr:producesRecord gdpr:ProcessingLeaf .
+
+gdpr:ProcessingLeaf
+    a cfr:ComplianceRecord ;
+    cfr:onChainRepresentation "Leaf in controller's trie: record_hash, updated_slot, previous_hash" .
+
+gdpr:DPIAObligation
+    a cfr:Obligation ;
+    cfr:obligationLabel "Data Protection Impact Assessment" ;
+    cfr:legalBasis "Art 35" ;
+    cfr:deadline "Before high-risk processing begins" ;
+    cfr:hasDataType cfr:EventDrivenData ;
+    cfr:hasAccessTier cfr:AuthorityAccess ;
+    cfr:producesRecord gdpr:DPIALeaf .
+
+gdpr:DPIALeaf
+    a cfr:ComplianceRecord ;
+    cfr:onChainRepresentation "Attestation hash + recorded_slot" .
+
+gdpr:CertificationObligation
+    a cfr:Obligation ;
+    cfr:obligationLabel "Data protection certification" ;
+    cfr:legalBasis "Art 42" ;
+    cfr:deadline "3-year validity, renewable" ;
+    cfr:hasDataType cfr:StaticData ;
+    cfr:hasAccessTier cfr:PublicAccess ;
+    cfr:producesRecord gdpr:CertLeaf .
+
+gdpr:CertLeaf
+    a cfr:ComplianceRecord ;
+    cfr:onChainRepresentation "Token with enforced expiry_slot, issuer key, scope_hash" .
+
+gdpr:ProcessorAgreement
+    a cfr:Obligation ;
+    cfr:obligationLabel "Processor agreement" ;
+    cfr:legalBasis "Art 28" ;
+    cfr:deadline "Before processing begins" ;
+    cfr:hasDataType cfr:StaticData ;
+    cfr:hasAccessTier cfr:AuthorizedAccess ;
+    cfr:producesRecord gdpr:AgreementLeaf .
+
+gdpr:AgreementLeaf
+    a cfr:ComplianceRecord ;
+    cfr:onChainRepresentation "Hash of agreement, cross-referenced in both controller and processor tries" .
+
+gdpr:CrossBorderSafeguard
+    a cfr:Obligation ;
+    cfr:obligationLabel "Cross-border transfer safeguard" ;
+    cfr:legalBasis "Art 44-49" ;
+    cfr:deadline "Before transfer" ;
+    cfr:hasDataType cfr:StaticData ;
+    cfr:hasAccessTier cfr:AuthorityAccess ;
+    cfr:producesRecord gdpr:TransferLeaf .
+
+gdpr:TransferLeaf
+    a cfr:ComplianceRecord ;
+    cfr:onChainRepresentation "Hash of SCC/BCR/adequacy reference" .
+
+gdpr:BreachNotificationToSubjects
+    a cfr:Obligation ;
+    cfr:obligationLabel "Breach notification to data subjects" ;
+    cfr:legalBasis "Art 34" ;
+    cfr:deadline "Without undue delay (high-risk breaches)" ;
+    cfr:hasDataType cfr:EventDrivenData ;
+    cfr:hasAccessTier cfr:AuthorizedAccess .
+
+# =============================================================================
+# Trust model
+# =============================================================================
+
+gdpr:TR_ControllerSubject
+    a cfr:TrustRelationship ;
+    cfr:trustPartyA gdpr:DataController ;
+    cfr:trustPartyB gdpr:DataSubject ;
+    cfr:hasTrustLevel cfr:LowTrust ;
+    cfr:trustRisk "Controller claims consent existed, subject denies" ;
+    cfr:blockchainMitigates "Immutable timestamped consent hash" .
+
+gdpr:TR_ControllerSA
+    a cfr:TrustRelationship ;
+    cfr:trustPartyA gdpr:DataController ;
+    cfr:trustPartyB gdpr:SupervisoryAuthority ;
+    cfr:hasTrustLevel cfr:MediumTrust ;
+    cfr:trustRisk "Controller backdates breach notification" ;
+    cfr:blockchainMitigates "Commitment proves exact submission time" .
+
+gdpr:TR_ControllerProcessor
+    a cfr:TrustRelationship ;
+    cfr:trustPartyA gdpr:DataController ;
+    cfr:trustPartyB gdpr:DataProcessor ;
+    cfr:hasTrustLevel cfr:MediumTrust ;
+    cfr:trustRisk "Processor claims it followed instructions" ;
+    cfr:blockchainMitigates "On-chain agreement hash, activity proofs" .
+
+gdpr:TR_SubjectController
+    a cfr:TrustRelationship ;
+    cfr:trustPartyA gdpr:DataSubject ;
+    cfr:trustPartyB gdpr:DataController ;
+    cfr:hasTrustLevel cfr:LowTrust ;
+    cfr:trustRisk "Controller ignores rights request" ;
+    cfr:blockchainMitigates "Commitment-then-submit proves response timeline" .
+
+gdpr:TR_SAController
+    a cfr:TrustRelationship ;
+    cfr:trustPartyA gdpr:SupervisoryAuthority ;
+    cfr:trustPartyB gdpr:DataController ;
+    cfr:hasTrustLevel cfr:MediumTrust ;
+    cfr:trustRisk "Controller presents selective compliance evidence" ;
+    cfr:blockchainMitigates "Completeness via MPT — all records in trie" .
+
+gdpr:TR_ControllerController
+    a cfr:TrustRelationship ;
+    cfr:trustPartyA gdpr:DataController ;
+    cfr:trustPartyB gdpr:DataController ;
+    cfr:hasTrustLevel cfr:NoTrust ;
+    cfr:trustRisk "Portability disputes — who had data when" ;
+    cfr:blockchainMitigates "Transfer records with timestamps" .
+
+# =============================================================================
+# Redeemer actions
+# =============================================================================
+
+gdpr:CommitBreach          a cfr:RedeemerAction ; cfr:actionLabel "CommitBreach" ;
+    cfr:hasGuard gdpr:G_IdentityTrie, gdpr:G_StandingNotSuspended,
+                 gdpr:G_NoExistingCommitment, gdpr:G_ControllerSig, gdpr:G_MPTProof .
+
+gdpr:SubmitBreachNotification a cfr:RedeemerAction ; cfr:actionLabel "SubmitBreachNotification" ;
+    cfr:hasGuard gdpr:G_CommitmentExists, gdpr:G_HashNotEmpty,
+                 gdpr:G_ControllerSig, gdpr:G_MPTProof .
+
+gdpr:CommitRightsRequest   a cfr:RedeemerAction ; cfr:actionLabel "CommitRightsRequest" ;
+    cfr:hasGuard gdpr:G_IdentityTrie, gdpr:G_NoExistingCommitment,
+                 gdpr:G_ProcessSig, gdpr:G_ControllerSig, gdpr:G_MPTProof .
+
+gdpr:SubmitRightsResponse  a cfr:RedeemerAction ; cfr:actionLabel "SubmitRightsResponse" ;
+    cfr:hasGuard gdpr:G_CommitmentExists, gdpr:G_HashNotEmpty,
+                 gdpr:G_ControllerSig, gdpr:G_MPTProof .
+
+gdpr:ExtendRightsDeadline  a cfr:RedeemerAction ; cfr:actionLabel "ExtendRightsDeadline" ;
+    cfr:hasGuard gdpr:G_CommitmentExists, gdpr:G_NotAlreadyExtended,
+                 gdpr:G_WithinOriginalDeadline, gdpr:G_HashNotEmpty,
+                 gdpr:G_ControllerSig, gdpr:G_MPTProof .
+
+gdpr:RecordConsent         a cfr:RedeemerAction ; cfr:actionLabel "RecordConsent" ;
+    cfr:hasGuard gdpr:G_IdentityTrie, gdpr:G_ProcessSig,
+                 gdpr:G_PurposeHashNotEmpty, gdpr:G_ConsentNotGiven,
+                 gdpr:G_ControllerSig, gdpr:G_MPTProof .
+
+gdpr:WithdrawConsent       a cfr:RedeemerAction ; cfr:actionLabel "WithdrawConsent" ;
+    cfr:hasGuard gdpr:G_ConsentGiven, gdpr:G_ProcessSig,
+                 gdpr:G_ControllerSig, gdpr:G_MPTProof .
+
+gdpr:UpdateProcessingRecord a cfr:RedeemerAction ; cfr:actionLabel "UpdateProcessingRecord" ;
+    cfr:hasGuard gdpr:G_IdentityTrie, gdpr:G_StandingNotSuspended,
+                 gdpr:G_HashNotEmpty, gdpr:G_ControllerSig, gdpr:G_MPTProof .
+
+gdpr:ReferenceCertification a cfr:RedeemerAction ; cfr:actionLabel "ReferenceCertification" ;
+    cfr:hasGuard gdpr:G_CertTokenExists, gdpr:G_CertIssuerQualified,
+                 gdpr:G_ControllerSig, gdpr:G_MPTProof .
+
+gdpr:RecordDPIA            a cfr:RedeemerAction ; cfr:actionLabel "RecordDPIA" ;
+    cfr:hasGuard gdpr:G_IdentityTrie, gdpr:G_HashNotEmpty,
+                 gdpr:G_ControllerSig, gdpr:G_MPTProof .
+
+# --- Guards ---
+
+gdpr:G_IdentityTrie         a cfr:Guard ; cfr:guardDescription "Controller key ∈ identity trie" .
+gdpr:G_StandingNotSuspended  a cfr:Guard ; cfr:guardDescription "Controller standing ≠ suspended (regulation trie)" .
+gdpr:G_NoExistingCommitment  a cfr:Guard ; cfr:guardDescription "No existing commitment on leaf" .
+gdpr:G_CommitmentExists      a cfr:Guard ; cfr:guardDescription "Commitment exists on leaf" .
+gdpr:G_HashNotEmpty          a cfr:Guard ; cfr:guardDescription "Hash ≠ empty" .
+gdpr:G_ProcessSig            a cfr:Guard ; cfr:guardDescription "Process signature present (data subject signed)" .
+gdpr:G_ControllerSig         a cfr:Guard ; cfr:guardDescription "Controller signature present" ;
+    cfr:isUniversalGuard true .
+gdpr:G_MPTProof              a cfr:Guard ; cfr:guardDescription "MPT root hash consistent" ;
+    cfr:isUniversalGuard true .
+gdpr:G_ConsentGiven          a cfr:Guard ; cfr:guardDescription "Consent state = given" .
+gdpr:G_ConsentNotGiven       a cfr:Guard ; cfr:guardDescription "Consent state ≠ given (or absent)" .
+gdpr:G_NotAlreadyExtended    a cfr:Guard ; cfr:guardDescription "Rights deadline not already extended" .
+gdpr:G_WithinOriginalDeadline a cfr:Guard ; cfr:guardDescription "Current slot ≤ original deadline" .
+gdpr:G_PurposeHashNotEmpty   a cfr:Guard ; cfr:guardDescription "Purpose hash ≠ empty" .
+gdpr:G_CertTokenExists       a cfr:Guard ; cfr:guardDescription "Certification token exists and not expired" .
+gdpr:G_CertIssuerQualified   a cfr:Guard ; cfr:guardDescription "Cert issuer ∈ regulation trie (qualified body)" .
+
+# =============================================================================
+# Penalties
+# =============================================================================
+
+gdpr:Tier1Fine
+    a cfr:Penalty ;
+    cfr:penaltyDescription "Controller/processor obligation breaches (Art 8, 11, 25-39, 42, 43)" ;
+    cfr:maxFine "€10,000,000 or 2% global turnover" .
+
+gdpr:Tier2Fine
+    a cfr:Penalty ;
+    cfr:penaltyDescription "Processing principles, data subject rights, transfers (Art 5, 6, 7, 9, 12-22, 44-49)" ;
+    cfr:maxFine "€20,000,000 or 4% global turnover" .
+
+# =============================================================================
+# Cross-regulation references
+# =============================================================================
+
+gdpr:NIS2_ref
+    a cfr:EURegulation ;
+    rdfs:label "NIS2 Directive" ;
+    cfr:officialReference "(EU) 2022/2555" ;
+    rdfs:comment "ISO 27001 + 27701 converge GDPR and NIS2 compliance evidence." .
