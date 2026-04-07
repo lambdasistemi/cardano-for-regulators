@@ -19,4 +19,8 @@ jobs:
 
       - name: Validate RDF ontology and instances
         run: |
-          nix shell nixpkgs#python3 nixpkgs#python3Packages.rdflib --command python3 ontology/validate.py
+          nix run --impure --expr '
+            let pkgs = import (builtins.getFlake "nixpkgs") {};
+                py = pkgs.python3.withPackages (p: [ p.rdflib ]);
+            in pkgs.writeShellScriptBin "validate" "exec ${py}/bin/python3 ontology/validate.py"
+          '
