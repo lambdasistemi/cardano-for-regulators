@@ -84,13 +84,32 @@ What goes on-chain is compliance evidence, not personal data.
 
 !!! warning "The bright line"
     No personal data — names, identifiers, health data, location, behavioural
-    profiles — should ever touch the chain. Not even encrypted. The chain
-    stores hashes of compliance records, while the actual records stay
-    off-chain under the controller's custody. This materially reduces GDPR
-    risk, but it does not automatically take every on-chain hash outside the
-    scope of personal data law. Whether a hash is personal data remains a
-    context-specific legal question under [Recital 26][rec26], especially if
-    linkage data exists off-chain.
+    profiles — ever touches the chain. Not even encrypted. The chain stores
+    hashes of compliance records. The actual records stay off-chain under the
+    controller's custody.
+
+    Whether an on-chain hash constitutes personal data depends on its
+    lifecycle phase:
+
+    | Phase | Pre-image exists? | Hash is personal data? | Lawful? |
+    |-------|:-:|:-:|:-:|
+    | **Active compliance** | Yes — controller holds linking data | Yes — [Breyer (C-582/14)][breyer]: parties with legal means to compel the controller can link the hash | Yes — [Art 6(1)(c)][art6]: legal obligation to maintain compliance records |
+    | **Retention under exception** | Yes — controller retains for legal claims | Yes | Yes — [Art 17(3)(e)][art17]: defence of legal claims |
+    | **Post-erasure** | No — controller deleted pre-image | No — unlinkable, anonymous under [Recital 26][rec26] | N/A — outside GDPR scope |
+
+    During the active phase, the hash is personal data and its processing
+    requires a legal basis — which exists ([Art 6(1)(c)][art6]). After the
+    controller deletes the off-chain pre-image in response to an erasure
+    request, the on-chain hash becomes an opaque string that no party can
+    link to a natural person. The "means reasonably likely to be used" test
+    in [Recital 26][rec26] is no longer satisfied — there is nothing to
+    compel and no one to compel it from.
+
+    This is the architecture's built-in erasure mechanism: delete the
+    off-chain pre-image, and the on-chain hash falls outside GDPR scope.
+    Analogous to the "encryption with key destruction" approach that
+    [CNIL's blockchain guidance][cnil-blockchain] discusses as a valid
+    erasure path — but simpler, because hashing requires no key management.
 
 ## Trust model
 
@@ -227,28 +246,38 @@ regulation trie. The token carries an expiry slot. The controller references
 it in their compliance trie. Expired or revoked tokens cannot be referenced
 in new compliance submissions.
 
-## The GDPR–blockchain tension — and why it does not apply here
+## The GDPR–blockchain tension
 
 The literature identifies fundamental conflicts between GDPR and blockchain.
 Every one of them concerns storing **personal data** on-chain. This
-architecture stores **compliance evidence** on-chain — a different category.
+architecture stores **compliance evidence** on-chain — hashes whose
+personal data status depends on the lifecycle phase (see the bright line
+above).
 
-| Tension | Standard framing | This architecture |
-|---------|-----------------|-------------------|
-| **Immutability vs erasure ([Art 17][art17])** | Cannot delete on-chain personal data | No personal data on-chain. Compliance records are not subject to erasure — they are the controller's proof of accountability. |
-| **Immutability vs rectification ([Art 16][art16])** | Cannot correct on-chain records | Compliance records are appended (new leaf for correction). The history of corrections is itself evidence of accountability. |
-| **Storage limitation ([Art 5(1)(e)][art5])** | On-chain data persists forever | Compliance records have legitimate retention: legal obligation ([Art 6(1)(c)][art6]) and legal claims defence ([Art 17(3)(e)][art17]). |
-| **Data minimisation ([Art 5(1)(c)][art5])** | Full node replication | Only hashes on-chain. Minimal by design. |
-| **Controller designation** | Who is the controller on a public chain? | Clear: the data controller is the operator of their own trie. Identity provider, SA, and validators are not controllers of compliance data. |
-| **Cross-border transfers ([Art 44][art44]–49)** | Nodes worldwide = transfer to every jurisdiction | On-chain data is hashes of compliance records, not personal data. No personal data crosses borders via the chain. |
-| **Automated decision-making ([Art 22][art22])** | Smart contracts make autonomous decisions | The smart contract validates format and timing. It does not make decisions about data subjects. |
-| **Legal basis** | No clean basis for on-chain personal data | Legal obligation ([Art 6(1)(c)][art6]) — the controller is required to maintain and demonstrate compliance records. |
+| Tension | Standard framing | This architecture | Residual risk |
+|---------|-----------------|-------------------|---------------|
+| **Immutability vs erasure ([Art 17][art17])** | Cannot delete on-chain personal data | Delete the off-chain pre-image. The on-chain hash becomes unlinkable — anonymous under [Recital 26][rec26]. Analogous to encryption with key destruction. | If the controller fails to delete all copies of the pre-image, the hash remains personal data. Operational discipline required. |
+| **Immutability vs rectification ([Art 16][art16])** | Cannot correct on-chain records | Compliance records are appended (new leaf for correction). The history of corrections is itself evidence of accountability. | The original hash persists alongside the correction. Acceptable for compliance evidence but the original inaccurate record's pre-image should be deleted. |
+| **Storage limitation ([Art 5(1)(e)][art5])** | On-chain data persists forever | During active phase: legitimate retention under [Art 6(1)(c)][art6]. After retention period: delete pre-image, hash becomes anonymous, storage limitation satisfied. | The controller must track retention periods and actually delete pre-images when they expire. |
+| **Data minimisation ([Art 5(1)(c)][art5])** | Full node replication | Only hashes on-chain — one hash per compliance record. Minimal by design. | Low. Hashes are fixed-size regardless of the underlying record's complexity. |
+| **Controller designation** | Who is the controller on a public chain? | The data controller is the operator of their own trie. Identity provider, SA, and validators are not controllers of compliance data. | During active phase the controller is clearly identifiable. Post-erasure the hash is anonymous and the question is moot. |
+| **Cross-border transfers ([Art 44][art44]–49)** | Nodes worldwide = transfer to every jurisdiction | During active phase: hashes are personal data but the controller is the only party holding the link, and the chain nodes don't process the link. Post-erasure: anonymous data, no transfer concern. | The [Breyer][breyer] argument could theoretically be applied to chain nodes during the active phase, but the nodes have no practical means to obtain the pre-image. |
+| **Automated decision-making ([Art 22][art22])** | Smart contracts make autonomous decisions | The smart contract validates format and timing. It does not make decisions about data subjects. | Low. No profiling, no legal effects on individuals from the validator logic. |
+| **Legal basis** | No clean basis for on-chain personal data | During active phase: [Art 6(1)(c)][art6] — legal obligation to maintain compliance records. Post-erasure: no legal basis needed — data is anonymous. | The legal obligation basis must be established per jurisdiction. Most GDPR obligations create sufficient basis. |
 
-The architecture resolves the tension by staying on the right side of the
-bright line: personal data off-chain, compliance proof on-chain. This
-aligns with [CNIL's 2018 blockchain guidance][cnil-blockchain], which
+The architecture addresses the tensions through two mechanisms:
+
+1. **Design**: personal data off-chain, compliance hashes on-chain —
+   minimises the personal data footprint on-chain.
+2. **Lifecycle**: when the off-chain pre-image is deleted, the on-chain
+   hash transitions from personal data (with lawful basis) to anonymous
+   data (outside GDPR scope). Immutability is not a problem when there
+   is nothing left to link.
+
+This aligns with [CNIL's 2018 blockchain guidance][cnil-blockchain], which
 recommends off-chain storage with on-chain commitment schemes as the
-primary GDPR-compatible pattern.
+primary GDPR-compatible pattern, and explicitly discusses key/pre-image
+destruction as an erasure mechanism for blockchain data.
 
 ## Formal invariants
 

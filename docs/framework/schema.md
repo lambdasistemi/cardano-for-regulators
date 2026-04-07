@@ -579,10 +579,15 @@ of *when* something was committed, without trusting either party.
 
 ## The beacon protocol
 
-The beacon is what bridges the regulator's on-chain assessment to the user.
-The operator cannot collect user attestations without first minting a
+The beacon is the regulator's policy carrier. It forces the operator to
+sample their current standing from the regulation trie before collecting
+user attestations, and it carries the regulator's data policy — including
+who may receive the data and under what conditions.
+
+The operator cannot collect user attestations without first producing a
 beacon, and the minting policy won't produce one without reading the
-operator's current standing from the regulation trie.
+operator's current standing and the applicable data policy from the
+regulation trie.
 
 ```mermaid
 sequenceDiagram
@@ -591,47 +596,109 @@ sequenceDiagram
     participant O as Operator
     participant U as User
 
-    R->>C: Update standing in regulation trie
+    R->>C: Update standing + data policy<br/>in regulation trie
 
-    O->>C: Mint beacon<br/>(minting policy reads standing<br/>from regulation trie)
-    Note over C: Beacon includes:<br/>operator standing + expiry
+    O->>C: Mint beacon<br/>(minting policy reads standing<br/>+ data policy from regulation trie)
+    Note over C: Beacon includes:<br/>operator standing<br/>data policy (recipient keys)<br/>expiry
 
     O->>U: Relay beacon + query
 
-    Note over U: Verifies beacon:<br/>- minting policy matches regulator<br/>- not expired<br/>- standing is current
+    Note over U: Verifies beacon:<br/>- minting policy matches regulator<br/>- not expired<br/>- standing is current<br/>- data policy is present
 
-    U->>U: Sign data + beacon<br/>(informed consent)
+    U->>U: Encrypt data for beacon recipients<br/>Sign encrypted data + beacon
 
     U->>O: Return signed payload
 
     O->>C: Submit batch<br/>(contract validates beacon<br/>is genuine and not expired)
 ```
 
-The beacon carries the regulator's assessment to the user — not because the
-operator chose to include it, but because the smart contract forced it.
+The beacon carries two things:
+
+1. **Standing** — the regulator's assessment of the operator (compliance
+   scores, flags, warnings). The user signs over it as proof of informed
+   awareness.
+2. **Data policy** — who may receive the data (recipient public keys or
+   key classes). The user encrypts their contribution for the specified
+   recipients. The operator cannot read data not addressed to them.
+
+Both travel through the same channel — not because the operator chose to
+include them, but because the smart contract forced it.
+
+### The data policy
+
+The regulator defines, through the beacon policy, who may decrypt each
+class of data. This is not a fixed recipient list — it is a
+**parameterized rule** that the regulation trie encodes:
+
+| Context | Recipients | Who triggers |
+|---------|-----------|-------------|
+| Routine reading | Owner + regulator | Automatic — every beacon |
+| Pre-sale disclosure | Owner + prospective buyer + regulator | Owner requests |
+| Regulatory audit | Regulator only | Regulator requests |
+| Repurposing assessment | Original owner + new operator + regulator | Either party requests |
+| Emergency recall | All affected owners + regulator | Regulator requests |
+
+The owner can request a disclosure beacon that adds a prospective buyer
+to the recipient set. The regulator's policy governs which disclosure
+contexts are permitted. The operator produces the beacon — the minting
+policy validates that the requested context is authorized by the
+regulation trie.
+
+```mermaid
+sequenceDiagram
+    participant OW as Owner
+    participant O as Operator
+    participant C as Chain
+    participant BU as Prospective Buyer
+
+    OW->>O: Request pre-sale disclosure<br/>for Buyer's public key
+
+    O->>C: Mint disclosure beacon<br/>(policy validates: pre-sale context<br/>+ owner authorization<br/>+ buyer key)
+    Note over C: Beacon includes:<br/>recipients: Owner + Buyer + Regulator<br/>context: pre-sale<br/>expiry
+
+    O->>OW: Relay disclosure beacon
+
+    Note over OW: Fresh SoH reading via NFC tap<br/>SE050 signs<br/>Phone encrypts for beacon recipients
+
+    OW->>O: Submit encrypted + signed payload
+
+    O->>C: Submit to trie<br/>(hash on-chain, ciphertext off-chain)
+
+    O->>BU: Relay ciphertext
+
+    Note over BU: Decrypts with own key<br/>Inspects SoH history<br/>Decides whether to buy
+```
+
+The operator relays the ciphertext but cannot read it. The buyer verifies
+the SoH before committing to the purchase. The regulator can always
+decrypt (their key is in every recipient set). The chain proves the
+disclosure was authorized by a valid beacon.
 
 ### Informed consent by construction
 
 The user signs over the beacon as part of their payload. This is
 cryptographic proof of awareness: the user cannot claim ignorance of the
-operator's standing or the regulator's disclosed information. Informed
-consent is enforced by protocol, not by policy.
+operator's standing, the data policy, or who will receive their data.
+Informed consent is enforced by protocol, not by policy.
 
-### No stale reputation
+### No stale reputation, no stale policy
 
 The beacon expires. An operator whose compliance status just dropped
-cannot keep presenting yesterday's clean beacon. The minting policy reads
-the current state of the regulation trie — if the regulator has updated the
-leaf, the next beacon reflects it. Transparency is bounded by the beacon's
-expiry window.
+cannot keep presenting yesterday's clean beacon. A disclosure beacon
+for a prospective buyer expires too — the buyer cannot use a stale
+authorization to access future readings.
+
+The minting policy reads the current state of the regulation trie — if the
+regulator has updated the standing or the data policy, the next beacon
+reflects it. Transparency is bounded by the beacon's expiry window.
 
 ### The user's one requirement
 
 The user needs one thing: the regulator's beacon policy identifier and
 trust anchor. With it, they can verify that the beacon was minted under
-the regulator's declared minting policy before signing over it. That
-identifier is public by definition — published on official channels,
-embedded in the smart contract, and verifiable on-chain.
+the regulator's declared policy before signing over it. This identifier
+is public by definition — published on official channels, embedded in the
+smart contract, and verifiable on-chain.
 
 ## The baton pattern
 

@@ -160,14 +160,13 @@ cfr:Beacon
     a owl:Class ;
     rdfs:subClassOf cfr:SchemaMechanism ;
     rdfs:label "Beacon" ;
-    rdfs:comment """A mechanism required by the regulator to validate user
-        contributions against the operator's will. Forces the operator to
-        sample and disclose their current standing from the regulation trie
-        before collecting attestations. The user signs over it, making
-        the regulator's assessment part of the payload. Expires to prevent
-        stale reputation. Implementation-agnostic — may be a minted token,
-        a reference input check, or any construction that the smart contract
-        enforces.""" .
+    rdfs:comment """The regulator's policy carrier. Forces the operator to sample
+        their standing and the applicable data policy from the regulation trie
+        before collecting user attestations. Carries two things: standing
+        (the regulator's assessment) and data policy (who may receive the data
+        and under what conditions). The user encrypts their contribution for
+        the beacon's recipients and signs over the beacon. Expires to prevent
+        stale reputation and stale disclosure authorization.""" .
 
 cfr:SigningFunction
     a owl:Class ;
