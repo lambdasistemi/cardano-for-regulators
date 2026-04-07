@@ -17,10 +17,5 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - name: Validate RDF ontology and instances
-        run: |
-          nix run --impure --expr '
-            let pkgs = import (builtins.getFlake "nixpkgs") {};
-                py = pkgs.python3.withPackages (p: [ p.rdflib ]);
-            in pkgs.writeShellScriptBin "validate" "exec ${py}/bin/python3 ontology/validate.py"
-          '
+      - name: Validate RDF ontology
+        run: nix build .#checks.x86_64-linux.ontology
