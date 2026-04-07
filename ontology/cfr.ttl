@@ -149,20 +149,33 @@ cfr:SmartContract
         by the regulator. Governs the process trie, reads identity and regulation
         tries as reference inputs.""" .
 
+cfr:SchemaMechanism
+    a owl:Class ;
+    rdfs:label "Schema Mechanism" ;
+    rdfs:comment """A core mechanism in the schema that connects parties to
+        the chain. Not an on-chain artifact per se — these are the conceptual
+        constructions that make the protocol work.""" .
+
 cfr:Beacon
     a owl:Class ;
-    rdfs:subClassOf cfr:Artifact ;
+    rdfs:subClassOf cfr:SchemaMechanism ;
     rdfs:label "Beacon" ;
-    rdfs:comment """A minted token carrying the operator's current standing from the
-        regulation trie. Expires. The user signs over it as proof of informed
-        awareness.""" .
+    rdfs:comment """A mechanism required by the regulator to validate user
+        contributions against the operator's will. Forces the operator to
+        sample and disclose their current standing from the regulation trie
+        before collecting attestations. The user signs over it, making
+        the regulator's assessment part of the payload. Expires to prevent
+        stale reputation. Implementation-agnostic — may be a minted token,
+        a reference input check, or any construction that the smart contract
+        enforces.""" .
 
 cfr:SigningFunction
     a owl:Class ;
-    rdfs:subClassOf cfr:Artifact ;
+    rdfs:subClassOf cfr:SchemaMechanism ;
     rdfs:label "Signing Function" ;
-    rdfs:comment """An opaque capability that produces signatures. Substrates:
-        hardware secure element, phone enclave, server endpoint, TEE, ZK circuit.""" .
+    rdfs:comment """An off-chain opaque capability that produces signatures.
+        Lives on hardware (SE050), phone enclave, server, TEE, or ZK circuit.
+        Only its public key and signatures appear on-chain.""" .
 
 # --- Protocol patterns ---
 

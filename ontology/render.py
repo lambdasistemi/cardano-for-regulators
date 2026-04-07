@@ -49,13 +49,13 @@ def label(g, node):
 
 def comment(g, node):
     for o in g.objects(node, RDFS.comment):
-        return str(o)
+        return re.sub(r'\s+', ' ', str(o)).strip()
     return ""
 
 
 def literal_val(g, subj, pred):
     for o in g.objects(subj, pred):
-        return str(o)
+        return re.sub(r'\s+', ' ', str(o)).strip()
     return ""
 
 
@@ -426,30 +426,67 @@ def render_ontology_overview(g):
         cls_comment = comment(g, cls).replace("\n", " ")
         classes[cls_label] = {"parent": parent, "comment": cls_comment, "uri": cls}
 
-    # Class hierarchy graph
+    # Build hierarchy: group children by root parent
+    roots = {}  # root_label -> [(child_label, comment)]
+    orphans = []  # classes with no parent and no children
+    children_of = {}  # parent_label -> [child_label]
+    for cls_label, info in classes.items():
+        if info["parent"]:
+            children_of.setdefault(info["parent"], []).append(cls_label)
+
+    # Find roots: classes that are parents but have no parent themselves
+    for cls_label, info in classes.items():
+        if info["parent"] is None:
+            if cls_label in children_of:
+                roots[cls_label] = children_of[cls_label]
+            else:
+                orphans.append(cls_label)
+
+    # One mermaid graph per root class — keeps each diagram focused
     lines.append("## Class hierarchy")
     lines.append("")
-    lines.append("```mermaid")
-    lines.append("graph TB")
-    for cls_label, info in sorted(classes.items()):
-        cid = mermaid_id(cls_label)
-        lines.append(f'    {cid}["{cls_label}"]')
-        if info["parent"]:
-            pid = mermaid_id(info["parent"])
-            lines.append(f"    {pid} --> {cid}")
-    lines.append("```")
-    lines.append("")
+    for root_label in sorted(roots):
+        children = sorted(roots[root_label])
+        rid = mermaid_id(root_label)
+        lines.append(f"### {root_label}")
+        lines.append("")
+        lines.append("```mermaid")
+        lines.append("graph LR")
+        lines.append(f'    {rid}["{root_label}"]')
+        for child in children:
+            cid = mermaid_id(child)
+            lines.append(f'    {rid} --> {cid}["{child}"]')
+            # Check for grandchildren
+            if child in children_of:
+                for grandchild in sorted(children_of[child]):
+                    gcid = mermaid_id(grandchild)
+                    lines.append(f'    {cid} --> {gcid}["{grandchild}"]')
+        lines.append("```")
+        lines.append("")
+        # Table for this group
+        lines.append("| Class | Description |")
+        lines.append("|-------|-------------|")
+        root_desc = classes[root_label]["comment"].replace("|", "—")
+        lines.append(f"| **{root_label}** | {root_desc} |")
+        for child in children:
+            desc = classes[child]["comment"].replace("|", "—")
+            lines.append(f"| {child} | {desc} |")
+            if child in children_of:
+                for grandchild in sorted(children_of[child]):
+                    desc = classes[grandchild]["comment"].replace("|", "—")
+                    lines.append(f"| ↳ {grandchild} | {desc} |")
+        lines.append("")
 
-    # Class table
-    lines.append("| Class | Parent | Description |")
-    lines.append("|-------|--------|-------------|")
-    for cls_label in sorted(classes):
-        info = classes[cls_label]
-        parent = info["parent"] or "—"
-        desc = info["comment"][:120] + "..." if len(info["comment"]) > 120 else info["comment"]
-        desc = desc.replace("|", "—")
-        lines.append(f"| **{cls_label}** | {parent} | {desc} |")
-    lines.append("")
+    # Standalone classes (no parent, no children)
+    if orphans:
+        lines.append("### Standalone classes")
+        lines.append("")
+        lines.append("| Class | Description |")
+        lines.append("|-------|-------------|")
+        for cls_label in sorted(orphans):
+            desc = classes[cls_label]["comment"].replace("|", "—")
+            lines.append(f"| **{cls_label}** | {desc} |")
+        lines.append("")
 
     # Collect properties
     obj_props = []
@@ -499,7 +536,7 @@ def render_ontology_overview(g):
         lines.append("| Property | Domain | Range | Description |")
         lines.append("|----------|--------|-------|-------------|")
         for p_label, d, r, p_comment in sorted(obj_props):
-            desc = p_comment[:100].replace("|", "—")
+            desc = p_comment.replace("|", "—")
             lines.append(f"| `{p_label}` | {d} | {r} | {desc} |")
         lines.append("")
 
@@ -510,7 +547,7 @@ def render_ontology_overview(g):
         lines.append("| Property | Domain | Range | Description |")
         lines.append("|----------|--------|-------|-------------|")
         for p_label, d, r, p_comment in sorted(data_props):
-            desc = p_comment[:100].replace("|", "—")
+            desc = p_comment.replace("|", "—")
             lines.append(f"| `{p_label}` | {d} | {r} | {desc} |")
         lines.append("")
 
