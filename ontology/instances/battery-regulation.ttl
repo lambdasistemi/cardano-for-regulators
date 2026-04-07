@@ -1,0 +1,334 @@
+@prefix cfr:    <https://lambdasistemi.github.io/cardano-for-regulators/ontology#> .
+@prefix bat:    <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+
+# =============================================================================
+# EU Battery Regulation — (EU) 2023/1542
+# =============================================================================
+
+bat:BatteryRegulation
+    a cfr:EURegulation ;
+    rdfs:label "EU Battery Regulation" ;
+    cfr:officialReference "(EU) 2023/1542" ;
+    cfr:fullTextURL "https://eur-lex.europa.eu/eli/reg/2023/1542/oj"^^xsd:anyURI ;
+    cfr:inForceDate "2024-02-18"^^xsd:date ;
+    cfr:hasFitAssessment cfr:StrongFit ;
+    cfr:hasMode cfr:PhysicalMode ;
+
+    # Parties
+    cfr:hasParty bat:EuropeanCommission, bat:Manufacturer, bat:Importer,
+                 bat:Distributor, bat:Consumer, bat:Recycler,
+                 bat:MarketSurveillance, bat:NotifiedBody ;
+
+    # Obligations
+    cfr:hasObligation bat:SoHReading, bat:CarbonFootprint,
+                      bat:RecycledContent, bat:Composition,
+                      bat:SupplyChainAudit, bat:RepurposingRecord,
+                      bat:EndOfLifeDeclaration ;
+
+    # Patterns
+    cfr:usesPattern cfr:CommitmentThenSubmit, cfr:LifecycleStateMachine,
+                    cfr:MPTPerOperator, cfr:OperatorAsAggregator,
+                    cfr:DoubleSignature, cfr:BatonPattern,
+                    cfr:BeaconGatedAttestation, cfr:CrossOperatorHandoff,
+                    cfr:RewardDistribution, cfr:TieredAccess ;
+
+    # Constraint assessments
+    cfr:hasConstraintAssessment bat:CA_DataCadence, bat:CA_Sequential,
+                               bat:CA_Liveness, bat:CA_Fee,
+                               bat:CA_Identity ;
+
+    # Trust model
+    cfr:hasTrustRelationship bat:TR_MfrConsumer, bat:TR_MfrRegulator,
+                            bat:TR_ConsumerConsumer, bat:TR_SensorChain ;
+
+    # Redeemer actions
+    cfr:hasRedeemerAction bat:RegisterItem, bat:AssignReporter,
+                          bat:ReassignReporter, bat:CreateCommitment,
+                          bat:SubmitReading, bat:TransferOwnership,
+                          bat:Repurpose ;
+
+    # Penalty
+    cfr:hasPenalty bat:Art77Penalty .
+
+# =============================================================================
+# Parties
+# =============================================================================
+
+bat:EuropeanCommission
+    a cfr:ConcreteParty ;
+    cfr:partyLabel "European Commission" ;
+    cfr:mapsToRole cfr:RegulatorRole .
+
+bat:Manufacturer
+    a cfr:ConcreteParty ;
+    cfr:partyLabel "Manufacturer" ;
+    cfr:mapsToRole cfr:OperatorRole ;
+    rdfs:comment "Primary operator. Manages product passport trie. Pays all fees." .
+
+bat:Importer
+    a cfr:ConcreteParty ;
+    cfr:partyLabel "Importer" ;
+    cfr:mapsToRole cfr:OperatorRole ;
+    rdfs:comment "Secondary operator for imported batteries." .
+
+bat:Distributor
+    a cfr:ConcreteParty ;
+    cfr:partyLabel "Distributor" ;
+    cfr:mapsToRole cfr:OperatorRole .
+
+bat:Consumer
+    a cfr:ConcreteParty ;
+    cfr:partyLabel "Consumer" ;
+    cfr:mapsToRole cfr:UserRole ;
+    rdfs:comment "Taps NFC to trigger SE050 SoH reading. No wallet." .
+
+bat:Recycler
+    a cfr:ConcreteParty ;
+    cfr:partyLabel "Recycler" ;
+    cfr:mapsToRole cfr:OperatorRole ;
+    rdfs:comment "End-of-life operator. Receives handoff from original manufacturer." .
+
+bat:MarketSurveillance
+    a cfr:ConcreteParty ;
+    cfr:partyLabel "Market Surveillance Authority" ;
+    cfr:mapsToRole cfr:VerificationBody .
+
+bat:NotifiedBody
+    a cfr:ConcreteParty ;
+    cfr:partyLabel "Notified Body" ;
+    cfr:mapsToRole cfr:VerificationBody .
+
+# =============================================================================
+# Constraint assessments
+# =============================================================================
+
+bat:CA_DataCadence
+    a cfr:ConstraintAssessment ;
+    cfr:assessesConstraint cfr:DataCadence ;
+    cfr:assessmentResult "Pass" ;
+    cfr:assessmentJustification "SoH readings monthly at most. Lifecycle events are rare." .
+
+bat:CA_Sequential
+    a cfr:ConstraintAssessment ;
+    cfr:assessesConstraint cfr:SequentialAccess ;
+    cfr:assessmentResult "Pass" ;
+    cfr:assessmentJustification "One manufacturer per trie. Relay on repurposing." .
+
+bat:CA_Liveness
+    a cfr:ConstraintAssessment ;
+    cfr:assessesConstraint cfr:Liveness ;
+    cfr:assessmentResult "Pass" ;
+    cfr:assessmentJustification "Art. 77 penalties for non-compliance. Slot-based timeouts for readings." .
+
+bat:CA_Fee
+    a cfr:ConstraintAssessment ;
+    cfr:assessesConstraint cfr:FeeAlignment ;
+    cfr:assessmentResult "Pass" ;
+    cfr:assessmentJustification "Manufacturers pay ~$0.10-0.15 per reading. Compliance value far exceeds cost." .
+
+bat:CA_Identity
+    a cfr:ConstraintAssessment ;
+    cfr:assessesConstraint cfr:IdentityDelegation ;
+    cfr:assessmentResult "Pass" ;
+    cfr:assessmentJustification "NFC secure element (SE050) signs readings. Consumer taps phone, no wallet." .
+
+# =============================================================================
+# Obligations
+# =============================================================================
+
+bat:SoHReading
+    a cfr:Obligation ;
+    cfr:obligationLabel "State of Health reading" ;
+    cfr:deadline "Monthly at most — event-driven on tap" ;
+    cfr:implementedBy cfr:CommitmentThenSubmit ;
+    cfr:hasDataType cfr:DynamicData ;
+    cfr:hasAccessTier cfr:PublicAccess ;
+    cfr:producesRecord bat:SoHLeaf ;
+    rdfs:comment "Core obligation. SE050 signs COSE_Sign1 with SoH, SoC, cycles, voltage, temperature." .
+
+bat:SoHLeaf
+    a cfr:ComplianceRecord ;
+    cfr:onChainRepresentation "ItemLeaf: commitment cleared, COSE_Sign1 verified, reward credited to ReporterLeaf" .
+
+bat:CarbonFootprint
+    a cfr:Obligation ;
+    cfr:obligationLabel "Carbon footprint per kWh" ;
+    cfr:deadline "At manufacturing — static" ;
+    cfr:hasDataType cfr:StaticData ;
+    cfr:hasAccessTier cfr:PublicAccess ;
+    cfr:producesRecord bat:CarbonLeaf .
+
+bat:CarbonLeaf
+    a cfr:ComplianceRecord ;
+    cfr:onChainRepresentation "Hash of carbon footprint declaration in metadata field" .
+
+bat:RecycledContent
+    a cfr:Obligation ;
+    cfr:obligationLabel "Recycled content percentages" ;
+    cfr:deadline "At manufacturing — static" ;
+    cfr:hasDataType cfr:StaticData ;
+    cfr:hasAccessTier cfr:PublicAccess .
+
+bat:Composition
+    a cfr:Obligation ;
+    cfr:obligationLabel "Detailed composition" ;
+    cfr:deadline "At manufacturing — static" ;
+    cfr:hasDataType cfr:StaticData ;
+    cfr:hasAccessTier cfr:AuthorizedAccess ;
+    rdfs:comment "Chemistry, hazardous substances. Authorized operators only." .
+
+bat:SupplyChainAudit
+    a cfr:Obligation ;
+    cfr:obligationLabel "Supply chain audit trail" ;
+    cfr:deadline "Event-driven" ;
+    cfr:hasDataType cfr:EventDrivenData ;
+    cfr:hasAccessTier cfr:AuthorityAccess .
+
+bat:RepurposingRecord
+    a cfr:Obligation ;
+    cfr:obligationLabel "Repurposing record" ;
+    cfr:legalBasis "Art 77(6a)" ;
+    cfr:deadline "At repurposing event" ;
+    cfr:implementedBy cfr:CrossOperatorHandoff ;
+    cfr:hasDataType cfr:EventDrivenData ;
+    cfr:hasAccessTier cfr:PublicAccess ;
+    rdfs:comment "New passport linked to original. Back-link via Merkle proof." .
+
+bat:EndOfLifeDeclaration
+    a cfr:Obligation ;
+    cfr:obligationLabel "End of life declaration" ;
+    cfr:legalBasis "Art 77(6b)" ;
+    cfr:deadline "At recycling" ;
+    cfr:implementedBy cfr:LifecycleStateMachine ;
+    cfr:hasDataType cfr:EventDrivenData ;
+    cfr:hasAccessTier cfr:PublicAccess .
+
+# =============================================================================
+# Trust model
+# =============================================================================
+
+bat:TR_MfrConsumer
+    a cfr:TrustRelationship ;
+    cfr:trustPartyA bat:Manufacturer ;
+    cfr:trustPartyB bat:Consumer ;
+    cfr:hasTrustLevel cfr:LowTrust ;
+    cfr:trustRisk "SoH manipulation" ;
+    cfr:blockchainMitigates "Immutable on-chain history" .
+
+bat:TR_MfrRegulator
+    a cfr:TrustRelationship ;
+    cfr:trustPartyA bat:Manufacturer ;
+    cfr:trustPartyB bat:EuropeanCommission ;
+    cfr:hasTrustLevel cfr:MediumTrust ;
+    cfr:trustRisk "Selective reporting" ;
+    cfr:blockchainMitigates "Completeness proofs via MPT" .
+
+bat:TR_ConsumerConsumer
+    a cfr:TrustRelationship ;
+    cfr:trustPartyA bat:Consumer ;
+    cfr:trustPartyB bat:Consumer ;
+    cfr:hasTrustLevel cfr:NoTrust ;
+    cfr:trustRisk "Counterfeit resale" ;
+    cfr:blockchainMitigates "On-chain provenance" .
+
+bat:TR_SensorChain
+    a cfr:TrustRelationship ;
+    cfr:trustPartyA bat:Consumer ;
+    cfr:trustPartyB bat:Consumer ;
+    cfr:hasTrustLevel cfr:MediumTrust ;
+    cfr:trustRisk "Analog tampering" ;
+    cfr:blockchainMitigates "Hardware SE — tampering is expensive, destructive" .
+
+# =============================================================================
+# Redeemer actions
+# =============================================================================
+
+bat:RegisterItem        a cfr:RedeemerAction ; cfr:actionLabel "RegisterItem" ;
+    cfr:hasGuard bat:G_MfrIdentity, bat:G_StandingOK, bat:G_NoExistingLeaf,
+                 bat:G_MetadataNotEmpty, bat:G_MfrSig, bat:G_MPTInsert .
+
+bat:AssignReporter      a cfr:RedeemerAction ; cfr:actionLabel "AssignReporter" ;
+    cfr:hasGuard bat:G_MfrIdentity, bat:G_ReporterNone, bat:G_RewardPositive,
+                 bat:G_MfrSig, bat:G_MPTUpdate .
+
+bat:ReassignReporter    a cfr:RedeemerAction ; cfr:actionLabel "ReassignReporter" ;
+    cfr:hasGuard bat:G_MfrIdentity, bat:G_CommitmentNone, bat:G_RewardPositive,
+                 bat:G_MfrSig, bat:G_MPTUpdate .
+
+bat:CreateCommitment    a cfr:RedeemerAction ; cfr:actionLabel "CreateCommitment" ;
+    cfr:hasGuard bat:G_MfrIdentity, bat:G_ReporterAssigned, bat:G_CommitmentNone,
+                 bat:G_ValidWindow, bat:G_MfrSig, bat:G_MPTUpdate .
+
+bat:SubmitReading       a cfr:RedeemerAction ; cfr:actionLabel "SubmitReading" ;
+    cfr:hasGuard bat:G_CommitmentExists, bat:G_COSEValid, bat:G_PayloadMatch,
+                 bat:G_Freshness, bat:G_ReporterKeyMatch, bat:G_ReporterSig,
+                 bat:G_MPTTransition ;
+    rdfs:comment "Core transaction. Two-leaf atomic update (item + reporter)." .
+
+bat:TransferOwnership   a cfr:RedeemerAction ; cfr:actionLabel "TransferOwnership" ;
+    cfr:hasGuard bat:G_SellerSig, bat:G_BuyerSig, bat:G_FreshReading,
+                 bat:G_CIP68Transfer, bat:G_CommitmentNone, bat:G_MPTUpdate .
+
+bat:Repurpose           a cfr:RedeemerAction ; cfr:actionLabel "Repurpose" ;
+    cfr:hasGuard bat:G_MfrSig, bat:G_NewOpIdentity, bat:G_NewOpQualified,
+                 bat:G_FreshReading, bat:G_BacklinkValid, bat:G_CommitmentNone .
+
+# --- Guards ---
+
+bat:G_MfrIdentity       a cfr:Guard ; cfr:guardDescription "Manufacturer key ∈ identity trie" .
+bat:G_StandingOK        a cfr:Guard ; cfr:guardDescription "Standing ≠ suspended (regulation trie)" .
+bat:G_NoExistingLeaf    a cfr:Guard ; cfr:guardDescription "No existing leaf at hash(itemPubKey)" .
+bat:G_MetadataNotEmpty  a cfr:Guard ; cfr:guardDescription "Metadata ≠ empty" .
+bat:G_ReporterNone      a cfr:Guard ; cfr:guardDescription "reporter = Nothing" .
+bat:G_ReporterAssigned  a cfr:Guard ; cfr:guardDescription "reporter ≠ Nothing" .
+bat:G_RewardPositive    a cfr:Guard ; cfr:guardDescription "nextReward > 0" .
+bat:G_CommitmentNone    a cfr:Guard ; cfr:guardDescription "commitment = Nothing" .
+bat:G_CommitmentExists  a cfr:Guard ; cfr:guardDescription "commitment ≠ Nothing" .
+bat:G_ValidWindow       a cfr:Guard ; cfr:guardDescription "validFrom ≤ validUntil, validFrom ≥ lower slot" .
+bat:G_COSEValid         a cfr:Guard ; cfr:guardDescription "COSE_Sign1 signature valid (Ed25519 or secp256k1)" .
+bat:G_PayloadMatch      a cfr:Guard ; cfr:guardDescription "Payload validFrom/validUntil match commitment" .
+bat:G_Freshness         a cfr:Guard ; cfr:guardDescription "validFrom ≤ current_slot ≤ validUntil" .
+bat:G_ReporterKeyMatch  a cfr:Guard ; cfr:guardDescription "Reporter key matches assignment" .
+bat:G_ReporterSig       a cfr:Guard ; cfr:guardDescription "Reporter signature present (actor auth)" .
+bat:G_SellerSig         a cfr:Guard ; cfr:guardDescription "Seller signature present" .
+bat:G_BuyerSig          a cfr:Guard ; cfr:guardDescription "Buyer signature present" .
+bat:G_FreshReading      a cfr:Guard ; cfr:guardDescription "Fresh COSE_Sign1 BMS reading valid" .
+bat:G_CIP68Transfer     a cfr:Guard ; cfr:guardDescription "CIP-68 user token moves seller → buyer" .
+bat:G_NewOpIdentity     a cfr:Guard ; cfr:guardDescription "New operator key ∈ identity trie" .
+bat:G_NewOpQualified    a cfr:Guard ; cfr:guardDescription "New operator qualified (regulation trie)" .
+bat:G_BacklinkValid     a cfr:Guard ; cfr:guardDescription "Back-link Merkle proof valid against original root" .
+bat:G_MfrSig            a cfr:Guard ; cfr:guardDescription "Manufacturer signature present" ;
+    cfr:isUniversalGuard true .
+bat:G_MPTInsert         a cfr:Guard ; cfr:guardDescription "MPT insert proof valid" .
+bat:G_MPTUpdate         a cfr:Guard ; cfr:guardDescription "MPT update proof valid" .
+bat:G_MPTTransition     a cfr:Guard ; cfr:guardDescription "MPT transition proof valid (two-leaf update)" .
+
+# =============================================================================
+# Penalty
+# =============================================================================
+
+bat:Art77Penalty
+    a cfr:Penalty ;
+    cfr:penaltyDescription "Art. 77 — fines, market withdrawal, criminal liability" ;
+    cfr:maxFine "Member State defined — includes product ban" .
+
+# =============================================================================
+# Formal invariants
+# =============================================================================
+
+bat:CommitmentCleared
+    a cfr:FormalInvariant ;
+    cfr:invariantStatement "commitment_cleared_after_submit: After SubmitReading, commitment = Nothing" ;
+    cfr:proofStatus "Proved" .
+
+bat:RewardMonotonicity
+    a cfr:FormalInvariant ;
+    cfr:invariantStatement "credit_increases: reward > 0 → rewardsAccumulated strictly increases" ;
+    cfr:proofStatus "Proved" .
+
+bat:MPTConsistency
+    a cfr:FormalInvariant ;
+    cfr:invariantStatement "transition_preserves_consistency: two-leaf update preserves MPT validity" ;
+    cfr:proofStatus "Proved" .
