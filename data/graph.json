@@ -123,9 +123,9 @@
     {
       "id": "signing-function",
       "label": "Signing Function",
-      "kind": "artifact",
+      "kind": "concept",
       "group": "schema",
-      "description": "The atomic unit of the system — an opaque capability that produces signatures when invoked without exposing the private key. Can live on different substrates: hardware secure element (physical isolation), phone enclave (OS isolation), server endpoint (access control), TEE (hardware-assisted software), or ZK circuit (cryptographic isolation). All present the same interface to the chain.",
+      "description": "An off-chain opaque capability that produces signatures when invoked without exposing the private key. Lives on hardware (SE050), phone enclave, server endpoint, TEE, or ZK circuit. Only its public key and signatures appear on-chain. All substrates present the same interface to the validator.",
       "links": [
         { "label": "Schema section", "url": "https://lambdasistemi.github.io/cardano-for-regulators/framework/schema/#the-signing-function" }
       ]
@@ -133,9 +133,9 @@
     {
       "id": "beacon",
       "label": "Beacon",
-      "kind": "artifact",
+      "kind": "concept",
       "group": "schema",
-      "description": "A minted token that bridges the regulator's on-chain assessment to the user. The minting policy forces inclusion of the operator's current standing from the regulation trie. Carries an expiry — no stale reputation. The operator cannot collect user attestations without first minting a beacon. The user signs over the beacon as proof of informed awareness.",
+      "description": "A mechanism required by the regulator to validate user contributions against the operator's will. Forces the operator to sample and disclose their current standing from the regulation trie before collecting attestations. The user signs over it, making the regulator's assessment part of the payload. Expires to prevent stale reputation. Implementation-agnostic — may be a minted token, a reference input check, or any construction the smart contract enforces.",
       "links": [
         { "label": "Schema section", "url": "https://lambdasistemi.github.io/cardano-for-regulators/framework/schema/#the-beacon-protocol" }
       ]
@@ -185,7 +185,7 @@
       "label": "Beacon-Gated Attestation",
       "kind": "protocol",
       "group": "protocols",
-      "description": "The operator mints a beacon (policy reads standing from regulation trie), relays it to the user with a query. The user verifies the beacon is current and authentic, then signs their data together with the beacon. At batch submission, the smart contract validates the beacon. Forces transparency: the operator cannot filter the regulator's assessment.",
+      "description": "The regulator requires that user contributions can only be validated if the operator's current standing is disclosed. The operator samples their standing from the regulation trie and relays it to the user. The user signs their data together with this disclosure. The smart contract enforces that the standing was current at submission time. The operator cannot filter or suppress the regulator's assessment.",
       "links": [
         { "label": "Pattern docs", "url": "https://lambdasistemi.github.io/cardano-for-regulators/framework/patterns/#beacon-gated-attestation" }
       ]
@@ -511,7 +511,7 @@
     { "source": "identity-provider", "target": "identity-trie", "label": "maintains", "description": "The identity provider verifies real-world entities and adds their public keys to the identity trie. The same trie can serve multiple regulators and regulations." },
     { "source": "operator", "target": "process-trie", "label": "manages", "description": "Each operator manages their own process trie — one UTxO holding the root hash. Contains all items or processes under their responsibility. Governed by the regulator's smart contract." },
     { "source": "operator", "target": "signing-function", "label": "mints", "description": "The operator generates key pairs, registers public keys on-chain, and distributes signing capabilities as physical devices or digital credentials to users." },
-    { "source": "operator", "target": "beacon", "label": "mints", "description": "The operator mints beacons by sampling their standing from the regulation trie. Cannot collect user attestations without a current, valid beacon." },
+    { "source": "operator", "target": "beacon", "label": "produces", "description": "The operator produces a beacon by sampling their standing from the regulation trie. Cannot collect user attestations without a current, valid beacon." },
     { "source": "user", "target": "signing-function", "label": "uses", "description": "The user performs regulated actions via the signing function — tap, scan, or click. The signing function produces signatures without exposing the private key. The user never interacts with blockchain directly." },
     { "source": "user", "target": "beacon", "label": "signs over", "description": "The user verifies the beacon is current and authentic (using the regulator's public key), then signs their data together with the beacon. This creates cryptographic proof of informed awareness." },
     { "source": "smart-contract", "target": "process-trie", "label": "governs", "description": "The smart contract validates every state transition on the process trie: checking signatures, trie membership, beacon validity, commitment windows, and root hash consistency." },
@@ -526,7 +526,7 @@
     { "source": "commitment-protocol", "target": "gdpr-rights-requests", "label": "proves timeliness of", "description": "The commitment protocol proves that rights-request responses were submitted within the 1-month (or 3-month extended) window, with timeout as provable non-compliance." },
     { "source": "lifecycle-state-machine", "target": "gdpr-consent", "label": "models", "description": "GDPR consent follows a lifecycle state machine: None to Given to Withdrawn. Each transition is a leaf update in the controller's trie with an immutable timestamped hash." },
     { "source": "lifecycle-state-machine", "target": "battery-regulation", "label": "models", "description": "Battery lifecycle follows: Virgin to Active to Repurposed to Recycled. Each transition may change the responsible operator via cross-operator handoff." },
-    { "source": "beacon-protocol", "target": "beacon", "label": "defines minting of", "description": "The beacon-gated attestation pattern defines how beacons are minted (policy reads standing), relayed to users, signed over, and validated at batch submission." },
+    { "source": "beacon-protocol", "target": "beacon", "label": "defines use of", "description": "The beacon-gated attestation pattern defines how the beacon is produced, relayed to users, signed over, and validated at batch submission." },
     { "source": "beacon-protocol", "target": "informed-consent", "label": "enforces", "description": "By requiring the user to sign over the beacon, the protocol enforces informed consent by construction. The user cannot interact without seeing the regulator's disclosure." },
     { "source": "double-signature", "target": "signing-function", "label": "uses", "description": "The process signature comes from the signing function (authentication — this process produced this data). Combined with the actor signature (authorization — this actor requests this transition)." },
     { "source": "double-signature", "target": "smart-contract", "label": "verified by", "description": "The smart contract validates both signatures at every transaction. Neither alone is sufficient — together they prove an authorized, attested actor interacted with a specific process." },
