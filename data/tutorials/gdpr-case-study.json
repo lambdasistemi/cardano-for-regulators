@@ -25,7 +25,7 @@
       "node": "gdpr-breach-notification",
       "depth": 2,
       "title": "72-Hour Breach Notification",
-      "narrative": "The flagship on-chain use case. [Art 33](https://gdpr-info.eu/art-33-gdpr/) requires notifying the SA within 72 hours of becoming aware of a breach. Today, controllers self-report timing — there is no neutral witness.\n\nThe [commitment-then-submit](node:commitment-protocol) protocol turns this into a verifiable fact. The controller creates a commitment when the breach is detected (slot recorded). Notification clears it. The chain proves exactly how many slots elapsed. [Temporal integrity](node:temporal-integrity) replaces self-reported claims."
+      "narrative": "The flagship on-chain use case. [Art 33](https://gdpr-info.eu/art-33-gdpr/) requires notifying the SA within 72 hours of becoming aware of a breach. Today, controllers self-report timing — there is no neutral witness.\n\nThe [commitment-then-submit](node:commitment-protocol) protocol turns part of this into a verifiable fact. The controller creates a commitment when it records the breach on-chain, and notification clears it. The chain proves how many slots elapsed between those two on-chain events. [Temporal integrity](node:temporal-integrity) replaces some self-reported claims, but not the need to assess off-chain awareness."
     },
     {
       "node": "gdpr-rights-requests",

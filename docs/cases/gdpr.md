@@ -45,7 +45,7 @@ is protocol enforcement, not hardware attestation.
 | **Reporting obligations** | Processing records ([Art 30][art30]), breach notifications ([Art 33][art33]–[34][art34]), DPIAs ([Art 35][art35]), consent records ([Art 7][art7]), rights-request responses ([Art 12][art12]–22) |
 | **Verification bodies** | Supervisory authorities (investigative + corrective powers, [Art 58][art58]), certification bodies ([Art 42][art42]–43) |
 | **Beneficiaries** | Data subjects (citizens), society (trust in digital economy) |
-| **Penalties** | Tier 1: €10M / 2% turnover. Tier 2: €20M / 4% turnover ([Art 83][art83]). Plus compensation ([Art 82][art82]), criminal liability ([Art 84][art84]). |
+| **Penalties** | Tier 1: €10M / 2% turnover. Tier 2: €20M / 4% turnover ([Art 83][art83]). Plus compensation ([Art 82][art82]). Member States may also lay down additional penalties under [Art 84][art84]. |
 | **Timeline** | In force since May 2018. No phase-in remaining. |
 
 ## Schema mapping
@@ -84,19 +84,20 @@ What goes on-chain is compliance evidence, not personal data.
 
 !!! warning "The bright line"
     No personal data — names, identifiers, health data, location, behavioural
-    profiles — ever touches the chain. Not even encrypted. The chain stores
-    hashes of compliance records. The actual records stay off-chain under the
-    controller's custody. If a hash can be linked to an identified person
-    only through the controller's off-chain data, and that off-chain data is
-    properly segregated, the on-chain hash does not constitute personal data
-    under [Recital 26][rec26]'s "means reasonably likely to be used" test.
+    profiles — should ever touch the chain. Not even encrypted. The chain
+    stores hashes of compliance records, while the actual records stay
+    off-chain under the controller's custody. This materially reduces GDPR
+    risk, but it does not automatically take every on-chain hash outside the
+    scope of personal data law. Whether a hash is personal data remains a
+    context-specific legal question under [Recital 26][rec26], especially if
+    linkage data exists off-chain.
 
 ## Trust model
 
 | Party A | Party B | Trust | Risk | Mitigation |
 |---------|---------|-------|------|------------|
 | Controller | Data subject | Low | Controller claims consent existed, subject denies | Immutable timestamped consent hash |
-| Controller | SA | Medium | Controller backdates breach notification | Commitment proves exact submission time |
+| Controller | SA | Medium | Controller backdates breach notification | Commitment proves on-chain ordering and submission slot once the controller commits |
 | Controller | Processor | Medium | Processor claims it followed instructions | On-chain agreement hash, activity proofs |
 | Data subject | Controller | Low | Controller ignores rights request | Commitment-then-submit proves response timeline |
 | SA | Controller | Medium | Controller presents selective compliance evidence | Completeness via MPT — all records in trie |
@@ -110,7 +111,7 @@ What goes on-chain is compliance evidence, not personal data.
 | **Consent record** | [Art 7][art7] | Created on consent, updated on withdrawal. Proves existence at any point. |
 | **Certification seal** | [Art 42][art42] | Issued by accredited body, 3-year validity, renewable. Revocable. |
 | **Rights-request ticket** | [Art 12][art12]–22 | Created on request, must be resolved within deadline. Commitment pattern. |
-| **Breach receipt** | [Art 33][art33] | Proves exact submission time to SA. One-shot commitment. |
+| **Breach receipt** | [Art 33][art33] | Proves the submission slot and on-chain ordering of the notification. One-shot commitment. |
 | **Adequacy attestation** | [Art 44][art44]–49 | Reference to transfer safeguard. Static until revoked. |
 
 ## Protocol patterns
@@ -134,16 +135,19 @@ sequenceDiagram
 
     C->>CH: Submit notification hash<br/>(clears commitment)
 
-    Note over CH: Chain proves:<br/>exactly how many slots<br/>between detection and notification
+    Note over CH: Chain proves:<br/>how many slots elapsed<br/>between commitment and notification
 
     SA->>CH: Query: was notification<br/>within 72h window?
 
     Note over SA: If commitment exists<br/>but no submission → non-compliance<br/>If no commitment and breach<br/>known → non-compliance
 ```
 
-The commitment protocol turns the 72-hour rule from a self-reported claim
-into a verifiable on-chain fact. The absence of a timely commitment, when a
-breach becomes known through other channels, is itself evidence of
+The commitment protocol turns part of the 72-hour rule from a self-reported
+claim into a verifiable on-chain fact. It proves when the controller
+committed and when it later submitted the notification hash. It does not, by
+itself, prove the exact off-chain moment when the controller first became
+aware of the breach. The absence of a timely commitment, when a breach
+becomes known through other channels, is still evidence of possible
 non-compliance.
 
 ### Rights-request response (1 month)
@@ -278,8 +282,9 @@ on-chain fees. A single GDPR fine (median ~€50,000 for SMEs, millions for
 large companies) makes this negligible.
 
 The value proposition is not cost savings — it is **proof**. The controller
-can prove to any court, SA, or data subject exactly when every compliance
-action occurred, with a neutral timestamp that neither party produced.
+can prove to any court, SA, or data subject when a compliance action was
+anchored on-chain, with neutral evidence of inclusion and slot ordering that
+neither party produced unilaterally.
 
 ## Comparison with Battery Regulation
 

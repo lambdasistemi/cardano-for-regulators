@@ -627,10 +627,11 @@ expiry window.
 
 ### The user's one requirement
 
-The user needs one thing: the regulator's public key. With it, they can
-verify that the beacon actually comes from the regulator's minting policy
-before signing over it. This key is public by definition — published on
-official channels, embedded in the smart contract, verifiable on-chain.
+The user needs one thing: the regulator's beacon policy identifier and
+trust anchor. With it, they can verify that the beacon was minted under
+the regulator's declared minting policy before signing over it. That
+identifier is public by definition — published on official channels,
+embedded in the smart contract, and verifiable on-chain.
 
 ## The baton pattern
 

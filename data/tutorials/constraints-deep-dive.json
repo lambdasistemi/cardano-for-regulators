@@ -25,7 +25,7 @@
       "node": "constraint-liveness",
       "depth": 2,
       "title": "3. Liveness",
-      "narrative": "[Liveness](node:constraint-liveness): if one actor stops, the chain stalls. The regulation must provide deadlines and penalties as external incentive.\n\nBattery Regulation: Art. 77 penalties, market withdrawal. GDPR: [fines up to 4% global turnover](node:gdpr-fines), the strongest penalties of any regulation analysed. The 72-hour and 1-month deadlines are themselves liveness mechanisms — they impose time pressure that prevents indefinite stalling.\n\nProtocol escalation (slot-based timeouts, bond slashing) can supplement regulatory penalties."
+      "narrative": "[Liveness](node:constraint-liveness): if one actor stops, the chain stalls. The regulation must provide deadlines and penalties as external incentive.\n\nBattery Regulation: Member State penalties under Art. 93, plus market restriction or withdrawal measures. GDPR: [fines up to 4% global turnover](node:gdpr-fines), the strongest penalties of any regulation analysed. The 72-hour and 1-month deadlines are themselves liveness mechanisms — they impose time pressure that prevents indefinite stalling.\n\nProtocol escalation (slot-based timeouts, bond slashing) can supplement regulatory penalties."
     },
     {
       "node": "constraint-fee-alignment",

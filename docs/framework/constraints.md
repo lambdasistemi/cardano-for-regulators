@@ -86,10 +86,10 @@ two ways:
 The regulation imposes deadlines and penalties. An operator who fails to
 submit data within the required window faces:
 
-- Fines (e.g., Battery Regulation Art. 77 penalties)
+- Fines (e.g., Battery Regulation penalties under Art. 93)
 - Market withdrawal of their products
 - Loss of operating license
-- Criminal liability for systematic non-compliance
+- Possible criminal liability where national law provides it
 
 This is external liveness — the legal system provides the incentive.
 
