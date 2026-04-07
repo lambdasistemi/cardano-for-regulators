@@ -16,5 +16,11 @@ jobs:
     runs-on: nixos
     steps:
       - uses: actions/checkout@v6
-      - name: Stub CI
-        run: echo "CI stub — will be replaced by real CI"
+
+      - name: Validate RDF ontology and instances
+        run: |
+          nix run --impure --expr '
+            let pkgs = import (builtins.getFlake "nixpkgs") {};
+                py = pkgs.python3.withPackages (p: [ p.rdflib ]);
+            in pkgs.writeShellScriptBin "validate" "exec ${py}/bin/python3 ontology/validate.py"
+          '
