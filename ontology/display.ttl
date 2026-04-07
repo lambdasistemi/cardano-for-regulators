@@ -1,0 +1,369 @@
+@prefix cfr:    <https://lambdasistemi.github.io/cardano-for-regulators/ontology#> .
+@prefix gdpr:   <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#> .
+@prefix bat:    <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#> .
+@prefix gb:     <https://lambdasistemi.github.io/graph-browser/vocab/terms#> .
+@prefix gbk:    <https://lambdasistemi.github.io/graph-browser/vocab/kinds#> .
+@prefix gbg:    <https://lambdasistemi.github.io/graph-browser/vocab/groups#> .
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+
+# =============================================================================
+# Graph-browser display annotations for the CFR ontology.
+# Layers on top of cfr.ttl + instances — does not modify core OWL definitions.
+# =============================================================================
+
+# --- Groups ---
+
+gbg:schema       gb:groupId "schema" .
+gbg:protocol     gb:groupId "protocol" .
+gbg:constraint   gb:groupId "constraint" .
+gbg:gdpr         gb:groupId "gdpr" .
+gbg:battery      gb:groupId "battery" .
+gbg:mechanism    gb:groupId "mechanism" .
+gbg:tension      gb:groupId "tension" .
+
+# =============================================================================
+# Schema parties
+# =============================================================================
+
+cfr:RegulatorRole         a gb:Node, gbk:party ;
+    gb:nodeId "regulator-role" ; gb:group gbg:schema ;
+    rdfs:label "Regulator" ;
+    gb:description "Defines rules. Maintains regulation trie and publishes the smart contract." .
+
+cfr:IdentityProviderRole  a gb:Node, gbk:party ;
+    gb:nodeId "identity-provider-role" ; gb:group gbg:schema ;
+    rdfs:label "Identity Provider" ;
+    gb:description "Maintains the identity trie of verified real-world entities." .
+
+cfr:OperatorRole          a gb:Node, gbk:party ;
+    gb:nodeId "operator-role" ; gb:group gbg:schema ;
+    rdfs:label "Operator" ;
+    gb:description "Manages a process trie. Transparent pipe: collects, verifies off-chain, submits, pays fees." .
+
+cfr:UserRole              a gb:Node, gbk:party ;
+    gb:nodeId "user-role" ; gb:group gbg:schema ;
+    rdfs:label "User" ;
+    gb:description "Acts via signing function. No wallet, no ADA, no blockchain knowledge." .
+
+# =============================================================================
+# On-chain artifacts
+# =============================================================================
+
+cfr:IdentityTrie    a gb:Node, gbk:artifact ;
+    gb:nodeId "identity-trie" ; gb:group gbg:schema ;
+    rdfs:label "Identity Trie" ;
+    gb:description "Attested actor public keys. Maintained by the identity provider." .
+
+cfr:RegulationTrie  a gb:Node, gbk:artifact ;
+    gb:nodeId "regulation-trie" ; gb:group gbg:schema ;
+    rdfs:label "Regulation Trie" ;
+    gb:description "Actor qualifications and operator standing. Maintained by the regulator." .
+
+cfr:ProcessTrie     a gb:Node, gbk:artifact ;
+    gb:nodeId "process-trie" ; gb:group gbg:schema ;
+    rdfs:label "Process Trie" ;
+    gb:description "Items, processes, and state. One per operator. Governed by the smart contract." .
+
+cfr:SmartContract   a gb:Node, gbk:artifact ;
+    gb:nodeId "smart-contract" ; gb:group gbg:schema ;
+    rdfs:label "Smart Contract" ;
+    gb:description "The regulation in executable form. Plutus validator. Reads identity and regulation tries as reference inputs." .
+
+# =============================================================================
+# Schema mechanisms
+# =============================================================================
+
+cfr:Beacon          a gb:Node, gbk:mechanism ;
+    gb:nodeId "beacon" ; gb:group gbg:mechanism ;
+    rdfs:label "Beacon" ;
+    gb:description "Regulator's policy carrier. Forces operator to sample standing and data policy before collecting attestations." .
+
+cfr:SigningFunction a gb:Node, gbk:mechanism ;
+    gb:nodeId "signing-function" ; gb:group gbg:mechanism ;
+    rdfs:label "Signing Function" ;
+    gb:description "Off-chain opaque capability that produces signatures. Hardware SE, phone enclave, server, TEE, or ZK circuit." .
+
+# =============================================================================
+# Protocol patterns
+# =============================================================================
+
+cfr:CommitmentThenSubmit    a gb:Node, gbk:protocol ;
+    gb:nodeId "commitment-then-submit" ; gb:group gbg:protocol ;
+    rdfs:label "Commitment-then-Submit" ;
+    gb:description "Proves an action occurred within a time window. Single-use, slot-bounded." .
+
+cfr:LifecycleStateMachine   a gb:Node, gbk:protocol ;
+    gb:nodeId "lifecycle-state-machine" ; gb:group gbg:protocol ;
+    rdfs:label "Lifecycle State Machine" ;
+    gb:description "Status field in MPT leaf with on-chain validated transitions. No backward transitions." .
+
+cfr:MPTPerOperator          a gb:Node, gbk:protocol ;
+    gb:nodeId "mpt-per-operator" ; gb:group gbg:protocol ;
+    rdfs:label "MPT-per-Operator" ;
+    gb:description "One UTxO per operator, items as leaves. Cost scales with operators not items." .
+
+cfr:DoubleSignature         a gb:Node, gbk:protocol ;
+    gb:nodeId "double-signature" ; gb:group gbg:protocol ;
+    rdfs:label "Double Signature" ;
+    gb:description "Every transition requires process signature (authentication) and actor signature (authorization)." .
+
+cfr:BatonPattern            a gb:Node, gbk:protocol ;
+    gb:nodeId "baton-pattern" ; gb:group gbg:protocol ;
+    rdfs:label "Baton Pattern" ;
+    gb:description "Authorization travels as a baton. Actor A's final submission includes Actor B's pubkey." .
+
+cfr:BeaconGatedAttestation  a gb:Node, gbk:protocol ;
+    gb:nodeId "beacon-gated-attestation" ; gb:group gbg:protocol ;
+    rdfs:label "Beacon-Gated Attestation" ;
+    gb:description "Operator cannot collect attestations without a current beacon carrying standing and data policy." .
+
+cfr:CrossOperatorHandoff    a gb:Node, gbk:protocol ;
+    gb:nodeId "cross-operator-handoff" ; gb:group gbg:protocol ;
+    rdfs:label "Cross-Operator Handoff" ;
+    gb:description "Responsibility transfer. Old leaf read-only, new leaf with back-link to original root." .
+
+cfr:RelayStateMachine       a gb:Node, gbk:protocol ;
+    gb:nodeId "relay-state-machine" ; gb:group gbg:protocol ;
+    rdfs:label "Relay State Machine" ;
+    gb:description "Multiple actors act in sequence. The regulation defines the ordering." .
+
+cfr:RewardDistribution      a gb:Node, gbk:protocol ;
+    gb:nodeId "reward-distribution" ; gb:group gbg:protocol ;
+    rdfs:label "Reward Distribution" ;
+    gb:description "Monotonically increasing reward accumulator in MPT leaf." .
+
+cfr:TieredAccess            a gb:Node, gbk:protocol ;
+    gb:nodeId "tiered-access" ; gb:group gbg:protocol ;
+    rdfs:label "Tiered Access" ;
+    gb:description "On-chain root hash only. Off-chain encrypted layers per access tier." .
+
+cfr:UpstreamVerification    a gb:Node, gbk:protocol ;
+    gb:nodeId "upstream-verification" ; gb:group gbg:protocol ;
+    rdfs:label "Upstream Verification" ;
+    gb:description "One operator's compliance depends on reading another operator's trie." .
+
+# =============================================================================
+# Constraints
+# =============================================================================
+
+cfr:DataCadence        a gb:Node, gbk:constraint ;
+    gb:nodeId "data-cadence" ; gb:group gbg:constraint ;
+    rdfs:label "Data Cadence" ;
+    gb:description "Update rhythm compatible with L1 settlement." .
+
+cfr:SequentialAccess   a gb:Node, gbk:constraint ;
+    gb:nodeId "sequential-access" ; gb:group gbg:constraint ;
+    rdfs:label "Sequential Access" ;
+    gb:description "No concurrent contention on the same data structure." .
+
+cfr:Liveness           a gb:Node, gbk:constraint ;
+    gb:nodeId "liveness" ; gb:group gbg:constraint ;
+    rdfs:label "Liveness" ;
+    gb:description "Deadlines and penalties incentivize participation." .
+
+cfr:FeeAlignment       a gb:Node, gbk:constraint ;
+    gb:nodeId "fee-alignment" ; gb:group gbg:constraint ;
+    rdfs:label "Fee Alignment" ;
+    gb:description "An actor benefits enough to sponsor on-chain activity." .
+
+cfr:IdentityDelegation a gb:Node, gbk:constraint ;
+    gb:nodeId "identity-delegation" ; gb:group gbg:constraint ;
+    rdfs:label "Identity Delegation" ;
+    gb:description "Non-crypto actors participate via cryptographic proxies." .
+
+# =============================================================================
+# Case studies
+# =============================================================================
+
+gdpr:GDPR              a gb:Node, gbk:case-study ;
+    gb:nodeId "gdpr" ; gb:group gbg:gdpr ;
+    rdfs:label "GDPR" ;
+    gb:description "EU 2016/679. Compliance evidence on-chain, personal data off-chain. Process mode." .
+
+bat:BatteryRegulation   a gb:Node, gbk:case-study ;
+    gb:nodeId "battery-regulation" ; gb:group gbg:battery ;
+    rdfs:label "EU Battery Regulation" ;
+    gb:description "EU 2023/1542. Product passport with NFC secure element. Physical mode." .
+
+# =============================================================================
+# GDPR concrete parties
+# =============================================================================
+
+gdpr:SupervisoryAuthority a gb:Node, gbk:gdpr-party ;
+    gb:nodeId "gdpr-sa" ; gb:group gbg:gdpr ;
+    rdfs:label "Supervisory Authority" ;
+    gb:description "National DPA. Maps to Regulator role." .
+
+gdpr:DataController     a gb:Node, gbk:gdpr-party ;
+    gb:nodeId "gdpr-controller" ; gb:group gbg:gdpr ;
+    rdfs:label "Data Controller" ;
+    gb:description "Determines purposes and means of processing. Maps to Operator role." .
+
+gdpr:DataSubject        a gb:Node, gbk:gdpr-party ;
+    gb:nodeId "gdpr-subject" ; gb:group gbg:gdpr ;
+    rdfs:label "Data Subject" ;
+    gb:description "Identified or identifiable natural person. Maps to User role." .
+
+# =============================================================================
+# GDPR key obligations
+# =============================================================================
+
+gdpr:BreachNotification72h a gb:Node, gbk:obligation ;
+    gb:nodeId "gdpr-breach-72h" ; gb:group gbg:gdpr ;
+    rdfs:label "Breach Notification (72h)" ;
+    gb:description "Art 33. Controller notifies SA within 72 hours. Flagship commitment-then-submit use case." .
+
+gdpr:RightsResponse1m   a gb:Node, gbk:obligation ;
+    gb:nodeId "gdpr-rights-1m" ; gb:group gbg:gdpr ;
+    rdfs:label "Rights Response (1 month)" ;
+    gb:description "Art 12-22. Controller responds to data subject rights within 1 month." .
+
+gdpr:ConsentRecord      a gb:Node, gbk:obligation ;
+    gb:nodeId "gdpr-consent" ; gb:group gbg:gdpr ;
+    rdfs:label "Consent Lifecycle" ;
+    gb:description "Art 7. None → Given → Withdrawn. Each transition timestamped on-chain." .
+
+# =============================================================================
+# GDPR tensions
+# =============================================================================
+
+gdpr:T_Erasure          a gb:Node, gbk:tension ;
+    gb:nodeId "tension-erasure" ; gb:group gbg:tension ;
+    rdfs:label "Immutability vs Erasure" ;
+    gb:description "Art 17. Delete off-chain pre-image → on-chain hash becomes anonymous under Recital 26." .
+
+# =============================================================================
+# Bright line phases
+# =============================================================================
+
+cfr:ActivePhase         a gb:Node, gbk:concept ;
+    gb:nodeId "bright-line-active" ; gb:group gbg:gdpr ;
+    rdfs:label "Active Phase" ;
+    gb:description "Pre-image exists. Hash is personal data under Breyer. Lawful under Art 6(1)(c)." .
+
+cfr:PostErasurePhase    a gb:Node, gbk:concept ;
+    gb:nodeId "bright-line-post-erasure" ; gb:group gbg:gdpr ;
+    rdfs:label "Post-Erasure Phase" ;
+    gb:description "Pre-image deleted. Hash is unlinkable — anonymous under Recital 26. Outside GDPR scope." .
+
+# =============================================================================
+# Battery concrete parties
+# =============================================================================
+
+bat:Manufacturer        a gb:Node, gbk:battery-party ;
+    gb:nodeId "bat-manufacturer" ; gb:group gbg:battery ;
+    rdfs:label "Manufacturer" ;
+    gb:description "Primary operator. Manages product passport trie. Pays all fees." .
+
+bat:Consumer            a gb:Node, gbk:battery-party ;
+    gb:nodeId "bat-consumer" ; gb:group gbg:battery ;
+    rdfs:label "Consumer" ;
+    gb:description "Taps NFC to trigger SE050 SoH reading. No wallet needed." .
+
+# =============================================================================
+# Battery key obligations
+# =============================================================================
+
+bat:SoHReading          a gb:Node, gbk:obligation ;
+    gb:nodeId "bat-soh" ; gb:group gbg:battery ;
+    rdfs:label "SoH Reading" ;
+    gb:description "Core obligation. SE050 signs COSE_Sign1 with SoH, cycles, voltage, temperature." .
+
+# =============================================================================
+# Edges (gb:EdgeAssertion)
+# =============================================================================
+
+# Schema edges
+_:e1  a gb:EdgeAssertion ; gb:from cfr:RegulatorRole ;   gb:to cfr:RegulationTrie ;  rdfs:label "maintains" ;
+    gb:description "The regulator maintains the regulation trie with standing and data policy." .
+_:e2  a gb:EdgeAssertion ; gb:from cfr:RegulatorRole ;   gb:to cfr:SmartContract ;   rdfs:label "publishes" ;
+    gb:description "Publishes the regulation as a Plutus validator." .
+_:e3  a gb:EdgeAssertion ; gb:from cfr:IdentityProviderRole ; gb:to cfr:IdentityTrie ; rdfs:label "maintains" ;
+    gb:description "Verifies entities and maintains attested public keys." .
+_:e4  a gb:EdgeAssertion ; gb:from cfr:OperatorRole ;    gb:to cfr:ProcessTrie ;     rdfs:label "manages" ;
+    gb:description "Each operator manages their own process trie." .
+_:e5  a gb:EdgeAssertion ; gb:from cfr:OperatorRole ;    gb:to cfr:SigningFunction ;  rdfs:label "mints" ;
+    gb:description "Generates key pairs, registers on-chain, distributes to users." .
+_:e6  a gb:EdgeAssertion ; gb:from cfr:OperatorRole ;    gb:to cfr:Beacon ;          rdfs:label "produces" ;
+    gb:description "Samples standing and data policy from regulation trie." .
+_:e7  a gb:EdgeAssertion ; gb:from cfr:UserRole ;        gb:to cfr:SigningFunction ;  rdfs:label "uses" ;
+    gb:description "Performs regulated actions via the signing function." .
+_:e8  a gb:EdgeAssertion ; gb:from cfr:UserRole ;        gb:to cfr:Beacon ;          rdfs:label "signs over" ;
+    gb:description "Verifies beacon, encrypts data for recipients, signs over it." .
+_:e9  a gb:EdgeAssertion ; gb:from cfr:SmartContract ;   gb:to cfr:ProcessTrie ;     rdfs:label "governs" ;
+    gb:description "Validates every state transition." .
+_:e10 a gb:EdgeAssertion ; gb:from cfr:SmartContract ;   gb:to cfr:IdentityTrie ;    rdfs:label "reads" ;
+    gb:description "Reference input: checks actor is attested." .
+_:e11 a gb:EdgeAssertion ; gb:from cfr:SmartContract ;   gb:to cfr:RegulationTrie ;  rdfs:label "reads" ;
+    gb:description "Reference input: checks actor is qualified." .
+
+# Beacon protocol edges
+_:e12 a gb:EdgeAssertion ; gb:from cfr:BeaconGatedAttestation ; gb:to cfr:Beacon ; rdfs:label "defines" ;
+    gb:description "The pattern defines how beacons are produced and validated." .
+_:e13 a gb:EdgeAssertion ; gb:from cfr:DoubleSignature ; gb:to cfr:SigningFunction ; rdfs:label "uses" ;
+    gb:description "Process signature comes from the signing function." .
+
+# Case study → pattern edges
+_:e20 a gb:EdgeAssertion ; gb:from gdpr:GDPR ; gb:to cfr:CommitmentThenSubmit ; rdfs:label "uses" ;
+    gb:description "72h breach notification and 1-month rights response." .
+_:e21 a gb:EdgeAssertion ; gb:from gdpr:GDPR ; gb:to cfr:LifecycleStateMachine ; rdfs:label "uses" ;
+    gb:description "Consent lifecycle: None → Given → Withdrawn." .
+_:e22 a gb:EdgeAssertion ; gb:from bat:BatteryRegulation ; gb:to cfr:CommitmentThenSubmit ; rdfs:label "uses" ;
+    gb:description "Authenticated SoH readings via two-transaction protocol." .
+_:e23 a gb:EdgeAssertion ; gb:from bat:BatteryRegulation ; gb:to cfr:RewardDistribution ; rdfs:label "uses" ;
+    gb:description "Incentivises third-party SoH data collection." .
+_:e24 a gb:EdgeAssertion ; gb:from bat:BatteryRegulation ; gb:to cfr:CrossOperatorHandoff ; rdfs:label "uses" ;
+    gb:description "Repurposing: new leaf in new operator's trie with back-link." .
+
+# Party mapping edges
+_:e30 a gb:EdgeAssertion ; gb:from gdpr:SupervisoryAuthority ; gb:to cfr:RegulatorRole ; rdfs:label "maps to" ;
+    gb:description "The SA maps to the regulator role in the schema." .
+_:e31 a gb:EdgeAssertion ; gb:from gdpr:DataController ; gb:to cfr:OperatorRole ; rdfs:label "maps to" ;
+    gb:description "The data controller maps to the operator role." .
+_:e32 a gb:EdgeAssertion ; gb:from gdpr:DataSubject ; gb:to cfr:UserRole ; rdfs:label "maps to" ;
+    gb:description "The data subject maps to the user role." .
+_:e33 a gb:EdgeAssertion ; gb:from bat:Manufacturer ; gb:to cfr:OperatorRole ; rdfs:label "maps to" ;
+    gb:description "The manufacturer maps to the operator role." .
+_:e34 a gb:EdgeAssertion ; gb:from bat:Consumer ; gb:to cfr:UserRole ; rdfs:label "maps to" ;
+    gb:description "The consumer maps to the user role." .
+
+# Obligation → pattern edges
+_:e40 a gb:EdgeAssertion ; gb:from gdpr:BreachNotification72h ; gb:to cfr:CommitmentThenSubmit ; rdfs:label "implemented by" ;
+    gb:description "The 72h deadline is enforced via the commitment protocol." .
+_:e41 a gb:EdgeAssertion ; gb:from gdpr:RightsResponse1m ; gb:to cfr:CommitmentThenSubmit ; rdfs:label "implemented by" ;
+    gb:description "The 1-month deadline is enforced via the commitment protocol." .
+_:e42 a gb:EdgeAssertion ; gb:from gdpr:ConsentRecord ; gb:to cfr:LifecycleStateMachine ; rdfs:label "implemented by" ;
+    gb:description "Consent transitions modelled as a lifecycle state machine." .
+_:e43 a gb:EdgeAssertion ; gb:from bat:SoHReading ; gb:to cfr:CommitmentThenSubmit ; rdfs:label "implemented by" ;
+    gb:description "Two-transaction protocol for authenticated readings." .
+
+# Constraint → pattern edges
+_:e50 a gb:EdgeAssertion ; gb:from cfr:MPTPerOperator ; gb:to cfr:SequentialAccess ; rdfs:label "satisfies" ;
+    gb:description "One writer per trie — no contention by design." .
+_:e51 a gb:EdgeAssertion ; gb:from cfr:MPTPerOperator ; gb:to cfr:DataCadence ; rdfs:label "satisfies" ;
+    gb:description "One transaction per batch regardless of item count." .
+_:e52 a gb:EdgeAssertion ; gb:from cfr:SigningFunction ; gb:to cfr:IdentityDelegation ; rdfs:label "implements" ;
+    gb:description "Cryptographic proxies for non-crypto actors." .
+
+# Missing pattern edges (were orphans)
+_:e53 a gb:EdgeAssertion ; gb:from gdpr:GDPR ; gb:to cfr:TieredAccess ; rdfs:label "uses" ;
+    gb:description "On-chain root hash only. Off-chain encrypted layers per access tier." .
+_:e54 a gb:EdgeAssertion ; gb:from gdpr:GDPR ; gb:to cfr:RelayStateMachine ; rdfs:label "uses" ;
+    gb:description "Rights request follows a relay: subject → controller → response." .
+_:e55 a gb:EdgeAssertion ; gb:from bat:BatteryRegulation ; gb:to cfr:BatonPattern ; rdfs:label "uses" ;
+    gb:description "Ownership baton passes from manufacturer to transporter to consumer." .
+_:e56 a gb:EdgeAssertion ; gb:from cfr:UpstreamVerification ; gb:to cfr:ProcessTrie ; rdfs:label "reads across" ;
+    gb:description "One operator's compliance depends on reading another operator's trie." .
+
+# Missing constraint edges
+_:e57 a gb:EdgeAssertion ; gb:from gdpr:GDPR ; gb:to cfr:FeeAlignment ; rdfs:label "satisfies" ;
+    gb:description "Controllers pay ~50-100 EUR/year vs potential fines of millions." .
+_:e58 a gb:EdgeAssertion ; gb:from gdpr:GDPR ; gb:to cfr:Liveness ; rdfs:label "satisfies" ;
+    gb:description "Up to 4% global turnover. Strongest liveness incentive of any regulation." .
+
+# Bright line edges
+_:e60 a gb:EdgeAssertion ; gb:from cfr:ActivePhase ; gb:to cfr:PostErasurePhase ; rdfs:label "delete pre-image" ;
+    gb:description "Controller deletes off-chain data. Hash transitions from personal data to anonymous." .
+_:e61 a gb:EdgeAssertion ; gb:from gdpr:T_Erasure ; gb:to cfr:PostErasurePhase ; rdfs:label "resolved by" ;
+    gb:description "Pre-image deletion makes the hash unlinkable. Immutability is not a problem." .

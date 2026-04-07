@@ -23,7 +23,14 @@ jobs:
       - name: Generate pages from ontology
         run: nix develop .#default --quiet -c python3 ontology/render.py
 
+      - name: Build ontology viewer
+        run: nix build .#ontology-viewer
+
       - name: Build docs
         run: nix develop github:paolino/dev-assets?dir=mkdocs --quiet -c mkdocs build --strict
+
+      - name: Copy ontology viewer into site
+        run: mkdir -p site/viewer && cp -r result/* site/viewer/
+
       - name: Deploy docs
         run: nix develop github:paolino/dev-assets?dir=mkdocs --quiet -c mkdocs gh-deploy --force
