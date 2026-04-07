@@ -136,6 +136,8 @@ def render_obligation_pattern_graph(g, obligations):
                 lines.append(f'    {p_id}{{{{"⚙️ {p_label}"}}}}')
                 patterns_seen.add(p_id)
             edge_label = deadline if deadline else ""
+            # Strip parentheses — mermaid edge labels can't contain them
+            edge_label = edge_label.replace("(", "").replace(")", "")
             if edge_label:
                 lines.append(f"    {ob_id} -->|{edge_label}| {p_id}")
             else:
@@ -144,7 +146,7 @@ def render_obligation_pattern_graph(g, obligations):
         if dtype:
             d_id = mermaid_id(dtype) + "_dt"
             if d_id not in patterns_seen:
-                lines.append(f'    {d_id}(("{dtype}")')
+                lines.append(f'    {d_id}["{dtype}"]')
                 patterns_seen.add(d_id)
             lines.append(f"    {ob_id} -.-> {d_id}")
 
