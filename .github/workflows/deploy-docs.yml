@@ -22,6 +22,10 @@ jobs:
 
       - name: Build site
         run: |
+          # 0. Clean stale build artifacts (nix store files are read-only)
+          chmod -R u+w site 2>/dev/null || true
+          rm -rf site
+
           # 1. Generate markdown pages from ontology
           nix develop .#default --quiet -c python3 ontology/render.py
 
