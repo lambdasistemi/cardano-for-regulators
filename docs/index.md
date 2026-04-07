@@ -1,7 +1,8 @@
 # Cardano for Regulators
 
 How a regulator can use Cardano to enforce a multi-party regulation without
-running infrastructure, managing identities, or trusting any single operator.
+operating the end-user workflow, managing user identities directly, or
+trusting any single operator.
 
 Start with [**The Thesis**](thesis.md) — why blockchain is the right tool
 for regulated multi-party systems, and why the economics work.

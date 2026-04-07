@@ -14,7 +14,7 @@ framework was extracted.
 |-----------|-----------|-------|
 | **Data cadence** | Pass | SoH readings monthly at most. Lifecycle events are rare. |
 | **Sequential access** | Pass | One manufacturer per trie. Relay on repurposing. |
-| **Liveness** | Pass | Art. 77 penalties for non-compliance. Slot-based timeouts for readings. |
+| **Liveness** | Pass | Penalties are set by Member States under Art. 93. The regulation also supports market restrictions and withdrawal for non-compliance. Slot-based timeouts can still be enforced at protocol level. |
 | **Fee alignment** | Pass | Manufacturers pay ~$0.10-0.15 per reading. Compliance value far exceeds cost. |
 | **Identity delegation** | Pass | NFC secure element (SE050) signs readings. Consumer taps phone, no wallet needed. |
 
@@ -27,7 +27,7 @@ framework was extracted.
 | **Reporting obligations** | SoH, recycled content %, carbon footprint, composition |
 | **Verification bodies** | Market surveillance authorities, notified bodies |
 | **Beneficiaries** | Consumers, second-life market, recyclers |
-| **Penalties** | Fines, market withdrawal, criminal liability |
+| **Penalties** | Member State penalties under Art. 93, plus market restriction or withdrawal measures elsewhere in the regulation |
 | **Timeline** | 2027 EV batteries, 2028 industrial, phased |
 
 ## Data classification
@@ -37,8 +37,8 @@ framework was extracted.
 | Product identity, chemistry, manufacturing date | Static | Public |
 | Carbon footprint per kWh, performance class | Static | Public |
 | Recycled content percentages | Static | Public |
-| State of Health (SoH) | Dynamic | Public |
-| Cycle count, capacity fade | Dynamic | Public |
+| State of Health (SoH) | Dynamic | Restricted to the lawful purchaser, parties acting on their behalf, and other actors expressly entitled by the regulation |
+| Cycle count, capacity fade | Dynamic | Restricted with the SoH access tier, not generally public |
 | Detailed composition | Static | Authorized operators |
 | Disassembly instructions | Static | Authorized operators |
 | Full SoH history | Dynamic | Authorities |

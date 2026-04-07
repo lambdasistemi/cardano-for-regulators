@@ -43,7 +43,7 @@
       "node": "gdpr-fines",
       "depth": 2,
       "title": "Comparative Economics",
-      "narrative": "Battery Regulation: annual on-chain cost ~$1,800-3,600 for the entire market. GDPR: ~50-100 EUR/year per controller.\n\n[GDPR fines](node:gdpr-fines) are far larger — up to 4% global turnover vs the Battery Regulation's Art. 77 penalties. This means the [fee alignment](node:constraint-fee-alignment) argument is even stronger for GDPR. The cost of non-compliance so far exceeds the cost of on-chain compliance that the economic case is overwhelming."
+      "narrative": "Battery Regulation: annual on-chain cost ~$1,800-3,600 for the entire market. GDPR: ~50-100 EUR/year per controller.\n\n[GDPR fines](node:gdpr-fines) are far larger — up to 4% global turnover vs the Battery Regulation's Member State penalties under Art. 93. This means the [fee alignment](node:constraint-fee-alignment) argument is even stronger for GDPR. The cost of non-compliance so far exceeds the cost of on-chain compliance that the economic case is overwhelming."
     }
   ]
 }

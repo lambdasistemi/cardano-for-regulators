@@ -265,15 +265,17 @@ does not depend on it.
 
 ## The user's one requirement
 
-The user needs one thing: the regulator's public key. With it, the user
-can verify that the beacon actually comes from the regulator before
-signing over it — they are not blindly signing whatever the operator
-hands them.
+The user needs one thing: the regulator's policy identifier and trust
+anchor. In practice this means the minting policy hash, plus whatever
+official channel the regulator uses to publish or attest that policy. With
+it, the user can verify that the beacon was minted under the regulator's
+declared rules before signing over it — they are not blindly signing
+whatever the operator hands them.
 
-This is a minimal, reasonable requirement. The regulator's public key is
-public by definition — published on official channels, embedded in the
-smart contract, verifiable on-chain. It is the single piece of
-out-of-band trust the entire system requires.
+This is a minimal, reasonable requirement. The policy identifier is public
+by definition — published on official channels, embedded in the smart
+contract, and verifiable on-chain. It is the main piece of out-of-band
+trust the system requires.
 
 ## Informed consent by construction
 
@@ -294,8 +296,9 @@ data the user signs, and the signature is the acknowledgment.
 
 A three-way binding where each party is held accountable:
 
-- **The regulator** encodes rules in a smart contract and publishes
-  beacons. Cannot retroactively rewrite evidence or selectively enforce.
+- **The regulator** encodes rules in a smart contract and publishes the
+  standing data and minting policy that govern beacons. Cannot
+  retroactively rewrite evidence or selectively enforce.
 - **The operator** relays beacons, collects user attestations, submits
   batches. Cannot tamper with data, censor beacons, or deviate from the
   contract.
@@ -303,7 +306,9 @@ A three-way binding where each party is held accountable:
   Cannot claim ignorance of disclosed information.
 
 The blockchain is the substrate that makes this possible: a neutral,
-immutable, temporally certified anchor that no single party controls.
+immutable anchor that no single party controls. It certifies inclusion in
+chain history and slot ordering, not an exact real-world timestamp for
+every off-chain event.
 The regulation defines the protocol. The smart contract enforces it. The
 user gets both free access and real guarantees.
 
