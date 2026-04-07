@@ -176,6 +176,65 @@ cfr:SigningFunction
         Lives on hardware (SE050), phone enclave, server, TEE, or ZK circuit.
         Only its public key and signatures appear on-chain.""" .
 
+# --- Beacon sub-concepts ---
+
+cfr:DataPolicy
+    a owl:Class ;
+    rdfs:label "Data Policy" ;
+    rdfs:comment """The beacon's second payload. Defines who may receive the data
+        (recipient public keys or key classes) and under what conditions. The
+        regulator encodes parameterized disclosure rules in the regulation trie;
+        the beacon carries the applicable rule for each interaction.""" .
+
+cfr:DisclosureContext
+    a owl:Class ;
+    rdfs:label "Disclosure Context" ;
+    rdfs:comment """A parameterized rule that determines encryption recipients
+        based on the purpose of the interaction. Examples: routine reading
+        (owner + regulator), pre-sale disclosure (owner + buyer + regulator),
+        regulatory audit (regulator only), repurposing (both operators +
+        regulator).""" .
+
+cfr:RoutineContext       a cfr:DisclosureContext ; rdfs:label "Routine Reading" ;
+    rdfs:comment "Every beacon — recipients: owner + regulator." .
+cfr:PreSaleContext       a cfr:DisclosureContext ; rdfs:label "Pre-sale Disclosure" ;
+    rdfs:comment "Owner requests — recipients: owner + prospective buyer + regulator." .
+cfr:AuditContext         a cfr:DisclosureContext ; rdfs:label "Regulatory Audit" ;
+    rdfs:comment "Regulator requests — recipients: regulator only." .
+cfr:RepurposingContext   a cfr:DisclosureContext ; rdfs:label "Repurposing Assessment" ;
+    rdfs:comment "Either party requests — recipients: original owner + new operator + regulator." .
+cfr:RecallContext        a cfr:DisclosureContext ; rdfs:label "Emergency Recall" ;
+    rdfs:comment "Regulator requests — recipients: all affected owners + regulator." .
+
+# --- Bright line lifecycle ---
+
+cfr:BrightLinePhase
+    a owl:Class ;
+    rdfs:label "Bright Line Phase" ;
+    rdfs:comment """A phase in the lifecycle of an on-chain hash's personal data
+        status. The hash transitions from personal data (with lawful basis) to
+        anonymous data (outside GDPR scope) when the off-chain pre-image is
+        deleted.""" .
+
+cfr:ActivePhase          a cfr:BrightLinePhase ; rdfs:label "Active Compliance" ;
+    rdfs:comment """Pre-image exists. Hash is personal data under Breyer
+        (C-582/14). Processing lawful under Art 6(1)(c).""" .
+cfr:RetentionPhase       a cfr:BrightLinePhase ; rdfs:label "Retention under Exception" ;
+    rdfs:comment """Pre-image retained for legal claims defence. Hash is
+        personal data. Lawful under Art 17(3)(e).""" .
+cfr:PostErasurePhase     a cfr:BrightLinePhase ; rdfs:label "Post-Erasure" ;
+    rdfs:comment """Pre-image deleted. Hash is unlinkable — anonymous under
+        Recital 26. Outside GDPR scope.""" .
+
+# --- Tension / residual risk ---
+
+cfr:Tension
+    a owl:Class ;
+    rdfs:label "Tension" ;
+    rdfs:comment """A conflict between a GDPR principle and a blockchain
+        architectural property. Each tension has a standard framing, the
+        architecture's response, and a residual risk.""" .
+
 # --- Protocol patterns ---
 
 cfr:ProtocolPattern
@@ -329,6 +388,8 @@ cfr:AccessTier
     rdfs:comment "Visibility level for a data element." .
 
 cfr:PublicAccess      a cfr:AccessTier ; rdfs:label "Public" .
+cfr:RestrictedAccess  a cfr:AccessTier ; rdfs:label "Restricted" ;
+    rdfs:comment "Restricted to the lawful holder and parties expressly entitled by the regulation." .
 cfr:AuthorizedAccess  a cfr:AccessTier ; rdfs:label "Authorized Operators" .
 cfr:AuthorityAccess   a cfr:AccessTier ; rdfs:label "Authorities Only" .
 
@@ -784,6 +845,66 @@ cfr:readsAsReference
     rdfs:domain cfr:SmartContract ;
     rdfs:range cfr:Trie ;
     rdfs:label "reads as reference input" .
+
+# --- Beacon data policy ---
+
+cfr:hasDataPolicy
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:Beacon ;
+    rdfs:range cfr:DataPolicy ;
+    rdfs:label "has data policy" ;
+    rdfs:comment "The data policy carried by this beacon." .
+
+cfr:hasDisclosureContext
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:DataPolicy ;
+    rdfs:range cfr:DisclosureContext ;
+    rdfs:label "has disclosure context" ;
+    rdfs:comment "A disclosure context permitted by this data policy." .
+
+# --- Bright line ---
+
+cfr:hasBrightLinePhase
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:Regulation ;
+    rdfs:range cfr:BrightLinePhase ;
+    rdfs:label "has bright line phase" ;
+    rdfs:comment "A phase in the hash personal-data lifecycle for this regulation." .
+
+# --- Tension ---
+
+cfr:hasTension
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:Regulation ;
+    rdfs:range cfr:Tension ;
+    rdfs:label "has tension" .
+
+cfr:tensionLabel
+    a owl:DatatypeProperty ;
+    rdfs:domain cfr:Tension ;
+    rdfs:range xsd:string ;
+    rdfs:label "tension label" .
+
+cfr:standardFraming
+    a owl:DatatypeProperty ;
+    rdfs:domain cfr:Tension ;
+    rdfs:range xsd:string ;
+    rdfs:label "standard framing" ;
+    rdfs:comment "How the literature frames this tension." .
+
+cfr:architectureResponse
+    a owl:DatatypeProperty ;
+    rdfs:domain cfr:Tension ;
+    rdfs:range xsd:string ;
+    rdfs:label "architecture response" ;
+    rdfs:comment "How this architecture addresses the tension." .
+
+cfr:residualRisk
+    a owl:DatatypeProperty ;
+    rdfs:domain cfr:Tension ;
+    rdfs:range xsd:string ;
+    rdfs:label "residual risk" ;
+    rdfs:comment "The remaining risk after the architecture addresses the tension." .
 
 # --- Cross-regulation ---
 

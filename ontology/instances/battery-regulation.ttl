@@ -50,7 +50,7 @@ bat:BatteryRegulation
                           bat:Repurpose ;
 
     # Penalty
-    cfr:hasPenalty bat:Art77Penalty .
+    cfr:hasPenalty bat:Art93Penalty .
 
 # =============================================================================
 # Parties
@@ -144,9 +144,9 @@ bat:SoHReading
     cfr:deadline "Monthly at most — event-driven on tap" ;
     cfr:implementedBy cfr:CommitmentThenSubmit ;
     cfr:hasDataType cfr:DynamicData ;
-    cfr:hasAccessTier cfr:PublicAccess ;
+    cfr:hasAccessTier cfr:RestrictedAccess ;
     cfr:producesRecord bat:SoHLeaf ;
-    rdfs:comment "Core obligation. SE050 signs COSE_Sign1 with SoH, SoC, cycles, voltage, temperature." .
+    rdfs:comment "Core obligation. SE050 signs COSE_Sign1 with SoH, SoC, cycles, voltage, temperature. Access restricted to lawful purchaser and expressly entitled parties." .
 
 bat:SoHLeaf
     a cfr:ComplianceRecord ;
@@ -189,7 +189,7 @@ bat:SupplyChainAudit
 bat:RepurposingRecord
     a cfr:Obligation ;
     cfr:obligationLabel "Repurposing record" ;
-    cfr:legalBasis "Art 77(6a)" ;
+    cfr:legalBasis "Art 77(3) — new battery passport for repurposed batteries" ;
     cfr:deadline "At repurposing event" ;
     cfr:implementedBy cfr:CrossOperatorHandoff ;
     cfr:hasDataType cfr:EventDrivenData ;
@@ -199,7 +199,7 @@ bat:RepurposingRecord
 bat:EndOfLifeDeclaration
     a cfr:Obligation ;
     cfr:obligationLabel "End of life declaration" ;
-    cfr:legalBasis "Art 77(6b)" ;
+    cfr:legalBasis "Art 77(5) — passport ceases to exist on recycling" ;
     cfr:deadline "At recycling" ;
     cfr:implementedBy cfr:LifecycleStateMachine ;
     cfr:hasDataType cfr:EventDrivenData ;
@@ -309,7 +309,7 @@ bat:G_MPTTransition     a cfr:Guard ; cfr:guardDescription "MPT transition proof
 # Penalty
 # =============================================================================
 
-bat:Art77Penalty
+bat:Art93Penalty
     a cfr:Penalty ;
     cfr:penaltyDescription "Art. 93 Member State penalties, plus market restriction or withdrawal measures under the regulation" ;
     cfr:maxFine "Member State defined — includes product ban" .

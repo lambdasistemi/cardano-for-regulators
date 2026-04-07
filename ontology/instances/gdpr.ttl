@@ -273,7 +273,7 @@ gdpr:TR_ControllerSA
     cfr:trustPartyB gdpr:SupervisoryAuthority ;
     cfr:hasTrustLevel cfr:MediumTrust ;
     cfr:trustRisk "Controller backdates breach notification" ;
-    cfr:blockchainMitigates "Commitment proves on-chain ordering and submission slot" .
+    cfr:blockchainMitigates "Commitment proves on-chain ordering and submission slot once the controller commits" .
 
 gdpr:TR_ControllerProcessor
     a cfr:TrustRelationship ;
@@ -386,6 +386,78 @@ gdpr:Tier2Fine
     a cfr:Penalty ;
     cfr:penaltyDescription "Processing principles, data subject rights, transfers (Art 5, 6, 7, 9, 12-22, 44-49)" ;
     cfr:maxFine "€20,000,000 or 4% global turnover" .
+
+# =============================================================================
+# Bright line lifecycle
+# =============================================================================
+
+gdpr:GDPR
+    cfr:hasBrightLinePhase cfr:ActivePhase, cfr:RetentionPhase, cfr:PostErasurePhase .
+
+# =============================================================================
+# GDPR–blockchain tensions
+# =============================================================================
+
+gdpr:GDPR
+    cfr:hasTension gdpr:T_Erasure, gdpr:T_Rectification, gdpr:T_Storage,
+                   gdpr:T_Minimisation, gdpr:T_Controller, gdpr:T_CrossBorder,
+                   gdpr:T_AutomatedDecision, gdpr:T_LegalBasis .
+
+gdpr:T_Erasure
+    a cfr:Tension ;
+    cfr:tensionLabel "Immutability vs erasure (Art 17)" ;
+    cfr:standardFraming "Cannot delete on-chain personal data" ;
+    cfr:architectureResponse "Delete the off-chain pre-image. The on-chain hash becomes unlinkable — anonymous under Recital 26." ;
+    cfr:residualRisk "If the controller fails to delete all copies of the pre-image, the hash remains personal data." .
+
+gdpr:T_Rectification
+    a cfr:Tension ;
+    cfr:tensionLabel "Immutability vs rectification (Art 16)" ;
+    cfr:standardFraming "Cannot correct on-chain records" ;
+    cfr:architectureResponse "Compliance records are appended (new leaf for correction). History of corrections is accountability evidence." ;
+    cfr:residualRisk "Original hash persists alongside correction. Original pre-image should be deleted." .
+
+gdpr:T_Storage
+    a cfr:Tension ;
+    cfr:tensionLabel "Storage limitation (Art 5(1)(e))" ;
+    cfr:standardFraming "On-chain data persists forever" ;
+    cfr:architectureResponse "Active phase: legitimate retention under Art 6(1)(c). After retention period: delete pre-image, hash becomes anonymous." ;
+    cfr:residualRisk "Controller must track retention periods and actually delete pre-images when they expire." .
+
+gdpr:T_Minimisation
+    a cfr:Tension ;
+    cfr:tensionLabel "Data minimisation (Art 5(1)(c))" ;
+    cfr:standardFraming "Full node replication" ;
+    cfr:architectureResponse "Only hashes on-chain — one fixed-size hash per compliance record." ;
+    cfr:residualRisk "Low." .
+
+gdpr:T_Controller
+    a cfr:Tension ;
+    cfr:tensionLabel "Controller designation" ;
+    cfr:standardFraming "Who is the controller on a public chain?" ;
+    cfr:architectureResponse "The data controller is the operator of their own trie. Post-erasure the hash is anonymous and the question is moot." ;
+    cfr:residualRisk "During active phase the controller is clearly identifiable." .
+
+gdpr:T_CrossBorder
+    a cfr:Tension ;
+    cfr:tensionLabel "Cross-border transfers (Art 44-49)" ;
+    cfr:standardFraming "Nodes worldwide = transfer to every jurisdiction" ;
+    cfr:architectureResponse "During active phase: controller is the only party holding the link. Post-erasure: anonymous data, no transfer concern." ;
+    cfr:residualRisk "Breyer argument could theoretically apply to chain nodes during active phase, but nodes have no practical means to obtain the pre-image." .
+
+gdpr:T_AutomatedDecision
+    a cfr:Tension ;
+    cfr:tensionLabel "Automated decision-making (Art 22)" ;
+    cfr:standardFraming "Smart contracts make autonomous decisions" ;
+    cfr:architectureResponse "The smart contract validates format and timing. It does not make decisions about data subjects." ;
+    cfr:residualRisk "Low. No profiling, no legal effects on individuals." .
+
+gdpr:T_LegalBasis
+    a cfr:Tension ;
+    cfr:tensionLabel "Legal basis" ;
+    cfr:standardFraming "No clean basis for on-chain personal data" ;
+    cfr:architectureResponse "Active phase: Art 6(1)(c) — legal obligation to maintain compliance records. Post-erasure: no basis needed — data is anonymous." ;
+    cfr:residualRisk "Legal obligation basis must be established per jurisdiction." .
 
 # =============================================================================
 # Cross-regulation references
