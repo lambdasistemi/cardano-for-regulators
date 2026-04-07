@@ -31,7 +31,8 @@ jobs:
           # 3. Copy ontology viewer into the built site
           nix build .#ontology-viewer
           mkdir -p site/viewer
-          cp -r result/index.html result/index.js result/data site/viewer/
+          cp -rL result/index.html result/index.js result/data site/viewer/
+          chmod -R u+w site/viewer
 
       - name: Deploy site
         run: nix develop github:paolino/dev-assets?dir=mkdocs --quiet -c ghp-import site --push --force --no-jekyll
