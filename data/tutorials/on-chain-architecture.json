@@ -37,7 +37,7 @@
       "node": "beacon",
       "depth": 2,
       "title": "The Beacon Protocol",
-      "narrative": "The [beacon](node:beacon) bridges the regulator's assessment to the user. The [operator](node:operator) mints it — the minting policy forces inclusion of the operator's current standing from the [regulation trie](node:regulation-trie).\n\nThe [user](node:user) verifies it is current and authentic (using the regulator's public key), then signs their data over it. This is [informed consent by construction](node:informed-consent) — the user cannot claim ignorance of disclosed information. The beacon expires, preventing stale reputation."
+      "narrative": "The [beacon](node:beacon) bridges the regulator's assessment to the user. The [operator](node:operator) mints it — the minting policy forces inclusion of the operator's current standing from the [regulation trie](node:regulation-trie).\n\nThe [user](node:user) verifies it is current and authentic using the regulator's published beacon policy identifier and trust anchor, then signs their data over it. This is [informed consent by construction](node:informed-consent) — the user cannot claim ignorance of disclosed information. The beacon expires, preventing stale reputation."
     },
     {
       "node": "baton-pattern",

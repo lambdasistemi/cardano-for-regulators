@@ -116,7 +116,7 @@ graph LR
 ### SubmitBreachNotification
 
 The controller submits the notification hash, clearing the commitment. The
-chain records exactly how many slots elapsed.
+chain records how many slots elapsed between commitment and submission.
 
 ```mermaid
 graph LR

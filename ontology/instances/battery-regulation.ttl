@@ -120,7 +120,7 @@ bat:CA_Liveness
     a cfr:ConstraintAssessment ;
     cfr:assessesConstraint cfr:Liveness ;
     cfr:assessmentResult "Pass" ;
-    cfr:assessmentJustification "Art. 77 penalties for non-compliance. Slot-based timeouts for readings." .
+    cfr:assessmentJustification "Penalties are set by Member States under Art. 93. Slot-based timeouts for readings remain enforceable at protocol level." .
 
 bat:CA_Fee
     a cfr:ConstraintAssessment ;
@@ -311,7 +311,7 @@ bat:G_MPTTransition     a cfr:Guard ; cfr:guardDescription "MPT transition proof
 
 bat:Art77Penalty
     a cfr:Penalty ;
-    cfr:penaltyDescription "Art. 77 — fines, market withdrawal, criminal liability" ;
+    cfr:penaltyDescription "Art. 93 Member State penalties, plus market restriction or withdrawal measures under the regulation" ;
     cfr:maxFine "Member State defined — includes product ban" .
 
 # =============================================================================

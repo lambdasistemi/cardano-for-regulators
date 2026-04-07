@@ -199,7 +199,8 @@ sequenceDiagram
 - Minting policy forces inclusion of operator's standing from regulation trie
 - Beacon has bounded validity — no stale reputation
 - User signs over the beacon — informed consent by construction
-- The user needs only the regulator's public key to verify the beacon
+- The user needs only the regulator's published beacon policy identifier
+  and trust anchor to verify the beacon
 
 **Invariant:** A batch submission is rejected if it includes a beacon whose
 expiry has passed or whose standing hash doesn't match the regulation trie

@@ -273,7 +273,7 @@ gdpr:TR_ControllerSA
     cfr:trustPartyB gdpr:SupervisoryAuthority ;
     cfr:hasTrustLevel cfr:MediumTrust ;
     cfr:trustRisk "Controller backdates breach notification" ;
-    cfr:blockchainMitigates "Commitment proves exact submission time" .
+    cfr:blockchainMitigates "Commitment proves on-chain ordering and submission slot" .
 
 gdpr:TR_ControllerProcessor
     a cfr:TrustRelationship ;
