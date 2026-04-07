@@ -53,5 +53,6 @@ nav:
       - GDPR: cases/gdpr.md
       - GDPR Smart Contract: cases/gdpr-contract.md
   - Ontology:
+      - Overview: generated/ontology.md
       - GDPR: generated/gdpr.md
       - EU Battery Regulation: generated/eu-battery-regulation.md
