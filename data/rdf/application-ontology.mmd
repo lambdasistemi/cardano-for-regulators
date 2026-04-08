@@ -1,0 +1,173 @@
+flowchart LR
+  App["application ontology"]
+  CoreNode["gb:Node"]
+  CoreGroup["gb:Group"]
+  CoreEdge["gb:EdgeRelation"]
+  App -->|imports| CoreNode
+  App -->|imports| CoreGroup
+  App -->|imports| CoreEdge
+  Kind0["gbkind:artifact\nOn-chain Artifact"]
+  App --> Kind0
+  Kind0 -->|subClassOf| CoreNode
+  Kind1["gbkind:case-study\nCase Study"]
+  App --> Kind1
+  Kind1 -->|subClassOf| CoreNode
+  Kind2["gbkind:concept\nConcept"]
+  App --> Kind2
+  Kind2 -->|subClassOf| CoreNode
+  Kind3["gbkind:constraint\nConstraint"]
+  App --> Kind3
+  Kind3 -->|subClassOf| CoreNode
+  Kind4["gbkind:gdpr-element\nGDPR Element"]
+  App --> Kind4
+  Kind4 -->|subClassOf| CoreNode
+  Kind5["gbkind:party\nParty"]
+  App --> Kind5
+  Kind5 -->|subClassOf| CoreNode
+  Kind6["gbkind:protocol\nProtocol Pattern"]
+  App --> Kind6
+  Kind6 -->|subClassOf| CoreNode
+  Kind7["gbkind:risk\nRisk / Tension"]
+  App --> Kind7
+  Kind7 -->|subClassOf| CoreNode
+  Group0["gbgroup:cases"]
+  App --> Group0
+  Group0 -->|instanceOf| CoreGroup
+  Group1["gbgroup:constraints"]
+  App --> Group1
+  Group1 -->|instanceOf| CoreGroup
+  Group2["gbgroup:foundation"]
+  App --> Group2
+  Group2 -->|instanceOf| CoreGroup
+  Group3["gbgroup:gdpr"]
+  App --> Group3
+  Group3 -->|instanceOf| CoreGroup
+  Group4["gbgroup:modes"]
+  App --> Group4
+  Group4 -->|instanceOf| CoreGroup
+  Group5["gbgroup:protocols"]
+  App --> Group5
+  Group5 -->|instanceOf| CoreGroup
+  Group6["gbgroup:schema"]
+  App --> Group6
+  Group6 -->|instanceOf| CoreGroup
+  Group7["gbgroup:tensions"]
+  App --> Group7
+  Group7 -->|instanceOf| CoreGroup
+  Edge0["gbedge:argues for"]
+  App --> Edge0
+  Edge0 -->|subPropertyOf| CoreEdge
+  Edge1["gbedge:attested in"]
+  App --> Edge1
+  Edge1 -->|subPropertyOf| CoreEdge
+  Edge2["gbedge:critical for"]
+  App --> Edge2
+  Edge2 -->|subPropertyOf| CoreEdge
+  Edge3["gbedge:defines use of"]
+  App --> Edge3
+  Edge3 -->|subPropertyOf| CoreEdge
+  Edge4["gbedge:depends on"]
+  App --> Edge4
+  Edge4 -->|subPropertyOf| CoreEdge
+  Edge5["gbedge:derives"]
+  App --> Edge5
+  Edge5 -->|subPropertyOf| CoreEdge
+  Edge6["gbedge:enforced via"]
+  App --> Edge6
+  Edge6 -->|subPropertyOf| CoreEdge
+  Edge7["gbedge:enforces"]
+  App --> Edge7
+  Edge7 -->|subPropertyOf| CoreEdge
+  Edge8["gbedge:formalised as"]
+  App --> Edge8
+  Edge8 -->|subPropertyOf| CoreEdge
+  Edge9["gbedge:gates"]
+  App --> Edge9
+  Edge9 -->|subPropertyOf| CoreEdge
+  Edge10["gbedge:governs"]
+  App --> Edge10
+  Edge10 -->|subPropertyOf| CoreEdge
+  Edge11["gbedge:implemented by"]
+  App --> Edge11
+  Edge11 -->|subPropertyOf| CoreEdge
+  Edge12["gbedge:implemented via"]
+  App --> Edge12
+  Edge12 -->|subPropertyOf| CoreEdge
+  Edge13["gbedge:implements"]
+  App --> Edge13
+  Edge13 -->|subPropertyOf| CoreEdge
+  Edge14["gbedge:justifies"]
+  App --> Edge14
+  Edge14 -->|subPropertyOf| CoreEdge
+  Edge15["gbedge:maintains"]
+  App --> Edge15
+  Edge15 -->|subPropertyOf| CoreEdge
+  Edge16["gbedge:manages"]
+  App --> Edge16
+  Edge16 -->|subPropertyOf| CoreEdge
+  Edge17["gbedge:maps to"]
+  App --> Edge17
+  Edge17 -->|subPropertyOf| CoreEdge
+  Edge18["gbedge:mints"]
+  App --> Edge18
+  Edge18 -->|subPropertyOf| CoreEdge
+  Edge19["gbedge:models"]
+  App --> Edge19
+  Edge19 -->|subPropertyOf| CoreEdge
+  Edge20["gbedge:on-chain as"]
+  App --> Edge20
+  Edge20 -->|subPropertyOf| CoreEdge
+  Edge21["gbedge:produces"]
+  App --> Edge21
+  Edge21 -->|subPropertyOf| CoreEdge
+  Edge22["gbedge:proves timeliness of"]
+  App --> Edge22
+  Edge22 -->|subPropertyOf| CoreEdge
+  Edge23["gbedge:provides"]
+  App --> Edge23
+  Edge23 -->|subPropertyOf| CoreEdge
+  Edge24["gbedge:publishes"]
+  App --> Edge24
+  Edge24 -->|subPropertyOf| CoreEdge
+  Edge25["gbedge:reads"]
+  App --> Edge25
+  Edge25 -->|subPropertyOf| CoreEdge
+  Edge26["gbedge:requires"]
+  App --> Edge26
+  Edge26 -->|subPropertyOf| CoreEdge
+  Edge27["gbedge:resolved by"]
+  App --> Edge27
+  Edge27 -->|subPropertyOf| CoreEdge
+  Edge28["gbedge:resolves"]
+  App --> Edge28
+  Edge28 -->|subPropertyOf| CoreEdge
+  Edge29["gbedge:satisfies"]
+  App --> Edge29
+  Edge29 -->|subPropertyOf| CoreEdge
+  Edge30["gbedge:signs over"]
+  App --> Edge30
+  Edge30 -->|subPropertyOf| CoreEdge
+  Edge31["gbedge:stored in"]
+  App --> Edge31
+  Edge31 -->|subPropertyOf| CoreEdge
+  Edge32["gbedge:substrate is hardware"]
+  App --> Edge32
+  Edge32 -->|subPropertyOf| CoreEdge
+  Edge33["gbedge:substrate is server"]
+  App --> Edge33
+  Edge33 -->|subPropertyOf| CoreEdge
+  Edge34["gbedge:trusts"]
+  App --> Edge34
+  Edge34 -->|subPropertyOf| CoreEdge
+  Edge35["gbedge:used in"]
+  App --> Edge35
+  Edge35 -->|subPropertyOf| CoreEdge
+  Edge36["gbedge:uses"]
+  App --> Edge36
+  Edge36 -->|subPropertyOf| CoreEdge
+  Edge37["gbedge:verified by"]
+  App --> Edge37
+  Edge37 -->|subPropertyOf| CoreEdge
+  Edge38["gbedge:withdrawal triggers"]
+  App --> Edge38
+  Edge38 -->|subPropertyOf| CoreEdge

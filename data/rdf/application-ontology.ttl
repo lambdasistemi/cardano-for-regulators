@@ -1,0 +1,376 @@
+@prefix gb: <https://lambdasistemi.github.io/graph-browser/vocab/terms#> .
+@prefix gbkind: <https://lambdasistemi.github.io/graph-browser/vocab/kinds#> .
+@prefix gbgroup: <https://lambdasistemi.github.io/graph-browser/vocab/groups#> .
+@prefix gbedge: <https://lambdasistemi.github.io/graph-browser/vocab/edges#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+<https://lambdasistemi.github.io/graph-browser/vocab/application-ontology> a owl:Ontology ;
+  rdfs:label "Graph Browser application vocabulary" ;
+  dcterms:description "Repository-specific vocabulary generated from graph-browser config and graph data." ;
+  owl:imports <https://lambdasistemi.github.io/graph-browser/vocab/ontology> ;
+  owl:versionInfo "0.1.0" .
+
+gbkind:artifact a owl:Class ;
+  rdfs:label "On-chain Artifact" ;
+  gb:kindId "artifact" ;
+  gb:color "#d2a8ff" ;
+  gb:shape "round-rectangle" ;
+  rdfs:subClassOf gb:Node .
+
+gbkind:case-study a owl:Class ;
+  rdfs:label "Case Study" ;
+  gb:kindId "case-study" ;
+  gb:color "#f0883e" ;
+  gb:shape "barrel" ;
+  rdfs:subClassOf gb:Node .
+
+gbkind:concept a owl:Class ;
+  rdfs:label "Concept" ;
+  gb:kindId "concept" ;
+  gb:color "#56d364" ;
+  gb:shape "star" ;
+  rdfs:subClassOf gb:Node .
+
+gbkind:constraint a owl:Class ;
+  rdfs:label "Constraint" ;
+  gb:kindId "constraint" ;
+  gb:color "#e3b341" ;
+  gb:shape "round-pentagon" ;
+  rdfs:subClassOf gb:Node .
+
+gbkind:gdpr-element a owl:Class ;
+  rdfs:label "GDPR Element" ;
+  gb:kindId "gdpr-element" ;
+  gb:color "#79c0ff" ;
+  gb:shape "ellipse" ;
+  rdfs:subClassOf gb:Node .
+
+gbkind:party a owl:Class ;
+  rdfs:label "Party" ;
+  gb:kindId "party" ;
+  gb:color "#58a6ff" ;
+  gb:shape "round-octagon" ;
+  rdfs:subClassOf gb:Node .
+
+gbkind:protocol a owl:Class ;
+  rdfs:label "Protocol Pattern" ;
+  gb:kindId "protocol" ;
+  gb:color "#f778ba" ;
+  gb:shape "diamond" ;
+  rdfs:subClassOf gb:Node .
+
+gbkind:risk a owl:Class ;
+  rdfs:label "Risk / Tension" ;
+  gb:kindId "risk" ;
+  gb:color "#f85149" ;
+  gb:shape "triangle" ;
+  rdfs:subClassOf gb:Node .
+
+
+gbgroup:cases a gb:Group ;
+  rdfs:label "cases" ;
+  gb:groupId "cases" .
+
+gbgroup:constraints a gb:Group ;
+  rdfs:label "constraints" ;
+  gb:groupId "constraints" .
+
+gbgroup:foundation a gb:Group ;
+  rdfs:label "foundation" ;
+  gb:groupId "foundation" .
+
+gbgroup:gdpr a gb:Group ;
+  rdfs:label "gdpr" ;
+  gb:groupId "gdpr" .
+
+gbgroup:modes a gb:Group ;
+  rdfs:label "modes" ;
+  gb:groupId "modes" .
+
+gbgroup:protocols a gb:Group ;
+  rdfs:label "protocols" ;
+  gb:groupId "protocols" .
+
+gbgroup:schema a gb:Group ;
+  rdfs:label "schema" ;
+  gb:groupId "schema" .
+
+gbgroup:tensions a gb:Group ;
+  rdfs:label "tensions" ;
+  gb:groupId "tensions" .
+
+
+gbedge:argues%20for a owl:ObjectProperty ;
+  rdfs:label "argues for" ;
+  rdfs:subPropertyOf gb:EdgeRelation ;
+  gb:edgeLabel "argues for" ;
+  rdfs:domain gb:Node ;
+  rdfs:range gb:Node .
+
+gbedge:attested%20in a owl:ObjectProperty ;
+  rdfs:label "attested in" ;
+  rdfs:subPropertyOf gb:EdgeRelation ;
+  gb:edgeLabel "attested in" ;
+  rdfs:domain gb:Node ;
+  rdfs:range gb:Node .
+
+gbedge:critical%20for a owl:ObjectProperty ;
+  rdfs:label "critical for" ;
+  rdfs:subPropertyOf gb:EdgeRelation ;
+  gb:edgeLabel "critical for" ;
+  rdfs:domain gb:Node ;
+  rdfs:range gb:Node .
+
+gbedge:defines%20use%20of a owl:ObjectProperty ;
+  rdfs:label "defines use of" ;
+  rdfs:subPropertyOf gb:EdgeRelation ;
+  gb:edgeLabel "defines use of" ;
+  rdfs:domain gb:Node ;
+  rdfs:range gb:Node .
+
+gbedge:depends%20on a owl:ObjectProperty ;
+  rdfs:label "depends on" ;
+  rdfs:subPropertyOf gb:EdgeRelation ;
+  gb:edgeLabel "depends on" ;
+  rdfs:domain gb:Node ;
+  rdfs:range gb:Node .
+
+gbedge:derives a owl:ObjectProperty ;
+  rdfs:label "derives" ;
+  rdfs:subPropertyOf gb:EdgeRelation ;
+  gb:edgeLabel "derives" ;
+  rdfs:domain gb:Node ;
+  rdfs:range gb:Node .
+
+gbedge:enforced%20via a owl:ObjectProperty ;
+  rdfs:label "enforced via" ;
+  rdfs:subPropertyOf gb:EdgeRelation ;
+  gb:edgeLabel "enforced via" ;
+  rdfs:domain gb:Node ;
+  rdfs:range gb:Node .
+
+gbedge:enforces a owl:ObjectProperty ;
+  rdfs:label "enforces" ;
+  rdfs:subPropertyOf gb:EdgeRelation ;
+  gb:edgeLabel "enforces" ;
+  rdfs:domain gb:Node ;
+  rdfs:range gb:Node .
+
+gbedge:formalised%20as a owl:ObjectProperty ;
+  rdfs:label "formalised as" ;
+  rdfs:subPropertyOf gb:EdgeRelation ;
+  gb:edgeLabel "formalised as" ;
+  rdfs:domain gb:Node ;
+  rdfs:range gb:Node .
+
+gbedge:gates a owl:ObjectProperty ;
+  rdfs:label "gates" ;
+  rdfs:subPropertyOf gb:EdgeRelation ;
+  gb:edgeLabel "gates" ;
+  rdfs:domain gb:Node ;
+  rdfs:range gb:Node .
+
+gbedge:governs a owl:ObjectProperty ;
+  rdfs:label "governs" ;
+  rdfs:subPropertyOf gb:EdgeRelation ;
+  gb:edgeLabel "governs" ;
+  rdfs:domain gb:Node ;
+  rdfs:range gb:Node .
+
+gbedge:implemented%20by a owl:ObjectProperty ;
+  rdfs:label "implemented by" ;
+  rdfs:subPropertyOf gb:EdgeRelation ;
+  gb:edgeLabel "implemented by" ;
+  rdfs:domain gb:Node ;
+  rdfs:range gb:Node .
+
+gbedge:implemented%20via a owl:ObjectProperty ;
+  rdfs:label "implemented via" ;
+  rdfs:subPropertyOf gb:EdgeRelation ;
+  gb:edgeLabel "implemented via" ;
+  rdfs:domain gb:Node ;
+  rdfs:range gb:Node .
+
+gbedge:implements a owl:ObjectProperty ;
+  rdfs:label "implements" ;
+  rdfs:subPropertyOf gb:EdgeRelation ;
+  gb:edgeLabel "implements" ;
+  rdfs:domain gb:Node ;
+  rdfs:range gb:Node .
+
+gbedge:justifies a owl:ObjectProperty ;
+  rdfs:label "justifies" ;
+  rdfs:subPropertyOf gb:EdgeRelation ;
+  gb:edgeLabel "justifies" ;
+  rdfs:domain gb:Node ;
+  rdfs:range gb:Node .
+
+gbedge:maintains a owl:ObjectProperty ;
+  rdfs:label "maintains" ;
+  rdfs:subPropertyOf gb:EdgeRelation ;
+  gb:edgeLabel "maintains" ;
+  rdfs:domain gb:Node ;
+  rdfs:range gb:Node .
+
+gbedge:manages a owl:ObjectProperty ;
+  rdfs:label "manages" ;
+  rdfs:subPropertyOf gb:EdgeRelation ;
+  gb:edgeLabel "manages" ;
+  rdfs:domain gb:Node ;
+  rdfs:range gb:Node .
+
+gbedge:maps%20to a owl:ObjectProperty ;
+  rdfs:label "maps to" ;
+  rdfs:subPropertyOf gb:EdgeRelation ;
+  gb:edgeLabel "maps to" ;
+  rdfs:domain gb:Node ;
+  rdfs:range gb:Node .
+
+gbedge:mints a owl:ObjectProperty ;
+  rdfs:label "mints" ;
+  rdfs:subPropertyOf gb:EdgeRelation ;
+  gb:edgeLabel "mints" ;
+  rdfs:domain gb:Node ;
+  rdfs:range gb:Node .
+
+gbedge:models a owl:ObjectProperty ;
+  rdfs:label "models" ;
+  rdfs:subPropertyOf gb:EdgeRelation ;
+  gb:edgeLabel "models" ;
+  rdfs:domain gb:Node ;
+  rdfs:range gb:Node .
+
+gbedge:on-chain%20as a owl:ObjectProperty ;
+  rdfs:label "on-chain as" ;
+  rdfs:subPropertyOf gb:EdgeRelation ;
+  gb:edgeLabel "on-chain as" ;
+  rdfs:domain gb:Node ;
+  rdfs:range gb:Node .
+
+gbedge:produces a owl:ObjectProperty ;
+  rdfs:label "produces" ;
+  rdfs:subPropertyOf gb:EdgeRelation ;
+  gb:edgeLabel "produces" ;
+  rdfs:domain gb:Node ;
+  rdfs:range gb:Node .
+
+gbedge:proves%20timeliness%20of a owl:ObjectProperty ;
+  rdfs:label "proves timeliness of" ;
+  rdfs:subPropertyOf gb:EdgeRelation ;
+  gb:edgeLabel "proves timeliness of" ;
+  rdfs:domain gb:Node ;
+  rdfs:range gb:Node .
+
+gbedge:provides a owl:ObjectProperty ;
+  rdfs:label "provides" ;
+  rdfs:subPropertyOf gb:EdgeRelation ;
+  gb:edgeLabel "provides" ;
+  rdfs:domain gb:Node ;
+  rdfs:range gb:Node .
+
+gbedge:publishes a owl:ObjectProperty ;
+  rdfs:label "publishes" ;
+  rdfs:subPropertyOf gb:EdgeRelation ;
+  gb:edgeLabel "publishes" ;
+  rdfs:domain gb:Node ;
+  rdfs:range gb:Node .
+
+gbedge:reads a owl:ObjectProperty ;
+  rdfs:label "reads" ;
+  rdfs:subPropertyOf gb:EdgeRelation ;
+  gb:edgeLabel "reads" ;
+  rdfs:domain gb:Node ;
+  rdfs:range gb:Node .
+
+gbedge:requires a owl:ObjectProperty ;
+  rdfs:label "requires" ;
+  rdfs:subPropertyOf gb:EdgeRelation ;
+  gb:edgeLabel "requires" ;
+  rdfs:domain gb:Node ;
+  rdfs:range gb:Node .
+
+gbedge:resolved%20by a owl:ObjectProperty ;
+  rdfs:label "resolved by" ;
+  rdfs:subPropertyOf gb:EdgeRelation ;
+  gb:edgeLabel "resolved by" ;
+  rdfs:domain gb:Node ;
+  rdfs:range gb:Node .
+
+gbedge:resolves a owl:ObjectProperty ;
+  rdfs:label "resolves" ;
+  rdfs:subPropertyOf gb:EdgeRelation ;
+  gb:edgeLabel "resolves" ;
+  rdfs:domain gb:Node ;
+  rdfs:range gb:Node .
+
+gbedge:satisfies a owl:ObjectProperty ;
+  rdfs:label "satisfies" ;
+  rdfs:subPropertyOf gb:EdgeRelation ;
+  gb:edgeLabel "satisfies" ;
+  rdfs:domain gb:Node ;
+  rdfs:range gb:Node .
+
+gbedge:signs%20over a owl:ObjectProperty ;
+  rdfs:label "signs over" ;
+  rdfs:subPropertyOf gb:EdgeRelation ;
+  gb:edgeLabel "signs over" ;
+  rdfs:domain gb:Node ;
+  rdfs:range gb:Node .
+
+gbedge:stored%20in a owl:ObjectProperty ;
+  rdfs:label "stored in" ;
+  rdfs:subPropertyOf gb:EdgeRelation ;
+  gb:edgeLabel "stored in" ;
+  rdfs:domain gb:Node ;
+  rdfs:range gb:Node .
+
+gbedge:substrate%20is%20hardware a owl:ObjectProperty ;
+  rdfs:label "substrate is hardware" ;
+  rdfs:subPropertyOf gb:EdgeRelation ;
+  gb:edgeLabel "substrate is hardware" ;
+  rdfs:domain gb:Node ;
+  rdfs:range gb:Node .
+
+gbedge:substrate%20is%20server a owl:ObjectProperty ;
+  rdfs:label "substrate is server" ;
+  rdfs:subPropertyOf gb:EdgeRelation ;
+  gb:edgeLabel "substrate is server" ;
+  rdfs:domain gb:Node ;
+  rdfs:range gb:Node .
+
+gbedge:trusts a owl:ObjectProperty ;
+  rdfs:label "trusts" ;
+  rdfs:subPropertyOf gb:EdgeRelation ;
+  gb:edgeLabel "trusts" ;
+  rdfs:domain gb:Node ;
+  rdfs:range gb:Node .
+
+gbedge:used%20in a owl:ObjectProperty ;
+  rdfs:label "used in" ;
+  rdfs:subPropertyOf gb:EdgeRelation ;
+  gb:edgeLabel "used in" ;
+  rdfs:domain gb:Node ;
+  rdfs:range gb:Node .
+
+gbedge:uses a owl:ObjectProperty ;
+  rdfs:label "uses" ;
+  rdfs:subPropertyOf gb:EdgeRelation ;
+  gb:edgeLabel "uses" ;
+  rdfs:domain gb:Node ;
+  rdfs:range gb:Node .
+
+gbedge:verified%20by a owl:ObjectProperty ;
+  rdfs:label "verified by" ;
+  rdfs:subPropertyOf gb:EdgeRelation ;
+  gb:edgeLabel "verified by" ;
+  rdfs:domain gb:Node ;
+  rdfs:range gb:Node .
+
+gbedge:withdrawal%20triggers a owl:ObjectProperty ;
+  rdfs:label "withdrawal triggers" ;
+  rdfs:subPropertyOf gb:EdgeRelation ;
+  gb:edgeLabel "withdrawal triggers" ;
+  rdfs:domain gb:Node ;
+  rdfs:range gb:Node .
