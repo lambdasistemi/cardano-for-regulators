@@ -1,0 +1,2222 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Framework for analyzing multi-party regulations and mapping them to Cardano compliance infrastructure">
+      
+      
+      
+        <link rel="canonical" href="https://lambdasistemi.github.io/cardano-for-regulators/cases/battery-contract/">
+      
+      
+        <link rel="prev" href="../battery-regulation/">
+      
+      
+        <link rel="next" href="../gdpr/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>Battery Smart Contract - Cardano for Regulators</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#battery-regulation-smart-contract" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Cardano for Regulators" class="md-header__button md-logo" aria-label="Cardano for Regulators" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Cardano for Regulators
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Battery Smart Contract
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/lambdasistemi/cardano-for-regulators" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    lambdasistemi/cardano-for-regulators
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Cardano for Regulators" class="md-nav__button md-logo" aria-label="Cardano for Regulators" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Cardano for Regulators
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/lambdasistemi/cardano-for-regulators" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    lambdasistemi/cardano-for-regulators
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../graph/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ontology Graph
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../thesis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Thesis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Framework
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Framework
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../framework/schema/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Regulator Schema
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../framework/constraints/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Five Constraints
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../framework/methodology/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Analysis Methodology
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../framework/patterns/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture Patterns
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Case Studies
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Case Studies
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../battery-regulation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EU Battery Regulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Battery Smart Contract
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Battery Smart Contract
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-utxo-landscape" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The UTxO landscape
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#leaf-types-in-the-trie" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Leaf types in the trie
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Leaf types in the trie">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#itemleaf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ItemLeaf
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reporterassignment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ReporterAssignment
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#commitment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Commitment
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reporterleaf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ReporterLeaf
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#redeemer-actions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Redeemer actions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#utxo-state-transitions-per-action" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        UTxO state transitions per action
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="UTxO state transitions per action">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#registeritem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RegisterItem
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#assignreporter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AssignReporter
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reassignreporter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ReassignReporter
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#createcommitment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CreateCommitment
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#submitreading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SubmitReading
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transferownership" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TransferOwnership
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#repurpose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Repurpose
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#validator-guard-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Validator guard table
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lifecycle-state-machines" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lifecycle state machines
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Lifecycle state machines">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#item-leaf-lifecycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Item leaf lifecycle
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#commitment-lifecycle-the-2-tx-protocol" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Commitment lifecycle (the 2-tx protocol)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reward-accumulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reward accumulation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#battery-lifecycle-regulatory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Battery lifecycle (regulatory)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-full-transaction-soh-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The full transaction: SoH reading
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-hardware-signing-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The hardware signing flow
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#plausibility-checks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Plausibility checks
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#comparison-with-gdpr-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comparison with GDPR contract
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sources
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gdpr/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GDPR
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gdpr-contract/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GDPR Smart Contract
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ontology
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Ontology
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generated/ontology/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generated/gdpr/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GDPR
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generated/eu-battery-regulation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EU Battery Regulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="battery-regulation-smart-contract">Battery Regulation Smart Contract</h1>
+<p>Visual specification of the Plutus validator that governs a manufacturer's
+product passport trie. Three diagram types: UTxO state transitions, the
+validator guard table, and lifecycle state machines.</p>
+<p>Physical mode — the battery carries a secure element that signs its own
+state of health. The chain anchors the reading with a neutral timestamp.</p>
+<h2 id="the-utxo-landscape">The UTxO landscape</h2>
+<p>The validator governs one UTxO per manufacturer — the MPT root. The trie
+contains two leaf types: item leaves (one per battery) and reporter leaves
+(one per reward recipient). Reference inputs: identity trie and regulation
+trie.</p>
+<pre class="mermaid"><code>graph LR
+    subgraph Reference Inputs
+        ID_UTxO["Identity UTxO&lt;br/&gt;&lt;b&gt;identity trie root&lt;/b&gt;&lt;br/&gt;&lt;i&gt;attested actor keys&lt;/i&gt;"]
+        REG_UTxO["Regulation UTxO&lt;br/&gt;&lt;b&gt;regulation trie root&lt;/b&gt;&lt;br/&gt;&lt;i&gt;manufacturer standing&lt;br/&gt;actor qualifications&lt;/i&gt;"]
+    end
+
+    subgraph Spent + Produced
+        TRIE_IN["Passport UTxO&lt;br/&gt;&lt;b&gt;MPT root₁&lt;/b&gt;&lt;br/&gt;&lt;i&gt;datum: trie state&lt;/i&gt;"]
+        TX{{"Transaction&lt;br/&gt;&lt;i&gt;redeemer action&lt;/i&gt;"}}
+        TRIE_OUT["Passport UTxO'&lt;br/&gt;&lt;b&gt;MPT root₂&lt;/b&gt;&lt;br/&gt;&lt;i&gt;datum: trie state'&lt;/i&gt;"]
+    end
+
+    TRIE_IN --&gt;|spent| TX
+    TX --&gt;|produced| TRIE_OUT
+    ID_UTxO -.-&gt;|reference| TX
+    REG_UTxO -.-&gt;|reference| TX
+
+    subgraph Signatures
+        SIG_ITEM["Process signature&lt;br/&gt;&lt;i&gt;SE050 COSE_Sign1&lt;/i&gt;"]
+        SIG_ACTOR["Actor signature&lt;br/&gt;&lt;i&gt;baton holder / reporter&lt;/i&gt;"]
+    end
+
+    SIG_ITEM -.-&gt; TX
+    SIG_ACTOR -.-&gt; TX</code></pre>
+<p>The critical difference from the GDPR contract: the process signature comes
+from <strong>hardware</strong> — an NXP SE050 secure element inside the battery, signing
+via NFC. The chain verifies this signature using Plutus built-in Ed25519 or
+secp256k1 verifiers.</p>
+<h2 id="leaf-types-in-the-trie">Leaf types in the trie</h2>
+<p>Two leaf types coexist under the same MPT root, distinguished by key
+prefix.</p>
+<pre class="mermaid"><code>graph TD
+    ROOT["Passport Trie Root&lt;br/&gt;&lt;b&gt;MPT root hash&lt;/b&gt;"]
+
+    ROOT --- ITEM1["item/&lt;br/&gt;hash(itemPubKey₁)"]
+    ROOT --- ITEM2["item/&lt;br/&gt;hash(itemPubKey₂)"]
+    ROOT --- ITEM3["item/&lt;br/&gt;hash(itemPubKeyₙ)"]
+    ROOT --- REP1["reporter/&lt;br/&gt;hash(reporterPubKey₁)"]
+    ROOT --- REP2["reporter/&lt;br/&gt;hash(reporterPubKey₂)"]
+
+    ITEM1 --- IL1["schemaVersion: 1&lt;br/&gt;metadata: 0xab... (model, chemistry)&lt;br/&gt;reporter: Just(reporterKey, nextReward)&lt;br/&gt;commitment: Just(validFrom, validUntil)"]
+    ITEM2 --- IL2["schemaVersion: 1&lt;br/&gt;metadata: 0xcd...&lt;br/&gt;reporter: Just(reporterKey, nextReward)&lt;br/&gt;commitment: Nothing"]
+    ITEM3 --- IL3["schemaVersion: 1&lt;br/&gt;metadata: 0xef...&lt;br/&gt;reporter: Nothing&lt;br/&gt;commitment: Nothing"]
+
+    REP1 --- RL1["reporterKey: pubKey₁&lt;br/&gt;rewardsAccumulated: 30"]
+    REP2 --- RL2["reporterKey: pubKey₂&lt;br/&gt;rewardsAccumulated: 10"]</code></pre>
+<h3 id="itemleaf">ItemLeaf</h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>schemaVersion</code></td>
+<td>Integer</td>
+<td>Datum versioning for forward compatibility</td>
+</tr>
+<tr>
+<td><code>metadata</code></td>
+<td>ByteString</td>
+<td>Product-specific: battery model, chemistry, manufacturing date</td>
+</tr>
+<tr>
+<td><code>reporter</code></td>
+<td>Maybe ReporterAssignment</td>
+<td>Who is assigned to report + what reward they get</td>
+</tr>
+<tr>
+<td><code>commitment</code></td>
+<td>Maybe Commitment</td>
+<td>Time window for the next reading (single-use)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="reporterassignment">ReporterAssignment</h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Invariant</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>reporterPubKey</code></td>
+<td>ByteString</td>
+<td>Key of the assigned reader (consumer, technician)</td>
+</tr>
+<tr>
+<td><code>nextReward</code></td>
+<td>Integer</td>
+<td>Always &gt; 0 — reward for the next valid reading</td>
+</tr>
+</tbody>
+</table>
+<h3 id="commitment">Commitment</h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>validFrom</code></td>
+<td>Integer (slot)</td>
+<td>Earliest slot the reading is accepted</td>
+</tr>
+<tr>
+<td><code>validUntil</code></td>
+<td>Integer (slot)</td>
+<td>Latest slot — deadline for the reading</td>
+</tr>
+</tbody>
+</table>
+<h3 id="reporterleaf">ReporterLeaf</h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Invariant</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>reporterKey</code></td>
+<td>ByteString</td>
+<td>Reporter's public key</td>
+</tr>
+<tr>
+<td><code>rewardsAccumulated</code></td>
+<td>Integer</td>
+<td>Monotonically increasing — never decreases</td>
+</tr>
+</tbody>
+</table>
+<h2 id="redeemer-actions">Redeemer actions</h2>
+<p>Seven redeemer actions grouped by lifecycle phase.</p>
+<pre class="mermaid"><code>graph TB
+    subgraph "Registration"
+        R1["RegisterItem"]
+    end
+
+    subgraph "Assignment"
+        R2["AssignReporter"]
+        R3["ReassignReporter"]
+    end
+
+    subgraph "Reading Protocol (2-tx)"
+        R4["CreateCommitment"]
+        R5["SubmitReading"]
+    end
+
+    subgraph "Ownership"
+        R6["TransferOwnership"]
+    end
+
+    subgraph "End of Life"
+        R7["Repurpose"]
+    end</code></pre>
+<h2 id="utxo-state-transitions-per-action">UTxO state transitions per action</h2>
+<h3 id="registeritem">RegisterItem</h3>
+<p>Manufacturer creates a new battery passport leaf in the trie. The battery
+is virgin — no reporter assigned, no commitment.</p>
+<pre class="mermaid"><code>graph LR
+    subgraph Input
+        IN["Passport UTxO&lt;br/&gt;&lt;b&gt;datum:&lt;/b&gt;&lt;br/&gt;no leaf at hash(itemPubKey)"]
+    end
+
+    subgraph Transaction
+        TX{{"RegisterItem&lt;br/&gt;&lt;br/&gt;redeemer:&lt;br/&gt;itemPubKey, metadata"}}
+    end
+
+    subgraph Output
+        OUT["Passport UTxO'&lt;br/&gt;&lt;b&gt;datum:&lt;/b&gt;&lt;br/&gt;new ItemLeaf:&lt;br/&gt;  schemaVersion: 1&lt;br/&gt;  metadata: M&lt;br/&gt;  reporter: Nothing&lt;br/&gt;  commitment: Nothing"]
+    end
+
+    IN --&gt; TX --&gt; OUT
+
+    subgraph Guards
+        G1["manufacturer key ∈ identity trie"]
+        G2["manufacturer standing ≠ suspended&lt;br/&gt;(regulation trie)"]
+        G3["no existing leaf at hash(itemPubKey)"]
+        G4["metadata ≠ empty"]
+        G5["manufacturer signature present"]
+        G6["MPT insert proof valid"]
+    end
+
+    G1 -.-&gt; TX
+    G2 -.-&gt; TX
+    G3 -.-&gt; TX
+    G4 -.-&gt; TX
+    G5 -.-&gt; TX
+    G6 -.-&gt; TX</code></pre>
+<h3 id="assignreporter">AssignReporter</h3>
+<p>Manufacturer assigns a reporter (consumer, technician) to a battery. This
+determines who can trigger readings and earn rewards.</p>
+<pre class="mermaid"><code>graph LR
+    subgraph Input
+        IN["Passport UTxO&lt;br/&gt;&lt;b&gt;datum:&lt;/b&gt;&lt;br/&gt;ItemLeaf:&lt;br/&gt;  reporter: Nothing&lt;br/&gt;  commitment: Nothing"]
+    end
+
+    subgraph Transaction
+        TX{{"AssignReporter&lt;br/&gt;&lt;br/&gt;redeemer:&lt;br/&gt;leaf_key,&lt;br/&gt;reporterPubKey,&lt;br/&gt;nextReward"}}
+    end
+
+    subgraph Output
+        OUT["Passport UTxO'&lt;br/&gt;&lt;b&gt;datum:&lt;/b&gt;&lt;br/&gt;ItemLeaf:&lt;br/&gt;  reporter: Just(&lt;br/&gt;    reporterPubKey: K&lt;br/&gt;    nextReward: R)&lt;br/&gt;  commitment: Nothing"]
+    end
+
+    IN --&gt; TX --&gt; OUT
+
+    subgraph Guards
+        G1["manufacturer key ∈ identity trie"]
+        G2["reporter: Nothing&lt;br/&gt;(not already assigned)"]
+        G3["nextReward &gt; 0"]
+        G4["manufacturer signature present"]
+        G5["MPT update proof valid"]
+    end
+
+    G1 -.-&gt; TX
+    G2 -.-&gt; TX
+    G3 -.-&gt; TX
+    G4 -.-&gt; TX
+    G5 -.-&gt; TX</code></pre>
+<h3 id="reassignreporter">ReassignReporter</h3>
+<p>Replace the current reporter. The old reporter keeps their accumulated
+rewards.</p>
+<pre class="mermaid"><code>graph LR
+    subgraph Input
+        IN["Passport UTxO&lt;br/&gt;&lt;b&gt;datum:&lt;/b&gt;&lt;br/&gt;ItemLeaf:&lt;br/&gt;  reporter: Just(oldKey, R₁)&lt;br/&gt;  commitment: Nothing"]
+    end
+
+    subgraph Transaction
+        TX{{"ReassignReporter&lt;br/&gt;&lt;br/&gt;redeemer:&lt;br/&gt;leaf_key,&lt;br/&gt;newReporterPubKey,&lt;br/&gt;newReward"}}
+    end
+
+    subgraph Output
+        OUT["Passport UTxO'&lt;br/&gt;&lt;b&gt;datum:&lt;/b&gt;&lt;br/&gt;ItemLeaf:&lt;br/&gt;  reporter: Just(&lt;br/&gt;    reporterPubKey: newKey&lt;br/&gt;    nextReward: R₂)&lt;br/&gt;  commitment: Nothing"]
+    end
+
+    IN --&gt; TX --&gt; OUT
+
+    subgraph Guards
+        G1["manufacturer key ∈ identity trie"]
+        G2["commitment: Nothing&lt;br/&gt;(no pending reading)"]
+        G3["newReward &gt; 0"]
+        G4["manufacturer signature present"]
+        G5["MPT update proof valid"]
+    end
+
+    G1 -.-&gt; TX
+    G2 -.-&gt; TX
+    G3 -.-&gt; TX
+    G4 -.-&gt; TX
+    G5 -.-&gt; TX</code></pre>
+<h3 id="createcommitment">CreateCommitment</h3>
+<p>The manufacturer opens a reading window on a battery. This is Tx 1 of the
+two-transaction protocol — the chain's slot becomes the trusted clock.</p>
+<pre class="mermaid"><code>graph LR
+    subgraph Input
+        IN["Passport UTxO&lt;br/&gt;&lt;b&gt;datum:&lt;/b&gt;&lt;br/&gt;ItemLeaf:&lt;br/&gt;  reporter: Just(K, R)&lt;br/&gt;  commitment: Nothing"]
+    end
+
+    subgraph Transaction
+        TX{{"CreateCommitment&lt;br/&gt;&lt;br/&gt;redeemer:&lt;br/&gt;leaf_key,&lt;br/&gt;validFrom, validUntil"}}
+    end
+
+    subgraph Output
+        OUT["Passport UTxO'&lt;br/&gt;&lt;b&gt;datum:&lt;/b&gt;&lt;br/&gt;ItemLeaf:&lt;br/&gt;  reporter: Just(K, R)&lt;br/&gt;  commitment: Just(&lt;br/&gt;    validFrom: V₁&lt;br/&gt;    validUntil: V₂)"]
+    end
+
+    IN --&gt; TX --&gt; OUT
+
+    subgraph Guards
+        G1["manufacturer key ∈ identity trie"]
+        G2["reporter assigned&lt;br/&gt;(reporter ≠ Nothing)"]
+        G3["commitment: Nothing&lt;br/&gt;(no pending commitment)"]
+        G4["validFrom ≤ validUntil"]
+        G5["validFrom ≥ current slot range lower"]
+        G6["manufacturer signature present"]
+        G7["MPT update proof valid"]
+    end
+
+    G1 -.-&gt; TX
+    G2 -.-&gt; TX
+    G3 -.-&gt; TX
+    G4 -.-&gt; TX
+    G5 -.-&gt; TX
+    G6 -.-&gt; TX
+    G7 -.-&gt; TX</code></pre>
+<h3 id="submitreading">SubmitReading</h3>
+<p>The reporter submits a signed BMS reading from the battery's secure
+element. Tx 2 of the protocol — clears the commitment and credits the
+reward. This is the core transaction of the entire system.</p>
+<pre class="mermaid"><code>graph LR
+    subgraph Input
+        IN["Passport UTxO&lt;br/&gt;&lt;b&gt;datum:&lt;/b&gt;&lt;br/&gt;ItemLeaf:&lt;br/&gt;  reporter: Just(K, R)&lt;br/&gt;  commitment: Just(V₁, V₂)&lt;br/&gt;&lt;br/&gt;ReporterLeaf:&lt;br/&gt;  rewardsAccumulated: A"]
+    end
+
+    subgraph Transaction
+        TX{{"SubmitReading&lt;br/&gt;&lt;br/&gt;redeemer:&lt;br/&gt;leaf_key,&lt;br/&gt;cose_sign1_envelope,&lt;br/&gt;reporter_key"}}
+    end
+
+    subgraph Output
+        OUT["Passport UTxO'&lt;br/&gt;&lt;b&gt;datum:&lt;/b&gt;&lt;br/&gt;ItemLeaf:&lt;br/&gt;  reporter: Just(K, R)&lt;br/&gt;  commitment: Nothing&lt;br/&gt;&lt;br/&gt;ReporterLeaf:&lt;br/&gt;  rewardsAccumulated: A + R"]
+    end
+
+    IN --&gt; TX --&gt; OUT
+
+    subgraph Guards
+        G1["commitment exists&lt;br/&gt;(commitment ≠ Nothing)"]
+        G2["COSE_Sign1 signature valid&lt;br/&gt;(Ed25519 or secp256k1&lt;br/&gt;Plutus built-in verifier)"]
+        G3["payload.validFrom = commitment.validFrom&lt;br/&gt;payload.validUntil = commitment.validUntil"]
+        G4["validFrom ≤ current_slot ≤ validUntil&lt;br/&gt;(freshness)"]
+        G5["reporter key matches assignment"]
+        G6["reporter signature present&lt;br/&gt;(actor authorization)"]
+        G7["MPT transition proof valid&lt;br/&gt;(two-leaf update: item + reporter)"]
+    end
+
+    G1 -.-&gt; TX
+    G2 -.-&gt; TX
+    G3 -.-&gt; TX
+    G4 -.-&gt; TX
+    G5 -.-&gt; TX
+    G6 -.-&gt; TX
+    G7 -.-&gt; TX</code></pre>
+<div class="admonition note">
+<p class="admonition-title">Two leaves updated atomically</p>
+<p>SubmitReading is the only action that updates <strong>two</strong> leaves in a single
+transaction: the item leaf (commitment cleared) and the reporter leaf
+(reward credited). The MPT transition proof must cover both updates.</p>
+</div>
+<h3 id="transferownership">TransferOwnership</h3>
+<p>Battery changes hands. Both seller and buyer sign. A fresh BMS reading is
+attached as proof of condition at the point of sale.</p>
+<pre class="mermaid"><code>graph LR
+    subgraph Input
+        IN["Passport UTxO&lt;br/&gt;&lt;b&gt;datum:&lt;/b&gt;&lt;br/&gt;ItemLeaf:&lt;br/&gt;  reporter: Just(seller_key, R)&lt;br/&gt;  commitment: Nothing&lt;br/&gt;&lt;br/&gt;CIP-68 User Token&lt;br/&gt;  owner: seller_pkh"]
+    end
+
+    subgraph Transaction
+        TX{{"TransferOwnership&lt;br/&gt;&lt;br/&gt;redeemer:&lt;br/&gt;leaf_key,&lt;br/&gt;new_owner_pkh,&lt;br/&gt;fresh_cose_reading"}}
+    end
+
+    subgraph Output
+        OUT["Passport UTxO'&lt;br/&gt;&lt;b&gt;datum:&lt;/b&gt;&lt;br/&gt;ItemLeaf:&lt;br/&gt;  reporter: Just(buyer_key, R)&lt;br/&gt;  commitment: Nothing&lt;br/&gt;&lt;br/&gt;CIP-68 User Token&lt;br/&gt;  owner: buyer_pkh"]
+    end
+
+    IN --&gt; TX --&gt; OUT
+
+    subgraph Guards
+        G1["seller signature present"]
+        G2["buyer signature present"]
+        G3["fresh COSE_Sign1 reading valid&lt;br/&gt;(condition at point of sale)"]
+        G4["CIP-68 token moves&lt;br/&gt;seller_pkh → buyer_pkh"]
+        G5["commitment: Nothing&lt;br/&gt;(no pending reading)"]
+        G6["MPT update proof valid"]
+    end
+
+    G1 -.-&gt; TX
+    G2 -.-&gt; TX
+    G3 -.-&gt; TX
+    G4 -.-&gt; TX
+    G5 -.-&gt; TX
+    G6 -.-&gt; TX</code></pre>
+<h3 id="repurpose">Repurpose</h3>
+<p>End of first life. The original operator marks the leaf as handed off,
+and the new operator (repurposer) creates a new leaf in their own trie
+with a back-link.</p>
+<pre class="mermaid"><code>graph LR
+    subgraph "Original Operator's Trie"
+        IN["Passport UTxO&lt;br/&gt;&lt;b&gt;datum:&lt;/b&gt;&lt;br/&gt;ItemLeaf:&lt;br/&gt;  status: active&lt;br/&gt;  commitment: Nothing"]
+        TX1{{"Repurpose (original)&lt;br/&gt;&lt;br/&gt;redeemer:&lt;br/&gt;leaf_key,&lt;br/&gt;new_operator_id"}}
+        OUT1["Passport UTxO'&lt;br/&gt;&lt;b&gt;datum:&lt;/b&gt;&lt;br/&gt;ItemLeaf:&lt;br/&gt;  status: handed_off&lt;br/&gt;  new_operator: OP₂&lt;br/&gt;  handoff_slot: current_slot&lt;br/&gt;  &lt;i&gt;read-only from here&lt;/i&gt;"]
+    end
+
+    subgraph "New Operator's Trie"
+        IN2["Passport UTxO (OP₂)&lt;br/&gt;&lt;b&gt;datum:&lt;/b&gt;&lt;br/&gt;no leaf for this item"]
+        TX2{{"Repurpose (new)&lt;br/&gt;&lt;br/&gt;redeemer:&lt;br/&gt;new_leaf_key,&lt;br/&gt;back_link"}}
+        OUT2["Passport UTxO' (OP₂)&lt;br/&gt;&lt;b&gt;datum:&lt;/b&gt;&lt;br/&gt;new ItemLeaf:&lt;br/&gt;  metadata: M'&lt;br/&gt;  back_link:&lt;br/&gt;    original_root: root₁&lt;br/&gt;    original_operator: OP₁&lt;br/&gt;    merkle_proof: π&lt;br/&gt;  initial_soh: fresh reading"]
+    end
+
+    IN --&gt; TX1 --&gt; OUT1
+    IN2 --&gt; TX2 --&gt; OUT2
+    OUT1 -.-&gt;|provenance link| OUT2
+
+    subgraph Guards
+        GR1["original operator signature"]
+        GR2["new operator key ∈ identity trie"]
+        GR3["new operator qualified&lt;br/&gt;(regulation trie)"]
+        GR4["fresh BMS reading at handoff"]
+        GR5["back_link merkle proof valid&lt;br/&gt;against original root"]
+    end
+
+    GR1 -.-&gt; TX1
+    GR2 -.-&gt; TX2
+    GR3 -.-&gt; TX2
+    GR4 -.-&gt; TX2
+    GR5 -.-&gt; TX2</code></pre>
+<div class="admonition note">
+<p class="admonition-title">Two transactions, two operators, two tries</p>
+<p>Repurposing is a <strong>cross-trie</strong> operation. The original operator marks
+their leaf as read-only. The new operator creates a new leaf in their
+own trie with a back-link (original root hash + Merkle proof). Full
+provenance is verifiable across both tries.</p>
+</div>
+<h2 id="validator-guard-table">Validator guard table</h2>
+<table>
+<thead>
+<tr>
+<th>Guard</th>
+<th style="text-align: center;">Register</th>
+<th style="text-align: center;">Assign</th>
+<th style="text-align: center;">Reassign</th>
+<th style="text-align: center;">Commit</th>
+<th style="text-align: center;">Submit</th>
+<th style="text-align: center;">Transfer</th>
+<th style="text-align: center;">Repurpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Manufacturer key ∈ identity trie</td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>x</strong></td>
+</tr>
+<tr>
+<td>Standing ≠ suspended (reg trie)</td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td>No existing leaf at key</td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td>reporter = Nothing</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td>commitment = Nothing</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"><strong>x</strong></td>
+</tr>
+<tr>
+<td>reporter ≠ Nothing</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td>commitment ≠ Nothing</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td>nextReward &gt; 0</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td>validFrom ≤ validUntil</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td>COSE_Sign1 valid (hardware sig)</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"><strong>x</strong></td>
+</tr>
+<tr>
+<td>Payload matches commitment</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td>Freshness: slot in [V₁, V₂]</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td>Reporter key matches assignment</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td>Reporter signature (actor auth)</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td>Seller + buyer signatures</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td>CIP-68 token transfer</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td>New operator ∈ identity trie</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>x</strong></td>
+</tr>
+<tr>
+<td>New operator qualified (reg trie)</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>x</strong></td>
+</tr>
+<tr>
+<td>Back-link Merkle proof valid</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>x</strong></td>
+</tr>
+<tr>
+<td>Manufacturer signature</td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>x</strong></td>
+</tr>
+<tr>
+<td>MPT proof valid</td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"><strong>x</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Universal guard</p>
+<p>MPT proof validity applies to every action — the root hash must be
+correctly recomputed after the leaf update. For SubmitReading, the
+proof covers a two-leaf update (item + reporter).</p>
+</div>
+<h2 id="lifecycle-state-machines">Lifecycle state machines</h2>
+<h3 id="item-leaf-lifecycle">Item leaf lifecycle</h3>
+<p>The main state machine — from manufacturing to end of life.</p>
+<pre class="mermaid"><code>stateDiagram-v2
+    [*] --&gt; Virgin: RegisterItem&lt;br/&gt;(reporter: Nothing, commitment: Nothing)
+
+    Virgin --&gt; Assigned: AssignReporter&lt;br/&gt;(reporter: Just(K, R))
+
+    Assigned --&gt; Committed: CreateCommitment&lt;br/&gt;(commitment: Just(V₁, V₂))
+
+    Committed --&gt; Assigned: SubmitReading&lt;br/&gt;(commitment cleared,&lt;br/&gt;reward credited)
+
+    Assigned --&gt; Reassigned: ReassignReporter&lt;br/&gt;(new reporter key)
+    Reassigned --&gt; Committed: CreateCommitment
+
+    Assigned --&gt; Transferred: TransferOwnership&lt;br/&gt;(CIP-68 token moves,&lt;br/&gt;fresh reading attached)
+    Transferred --&gt; Assigned: AssignReporter&lt;br/&gt;(new owner's reporter)
+
+    Assigned --&gt; HandedOff: Repurpose&lt;br/&gt;(status: read-only,&lt;br/&gt;back-link created)
+    HandedOff --&gt; [*]: leaf frozen
+
+    note right of Committed
+        72h-scale window
+        SE050 signs reading
+        Single-use commitment
+    end note
+
+    note right of HandedOff
+        New operator creates
+        fresh leaf in their
+        own trie with back-link
+    end note</code></pre>
+<h3 id="commitment-lifecycle-the-2-tx-protocol">Commitment lifecycle (the 2-tx protocol)</h3>
+<p>The core protocol — zoomed in on the commitment field.</p>
+<pre class="mermaid"><code>stateDiagram-v2
+    [*] --&gt; Empty: reporter assigned,&lt;br/&gt;commitment: Nothing
+
+    Empty --&gt; Active: CreateCommitment (Tx 1)&lt;br/&gt;commitment: Just(validFrom, validUntil)&lt;br/&gt;chain slot = trusted timestamp
+
+    Active --&gt; Empty: SubmitReading (Tx 2)&lt;br/&gt;commitment: Nothing&lt;br/&gt;COSE_Sign1 verified&lt;br/&gt;reward credited
+
+    Active --&gt; Expired: validUntil &lt; current_slot&lt;br/&gt;(no transaction needed)
+    Expired --&gt; Empty: operator creates&lt;br/&gt;new commitment
+
+    note right of Active
+        The battery signs:
+        { battery_id, validFrom,
+          validUntil, soh_bp,
+          soc_bp, cycles, volts }
+        in COSE_Sign1 envelope
+    end note
+
+    note left of Expired
+        Expired commitments
+        are inert — SubmitReading
+        will fail freshness check
+    end note</code></pre>
+<h3 id="reward-accumulation">Reward accumulation</h3>
+<pre class="mermaid"><code>stateDiagram-v2
+    [*] --&gt; NoLeaf: reporter not yet in trie
+
+    NoLeaf --&gt; Created: First SubmitReading&lt;br/&gt;insert ReporterLeaf&lt;br/&gt;rewardsAccumulated: R₁
+
+    Created --&gt; Accumulating: Subsequent SubmitReading&lt;br/&gt;rewardsAccumulated: A + Rₙ
+
+    Accumulating --&gt; Accumulating: Each reading&lt;br/&gt;adds nextReward&lt;br/&gt;(monotonically increasing)
+
+    note right of Accumulating
+        Proved in Lean:
+        credit_increases
+        credit_monotone
+        double_credit_sum
+    end note</code></pre>
+<h3 id="battery-lifecycle-regulatory">Battery lifecycle (regulatory)</h3>
+<p>The physical lifecycle mapped to on-chain states, per (EU) 2023/1542.</p>
+<pre class="mermaid"><code>stateDiagram-v2
+    [*] --&gt; Manufactured: factory produces battery&lt;br/&gt;(static data: chemistry,&lt;br/&gt;carbon footprint, recycled %)
+
+    Manufactured --&gt; PlacedOnMarket: RegisterItem&lt;br/&gt;(2027 EV, 2028 industrial)
+
+    PlacedOnMarket --&gt; InService: first SoH reading&lt;br/&gt;(AssignReporter + readings)
+
+    InService --&gt; InService: periodic readings&lt;br/&gt;(SoH, cycles, capacity fade)
+
+    InService --&gt; SecondLife: Repurpose&lt;br/&gt;(new operator, back-link)
+    SecondLife --&gt; SecondLife: readings continue&lt;br/&gt;(new operator's trie)
+
+    InService --&gt; EndOfLife: Repurpose to recycler&lt;br/&gt;(Art. 77(6b))
+    SecondLife --&gt; EndOfLife: Repurpose to recycler
+
+    EndOfLife --&gt; [*]: passport ceases to exist&lt;br/&gt;(leaf frozen, record preserved)
+
+    note right of InService
+        Consumer taps phone → NFC
+        SE050 signs SoH reading
+        Operator submits to chain
+    end note
+
+    note right of SecondLife
+        Full provenance:
+        new trie back-links
+        to original root
+    end note</code></pre>
+<h2 id="the-full-transaction-soh-reading">The full transaction: SoH reading</h2>
+<p>End-to-end flow for the two-transaction commitment protocol, showing the
+hardware interaction.</p>
+<pre class="mermaid"><code>sequenceDiagram
+    participant MFR as Manufacturer (Operator)
+    participant V as Validator
+    participant IT as Identity Trie
+    participant RT as Regulation Trie
+    participant U as Consumer (Reporter)
+    participant BMS as Battery (SE050 + Sensor)
+
+    rect rgb(60, 60, 80)
+    Note over MFR,RT: Transaction 1: CreateCommitment
+
+    MFR-&gt;&gt;V: Spend passport UTxO&lt;br/&gt;redeemer: CreateCommitment(leaf_key, V₁, V₂)
+    V-&gt;&gt;IT: Read reference: manufacturer key present?
+    IT--&gt;&gt;V: ✓ attested
+    V-&gt;&gt;V: Check: reporter assigned on leaf
+    V-&gt;&gt;V: Check: no existing commitment
+    V-&gt;&gt;V: Check: V₁ ≤ V₂, V₁ ≥ lower slot
+    V-&gt;&gt;V: Check: manufacturer signature
+    V-&gt;&gt;V: Check: MPT update proof valid
+    V--&gt;&gt;MFR: ✓ Produce passport UTxO'&lt;br/&gt;datum: commitment = Just(V₁, V₂)
+    end
+
+    Note over MFR,BMS: Off-chain: manufacturer relays&lt;br/&gt;commitment to consumer
+
+    MFR-&gt;&gt;U: Relay: commitment window (V₁, V₂)
+
+    rect rgb(80, 60, 60)
+    Note over U,BMS: NFC tap — physical world
+
+    U-&gt;&gt;BMS: NFC tap (phone provides power)
+    BMS-&gt;&gt;BMS: Sensor reads: SoH, SoC,&lt;br/&gt;cycles, voltage, temperature
+    BMS-&gt;&gt;BMS: SE050 signs COSE_Sign1:&lt;br/&gt;{ battery_id, V₁, V₂,&lt;br/&gt;  soh_bp: 8800, cycles: 342, ... }
+    BMS--&gt;&gt;U: Signed envelope (Ed25519 or secp256k1)
+    end
+
+    U-&gt;&gt;MFR: Submit signed envelope
+
+    rect rgb(60, 80, 60)
+    Note over MFR,RT: Transaction 2: SubmitReading
+
+    MFR-&gt;&gt;V: Spend passport UTxO'&lt;br/&gt;redeemer: SubmitReading(leaf_key, cose_envelope, reporter_key)
+    V-&gt;&gt;V: Check: commitment exists
+    V-&gt;&gt;V: Verify COSE_Sign1 signature&lt;br/&gt;(Plutus built-in: Ed25519 or secp256k1)
+    V-&gt;&gt;V: Check: payload.V₁ = commitment.V₁&lt;br/&gt;payload.V₂ = commitment.V₂
+    V-&gt;&gt;V: Check: V₁ ≤ current_slot ≤ V₂ (freshness)
+    V-&gt;&gt;V: Check: reporter key matches assignment
+    V-&gt;&gt;V: Check: reporter signature present
+    V-&gt;&gt;V: Check: MPT transition proof&lt;br/&gt;(two-leaf update: item + reporter)
+    V--&gt;&gt;MFR: ✓ Produce passport UTxO''&lt;br/&gt;datum: commitment = Nothing&lt;br/&gt;reporter.rewardsAccumulated += R
+    end
+
+    Note over U: Reward credited on-chain&lt;br/&gt;Redeemable off-chain via&lt;br/&gt;reporter key signature</code></pre>
+<h2 id="the-hardware-signing-flow">The hardware signing flow</h2>
+<p>How the physical measurement becomes an on-chain proof. This is the
+detail the GDPR contract does not have — the bridge between the physical
+world and the chain.</p>
+<pre class="mermaid"><code>graph TD
+    subgraph "Battery Module ($1.91)"
+        SENSOR["Analog Sensor&lt;br/&gt;&lt;i&gt;measures SoH, SoC,&lt;br/&gt;cycles, voltage, temp&lt;/i&gt;"]
+        I2C["I2C Bus"]
+        SE["NXP SE050&lt;br/&gt;&lt;i&gt;Ed25519 + secp256k1&lt;br/&gt;key never leaves chip&lt;/i&gt;"]
+        NFC["NXP NTAG 5 Link&lt;br/&gt;&lt;i&gt;NFC + I2C master&lt;br/&gt;energy harvesting&lt;/i&gt;"]
+        ANT["Antenna + passives&lt;br/&gt;&lt;i&gt;$0.06&lt;/i&gt;"]
+    end
+
+    subgraph "Consumer's Phone"
+        APP["Phone App&lt;br/&gt;&lt;i&gt;relays commitment window&lt;br/&gt;receives signed envelope&lt;/i&gt;"]
+    end
+
+    subgraph "On-chain Verification"
+        BUILT_IN["Plutus Built-in&lt;br/&gt;&lt;i&gt;verifyEd25519Signature or&lt;br/&gt;verifyEcdsaSecp256k1Signature&lt;/i&gt;"]
+    end
+
+    SENSOR --&gt;|analog reading| I2C
+    I2C --&gt;|digital values| SE
+    SE --&gt;|COSE_Sign1 envelope| NFC
+    NFC &lt;--&gt;|NFC field&lt;br/&gt;powers the module| APP
+    APP --&gt;|HTTPS| OPERATOR["Operator API"]
+    OPERATOR --&gt;|transaction| BUILT_IN
+
+    subgraph "What the SE050 Signs (CBOR)"
+        PAYLOAD["battery_id: hash(pubKey)&lt;br/&gt;validFrom: slot V₁&lt;br/&gt;validUntil: slot V₂&lt;br/&gt;soh_bp: 8800 (= 88.00%)&lt;br/&gt;soc_bp: 6500 (= 65.00%)&lt;br/&gt;cycle_count: 342&lt;br/&gt;voltage_mv: 3720&lt;br/&gt;temperature_dc: 245 (= 24.5°C)&lt;br/&gt;schema_version: 1"]
+    end
+
+    SE -.-&gt;|signs| PAYLOAD</code></pre>
+<div class="admonition note">
+<p class="admonition-title">Integer-only encoding</p>
+<p>All values are integers — no floating point. SoH in basis points
+(8800 = 88.00%), temperature in deci-Celsius (245 = 24.5°C). This
+enables deterministic CBOR encoding without canonicalisation, which is
+critical for signature verification: the byte sequence the SE050
+signed must be exactly reproducible by the Plutus validator.</p>
+</div>
+<h2 id="plausibility-checks">Plausibility checks</h2>
+<p>Beyond cryptographic verification, the validator can enforce physical
+plausibility. These are optional guards that catch obvious fraud without
+requiring domain expertise.</p>
+<table>
+<thead>
+<tr>
+<th>Check</th>
+<th>Rule</th>
+<th>Catches</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SoH decreasing</td>
+<td><code>new_soh_bp ≤ previous_soh_bp</code></td>
+<td>Manufacturer inflating health</td>
+</tr>
+<tr>
+<td>Cycles increasing</td>
+<td><code>new_cycles ≥ previous_cycles</code></td>
+<td>Resetting cycle counter</td>
+</tr>
+<tr>
+<td>SoH range</td>
+<td><code>0 ≤ soh_bp ≤ 10000</code></td>
+<td>Invalid readings</td>
+</tr>
+<tr>
+<td>Voltage range</td>
+<td><code>2500 ≤ voltage_mv ≤ 4500</code> (Li-ion)</td>
+<td>Sensor malfunction</td>
+</tr>
+<tr>
+<td>Temperature range</td>
+<td><code>-400 ≤ temp_dc ≤ 800</code></td>
+<td>Sensor malfunction</td>
+</tr>
+</tbody>
+</table>
+<p>These are <strong>soft guards</strong> — recorded on-chain for auditors rather than
+causing transaction rejection. A failing plausibility check flags the
+reading but does not prevent it, because the SE050 signature proves the
+sensor produced this value. The anomaly is real data, not fraud — the
+regulator investigates.</p>
+<h2 id="comparison-with-gdpr-contract">Comparison with GDPR contract</h2>
+<table>
+<thead>
+<tr>
+<th>Dimension</th>
+<th>Battery Contract</th>
+<th>GDPR Contract</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mode</td>
+<td>Physical — hardware signature</td>
+<td>Process — server-side signing</td>
+</tr>
+<tr>
+<td>Process signature source</td>
+<td>SE050 secure element (COSE_Sign1)</td>
+<td>Authenticated web session</td>
+</tr>
+<tr>
+<td>Leaf types</td>
+<td>ItemLeaf + ReporterLeaf</td>
+<td>Consent, breach, rights, Art 30, DPIA, cert</td>
+</tr>
+<tr>
+<td>Two-leaf atomic update</td>
+<td>Yes (item + reporter on SubmitReading)</td>
+<td>No (single leaf per action)</td>
+</tr>
+<tr>
+<td>Reward system</td>
+<td>Yes (monotonic accumulator)</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Cross-operator handoff</td>
+<td>Repurpose (back-link to original root)</td>
+<td>Data portability (Art 20)</td>
+</tr>
+<tr>
+<td>Plausibility checks</td>
+<td>Physics-based (SoH ≤ prev, cycles ≥ prev)</td>
+<td>Timeline-based (timeliness flag)</td>
+</tr>
+<tr>
+<td>Timeliness recording</td>
+<td>Freshness check (reject if expired)</td>
+<td>Timeliness flag (record, don't reject)</td>
+</tr>
+<tr>
+<td>CIP-68 token</td>
+<td>Yes (ownership transfer)</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Signature curves</td>
+<td>Ed25519, secp256k1 (hardware-constrained)</td>
+<td>Ed25519 (software, no constraint)</td>
+</tr>
+</tbody>
+</table>
+<p>The battery contract is <strong>strictly more complex</strong> — it has hardware
+signatures, two-leaf atomic updates, reward accounting, CIP-68 token
+transfer, and cross-operator handoff with Merkle back-links. The GDPR
+contract is structurally simpler but covers more redeemer actions because
+GDPR has more distinct obligation types.</p>
+<h2 id="sources">Sources</h2>
+<ul>
+<li><a href="https://eur-lex.europa.eu/eli/reg/2023/1542/oj">EU Battery Regulation (EU) 2023/1542</a> —
+  full regulation text</li>
+<li><a href="../battery-regulation/">Battery Regulation case study</a> — obligation map,
+  constraint check, economics</li>
+<li><a href="https://omelkonian.github.io/data/publications/eutxo.pdf">The Extended UTXO Model (IOG)</a> —
+  UTxO diagram conventions</li>
+<li><a href="https://cips.cardano.org/cip/CIP-0031">CIP-31: Reference Inputs</a> —
+  cross-trie verification</li>
+<li><a href="https://cips.cardano.org/cip/CIP-0068">CIP-68: Datum Metadata Standard</a> —
+  user token pattern for ownership transfer</li>
+<li><a href="https://www.rfc-editor.org/rfc/rfc9052">RFC 9052: COSE_Sign1</a> —
+  signing envelope format for hardware attestation</li>
+<li><a href="https://github.com/lambdasistemi/eu-digital-product-passport">eu-digital-product-passport</a> —
+  full implementation with Lean proofs</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.expand", "toc.integrate", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+        <script src="../../javascripts/mermaid.mjs" type="module"></script>
+      
+    
+  </body>
+</html>

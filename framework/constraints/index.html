@@ -1,0 +1,1367 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Framework for analyzing multi-party regulations and mapping them to Cardano compliance infrastructure">
+      
+      
+      
+        <link rel="canonical" href="https://lambdasistemi.github.io/cardano-for-regulators/framework/constraints/">
+      
+      
+        <link rel="prev" href="../schema/">
+      
+      
+        <link rel="next" href="../methodology/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>The Five Constraints - Cardano for Regulators</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#the-five-constraints" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Cardano for Regulators" class="md-header__button md-logo" aria-label="Cardano for Regulators" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Cardano for Regulators
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              The Five Constraints
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/lambdasistemi/cardano-for-regulators" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    lambdasistemi/cardano-for-regulators
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Cardano for Regulators" class="md-nav__button md-logo" aria-label="Cardano for Regulators" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Cardano for Regulators
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/lambdasistemi/cardano-for-regulators" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    lambdasistemi/cardano-for-regulators
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../graph/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ontology Graph
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../thesis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Thesis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Framework
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Framework
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../schema/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Regulator Schema
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Five Constraints
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Five Constraints
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-data-cadence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Data cadence
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-sequential-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Sequential access
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Sequential access">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#single-operator-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Single operator pattern
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#relay-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Relay pattern
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-it-breaks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When it breaks
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-liveness" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Liveness
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Liveness">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#regulatory-incentive" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Regulatory incentive
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#protocol-escalation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Protocol escalation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-fee-alignment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Fee alignment
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Fee alignment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#who-pays-and-why" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Who pays and why
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-user-doesnt-pay" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The user doesn't pay
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#happy-path-vs-sad-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Happy path vs sad path
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-identity-delegation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Identity delegation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Identity delegation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-proxy-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The proxy pattern
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-the-proxy-proves" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What the proxy proves
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hardware-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hardware requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-three-question-pre-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The three-question pre-filter
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../methodology/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Analysis Methodology
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../patterns/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture Patterns
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Case Studies
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Case Studies
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/battery-regulation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EU Battery Regulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/battery-contract/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Battery Smart Contract
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/gdpr/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GDPR
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/gdpr-contract/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GDPR Smart Contract
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ontology
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Ontology
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generated/ontology/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generated/gdpr/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GDPR
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generated/eu-battery-regulation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EU Battery Regulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="the-five-constraints">The Five Constraints</h1>
+<p>These constraints determine whether a regulation is a good candidate for
+blockchain-based compliance infrastructure. All five must hold. If any fails,
+a traditional database with audit logs likely suffices.</p>
+<h2 id="1-data-cadence">1. Data cadence</h2>
+<p><strong>The regulation's data update rhythm must be compatible with L1 settlement.</strong></p>
+<p>Blockchain transactions are not instantaneous. Even on fast L1s, there is
+a settlement window measured in seconds to minutes, and batching makes
+economic sense at intervals of hours to days.</p>
+<p>This is fine when the regulation requires:</p>
+<ul>
+<li><strong>Periodic reporting</strong> — quarterly carbon declarations, annual recycling
+  targets, monthly SoH snapshots</li>
+<li><strong>Event-driven updates</strong> — ownership transfer, repurposing, end-of-life
+  declaration, recall notification</li>
+<li><strong>Batch submissions</strong> — operator aggregates readings from the field and
+  submits daily</li>
+</ul>
+<p>This does <strong>not</strong> fit when:</p>
+<ul>
+<li>Real-time sensor telemetry must be continuously anchored (100ms intervals)</li>
+<li>Sub-second latency matters for the compliance outcome</li>
+<li>The data volume per time unit exceeds L1 throughput even with batching</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">The Merkle Patricia Trie helps</p>
+<p>The MPT-per-operator pattern means each operator submits one transaction
+per batch, regardless of how many items were updated. A manufacturer
+updating 10,000 batteries pays for one root hash update, not 10,000
+individual transactions.</p>
+</div>
+<h2 id="2-sequential-access">2. Sequential access</h2>
+<p><strong>Writes to the shared state must be naturally serialized — no concurrent
+contention on the same data structure.</strong></p>
+<p>A Merkle Patricia Trie stored in a single UTxO is inherently sequential:
+only one transaction can consume and recreate it per block. This is a feature,
+not a limitation, when the regulation's own structure serializes access.</p>
+<h3 id="single-operator-pattern">Single operator pattern</h3>
+<p>The most common case: the regulation assigns responsibility to one party
+(manufacturer, importer, economic operator) who is the sole writer for their
+own data. No contention by design.</p>
+<h3 id="relay-pattern">Relay pattern</h3>
+<p>Multiple actors write to the same trie, but in sequence. The regulation
+defines the ordering:</p>
+<pre class="mermaid"><code>graph LR
+    A[Manufacturer] --&gt;|creates leaf| B[Transporter]
+    B --&gt;|adds shipment data| C[Customs]
+    C --&gt;|verifies| D[Importer]
+    D --&gt;|takes ownership| E[Consumer]</code></pre>
+<p>Each step is a state transition. Actor B cannot act until actor A has
+completed their step. The regulation <strong>is</strong> the state machine — we are
+not imposing sequentiality, we are mirroring it.</p>
+<h3 id="when-it-breaks">When it breaks</h3>
+<ul>
+<li>Multiple independent operators need to write to a <strong>shared</strong> trie
+  simultaneously (use separate tries instead)</li>
+<li>Auction or exchange dynamics where many parties compete to update the
+  same state in the same block (use a different pattern entirely)</li>
+</ul>
+<h2 id="3-liveness">3. Liveness</h2>
+<p><strong>The regulation must provide deadlines and penalties that incentivize
+continued participation, or the protocol must have timeout/escalation paths.</strong></p>
+<p>The relay pattern from constraint 2 has an inherent risk: if one actor
+stops participating, the chain stalls. The regulation mitigates this in
+two ways:</p>
+<h3 id="regulatory-incentive">Regulatory incentive</h3>
+<p>The regulation imposes deadlines and penalties. An operator who fails to
+submit data within the required window faces:</p>
+<ul>
+<li>Fines (e.g., Battery Regulation penalties under Art. 93)</li>
+<li>Market withdrawal of their products</li>
+<li>Loss of operating license</li>
+<li>Possible criminal liability where national law provides it</li>
+</ul>
+<p>This is external liveness — the legal system provides the incentive.</p>
+<h3 id="protocol-escalation">Protocol escalation</h3>
+<p>On-chain mechanisms can complement regulatory penalties:</p>
+<ul>
+<li><strong>Slot-based timeouts</strong> — if an actor doesn't act within N slots, the
+  next actor in the relay can skip them or escalate</li>
+<li><strong>Bond/deposit</strong> — operators lock collateral that is slashed on timeout</li>
+<li><strong>Fallback operator</strong> — a designated backup can process stalled items</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">v1 vs v2</p>
+<p>In the cooperative model (v1), liveness depends on the operator's
+good faith, backed by regulatory penalties. The adversarial model (v2)
+adds on-chain enforcement but increases complexity and cost.</p>
+</div>
+<h2 id="4-fee-alignment">4. Fee alignment</h2>
+<p><strong>There must be an actor who benefits enough from on-chain compliance to
+pay for it — the sponsor.</strong></p>
+<p>Users will not pay per action. Blockchain transactions cost money, but the
+cost must not leak through to the user. The entity that benefits from the
+on-chain guarantees sponsors the transactions. The regulation creates this
+economic incentive — compliance is compulsory, and sponsoring on-chain
+activity is the cheapest way to comply.</p>
+<h3 id="who-pays-and-why">Who pays and why</h3>
+<table>
+<thead>
+<tr>
+<th>Actor</th>
+<th>Pays because</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Manufacturer</strong></td>
+<td>Compliance is cheaper than fines</td>
+<td>Battery passport updates</td>
+</tr>
+<tr>
+<td><strong>Importer</strong></td>
+<td>Market access requires it</td>
+<td>CBAM certificate purchases</td>
+</tr>
+<tr>
+<td><strong>Operator</strong></td>
+<td>Competitive advantage from certified data</td>
+<td>SoH verification for resale</td>
+</tr>
+<tr>
+<td><strong>Institution</strong></td>
+<td>Public good infrastructure</td>
+<td>National registry anchoring</td>
+</tr>
+</tbody>
+</table>
+<h3 id="the-user-doesnt-pay">The user doesn't pay</h3>
+<p>In most regulatory contexts, the end user (citizen, consumer, field worker)
+should not need a wallet, ADA, or any blockchain knowledge. The operator
+absorbs the cost because:</p>
+<ul>
+<li>The regulation mandates them, not the user</li>
+<li>The cost per operation is negligible at scale (~$0.10-0.15 per update)</li>
+<li>The compliance benefit far exceeds the transaction cost</li>
+</ul>
+<h3 id="happy-path-vs-sad-path">Happy path vs sad path</h3>
+<p><strong>Happy path (cooperative):</strong> The operator pays willingly because compliance
+is valuable. Users interact through the operator's infrastructure.</p>
+<p><strong>Sad path (adversarial):</strong> The operator refuses to act. Now the user needs
+leverage:</p>
+<ul>
+<li>On-chain escrow — operator locked a bond; timeout triggers penalty</li>
+<li>Direct submission — user can force a state transition (requires wallet)</li>
+<li>Regulatory complaint — off-chain, but the on-chain record proves the
+  operator's failure</li>
+</ul>
+<p>The happy path should be cheap and frictionless. The sad path should exist
+as a deterrent, even if rarely used.</p>
+<h2 id="5-identity-delegation">5. Identity delegation</h2>
+<p><strong>Actors who will never have wallets must be able to make meaningful
+on-chain state transitions through cryptographic proxies.</strong></p>
+<p>Regulations apply to everyone — manufacturers, transport workers, recyclers,
+consumers. These people will not install a Cardano wallet. But they need
+to perform actions that result in on-chain state changes.</p>
+<h3 id="the-proxy-pattern">The proxy pattern</h3>
+<p>A physical object or institutional credential carries a key pair that
+acts on the user's behalf:</p>
+<table>
+<thead>
+<tr>
+<th>Proxy</th>
+<th>How it works</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Secure element in product</strong></td>
+<td>NFC tap triggers SE050 to sign a reading</td>
+<td>Battery SoH check</td>
+</tr>
+<tr>
+<td><strong>Institutional smart card</strong></td>
+<td>Employee badge signs an inspection attestation</td>
+<td>Factory audit</td>
+</tr>
+<tr>
+<td><strong>Mobile credential</strong></td>
+<td>Phone app holds a delegated key from the operator</td>
+<td>Field data collection</td>
+</tr>
+<tr>
+<td><strong>QR + challenge</strong></td>
+<td>Scan triggers a time-bounded commitment</td>
+<td>Product verification</td>
+</tr>
+</tbody>
+</table>
+<h3 id="what-the-proxy-proves">What the proxy proves</h3>
+<p>The proxy bridges the physical world to the chain:</p>
+<ol>
+<li><strong>This specific human</strong> performed <strong>this specific action</strong> (tap, scan, present)</li>
+<li><strong>At this specific time</strong> (commitment window on-chain)</li>
+<li><strong>On this specific item</strong> (leaf in the operator's trie)</li>
+<li>The human never knew about blockchain, UTxOs, or ADA</li>
+</ol>
+<h3 id="hardware-requirements">Hardware requirements</h3>
+<p>For the proxy to work on-chain, it must:</p>
+<ul>
+<li>Use a curve with <strong>native Plutus built-in support</strong> (Ed25519, secp256k1)</li>
+<li>Produce <strong>deterministic signatures</strong> (COSE_Sign1/CBOR, not JSON)</li>
+<li>Be <strong>tamper-resistant</strong> (secure element, not software key)</li>
+<li>Be <strong>powered by the interaction</strong> (NFC energy harvesting, no battery)</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">This is what makes blockchain accessible to regulation</p>
+<p>Regulations apply to millions of people who will never be crypto users.
+The delegation pattern is the bridge. Without it, blockchain remains
+a tool for crypto-native participants only.</p>
+</div>
+<h2 id="the-three-question-pre-filter">The three-question pre-filter</h2>
+<p>Before running the full five constraints, apply this quick filter:</p>
+<ol>
+<li><strong>Multi-party data?</strong> — Multiple independent parties must share a common
+   data set, and no single party should control it.</li>
+<li><strong>Institutional anchor?</strong> — An institution defines what's valid but
+   doesn't want to run the infrastructure.</li>
+<li><strong>Verifiable history?</strong> — Historical integrity matters — parties must
+   not be able to rewrite past records.</li>
+</ol>
+<p>If all three hold → proceed with the five constraints.
+If only 1-2 hold → a traditional database with audit logs may suffice.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.expand", "toc.integrate", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+        <script src="../../javascripts/mermaid.mjs" type="module"></script>
+      
+    
+  </body>
+</html>

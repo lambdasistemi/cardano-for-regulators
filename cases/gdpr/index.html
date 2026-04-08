@@ -1,0 +1,2012 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Framework for analyzing multi-party regulations and mapping them to Cardano compliance infrastructure">
+      
+      
+      
+        <link rel="canonical" href="https://lambdasistemi.github.io/cardano-for-regulators/cases/gdpr/">
+      
+      
+        <link rel="prev" href="../battery-contract/">
+      
+      
+        <link rel="next" href="../gdpr-contract/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>GDPR - Cardano for Regulators</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#gdpr" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Cardano for Regulators" class="md-header__button md-logo" aria-label="Cardano for Regulators" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Cardano for Regulators
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              GDPR
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/lambdasistemi/cardano-for-regulators" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    lambdasistemi/cardano-for-regulators
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Cardano for Regulators" class="md-nav__button md-logo" aria-label="Cardano for Regulators" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Cardano for Regulators
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/lambdasistemi/cardano-for-regulators" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    lambdasistemi/cardano-for-regulators
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../graph/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ontology Graph
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../thesis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Thesis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Framework
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Framework
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../framework/schema/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Regulator Schema
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../framework/constraints/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Five Constraints
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../framework/methodology/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Analysis Methodology
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../framework/patterns/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture Patterns
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Case Studies
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Case Studies
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../battery-regulation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EU Battery Regulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../battery-contract/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Battery Smart Contract
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GDPR
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GDPR
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-reframing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The reframing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#constraint-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Constraint check
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#obligation-map" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Obligation map
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#schema-mapping" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Schema mapping
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-classification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data classification
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#trust-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trust model
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#value-token-identification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Value / token identification
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#protocol-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Protocol patterns
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Protocol patterns">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#breach-notification-72-hours-the-flagship" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Breach notification (72 hours) — the flagship
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rights-request-response-1-month" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rights-request response (1 month)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#consent-lifecycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Consent lifecycle
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#processing-records-art-30" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Processing records (Art 30)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#certification-art-42" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Certification (Art 42)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-gdprblockchain-tension" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The GDPR–blockchain tension
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#formal-invariants" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Formal invariants
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#economics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Economics
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#comparison-with-battery-regulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comparison with Battery Regulation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#open-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Open questions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sources
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sources">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#primary-legislation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Primary legislation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cjeu-case-law" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CJEU case law
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#regulatory-guidance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Regulatory guidance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gdpr-enforcement-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GDPR enforcement data
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gdpr-contract/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GDPR Smart Contract
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ontology
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Ontology
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generated/ontology/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generated/gdpr/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GDPR
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generated/eu-battery-regulation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EU Battery Regulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="gdpr">GDPR</h1>
+<p><strong>Regulation:</strong> <a href="https://eur-lex.europa.eu/eli/reg/2016/679/oj">(EU) 2016/679</a> — General Data Protection Regulation</p>
+<p><strong>Status:</strong> Candidate case — constraint check passed, architecture mapped.
+<strong>Smart contract:</strong> <a href="../gdpr-contract/">GDPR Smart Contract</a> — UTxO diagrams, guard table, lifecycle state machines.</p>
+<h2 id="the-reframing">The reframing</h2>
+<p>GDPR does not regulate a product lifecycle. It regulates how organisations
+handle personal data. The natural instinct is to ask "can we put personal
+data on a blockchain?" — the answer is no, and that is the wrong question.</p>
+<p>The right question: <strong>can a blockchain prove that an organisation complied
+with GDPR, without storing any personal data on-chain?</strong></p>
+<p>The "items" in the process trie are not data subjects or personal records.
+They are <strong>compliance evidence</strong>: consent hashes, breach notification
+timestamps, rights-request response proofs, processing activity records,
+DPIA attestations. The chain never sees personal data. It sees hashes and
+timestamps that prove the controller did what the regulation requires, when
+the regulation requires it.</p>
+<p>This is pure process mode. No sensors, no physical objects. The trust basis
+is protocol enforcement, not hardware attestation.</p>
+<h2 id="constraint-check">Constraint check</h2>
+<table>
+<thead>
+<tr>
+<th>Constraint</th>
+<th>Assessment</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Data cadence</strong></td>
+<td>Pass</td>
+<td>Consent events, breach notifications (72h), rights requests (1 month response), DPIAs — all event-driven or periodic. No real-time streaming.</td>
+</tr>
+<tr>
+<td><strong>Sequential access</strong></td>
+<td>Pass</td>
+<td>Single controller per trie. Rights requests follow a relay: subject → controller → response. Breach: controller → SA.</td>
+</tr>
+<tr>
+<td><strong>Liveness</strong></td>
+<td>Pass</td>
+<td>Up to €20M / 4% global turnover. 72h breach deadline. 1-month rights response. Strongest penalties of any regulation analysed.</td>
+</tr>
+<tr>
+<td><strong>Fee alignment</strong></td>
+<td>Pass</td>
+<td>Controllers pay. Compliance cost (~€0.10-0.15 per record) is negligible vs fine exposure. A single breach fine dwarfs lifetime on-chain costs.</td>
+</tr>
+<tr>
+<td><strong>Identity delegation</strong></td>
+<td>Pass</td>
+<td>Process mode. Data subjects exercise rights through digital channels. The signing function maps to the subject's authenticated request (web portal, app, email verification).</td>
+</tr>
+</tbody>
+</table>
+<h2 id="obligation-map">Obligation map</h2>
+<table>
+<thead>
+<tr>
+<th>Element</th>
+<th>GDPR</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Regulator</strong></td>
+<td>Supervisory authorities (national DPAs), EDPB for cross-border consistency</td>
+</tr>
+<tr>
+<td><strong>Obligated parties</strong></td>
+<td>Data controllers, data processors</td>
+</tr>
+<tr>
+<td><strong>Reporting obligations</strong></td>
+<td>Processing records (<a href="https://gdpr-info.eu/art-30-gdpr/">Art 30</a>), breach notifications (<a href="https://gdpr-info.eu/art-33-gdpr/">Art 33</a>–<a href="https://gdpr-info.eu/art-34-gdpr/">34</a>), DPIAs (<a href="https://gdpr-info.eu/art-35-gdpr/">Art 35</a>), consent records (<a href="https://gdpr-info.eu/art-7-gdpr/">Art 7</a>), rights-request responses (<a href="https://gdpr-info.eu/art-12-gdpr/">Art 12</a>–22)</td>
+</tr>
+<tr>
+<td><strong>Verification bodies</strong></td>
+<td>Supervisory authorities (investigative + corrective powers, <a href="https://gdpr-info.eu/art-58-gdpr/">Art 58</a>), certification bodies (<a href="https://gdpr-info.eu/art-42-gdpr/">Art 42</a>–43)</td>
+</tr>
+<tr>
+<td><strong>Beneficiaries</strong></td>
+<td>Data subjects (citizens), society (trust in digital economy)</td>
+</tr>
+<tr>
+<td><strong>Penalties</strong></td>
+<td>Tier 1: €10M / 2% turnover. Tier 2: €20M / 4% turnover (<a href="https://gdpr-info.eu/art-83-gdpr/">Art 83</a>). Plus compensation (<a href="https://gdpr-info.eu/art-82-gdpr/">Art 82</a>). Member States may also lay down additional penalties under <a href="https://gdpr-info.eu/art-84-gdpr/">Art 84</a>.</td>
+</tr>
+<tr>
+<td><strong>Timeline</strong></td>
+<td>In force since May 2018. No phase-in remaining.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="schema-mapping">Schema mapping</h2>
+<table>
+<thead>
+<tr>
+<th>Schema role</th>
+<th>GDPR party</th>
+<th>Trie contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Identity provider</strong></td>
+<td>eIDAS / national ID / corporate registry</td>
+<td>Attested controller and processor keys</td>
+</tr>
+<tr>
+<td><strong>Regulator</strong></td>
+<td>Supervisory authority (DPA)</td>
+<td>Controller standing, certification status, enforcement history</td>
+</tr>
+<tr>
+<td><strong>Operator</strong></td>
+<td>Data controller</td>
+<td>Compliance records: consent hashes, breach notifications, rights responses, Art 30 records</td>
+</tr>
+<tr>
+<td><strong>User</strong></td>
+<td>Data subject</td>
+<td>Exercises rights via signing function (process mode)</td>
+</tr>
+</tbody>
+</table>
+<p>The processor (<a href="https://gdpr-info.eu/art-4-gdpr/">Art 4(8)</a>) is a secondary operator — they maintain
+their own compliance trie, governed by the same smart contract, but their
+processing activity is constrained by the controller's documented
+instructions. The <a href="https://gdpr-info.eu/art-28-gdpr/">Art 28</a> processing agreement is a static leaf in
+both tries, cross-referencing each other.</p>
+<h2 id="data-classification">Data classification</h2>
+<p>What goes on-chain is compliance evidence, not personal data.</p>
+<table>
+<thead>
+<tr>
+<th>Compliance record</th>
+<th>Type</th>
+<th>Access tier</th>
+<th>On-chain</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Consent given/withdrawn</td>
+<td>Event-driven</td>
+<td>Subject + controller</td>
+<td>Hash of consent record + timestamp</td>
+</tr>
+<tr>
+<td>Lawful basis per purpose</td>
+<td>Static</td>
+<td>Controller + SA</td>
+<td>Hash in processing-record leaf</td>
+</tr>
+<tr>
+<td>Processing activity record (<a href="https://gdpr-info.eu/art-30-gdpr/">Art 30</a>)</td>
+<td>Static + updates</td>
+<td>Controller + SA on request</td>
+<td>Leaf in controller's trie</td>
+</tr>
+<tr>
+<td>Breach notification to SA</td>
+<td>Event-driven, 72h</td>
+<td>Controller + SA</td>
+<td>Commitment-then-submit</td>
+</tr>
+<tr>
+<td>Breach notification to subjects</td>
+<td>Event-driven</td>
+<td>Controller + subjects</td>
+<td>Hash + timestamp</td>
+</tr>
+<tr>
+<td>DPIA conducted</td>
+<td>Event-driven</td>
+<td>Controller + SA</td>
+<td>Attestation hash + timestamp</td>
+</tr>
+<tr>
+<td>Rights request received</td>
+<td>Event-driven</td>
+<td>Subject + controller</td>
+<td>Commitment (proves receipt time)</td>
+</tr>
+<tr>
+<td>Rights request fulfilled</td>
+<td>Event-driven, 1 month</td>
+<td>Subject + controller</td>
+<td>Submission clearing commitment</td>
+</tr>
+<tr>
+<td>Processor agreement (<a href="https://gdpr-info.eu/art-28-gdpr/">Art 28</a>)</td>
+<td>Static</td>
+<td>Controller + processor</td>
+<td>Hash of agreement</td>
+</tr>
+<tr>
+<td>Certification (<a href="https://gdpr-info.eu/art-42-gdpr/">Art 42</a>)</td>
+<td>Static, 3yr validity</td>
+<td>Public</td>
+<td>Token with expiry</td>
+</tr>
+<tr>
+<td>Cross-border safeguard</td>
+<td>Static + event-driven</td>
+<td>Controller + SA</td>
+<td>Hash of SCC/BCR/adequacy ref</td>
+</tr>
+<tr>
+<td>DPO designation</td>
+<td>Static</td>
+<td>Public</td>
+<td>Leaf in controller's trie</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">The bright line</p>
+<p>No personal data — names, identifiers, health data, location, behavioural
+profiles — ever touches the chain. Not even encrypted. The chain stores
+hashes of compliance records. The actual records stay off-chain under the
+controller's custody.</p>
+<p>Whether an on-chain hash constitutes personal data depends on its
+lifecycle phase:</p>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th style="text-align: center;">Pre-image exists?</th>
+<th style="text-align: center;">Hash is personal data?</th>
+<th style="text-align: center;">Lawful?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Active compliance</strong></td>
+<td style="text-align: center;">Yes — controller holds linking data</td>
+<td style="text-align: center;">Yes — <a href="https://curia.europa.eu/juris/liste.jsf?num=C-582/14">Breyer (C-582/14)</a>: parties with legal means to compel the controller can link the hash</td>
+<td style="text-align: center;">Yes — <a href="https://gdpr-info.eu/art-6-gdpr/">Art 6(1)(c)</a>: legal obligation to maintain compliance records</td>
+</tr>
+<tr>
+<td><strong>Retention under exception</strong></td>
+<td style="text-align: center;">Yes — controller retains for legal claims</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">Yes — <a href="https://gdpr-info.eu/art-17-gdpr/">Art 17(3)(e)</a>: defence of legal claims</td>
+</tr>
+<tr>
+<td><strong>Post-erasure</strong></td>
+<td style="text-align: center;">No — controller deleted pre-image</td>
+<td style="text-align: center;">No — unlinkable, anonymous under <a href="https://gdpr-info.eu/recitals/no-26/">Recital 26</a></td>
+<td style="text-align: center;">N/A — outside GDPR scope</td>
+</tr>
+</tbody>
+</table>
+<p>During the active phase, the hash is personal data and its processing
+requires a legal basis — which exists (<a href="https://gdpr-info.eu/art-6-gdpr/">Art 6(1)(c)</a>). After the
+controller deletes the off-chain pre-image in response to an erasure
+request, the on-chain hash becomes an opaque string that no party can
+link to a natural person. The "means reasonably likely to be used" test
+in <a href="https://gdpr-info.eu/recitals/no-26/">Recital 26</a> is no longer satisfied — there is nothing to
+compel and no one to compel it from.</p>
+<p>This is the architecture's built-in erasure mechanism: delete the
+off-chain pre-image, and the on-chain hash falls outside GDPR scope.
+Analogous to the "encryption with key destruction" approach that
+<a href="https://www.cnil.fr/en/blockchain-and-gdpr-solutions-responsible-use-blockchain-context-personal-data">CNIL's blockchain guidance</a> discusses as a valid
+erasure path — but simpler, because hashing requires no key management.</p>
+</div>
+<h2 id="trust-model">Trust model</h2>
+<table>
+<thead>
+<tr>
+<th>Party A</th>
+<th>Party B</th>
+<th>Trust</th>
+<th>Risk</th>
+<th>Mitigation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Controller</td>
+<td>Data subject</td>
+<td>Low</td>
+<td>Controller claims consent existed, subject denies</td>
+<td>Immutable timestamped consent hash</td>
+</tr>
+<tr>
+<td>Controller</td>
+<td>SA</td>
+<td>Medium</td>
+<td>Controller backdates breach notification</td>
+<td>Commitment proves on-chain ordering and submission slot once the controller commits</td>
+</tr>
+<tr>
+<td>Controller</td>
+<td>Processor</td>
+<td>Medium</td>
+<td>Processor claims it followed instructions</td>
+<td>On-chain agreement hash, activity proofs</td>
+</tr>
+<tr>
+<td>Data subject</td>
+<td>Controller</td>
+<td>Low</td>
+<td>Controller ignores rights request</td>
+<td>Commitment-then-submit proves response timeline</td>
+</tr>
+<tr>
+<td>SA</td>
+<td>Controller</td>
+<td>Medium</td>
+<td>Controller presents selective compliance evidence</td>
+<td>Completeness via MPT — all records in trie</td>
+</tr>
+<tr>
+<td>Controller</td>
+<td>Controller</td>
+<td>None</td>
+<td>Portability disputes — who had data when</td>
+<td>Transfer records with timestamps</td>
+</tr>
+<tr>
+<td>Cert body</td>
+<td>Controller</td>
+<td>Medium</td>
+<td>Controller claims valid certification</td>
+<td>On-chain token with enforced expiry</td>
+</tr>
+</tbody>
+</table>
+<h2 id="value-token-identification">Value / token identification</h2>
+<table>
+<thead>
+<tr>
+<th>Token</th>
+<th>GDPR source</th>
+<th>Behaviour</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Consent record</strong></td>
+<td><a href="https://gdpr-info.eu/art-7-gdpr/">Art 7</a></td>
+<td>Created on consent, updated on withdrawal. Proves existence at any point.</td>
+</tr>
+<tr>
+<td><strong>Certification seal</strong></td>
+<td><a href="https://gdpr-info.eu/art-42-gdpr/">Art 42</a></td>
+<td>Issued by accredited body, 3-year validity, renewable. Revocable.</td>
+</tr>
+<tr>
+<td><strong>Rights-request ticket</strong></td>
+<td><a href="https://gdpr-info.eu/art-12-gdpr/">Art 12</a>–22</td>
+<td>Created on request, must be resolved within deadline. Commitment pattern.</td>
+</tr>
+<tr>
+<td><strong>Breach receipt</strong></td>
+<td><a href="https://gdpr-info.eu/art-33-gdpr/">Art 33</a></td>
+<td>Proves the submission slot and on-chain ordering of the notification. One-shot commitment.</td>
+</tr>
+<tr>
+<td><strong>Adequacy attestation</strong></td>
+<td><a href="https://gdpr-info.eu/art-44-gdpr/">Art 44</a>–49</td>
+<td>Reference to transfer safeguard. Static until revoked.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="protocol-patterns">Protocol patterns</h2>
+<h3 id="breach-notification-72-hours-the-flagship">Breach notification (72 hours) — the flagship</h3>
+<p>This is where blockchain adds the most obvious value. Today controllers
+self-report breach timing. There is no neutral witness.</p>
+<pre class="mermaid"><code>sequenceDiagram
+    participant C as Controller
+    participant CH as Chain
+    participant SA as Supervisory Authority
+
+    Note over C: Breach detected
+
+    C-&gt;&gt;CH: Create commitment in trie leaf&lt;br/&gt;(breach detected, slot recorded)
+
+    Note over C: Prepare notification&lt;br/&gt;(nature, categories, numbers,&lt;br/&gt;consequences, measures)
+
+    C-&gt;&gt;CH: Submit notification hash&lt;br/&gt;(clears commitment)
+
+    Note over CH: Chain proves:&lt;br/&gt;how many slots elapsed&lt;br/&gt;between commitment and notification
+
+    SA-&gt;&gt;CH: Query: was notification&lt;br/&gt;within 72h window?
+
+    Note over SA: If commitment exists&lt;br/&gt;but no submission → non-compliance&lt;br/&gt;If no commitment and breach&lt;br/&gt;known → non-compliance</code></pre>
+<p>The commitment protocol turns part of the 72-hour rule from a self-reported
+claim into a verifiable on-chain fact. It proves when the controller
+committed and when it later submitted the notification hash. It does not, by
+itself, prove the exact off-chain moment when the controller first became
+aware of the breach. The absence of a timely commitment, when a breach
+becomes known through other channels, is still evidence of possible
+non-compliance.</p>
+<h3 id="rights-request-response-1-month">Rights-request response (1 month)</h3>
+<pre class="mermaid"><code>sequenceDiagram
+    participant DS as Data Subject
+    participant SF as Signing Function
+    participant C as Controller (Operator)
+    participant CH as Chain
+
+    DS-&gt;&gt;SF: Submit rights request&lt;br/&gt;(access / rectification / erasure / etc.)
+    SF-&gt;&gt;DS: Signed request payload
+
+    DS-&gt;&gt;C: Send signed request
+
+    C-&gt;&gt;CH: Create commitment in trie leaf&lt;br/&gt;(request type, slot recorded)
+
+    Note over C: Process request off-chain&lt;br/&gt;(retrieve data, prepare response)
+
+    C-&gt;&gt;CH: Submit response hash&lt;br/&gt;(clears commitment, within ~43,200 slots)
+
+    Note over CH: Chain proves response&lt;br/&gt;was within 1-month window
+
+    Note over DS: If commitment expires&lt;br/&gt;without submission → provable&lt;br/&gt;non-compliance</code></pre>
+<p>Complex requests can extend to 3 months (<a href="https://gdpr-info.eu/art-12-gdpr/">Art 12(3)</a>). The commitment window
+reflects this — the controller creates a second commitment with the
+extended deadline and notifies the subject within the first month.</p>
+<h3 id="consent-lifecycle">Consent lifecycle</h3>
+<div class="highlight"><pre><span></span><code>None → Given → Withdrawn
+</code></pre></div>
+<p>Each transition is a leaf update in the controller's trie. The chain proves:</p>
+<ul>
+<li><strong>When</strong> consent was given (slot timestamp)</li>
+<li><strong>For what purpose</strong> (hash of purpose description — not the purpose itself)</li>
+<li><strong>When</strong> it was withdrawn</li>
+<li><strong>That</strong> processing stopped after withdrawal (no further activity leaves
+  referencing that consent hash after withdrawal slot)</li>
+</ul>
+<p>The data subject never needs a wallet. They interact through the controller's
+portal. The signing function is the authenticated session.</p>
+<h3 id="processing-records-art-30">Processing records (<a href="https://gdpr-info.eu/art-30-gdpr/">Art 30</a>)</h3>
+<p>The controller maintains <a href="https://gdpr-info.eu/art-30-gdpr/">Art 30</a> records as leaves in their trie:</p>
+<ul>
+<li>Purposes of processing</li>
+<li>Categories of data subjects and personal data</li>
+<li>Categories of recipients</li>
+<li>Transfers to third countries</li>
+<li>Envisaged erasure time limits</li>
+<li>Security measures description</li>
+</ul>
+<p>All stored as hashes. The SA queries the trie root via reference input. On
+audit, the controller produces the pre-images. If a hash matches, the
+record is proved authentic and timestamped.</p>
+<h3 id="certification-art-42">Certification (<a href="https://gdpr-info.eu/art-42-gdpr/">Art 42</a>)</h3>
+<pre class="mermaid"><code>graph LR
+    CB[Certification Body] --&gt;|mints| TOKEN[Certification Token&lt;br/&gt;3-year validity]
+    TOKEN --&gt;|referenced by| CTRL[Controller's Trie]
+    TOKEN --&gt;|expires| EXP[On-chain expiry check]
+    CB --&gt;|can revoke| BURN[Token burn]</code></pre>
+<p>The certification body is an authorised party in the regulation trie. The
+token minting policy reads the certification body's qualification from the
+regulation trie. The token carries an expiry slot. The controller references
+it in their compliance trie. Expired or revoked tokens cannot be referenced
+in new compliance submissions.</p>
+<h2 id="the-gdprblockchain-tension">The GDPR–blockchain tension</h2>
+<p>The literature identifies fundamental conflicts between GDPR and blockchain.
+Every one of them concerns storing <strong>personal data</strong> on-chain. This
+architecture stores <strong>compliance evidence</strong> on-chain — hashes whose
+personal data status depends on the lifecycle phase (see the bright line
+above).</p>
+<table>
+<thead>
+<tr>
+<th>Tension</th>
+<th>Standard framing</th>
+<th>This architecture</th>
+<th>Residual risk</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Immutability vs erasure (<a href="https://gdpr-info.eu/art-17-gdpr/">Art 17</a>)</strong></td>
+<td>Cannot delete on-chain personal data</td>
+<td>Delete the off-chain pre-image. The on-chain hash becomes unlinkable — anonymous under <a href="https://gdpr-info.eu/recitals/no-26/">Recital 26</a>. Analogous to encryption with key destruction.</td>
+<td>If the controller fails to delete all copies of the pre-image, the hash remains personal data. Operational discipline required.</td>
+</tr>
+<tr>
+<td><strong>Immutability vs rectification (<a href="https://gdpr-info.eu/art-16-gdpr/">Art 16</a>)</strong></td>
+<td>Cannot correct on-chain records</td>
+<td>Compliance records are appended (new leaf for correction). The history of corrections is itself evidence of accountability.</td>
+<td>The original hash persists alongside the correction. Acceptable for compliance evidence but the original inaccurate record's pre-image should be deleted.</td>
+</tr>
+<tr>
+<td><strong>Storage limitation (<a href="https://gdpr-info.eu/art-5-gdpr/">Art 5(1)(e)</a>)</strong></td>
+<td>On-chain data persists forever</td>
+<td>During active phase: legitimate retention under <a href="https://gdpr-info.eu/art-6-gdpr/">Art 6(1)(c)</a>. After retention period: delete pre-image, hash becomes anonymous, storage limitation satisfied.</td>
+<td>The controller must track retention periods and actually delete pre-images when they expire.</td>
+</tr>
+<tr>
+<td><strong>Data minimisation (<a href="https://gdpr-info.eu/art-5-gdpr/">Art 5(1)(c)</a>)</strong></td>
+<td>Full node replication</td>
+<td>Only hashes on-chain — one hash per compliance record. Minimal by design.</td>
+<td>Low. Hashes are fixed-size regardless of the underlying record's complexity.</td>
+</tr>
+<tr>
+<td><strong>Controller designation</strong></td>
+<td>Who is the controller on a public chain?</td>
+<td>The data controller is the operator of their own trie. Identity provider, SA, and validators are not controllers of compliance data.</td>
+<td>During active phase the controller is clearly identifiable. Post-erasure the hash is anonymous and the question is moot.</td>
+</tr>
+<tr>
+<td><strong>Cross-border transfers (<a href="https://gdpr-info.eu/art-44-gdpr/">Art 44</a>–49)</strong></td>
+<td>Nodes worldwide = transfer to every jurisdiction</td>
+<td>During active phase: hashes are personal data but the controller is the only party holding the link, and the chain nodes don't process the link. Post-erasure: anonymous data, no transfer concern.</td>
+<td>The <a href="https://curia.europa.eu/juris/liste.jsf?num=C-582/14">Breyer</a> argument could theoretically be applied to chain nodes during the active phase, but the nodes have no practical means to obtain the pre-image.</td>
+</tr>
+<tr>
+<td><strong>Automated decision-making (<a href="https://gdpr-info.eu/art-22-gdpr/">Art 22</a>)</strong></td>
+<td>Smart contracts make autonomous decisions</td>
+<td>The smart contract validates format and timing. It does not make decisions about data subjects.</td>
+<td>Low. No profiling, no legal effects on individuals from the validator logic.</td>
+</tr>
+<tr>
+<td><strong>Legal basis</strong></td>
+<td>No clean basis for on-chain personal data</td>
+<td>During active phase: <a href="https://gdpr-info.eu/art-6-gdpr/">Art 6(1)(c)</a> — legal obligation to maintain compliance records. Post-erasure: no legal basis needed — data is anonymous.</td>
+<td>The legal obligation basis must be established per jurisdiction. Most GDPR obligations create sufficient basis.</td>
+</tr>
+</tbody>
+</table>
+<p>The architecture addresses the tensions through two mechanisms:</p>
+<ol>
+<li><strong>Design</strong>: personal data off-chain, compliance hashes on-chain —
+   minimises the personal data footprint on-chain.</li>
+<li><strong>Lifecycle</strong>: when the off-chain pre-image is deleted, the on-chain
+   hash transitions from personal data (with lawful basis) to anonymous
+   data (outside GDPR scope). Immutability is not a problem when there
+   is nothing left to link.</li>
+</ol>
+<p>This aligns with <a href="https://www.cnil.fr/en/blockchain-and-gdpr-solutions-responsible-use-blockchain-context-personal-data">CNIL's 2018 blockchain guidance</a>, which
+recommends off-chain storage with on-chain commitment schemes as the
+primary GDPR-compatible pattern, and explicitly discusses key/pre-image
+destruction as an erasure mechanism for blockchain data.</p>
+<h2 id="formal-invariants">Formal invariants</h2>
+<table>
+<thead>
+<tr>
+<th>Invariant</th>
+<th>Meaning</th>
+<th>Lean statement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Breach timeliness</td>
+<td>Notification within 72h of commitment</td>
+<td><code>breachSubmit leaf → leaf.submitSlot - leaf.commitSlot ≤ 72h_in_slots</code></td>
+</tr>
+<tr>
+<td>Rights response timeliness</td>
+<td>Response within 1 month of commitment</td>
+<td><code>rightsResponse leaf → leaf.responseSlot - leaf.requestSlot ≤ 1month_in_slots</code></td>
+</tr>
+<tr>
+<td>Consent monotonicity</td>
+<td>Withdrawn consent not re-given for same purpose without new event</td>
+<td><code>withdrawConsent leaf → ¬(restoreConsent leaf same_purpose)</code></td>
+</tr>
+<tr>
+<td>Certification validity</td>
+<td>Expired tokens cannot be referenced</td>
+<td><code>referenceCert token → token.expirySlot &gt; currentSlot</code></td>
+</tr>
+<tr>
+<td>Commitment single-use</td>
+<td>Each commitment cleared exactly once</td>
+<td><code>submitResponse leaf → leaf.commitment = none</code></td>
+</tr>
+<tr>
+<td>Processing record completeness</td>
+<td>All mandatory Art 30 fields present</td>
+<td><code>createProcessingRecord leaf → hasAllMandatoryFields leaf</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="economics">Economics</h2>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Frequency</th>
+<th>L1 cost</th>
+<th>At scale (1000 controllers)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Controller registration</td>
+<td>Once</td>
+<td>~0.2 ADA</td>
+<td>Negligible</td>
+</tr>
+<tr>
+<td>Consent record (leaf insert)</td>
+<td>Per consent event</td>
+<td>~0.15 ADA</td>
+<td>Volume × unit cost</td>
+</tr>
+<tr>
+<td>Breach commitment</td>
+<td>Per breach</td>
+<td>~0.2 ADA</td>
+<td>Rare events</td>
+</tr>
+<tr>
+<td>Breach notification submit</td>
+<td>Per breach</td>
+<td>~0.15 ADA</td>
+<td>Rare events</td>
+</tr>
+<tr>
+<td>Rights request commitment</td>
+<td>Per request</td>
+<td>~0.15 ADA</td>
+<td>Moderate volume</td>
+</tr>
+<tr>
+<td>Rights response submit</td>
+<td>Per response</td>
+<td>~0.15 ADA</td>
+<td>Moderate volume</td>
+</tr>
+<tr>
+<td>Art 30 record update</td>
+<td>Per processing change</td>
+<td>~0.15 ADA</td>
+<td>Low frequency</td>
+</tr>
+<tr>
+<td>Certification token mint</td>
+<td>Per certification</td>
+<td>~0.3 ADA</td>
+<td>Every 3 years</td>
+</tr>
+<tr>
+<td>Root anchor</td>
+<td>Per batch</td>
+<td>~0.2 ADA</td>
+<td>Fixed, amortised</td>
+</tr>
+<tr>
+<td>Verification (query)</td>
+<td>Per audit query</td>
+<td>Free (off-chain)</td>
+<td>Zero marginal cost</td>
+</tr>
+</tbody>
+</table>
+<p>A medium-sized controller processing 1000 consent events/year, 10 rights
+requests/month, and rare breach notifications would spend ~€50-100/year in
+on-chain fees. A single GDPR fine (median ~€50,000 for SMEs, millions for
+large companies) makes this negligible.</p>
+<p>The value proposition is not cost savings — it is <strong>proof</strong>. The controller
+can prove to any court, SA, or data subject when a compliance action was
+anchored on-chain, with neutral evidence of inclusion and slot ordering that
+neither party produced unilaterally.</p>
+<h2 id="comparison-with-battery-regulation">Comparison with Battery Regulation</h2>
+<table>
+<thead>
+<tr>
+<th>Dimension</th>
+<th>Battery Regulation</th>
+<th>GDPR</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mode</td>
+<td>Physical (sensor + secure element)</td>
+<td>Process (server-side signing functions)</td>
+</tr>
+<tr>
+<td>Items in trie</td>
+<td>Batteries (physical products)</td>
+<td>Compliance records (abstract evidence)</td>
+</tr>
+<tr>
+<td>Key hardware</td>
+<td>NFC + SE050</td>
+<td>None — pure software</td>
+</tr>
+<tr>
+<td>Data on-chain</td>
+<td>Product data hashes (SoH, composition)</td>
+<td>Compliance evidence hashes (consent, breach timing)</td>
+</tr>
+<tr>
+<td>Primary value</td>
+<td>Provenance and tamper-proof readings</td>
+<td>Temporal proof and accountability</td>
+</tr>
+<tr>
+<td>User interaction</td>
+<td>Tap a battery</td>
+<td>Submit a request through a portal</td>
+</tr>
+<tr>
+<td>Relay pattern</td>
+<td>Manufacturer → transporter → consumer</td>
+<td>Subject → controller → SA</td>
+</tr>
+<tr>
+<td>Flagship protocol</td>
+<td>SoH reading (commitment-then-submit)</td>
+<td>72h breach notification (commitment-then-submit)</td>
+</tr>
+<tr>
+<td>Scale</td>
+<td>~5M batteries/year</td>
+<td>~100K+ controllers, millions of events</td>
+</tr>
+</tbody>
+</table>
+<h2 id="open-questions">Open questions</h2>
+<ol>
+<li>
+<p><strong>SA adoption</strong> — SAs are public authorities with limited technical
+   capacity. The regulator role requires maintaining a regulation trie and
+   publishing a smart contract. Who builds and maintains this for them?</p>
+</li>
+<li>
+<p><strong>Cross-border consistency</strong> — GDPR has 27+ national SAs with a
+   consistency mechanism (EDPB). Does each SA maintain its own regulation
+   trie, or is there a shared EU-level trie? The lead authority mechanism
+   (<a href="https://gdpr-info.eu/art-56-gdpr/">Art 56</a>) suggests a federated model.</p>
+</li>
+<li>
+<p><strong>Processor chains</strong> — <a href="https://gdpr-info.eu/art-28-gdpr/">Art 28</a> allows sub-processors. The
+   processor agreement chain (controller → processor → sub-processor)
+   creates multi-level trie references. How deep can this go efficiently?</p>
+</li>
+<li>
+<p><strong>Joint controllers</strong> — <a href="https://gdpr-info.eu/art-26-gdpr/">Art 26</a> allows joint controller
+   arrangements. Two or more controllers sharing a trie, or
+   cross-referencing separate tries? The arrangement must be transparent
+   to data subjects.</p>
+</li>
+<li>
+<p><strong>Hash-as-personal-data risk</strong> — the argument that on-chain hashes are
+   not personal data holds only if the controller's off-chain data is
+   properly segregated. If an attacker compromises both the chain data and
+   the controller's database, hashes become linkable. This is a security
+   boundary, not an architectural one, but it must be addressed.</p>
+</li>
+<li>
+<p><strong>Consent withdrawal and processing cessation</strong> — the chain can prove
+   when consent was withdrawn. But can it prove that processing <em>stopped</em>?
+   This requires the absence of certain leaf updates after a given slot —
+   provable by MPT completeness, but subtle.</p>
+</li>
+</ol>
+<h2 id="sources">Sources</h2>
+<h3 id="primary-legislation">Primary legislation</h3>
+<ul>
+<li><a href="https://eur-lex.europa.eu/eli/reg/2016/679/oj">Regulation (EU) 2016/679</a> — full GDPR text (EUR-Lex consolidated version)</li>
+<li><a href="https://gdpr-info.eu/art-4-gdpr/">Art 4</a> — definitions (personal data, controller, processor, consent, pseudonymisation)</li>
+<li><a href="https://gdpr-info.eu/art-5-gdpr/">Art 5</a> — principles (lawfulness, purpose limitation, minimisation, accuracy, storage limitation, integrity, accountability)</li>
+<li><a href="https://gdpr-info.eu/art-6-gdpr/">Art 6</a> — lawful bases for processing</li>
+<li><a href="https://gdpr-info.eu/art-7-gdpr/">Art 7</a> — conditions for consent</li>
+<li><a href="https://gdpr-info.eu/art-9-gdpr/">Art 9</a> — special categories of personal data</li>
+<li><a href="https://gdpr-info.eu/art-12-gdpr/">Art 12</a> — modalities for exercising data subject rights (1-month / 3-month timeline)</li>
+<li><a href="https://gdpr-info.eu/art-15-gdpr/">Art 15</a> — right of access</li>
+<li><a href="https://gdpr-info.eu/art-16-gdpr/">Art 16</a> — right to rectification</li>
+<li><a href="https://gdpr-info.eu/art-17-gdpr/">Art 17</a> — right to erasure ("right to be forgotten")</li>
+<li><a href="https://gdpr-info.eu/art-20-gdpr/">Art 20</a> — right to data portability</li>
+<li><a href="https://gdpr-info.eu/art-22-gdpr/">Art 22</a> — automated individual decision-making, including profiling</li>
+<li><a href="https://gdpr-info.eu/art-25-gdpr/">Art 25</a> — data protection by design and by default</li>
+<li><a href="https://gdpr-info.eu/art-26-gdpr/">Art 26</a> — joint controllers</li>
+<li><a href="https://gdpr-info.eu/art-28-gdpr/">Art 28</a> — processor obligations and processing agreements</li>
+<li><a href="https://gdpr-info.eu/art-30-gdpr/">Art 30</a> — records of processing activities</li>
+<li><a href="https://gdpr-info.eu/art-33-gdpr/">Art 33</a> — notification of breach to supervisory authority (72 hours)</li>
+<li><a href="https://gdpr-info.eu/art-34-gdpr/">Art 34</a> — communication of breach to data subject</li>
+<li><a href="https://gdpr-info.eu/art-35-gdpr/">Art 35</a> — data protection impact assessment (DPIA)</li>
+<li><a href="https://gdpr-info.eu/art-42-gdpr/">Art 42</a> — certification</li>
+<li><a href="https://gdpr-info.eu/art-44-gdpr/">Art 44–49</a> — transfers to third countries (adequacy, SCCs, BCRs, derogations)</li>
+<li><a href="https://gdpr-info.eu/art-56-gdpr/">Art 56</a> — lead supervisory authority (cross-border)</li>
+<li><a href="https://gdpr-info.eu/art-58-gdpr/">Art 58</a> — supervisory authority powers</li>
+<li><a href="https://gdpr-info.eu/art-82-gdpr/">Art 82</a> — right to compensation</li>
+<li><a href="https://gdpr-info.eu/art-83-gdpr/">Art 83</a> — administrative fines (€10M/2% and €20M/4% tiers)</li>
+<li><a href="https://gdpr-info.eu/art-84-gdpr/">Art 84</a> — criminal penalties</li>
+<li><a href="https://gdpr-info.eu/recitals/no-26/">Recital 26</a> — definition of anonymous data and the "means reasonably likely" test</li>
+</ul>
+<h3 id="cjeu-case-law">CJEU case law</h3>
+<ul>
+<li><a href="https://curia.europa.eu/juris/liste.jsf?num=C-582/14">C-582/14 Breyer v Germany</a> — dynamic IP addresses as personal data;
+  broad interpretation of "identifiable" person even when identification
+  requires third-party data</li>
+<li><a href="https://curia.europa.eu/juris/liste.jsf?num=C-311/18">C-311/18 Schrems II</a> — invalidation of EU-US Privacy Shield;
+  requirement for transfer impact assessments alongside SCCs</li>
+<li><a href="https://curia.europa.eu/juris/liste.jsf?num=C-362/14">C-362/14 Schrems I</a> — invalidation of Safe Harbor; adequacy
+  decisions can be challenged</li>
+</ul>
+<h3 id="regulatory-guidance">Regulatory guidance</h3>
+<ul>
+<li><a href="https://www.edpb.europa.eu/our-work-tools/our-documents/guidelines/guidelines-42019-article-25-data-protection-design-and_en">EDPB Guidelines on Data Protection by Design and by Default</a>
+  (version 2.0, 2020) — practical requirements for Art 25 implementation</li>
+<li><a href="https://ec.europa.eu/justice/article-29/documentation/opinion-recommendation/files/2014/wp216_en.pdf">Article 29 Working Party Opinion 05/2014 on Anonymisation Techniques</a>
+  — the three criteria for effective anonymisation (singling out, linkability,
+  inference) and why pseudonymised data remains personal data</li>
+<li><a href="https://www.cnil.fr/en/blockchain-and-gdpr-solutions-responsible-use-blockchain-context-personal-data">CNIL Blockchain and GDPR guidance</a> (2018) — the French
+  SA's position on controller designation in blockchain systems, smart contract
+  deployers as potential controllers, and recommended mitigations (off-chain
+  storage, commitment schemes, encryption with key destruction)</li>
+<li><a href="https://commission.europa.eu/law/law-topic/data-protection/international-dimension-data-protection/eu-us-data-transfers_en">EU-US Data Privacy Framework adequacy decision</a> (2023) — current
+  transatlantic transfer mechanism replacing Privacy Shield</li>
+</ul>
+<h3 id="gdpr-enforcement-data">GDPR enforcement data</h3>
+<ul>
+<li><a href="https://www.enforcementtracker.com/">GDPR Enforcement Tracker</a> — database of fines issued by
+  EU supervisory authorities (used for median fine estimates in the
+  economics section)</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.expand", "toc.integrate", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+        <script src="../../javascripts/mermaid.mjs" type="module"></script>
+      
+    
+  </body>
+</html>

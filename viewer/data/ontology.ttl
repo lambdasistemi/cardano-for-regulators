@@ -1,0 +1,3444 @@
+@prefix cfr:    <https://lambdasistemi.github.io/cardano-for-regulators/ontology#> .
+@prefix owl:    <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix skos:   <http://www.w3.org/2004/02/skos/core#> .
+
+# =============================================================================
+# Ontology metadata
+# =============================================================================
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology>
+    a owl:Ontology ;
+    dcterms:title "Cardano for Regulators Ontology" ;
+    dcterms:description """Framework ontology for analyzing multi-party regulations
+        and mapping them to Cardano compliance infrastructure. Each regulation
+        case study is an instance of this ontology.""" ;
+    dcterms:source <https://github.com/lambdasistemi/cardano-for-regulators> .
+
+# =============================================================================
+# Core classes
+# =============================================================================
+
+# --- Regulation ---
+
+cfr:Regulation
+    a owl:Class ;
+    rdfs:label "Regulation" ;
+    rdfs:comment """A regulation, directive, standard, or certification scheme
+        analyzed through the framework. The top-level entity for each case study.""" .
+
+cfr:EURegulation
+    a owl:Class ;
+    rdfs:subClassOf cfr:Regulation ;
+    rdfs:label "EU Regulation" ;
+    rdfs:comment "A regulation or directive issued by the European Union." .
+
+cfr:ISOStandard
+    a owl:Class ;
+    rdfs:subClassOf cfr:Regulation ;
+    rdfs:label "ISO Standard" ;
+    rdfs:comment "An ISO/IEC management system or product standard." .
+
+cfr:IndustryCertification
+    a owl:Class ;
+    rdfs:subClassOf cfr:Regulation ;
+    rdfs:label "Industry Certification" ;
+    rdfs:comment "A sector-specific certification scheme (TISAX, PCI DSS, etc.)." .
+
+# --- Parties (schema roles) ---
+
+cfr:Party
+    a owl:Class ;
+    rdfs:label "Party" ;
+    rdfs:comment """An actor in a regulated process. The schema defines four
+        canonical roles; each regulation maps its actors to these roles.""" .
+
+cfr:RegulatorRole
+    a owl:Class ;
+    rdfs:subClassOf cfr:Party ;
+    rdfs:label "Regulator" ;
+    rdfs:comment """The institution that defines the rules. Maintains the
+        regulation trie, publishes the smart contract, defines the beacon
+        minting policy. Does not run infrastructure.""" .
+
+cfr:IdentityProviderRole
+    a owl:Class ;
+    rdfs:subClassOf cfr:Party ;
+    rdfs:label "Identity Provider" ;
+    rdfs:comment """Maintains the identity trie of verified real-world entities.
+        Attests actor public keys. Can serve multiple regulators.""" .
+
+cfr:OperatorRole
+    a owl:Class ;
+    rdfs:subClassOf cfr:Party ;
+    rdfs:label "Operator" ;
+    rdfs:comment """Participates in the regulated market. Manages a process trie.
+        A transparent pipe: collects user payloads, verifies off-chain, submits
+        transactions, pays fees.""" .
+
+cfr:UserRole
+    a owl:Class ;
+    rdfs:subClassOf cfr:Party ;
+    rdfs:label "User" ;
+    rdfs:comment """Interacts with the process via a signing function. No wallet,
+        no ADA, no blockchain knowledge. Receive, use, pass on.""" .
+
+cfr:VerificationBody
+    a owl:Class ;
+    rdfs:subClassOf cfr:Party ;
+    rdfs:label "Verification Body" ;
+    rdfs:comment """An entity that checks compliance — auditors, notified bodies,
+        certification bodies, market surveillance authorities.""" .
+
+cfr:Beneficiary
+    a owl:Class ;
+    rdfs:subClassOf cfr:Party ;
+    rdfs:label "Beneficiary" ;
+    rdfs:comment "A party that benefits from the transparency the regulation creates." .
+
+# --- Party instances (concrete actors in regulations) ---
+
+cfr:ConcreteParty
+    a owl:Class ;
+    rdfs:label "Concrete Party" ;
+    rdfs:comment """A specific real-world actor type in a regulation, mapped to
+        a schema role. E.g., 'Data Controller' maps to OperatorRole.""" .
+
+# --- On-chain artifacts ---
+
+cfr:Artifact
+    a owl:Class ;
+    rdfs:label "On-chain Artifact" ;
+    rdfs:comment "An on-chain data structure or mechanism in the architecture." .
+
+cfr:Trie
+    a owl:Class ;
+    rdfs:subClassOf cfr:Artifact ;
+    rdfs:label "Merkle Patricia Trie" ;
+    rdfs:comment """An MPT stored in a single UTxO. Three types: identity trie,
+        regulation trie, process trie.""" .
+
+cfr:IdentityTrie
+    a owl:Class ;
+    rdfs:subClassOf cfr:Trie ;
+    rdfs:label "Identity Trie" ;
+    rdfs:comment "Attested actor public keys. Maintained by the identity provider." .
+
+cfr:RegulationTrie
+    a owl:Class ;
+    rdfs:subClassOf cfr:Trie ;
+    rdfs:label "Regulation Trie" ;
+    rdfs:comment """Actor qualifications and operator standing. Maintained by the
+        regulator. Reference input for the smart contract.""" .
+
+cfr:ProcessTrie
+    a owl:Class ;
+    rdfs:subClassOf cfr:Trie ;
+    rdfs:label "Process Trie" ;
+    rdfs:comment """Items, processes, and state. One per operator. Governed by the
+        smart contract.""" .
+
+cfr:SmartContract
+    a owl:Class ;
+    rdfs:subClassOf cfr:Artifact ;
+    rdfs:label "Smart Contract" ;
+    rdfs:comment """The regulation in executable form. A Plutus validator published
+        by the regulator. Governs the process trie, reads identity and regulation
+        tries as reference inputs.""" .
+
+cfr:SchemaMechanism
+    a owl:Class ;
+    rdfs:label "Schema Mechanism" ;
+    rdfs:comment """A core mechanism in the schema that connects parties to
+        the chain. Not an on-chain artifact per se — these are the conceptual
+        constructions that make the protocol work.""" .
+
+cfr:Beacon
+    a owl:Class ;
+    rdfs:subClassOf cfr:SchemaMechanism ;
+    rdfs:label "Beacon" ;
+    rdfs:comment """The regulator's policy carrier. Forces the operator to sample
+        their standing and the applicable data policy from the regulation trie
+        before collecting user attestations. Carries two things: standing
+        (the regulator's assessment) and data policy (who may receive the data
+        and under what conditions). The user encrypts their contribution for
+        the beacon's recipients and signs over the beacon. Expires to prevent
+        stale reputation and stale disclosure authorization.""" .
+
+cfr:SigningFunction
+    a owl:Class ;
+    rdfs:subClassOf cfr:SchemaMechanism ;
+    rdfs:label "Signing Function" ;
+    rdfs:comment """An off-chain opaque capability that produces signatures.
+        Lives on hardware (SE050), phone enclave, server, TEE, or ZK circuit.
+        Only its public key and signatures appear on-chain.""" .
+
+# --- Beacon sub-concepts ---
+
+cfr:DataPolicy
+    a owl:Class ;
+    rdfs:label "Data Policy" ;
+    rdfs:comment """The beacon's second payload. Defines who may receive the data
+        (recipient public keys or key classes) and under what conditions. The
+        regulator encodes parameterized disclosure rules in the regulation trie;
+        the beacon carries the applicable rule for each interaction.""" .
+
+cfr:DisclosureContext
+    a owl:Class ;
+    rdfs:label "Disclosure Context" ;
+    rdfs:comment """A parameterized rule that determines encryption recipients
+        based on the purpose of the interaction. Examples: routine reading
+        (owner + regulator), pre-sale disclosure (owner + buyer + regulator),
+        regulatory audit (regulator only), repurposing (both operators +
+        regulator).""" .
+
+cfr:RoutineContext       a cfr:DisclosureContext ; rdfs:label "Routine Reading" ;
+    rdfs:comment "Every beacon — recipients: owner + regulator." .
+cfr:PreSaleContext       a cfr:DisclosureContext ; rdfs:label "Pre-sale Disclosure" ;
+    rdfs:comment "Owner requests — recipients: owner + prospective buyer + regulator." .
+cfr:AuditContext         a cfr:DisclosureContext ; rdfs:label "Regulatory Audit" ;
+    rdfs:comment "Regulator requests — recipients: regulator only." .
+cfr:RepurposingContext   a cfr:DisclosureContext ; rdfs:label "Repurposing Assessment" ;
+    rdfs:comment "Either party requests — recipients: original owner + new operator + regulator." .
+cfr:RecallContext        a cfr:DisclosureContext ; rdfs:label "Emergency Recall" ;
+    rdfs:comment "Regulator requests — recipients: all affected owners + regulator." .
+
+# --- Bright line lifecycle ---
+
+cfr:BrightLinePhase
+    a owl:Class ;
+    rdfs:label "Bright Line Phase" ;
+    rdfs:comment """A phase in the lifecycle of an on-chain hash's personal data
+        status. The hash transitions from personal data (with lawful basis) to
+        anonymous data (outside GDPR scope) when the off-chain pre-image is
+        deleted.""" .
+
+cfr:ActivePhase          a cfr:BrightLinePhase ; rdfs:label "Active Compliance" ;
+    rdfs:comment """Pre-image exists. Hash is personal data under Breyer
+        (C-582/14). Processing lawful under Art 6(1)(c).""" .
+cfr:RetentionPhase       a cfr:BrightLinePhase ; rdfs:label "Retention under Exception" ;
+    rdfs:comment """Pre-image retained for legal claims defence. Hash is
+        personal data. Lawful under Art 17(3)(e).""" .
+cfr:PostErasurePhase     a cfr:BrightLinePhase ; rdfs:label "Post-Erasure" ;
+    rdfs:comment """Pre-image deleted. Hash is unlinkable — anonymous under
+        Recital 26. Outside GDPR scope.""" .
+
+# --- Tension / residual risk ---
+
+cfr:Tension
+    a owl:Class ;
+    rdfs:label "Tension" ;
+    rdfs:comment """A conflict between a GDPR principle and a blockchain
+        architectural property. Each tension has a standard framing, the
+        architecture's response, and a residual risk.""" .
+
+# --- Protocol patterns ---
+
+cfr:ProtocolPattern
+    a owl:Class ;
+    rdfs:label "Protocol Pattern" ;
+    rdfs:comment """A reusable on-chain pattern extracted from the framework.
+        Each addresses a specific class of regulatory requirement.""" .
+
+cfr:CommitmentThenSubmit
+    a owl:Class ;
+    rdfs:subClassOf cfr:ProtocolPattern ;
+    rdfs:label "Commitment-then-Submit" ;
+    rdfs:comment """Proves an action occurred within a time window. Single-use,
+        slot-bounded, no off-chain timestamp trust.""" .
+
+cfr:LifecycleStateMachine
+    a owl:Class ;
+    rdfs:subClassOf cfr:ProtocolPattern ;
+    rdfs:label "Lifecycle State Machine" ;
+    rdfs:comment """Status field in MPT leaf with on-chain validated transitions.
+        No backward transitions unless explicitly allowed.""" .
+
+cfr:MPTPerOperator
+    a owl:Class ;
+    rdfs:subClassOf cfr:ProtocolPattern ;
+    rdfs:label "MPT-per-Operator" ;
+    rdfs:comment """One UTxO per operator, items as leaves. Cost scales with
+        operators not items.""" .
+
+cfr:OperatorAsAggregator
+    a owl:Class ;
+    rdfs:subClassOf cfr:ProtocolPattern ;
+    rdfs:label "Operator-as-Aggregator" ;
+    rdfs:comment """Users have no wallet. Operator collects and batches actions
+        into transactions, pays all fees.""" .
+
+cfr:BeaconGatedAttestation
+    a owl:Class ;
+    rdfs:subClassOf cfr:ProtocolPattern ;
+    rdfs:label "Beacon-Gated Attestation" ;
+    rdfs:comment """Operator must mint a beacon (sampling standing from regulation
+        trie) before collecting user attestations. Forces transparency.""" .
+
+cfr:DoubleSignature
+    a owl:Class ;
+    rdfs:subClassOf cfr:ProtocolPattern ;
+    rdfs:label "Double Signature" ;
+    rdfs:comment """Every transition requires two signatures: process (authentication)
+        and actor (authorization).""" .
+
+cfr:BatonPattern
+    a owl:Class ;
+    rdfs:subClassOf cfr:ProtocolPattern ;
+    rdfs:label "Baton Pattern" ;
+    rdfs:comment """Authorization travels as a baton. Actor A's final submission
+        includes Actor B's pubkey. Atomic transfer, no gap.""" .
+
+cfr:CrossOperatorHandoff
+    a owl:Class ;
+    rdfs:subClassOf cfr:ProtocolPattern ;
+    rdfs:label "Cross-Operator Handoff" ;
+    rdfs:comment """Responsibility transfer. Old leaf read-only, new leaf in
+        receiving operator's trie with back-link to original root.""" .
+
+cfr:RelayStateMachine
+    a owl:Class ;
+    rdfs:subClassOf cfr:ProtocolPattern ;
+    rdfs:label "Relay State Machine" ;
+    rdfs:comment """Multiple actors act in sequence. The regulation defines the
+        ordering. Timeout/escalation if an actor stalls.""" .
+
+cfr:RewardDistribution
+    a owl:Class ;
+    rdfs:subClassOf cfr:ProtocolPattern ;
+    rdfs:label "Reward Distribution" ;
+    rdfs:comment """Monotonically increasing reward accumulator in MPT leaf.
+        Each valid action adds to the reporter's total.""" .
+
+cfr:TieredAccess
+    a owl:Class ;
+    rdfs:subClassOf cfr:ProtocolPattern ;
+    rdfs:label "Tiered Access" ;
+    rdfs:comment """On-chain: root hash only. Off-chain: encrypted layers per
+        access tier (public, authorized, authority-only).""" .
+
+cfr:UpstreamVerification
+    a owl:Class ;
+    rdfs:subClassOf cfr:ProtocolPattern ;
+    rdfs:label "Upstream Verification" ;
+    rdfs:comment """One operator's compliance depends on reading another operator's
+        trie. Supply chain cascading.""" .
+
+# --- Constraints ---
+
+cfr:Constraint
+    a owl:Class ;
+    rdfs:label "Constraint" ;
+    rdfs:comment """A constraint that must hold for a regulation to be a good
+        blockchain candidate. All five must pass.""" .
+
+cfr:DataCadence          a cfr:Constraint ; rdfs:label "Data Cadence" ;
+    rdfs:comment "Update rhythm compatible with L1 settlement." .
+cfr:SequentialAccess     a cfr:Constraint ; rdfs:label "Sequential Access" ;
+    rdfs:comment "No concurrent contention on the same data structure." .
+cfr:Liveness             a cfr:Constraint ; rdfs:label "Liveness" ;
+    rdfs:comment "Deadlines and penalties incentivize participation." .
+cfr:FeeAlignment         a cfr:Constraint ; rdfs:label "Fee Alignment" ;
+    rdfs:comment "An actor benefits enough to sponsor on-chain activity." .
+cfr:IdentityDelegation   a cfr:Constraint ; rdfs:label "Identity Delegation" ;
+    rdfs:comment "Non-crypto actors participate via cryptographic proxies." .
+
+cfr:ThreeQuestionTest
+    a owl:Class ;
+    rdfs:label "Three-Question Pre-filter" ;
+    rdfs:comment """Quick screening: multi-party data, institutional anchor,
+        verifiable history. All three must hold.""" .
+
+# --- Constraint assessment ---
+
+cfr:ConstraintAssessment
+    a owl:Class ;
+    rdfs:label "Constraint Assessment" ;
+    rdfs:comment """The result of evaluating a constraint against a specific
+        regulation: pass or fail with justification.""" .
+
+# --- Obligation ---
+
+cfr:Obligation
+    a owl:Class ;
+    rdfs:label "Obligation" ;
+    rdfs:comment """A specific reporting or compliance obligation within a
+        regulation, mapped to a protocol pattern.""" .
+
+# --- Data classification ---
+
+cfr:DataType
+    a owl:Class ;
+    rdfs:label "Data Type" ;
+    rdfs:comment "Classification of a data element in a regulation." .
+
+cfr:StaticData    a cfr:DataType ; rdfs:label "Static" ;
+    rdfs:comment "Set once at creation." .
+cfr:DynamicData   a cfr:DataType ; rdfs:label "Dynamic" ;
+    rdfs:comment "Changes over lifetime." .
+cfr:EventDrivenData a cfr:DataType ; rdfs:label "Event-driven" ;
+    rdfs:comment "Triggered by lifecycle events." .
+
+cfr:AccessTier
+    a owl:Class ;
+    rdfs:label "Access Tier" ;
+    rdfs:comment "Visibility level for a data element." .
+
+cfr:PublicAccess      a cfr:AccessTier ; rdfs:label "Public" .
+cfr:RestrictedAccess  a cfr:AccessTier ; rdfs:label "Restricted" ;
+    rdfs:comment "Restricted to the lawful holder and parties expressly entitled by the regulation." .
+cfr:AuthorizedAccess  a cfr:AccessTier ; rdfs:label "Authorized Operators" .
+cfr:AuthorityAccess   a cfr:AccessTier ; rdfs:label "Authorities Only" .
+
+# --- Compliance record ---
+
+cfr:ComplianceRecord
+    a owl:Class ;
+    rdfs:label "Compliance Record" ;
+    rdfs:comment """A specific record type stored as a leaf in the process trie.
+        The on-chain representation of an obligation.""" .
+
+# --- Trust relationship ---
+
+cfr:TrustRelationship
+    a owl:Class ;
+    rdfs:label "Trust Relationship" ;
+    rdfs:comment """The trust level between two parties, the risk if trust is
+        misplaced, and whether blockchain mitigates it.""" .
+
+cfr:TrustLevel
+    a owl:Class ;
+    rdfs:label "Trust Level" .
+
+cfr:LowTrust     a cfr:TrustLevel ; rdfs:label "Low" .
+cfr:MediumTrust  a cfr:TrustLevel ; rdfs:label "Medium" .
+cfr:HighTrust    a cfr:TrustLevel ; rdfs:label "High" .
+cfr:NoTrust      a cfr:TrustLevel ; rdfs:label "None" .
+
+# --- Token type ---
+
+cfr:TokenType
+    a owl:Class ;
+    rdfs:label "Token Type" ;
+    rdfs:comment "Something that behaves like a token in the regulation." .
+
+cfr:Certificate    a cfr:TokenType ; rdfs:label "Certificate" ;
+    rdfs:comment "Issued, transferred, surrendered." .
+cfr:Credit         a cfr:TokenType ; rdfs:label "Credit" ;
+    rdfs:comment "Accumulated, tradeable." .
+cfr:Right          a cfr:TokenType ; rdfs:label "Right" ;
+    rdfs:comment "Granted, revoked." .
+cfr:ObligationToken a cfr:TokenType ; rdfs:label "Obligation" ;
+    rdfs:comment "Created, discharged." .
+cfr:Reward         a cfr:TokenType ; rdfs:label "Reward" ;
+    rdfs:comment "Earned through participation." .
+
+# --- Validator ---
+
+cfr:RedeemerAction
+    a owl:Class ;
+    rdfs:label "Redeemer Action" ;
+    rdfs:comment """A specific action the smart contract recognises. Each
+        action has guards (conditions the validator checks).""" .
+
+cfr:Guard
+    a owl:Class ;
+    rdfs:label "Guard" ;
+    rdfs:comment """A condition the validator checks for a specific redeemer
+        action. Universal guards apply to all actions.""" .
+
+cfr:LifecycleState
+    a owl:Class ;
+    rdfs:label "Lifecycle State" ;
+    rdfs:comment "A state in a lifecycle state machine." .
+
+cfr:StateTransition
+    a owl:Class ;
+    rdfs:label "State Transition" ;
+    rdfs:comment """A valid transition between lifecycle states, triggered by
+        a redeemer action.""" .
+
+# --- Invariant ---
+
+cfr:FormalInvariant
+    a owl:Class ;
+    rdfs:label "Formal Invariant" ;
+    rdfs:comment """A property that must hold for a protocol pattern. If it
+        cannot be stated precisely, the design is incomplete.""" .
+
+# --- Mode ---
+
+cfr:Mode
+    a owl:Class ;
+    rdfs:label "Mode" ;
+    rdfs:comment "Physical mode (hardware attestation) or process mode (protocol enforcement)." .
+
+cfr:PhysicalMode  a cfr:Mode ; rdfs:label "Physical Mode" ;
+    rdfs:comment "Object carries its own identity and attests its own state." .
+cfr:ProcessMode   a cfr:Mode ; rdfs:label "Process Mode" ;
+    rdfs:comment "No physical object. Signing function on a server. Identity is abstract." .
+
+# --- Penalty ---
+
+cfr:Penalty
+    a owl:Class ;
+    rdfs:label "Penalty" ;
+    rdfs:comment "The consequence of non-compliance." .
+
+# --- Fit assessment ---
+
+cfr:FitAssessment
+    a owl:Class ;
+    rdfs:label "Fit Assessment" ;
+    rdfs:comment "Overall blockchain fit assessment for a regulation." .
+
+cfr:StrongFit     a cfr:FitAssessment ; rdfs:label "Strong" .
+cfr:GoodFit       a cfr:FitAssessment ; rdfs:label "Good" .
+cfr:MediumFit     a cfr:FitAssessment ; rdfs:label "Medium" .
+cfr:WeakFit       a cfr:FitAssessment ; rdfs:label "Weak" .
+
+# =============================================================================
+# Properties
+# =============================================================================
+
+# --- Regulation properties ---
+
+cfr:officialReference
+    a owl:DatatypeProperty ;
+    rdfs:domain cfr:Regulation ;
+    rdfs:range xsd:string ;
+    rdfs:label "official reference" ;
+    rdfs:comment "Official identifier, e.g., '(EU) 2016/679'." .
+
+cfr:fullTextURL
+    a owl:DatatypeProperty ;
+    rdfs:domain cfr:Regulation ;
+    rdfs:range xsd:anyURI ;
+    rdfs:label "full text URL" ;
+    rdfs:comment "Link to the official regulation text (EUR-Lex, ISO, etc.)." .
+
+cfr:inForceDate
+    a owl:DatatypeProperty ;
+    rdfs:domain cfr:Regulation ;
+    rdfs:range xsd:date ;
+    rdfs:label "in force date" .
+
+cfr:hasFitAssessment
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:Regulation ;
+    rdfs:range cfr:FitAssessment ;
+    rdfs:label "has fit assessment" .
+
+cfr:hasMode
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:Regulation ;
+    rdfs:range cfr:Mode ;
+    rdfs:label "uses mode" .
+
+# --- Party mapping ---
+
+cfr:hasParty
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:Regulation ;
+    rdfs:range cfr:ConcreteParty ;
+    rdfs:label "has party" ;
+    rdfs:comment "A concrete actor type in this regulation." .
+
+cfr:mapsToRole
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:ConcreteParty ;
+    rdfs:range cfr:Party ;
+    rdfs:label "maps to role" ;
+    rdfs:comment "The schema role this concrete party maps to." .
+
+cfr:partyLabel
+    a owl:DatatypeProperty ;
+    rdfs:domain cfr:ConcreteParty ;
+    rdfs:range xsd:string ;
+    rdfs:label "party label" ;
+    rdfs:comment "E.g., 'Data Controller', 'Manufacturer', 'Supervisory Authority'." .
+
+# --- Obligation mapping ---
+
+cfr:hasObligation
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:Regulation ;
+    rdfs:range cfr:Obligation ;
+    rdfs:label "has obligation" .
+
+cfr:obligationLabel
+    a owl:DatatypeProperty ;
+    rdfs:domain cfr:Obligation ;
+    rdfs:range xsd:string ;
+    rdfs:label "obligation label" .
+
+cfr:deadline
+    a owl:DatatypeProperty ;
+    rdfs:domain cfr:Obligation ;
+    rdfs:range xsd:string ;
+    rdfs:label "deadline" ;
+    rdfs:comment "E.g., '72 hours', '1 month', '3-year cycle'." .
+
+cfr:legalBasis
+    a owl:DatatypeProperty ;
+    rdfs:domain cfr:Obligation ;
+    rdfs:range xsd:string ;
+    rdfs:label "legal basis" ;
+    rdfs:comment "Article reference, e.g., 'Art 33'." .
+
+cfr:implementedBy
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:Obligation ;
+    rdfs:range cfr:ProtocolPattern ;
+    rdfs:label "implemented by" ;
+    rdfs:comment "The protocol pattern that realises this obligation on-chain." .
+
+cfr:hasDataType
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:Obligation ;
+    rdfs:range cfr:DataType ;
+    rdfs:label "has data type" .
+
+cfr:hasAccessTier
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:Obligation ;
+    rdfs:range cfr:AccessTier ;
+    rdfs:label "has access tier" .
+
+cfr:producesRecord
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:Obligation ;
+    rdfs:range cfr:ComplianceRecord ;
+    rdfs:label "produces record" ;
+    rdfs:comment "The on-chain compliance record type this obligation creates." .
+
+cfr:onChainRepresentation
+    a owl:DatatypeProperty ;
+    rdfs:domain cfr:ComplianceRecord ;
+    rdfs:range xsd:string ;
+    rdfs:label "on-chain representation" ;
+    rdfs:comment "What is stored on-chain, e.g., 'hash of consent record + timestamp'." .
+
+# --- Constraint assessment ---
+
+cfr:hasConstraintAssessment
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:Regulation ;
+    rdfs:range cfr:ConstraintAssessment ;
+    rdfs:label "has constraint assessment" .
+
+cfr:assessesConstraint
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:ConstraintAssessment ;
+    rdfs:range cfr:Constraint ;
+    rdfs:label "assesses constraint" .
+
+cfr:assessmentResult
+    a owl:DatatypeProperty ;
+    rdfs:domain cfr:ConstraintAssessment ;
+    rdfs:range xsd:string ;
+    rdfs:label "result" ;
+    rdfs:comment "'Pass' or 'Fail'." .
+
+cfr:assessmentJustification
+    a owl:DatatypeProperty ;
+    rdfs:domain cfr:ConstraintAssessment ;
+    rdfs:range xsd:string ;
+    rdfs:label "justification" .
+
+# --- Trust model ---
+
+cfr:hasTrustRelationship
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:Regulation ;
+    rdfs:range cfr:TrustRelationship ;
+    rdfs:label "has trust relationship" .
+
+cfr:trustPartyA
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:TrustRelationship ;
+    rdfs:range cfr:ConcreteParty ;
+    rdfs:label "party A" .
+
+cfr:trustPartyB
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:TrustRelationship ;
+    rdfs:range cfr:ConcreteParty ;
+    rdfs:label "party B" .
+
+cfr:hasTrustLevel
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:TrustRelationship ;
+    rdfs:range cfr:TrustLevel ;
+    rdfs:label "has trust level" .
+
+cfr:trustRisk
+    a owl:DatatypeProperty ;
+    rdfs:domain cfr:TrustRelationship ;
+    rdfs:range xsd:string ;
+    rdfs:label "risk" .
+
+cfr:blockchainMitigates
+    a owl:DatatypeProperty ;
+    rdfs:domain cfr:TrustRelationship ;
+    rdfs:range xsd:string ;
+    rdfs:label "mitigation" .
+
+# --- Token identification ---
+
+cfr:hasToken
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:Regulation ;
+    rdfs:range cfr:TokenType ;
+    rdfs:label "has token" .
+
+cfr:tokenLabel
+    a owl:DatatypeProperty ;
+    rdfs:domain cfr:TokenType ;
+    rdfs:range xsd:string ;
+    rdfs:label "token label" .
+
+cfr:tokenBehavior
+    a owl:DatatypeProperty ;
+    rdfs:domain cfr:TokenType ;
+    rdfs:range xsd:string ;
+    rdfs:label "behavior" .
+
+# --- Penalty ---
+
+cfr:hasPenalty
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:Regulation ;
+    rdfs:range cfr:Penalty ;
+    rdfs:label "has penalty" .
+
+cfr:penaltyDescription
+    a owl:DatatypeProperty ;
+    rdfs:domain cfr:Penalty ;
+    rdfs:range xsd:string ;
+    rdfs:label "description" .
+
+cfr:maxFine
+    a owl:DatatypeProperty ;
+    rdfs:domain cfr:Penalty ;
+    rdfs:range xsd:string ;
+    rdfs:label "maximum fine" ;
+    rdfs:comment "E.g., '€20M / 4% global turnover'." .
+
+# --- Pattern properties ---
+
+cfr:usesPattern
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:Regulation ;
+    rdfs:range cfr:ProtocolPattern ;
+    rdfs:label "uses pattern" .
+
+cfr:hasInvariant
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:ProtocolPattern ;
+    rdfs:range cfr:FormalInvariant ;
+    rdfs:label "has invariant" .
+
+cfr:invariantStatement
+    a owl:DatatypeProperty ;
+    rdfs:domain cfr:FormalInvariant ;
+    rdfs:range xsd:string ;
+    rdfs:label "formal statement" .
+
+cfr:proofStatus
+    a owl:DatatypeProperty ;
+    rdfs:domain cfr:FormalInvariant ;
+    rdfs:range xsd:string ;
+    rdfs:label "proof status" ;
+    rdfs:comment "'Proved', 'Conjectured', 'Open'." .
+
+# --- Validator properties ---
+
+cfr:hasRedeemerAction
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:Regulation ;
+    rdfs:range cfr:RedeemerAction ;
+    rdfs:label "has redeemer action" .
+
+cfr:actionLabel
+    a owl:DatatypeProperty ;
+    rdfs:domain cfr:RedeemerAction ;
+    rdfs:range xsd:string ;
+    rdfs:label "action label" .
+
+cfr:hasGuard
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:RedeemerAction ;
+    rdfs:range cfr:Guard ;
+    rdfs:label "has guard" .
+
+cfr:guardDescription
+    a owl:DatatypeProperty ;
+    rdfs:domain cfr:Guard ;
+    rdfs:range xsd:string ;
+    rdfs:label "description" .
+
+cfr:isUniversalGuard
+    a owl:DatatypeProperty ;
+    rdfs:domain cfr:Guard ;
+    rdfs:range xsd:boolean ;
+    rdfs:label "is universal" ;
+    rdfs:comment "True if this guard applies to every redeemer action." .
+
+# --- Lifecycle ---
+
+cfr:hasLifecycle
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:Regulation ;
+    rdfs:range cfr:LifecycleStateMachine ;
+    rdfs:label "has lifecycle" .
+
+cfr:hasState
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:LifecycleStateMachine ;
+    rdfs:range cfr:LifecycleState ;
+    rdfs:label "has state" .
+
+cfr:hasTransition
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:LifecycleStateMachine ;
+    rdfs:range cfr:StateTransition ;
+    rdfs:label "has transition" .
+
+cfr:fromState
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:StateTransition ;
+    rdfs:range cfr:LifecycleState ;
+    rdfs:label "from state" .
+
+cfr:toState
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:StateTransition ;
+    rdfs:range cfr:LifecycleState ;
+    rdfs:label "to state" .
+
+cfr:triggeredBy
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:StateTransition ;
+    rdfs:range cfr:RedeemerAction ;
+    rdfs:label "triggered by" .
+
+# --- Artifact relationships ---
+
+cfr:maintainedBy
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:Artifact ;
+    rdfs:range cfr:Party ;
+    rdfs:label "maintained by" .
+
+cfr:governedBy
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:Trie ;
+    rdfs:range cfr:SmartContract ;
+    rdfs:label "governed by" .
+
+cfr:readsAsReference
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:SmartContract ;
+    rdfs:range cfr:Trie ;
+    rdfs:label "reads as reference input" .
+
+# --- Beacon data policy ---
+
+cfr:hasDataPolicy
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:Beacon ;
+    rdfs:range cfr:DataPolicy ;
+    rdfs:label "has data policy" ;
+    rdfs:comment "The data policy carried by this beacon." .
+
+cfr:hasDisclosureContext
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:DataPolicy ;
+    rdfs:range cfr:DisclosureContext ;
+    rdfs:label "has disclosure context" ;
+    rdfs:comment "A disclosure context permitted by this data policy." .
+
+# --- Bright line ---
+
+cfr:hasBrightLinePhase
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:Regulation ;
+    rdfs:range cfr:BrightLinePhase ;
+    rdfs:label "has bright line phase" ;
+    rdfs:comment "A phase in the hash personal-data lifecycle for this regulation." .
+
+# --- Tension ---
+
+cfr:hasTension
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:Regulation ;
+    rdfs:range cfr:Tension ;
+    rdfs:label "has tension" .
+
+cfr:tensionLabel
+    a owl:DatatypeProperty ;
+    rdfs:domain cfr:Tension ;
+    rdfs:range xsd:string ;
+    rdfs:label "tension label" .
+
+cfr:standardFraming
+    a owl:DatatypeProperty ;
+    rdfs:domain cfr:Tension ;
+    rdfs:range xsd:string ;
+    rdfs:label "standard framing" ;
+    rdfs:comment "How the literature frames this tension." .
+
+cfr:architectureResponse
+    a owl:DatatypeProperty ;
+    rdfs:domain cfr:Tension ;
+    rdfs:range xsd:string ;
+    rdfs:label "architecture response" ;
+    rdfs:comment "How this architecture addresses the tension." .
+
+cfr:residualRisk
+    a owl:DatatypeProperty ;
+    rdfs:domain cfr:Tension ;
+    rdfs:range xsd:string ;
+    rdfs:label "residual risk" ;
+    rdfs:comment "The remaining risk after the architecture addresses the tension." .
+
+# --- Cross-regulation ---
+
+cfr:convergsWith
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:Regulation ;
+    rdfs:range cfr:Regulation ;
+    rdfs:label "converges with" ;
+    rdfs:comment """Compliance evidence from one regulation satisfies requirements
+        of another. The same trie serves multiple smart contracts.""" .
+
+cfr:complementedBy
+    a owl:ObjectProperty ;
+    rdfs:domain cfr:Regulation ;
+    rdfs:range cfr:Regulation ;
+    rdfs:label "complemented by" ;
+    rdfs:comment "A standard that operationalises a regulation (e.g., ISO 27001 for NIS2)." .
+@prefix cfr:    <https://lambdasistemi.github.io/cardano-for-regulators/ontology#> .
+@prefix bat:    <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+
+# =============================================================================
+# EU Battery Regulation — (EU) 2023/1542
+# =============================================================================
+
+bat:BatteryRegulation
+    a cfr:EURegulation ;
+    rdfs:label "EU Battery Regulation" ;
+    cfr:officialReference "(EU) 2023/1542" ;
+    cfr:fullTextURL "https://eur-lex.europa.eu/eli/reg/2023/1542/oj"^^xsd:anyURI ;
+    cfr:inForceDate "2024-02-18"^^xsd:date ;
+    cfr:hasFitAssessment cfr:StrongFit ;
+    cfr:hasMode cfr:PhysicalMode ;
+
+    # Parties
+    cfr:hasParty bat:EuropeanCommission, bat:Manufacturer, bat:Importer,
+                 bat:Distributor, bat:Consumer, bat:Recycler,
+                 bat:MarketSurveillance, bat:NotifiedBody ;
+
+    # Obligations
+    cfr:hasObligation bat:SoHReading, bat:CarbonFootprint,
+                      bat:RecycledContent, bat:Composition,
+                      bat:SupplyChainAudit, bat:RepurposingRecord,
+                      bat:EndOfLifeDeclaration ;
+
+    # Patterns
+    cfr:usesPattern cfr:CommitmentThenSubmit, cfr:LifecycleStateMachine,
+                    cfr:MPTPerOperator, cfr:OperatorAsAggregator,
+                    cfr:DoubleSignature, cfr:BatonPattern,
+                    cfr:BeaconGatedAttestation, cfr:CrossOperatorHandoff,
+                    cfr:RewardDistribution, cfr:TieredAccess ;
+
+    # Constraint assessments
+    cfr:hasConstraintAssessment bat:CA_DataCadence, bat:CA_Sequential,
+                               bat:CA_Liveness, bat:CA_Fee,
+                               bat:CA_Identity ;
+
+    # Trust model
+    cfr:hasTrustRelationship bat:TR_MfrConsumer, bat:TR_MfrRegulator,
+                            bat:TR_ConsumerConsumer, bat:TR_SensorChain ;
+
+    # Redeemer actions
+    cfr:hasRedeemerAction bat:RegisterItem, bat:AssignReporter,
+                          bat:ReassignReporter, bat:CreateCommitment,
+                          bat:SubmitReading, bat:TransferOwnership,
+                          bat:Repurpose ;
+
+    # Penalty
+    cfr:hasPenalty bat:Art93Penalty .
+
+# =============================================================================
+# Parties
+# =============================================================================
+
+bat:EuropeanCommission
+    a cfr:ConcreteParty ;
+    cfr:partyLabel "European Commission" ;
+    cfr:mapsToRole cfr:RegulatorRole .
+
+bat:Manufacturer
+    a cfr:ConcreteParty ;
+    cfr:partyLabel "Manufacturer" ;
+    cfr:mapsToRole cfr:OperatorRole ;
+    rdfs:comment "Primary operator. Manages product passport trie. Pays all fees." .
+
+bat:Importer
+    a cfr:ConcreteParty ;
+    cfr:partyLabel "Importer" ;
+    cfr:mapsToRole cfr:OperatorRole ;
+    rdfs:comment "Secondary operator for imported batteries." .
+
+bat:Distributor
+    a cfr:ConcreteParty ;
+    cfr:partyLabel "Distributor" ;
+    cfr:mapsToRole cfr:OperatorRole .
+
+bat:Consumer
+    a cfr:ConcreteParty ;
+    cfr:partyLabel "Consumer" ;
+    cfr:mapsToRole cfr:UserRole ;
+    rdfs:comment "Taps NFC to trigger SE050 SoH reading. No wallet." .
+
+bat:Recycler
+    a cfr:ConcreteParty ;
+    cfr:partyLabel "Recycler" ;
+    cfr:mapsToRole cfr:OperatorRole ;
+    rdfs:comment "End-of-life operator. Receives handoff from original manufacturer." .
+
+bat:MarketSurveillance
+    a cfr:ConcreteParty ;
+    cfr:partyLabel "Market Surveillance Authority" ;
+    cfr:mapsToRole cfr:VerificationBody .
+
+bat:NotifiedBody
+    a cfr:ConcreteParty ;
+    cfr:partyLabel "Notified Body" ;
+    cfr:mapsToRole cfr:VerificationBody .
+
+# =============================================================================
+# Constraint assessments
+# =============================================================================
+
+bat:CA_DataCadence
+    a cfr:ConstraintAssessment ;
+    cfr:assessesConstraint cfr:DataCadence ;
+    cfr:assessmentResult "Pass" ;
+    cfr:assessmentJustification "SoH readings monthly at most. Lifecycle events are rare." .
+
+bat:CA_Sequential
+    a cfr:ConstraintAssessment ;
+    cfr:assessesConstraint cfr:SequentialAccess ;
+    cfr:assessmentResult "Pass" ;
+    cfr:assessmentJustification "One manufacturer per trie. Relay on repurposing." .
+
+bat:CA_Liveness
+    a cfr:ConstraintAssessment ;
+    cfr:assessesConstraint cfr:Liveness ;
+    cfr:assessmentResult "Pass" ;
+    cfr:assessmentJustification "Penalties are set by Member States under Art. 93. Slot-based timeouts for readings remain enforceable at protocol level." .
+
+bat:CA_Fee
+    a cfr:ConstraintAssessment ;
+    cfr:assessesConstraint cfr:FeeAlignment ;
+    cfr:assessmentResult "Pass" ;
+    cfr:assessmentJustification "Manufacturers pay ~$0.10-0.15 per reading. Compliance value far exceeds cost." .
+
+bat:CA_Identity
+    a cfr:ConstraintAssessment ;
+    cfr:assessesConstraint cfr:IdentityDelegation ;
+    cfr:assessmentResult "Pass" ;
+    cfr:assessmentJustification "NFC secure element (SE050) signs readings. Consumer taps phone, no wallet." .
+
+# =============================================================================
+# Obligations
+# =============================================================================
+
+bat:SoHReading
+    a cfr:Obligation ;
+    cfr:obligationLabel "State of Health reading" ;
+    cfr:deadline "Monthly at most — event-driven on tap" ;
+    cfr:implementedBy cfr:CommitmentThenSubmit ;
+    cfr:hasDataType cfr:DynamicData ;
+    cfr:hasAccessTier cfr:RestrictedAccess ;
+    cfr:producesRecord bat:SoHLeaf ;
+    rdfs:comment "Core obligation. SE050 signs COSE_Sign1 with SoH, SoC, cycles, voltage, temperature. Access restricted to lawful purchaser and expressly entitled parties." .
+
+bat:SoHLeaf
+    a cfr:ComplianceRecord ;
+    cfr:onChainRepresentation "ItemLeaf: commitment cleared, COSE_Sign1 verified, reward credited to ReporterLeaf" .
+
+bat:CarbonFootprint
+    a cfr:Obligation ;
+    cfr:obligationLabel "Carbon footprint per kWh" ;
+    cfr:deadline "At manufacturing — static" ;
+    cfr:hasDataType cfr:StaticData ;
+    cfr:hasAccessTier cfr:PublicAccess ;
+    cfr:producesRecord bat:CarbonLeaf .
+
+bat:CarbonLeaf
+    a cfr:ComplianceRecord ;
+    cfr:onChainRepresentation "Hash of carbon footprint declaration in metadata field" .
+
+bat:RecycledContent
+    a cfr:Obligation ;
+    cfr:obligationLabel "Recycled content percentages" ;
+    cfr:deadline "At manufacturing — static" ;
+    cfr:hasDataType cfr:StaticData ;
+    cfr:hasAccessTier cfr:PublicAccess .
+
+bat:Composition
+    a cfr:Obligation ;
+    cfr:obligationLabel "Detailed composition" ;
+    cfr:deadline "At manufacturing — static" ;
+    cfr:hasDataType cfr:StaticData ;
+    cfr:hasAccessTier cfr:AuthorizedAccess ;
+    rdfs:comment "Chemistry, hazardous substances. Authorized operators only." .
+
+bat:SupplyChainAudit
+    a cfr:Obligation ;
+    cfr:obligationLabel "Supply chain audit trail" ;
+    cfr:deadline "Event-driven" ;
+    cfr:hasDataType cfr:EventDrivenData ;
+    cfr:hasAccessTier cfr:AuthorityAccess .
+
+bat:RepurposingRecord
+    a cfr:Obligation ;
+    cfr:obligationLabel "Repurposing record" ;
+    cfr:legalBasis "Art 77(3) — new battery passport for repurposed batteries" ;
+    cfr:deadline "At repurposing event" ;
+    cfr:implementedBy cfr:CrossOperatorHandoff ;
+    cfr:hasDataType cfr:EventDrivenData ;
+    cfr:hasAccessTier cfr:PublicAccess ;
+    rdfs:comment "New passport linked to original. Back-link via Merkle proof." .
+
+bat:EndOfLifeDeclaration
+    a cfr:Obligation ;
+    cfr:obligationLabel "End of life declaration" ;
+    cfr:legalBasis "Art 77(5) — passport ceases to exist on recycling" ;
+    cfr:deadline "At recycling" ;
+    cfr:implementedBy cfr:LifecycleStateMachine ;
+    cfr:hasDataType cfr:EventDrivenData ;
+    cfr:hasAccessTier cfr:PublicAccess .
+
+# =============================================================================
+# Trust model
+# =============================================================================
+
+bat:TR_MfrConsumer
+    a cfr:TrustRelationship ;
+    cfr:trustPartyA bat:Manufacturer ;
+    cfr:trustPartyB bat:Consumer ;
+    cfr:hasTrustLevel cfr:LowTrust ;
+    cfr:trustRisk "SoH manipulation" ;
+    cfr:blockchainMitigates "Immutable on-chain history" .
+
+bat:TR_MfrRegulator
+    a cfr:TrustRelationship ;
+    cfr:trustPartyA bat:Manufacturer ;
+    cfr:trustPartyB bat:EuropeanCommission ;
+    cfr:hasTrustLevel cfr:MediumTrust ;
+    cfr:trustRisk "Selective reporting" ;
+    cfr:blockchainMitigates "Completeness proofs via MPT" .
+
+bat:TR_ConsumerConsumer
+    a cfr:TrustRelationship ;
+    cfr:trustPartyA bat:Consumer ;
+    cfr:trustPartyB bat:Consumer ;
+    cfr:hasTrustLevel cfr:NoTrust ;
+    cfr:trustRisk "Counterfeit resale" ;
+    cfr:blockchainMitigates "On-chain provenance" .
+
+bat:TR_SensorChain
+    a cfr:TrustRelationship ;
+    cfr:trustPartyA bat:Consumer ;
+    cfr:trustPartyB bat:Consumer ;
+    cfr:hasTrustLevel cfr:MediumTrust ;
+    cfr:trustRisk "Analog tampering" ;
+    cfr:blockchainMitigates "Hardware SE — tampering is expensive, destructive" .
+
+# =============================================================================
+# Redeemer actions
+# =============================================================================
+
+bat:RegisterItem        a cfr:RedeemerAction ; cfr:actionLabel "RegisterItem" ;
+    cfr:hasGuard bat:G_MfrIdentity, bat:G_StandingOK, bat:G_NoExistingLeaf,
+                 bat:G_MetadataNotEmpty, bat:G_MfrSig, bat:G_MPTInsert .
+
+bat:AssignReporter      a cfr:RedeemerAction ; cfr:actionLabel "AssignReporter" ;
+    cfr:hasGuard bat:G_MfrIdentity, bat:G_ReporterNone, bat:G_RewardPositive,
+                 bat:G_MfrSig, bat:G_MPTUpdate .
+
+bat:ReassignReporter    a cfr:RedeemerAction ; cfr:actionLabel "ReassignReporter" ;
+    cfr:hasGuard bat:G_MfrIdentity, bat:G_CommitmentNone, bat:G_RewardPositive,
+                 bat:G_MfrSig, bat:G_MPTUpdate .
+
+bat:CreateCommitment    a cfr:RedeemerAction ; cfr:actionLabel "CreateCommitment" ;
+    cfr:hasGuard bat:G_MfrIdentity, bat:G_ReporterAssigned, bat:G_CommitmentNone,
+                 bat:G_ValidWindow, bat:G_MfrSig, bat:G_MPTUpdate .
+
+bat:SubmitReading       a cfr:RedeemerAction ; cfr:actionLabel "SubmitReading" ;
+    cfr:hasGuard bat:G_CommitmentExists, bat:G_COSEValid, bat:G_PayloadMatch,
+                 bat:G_Freshness, bat:G_ReporterKeyMatch, bat:G_ReporterSig,
+                 bat:G_MPTTransition ;
+    rdfs:comment "Core transaction. Two-leaf atomic update (item + reporter)." .
+
+bat:TransferOwnership   a cfr:RedeemerAction ; cfr:actionLabel "TransferOwnership" ;
+    cfr:hasGuard bat:G_SellerSig, bat:G_BuyerSig, bat:G_FreshReading,
+                 bat:G_CIP68Transfer, bat:G_CommitmentNone, bat:G_MPTUpdate .
+
+bat:Repurpose           a cfr:RedeemerAction ; cfr:actionLabel "Repurpose" ;
+    cfr:hasGuard bat:G_MfrSig, bat:G_NewOpIdentity, bat:G_NewOpQualified,
+                 bat:G_FreshReading, bat:G_BacklinkValid, bat:G_CommitmentNone .
+
+# --- Guards ---
+
+bat:G_MfrIdentity       a cfr:Guard ; cfr:guardDescription "Manufacturer key ∈ identity trie" .
+bat:G_StandingOK        a cfr:Guard ; cfr:guardDescription "Standing ≠ suspended (regulation trie)" .
+bat:G_NoExistingLeaf    a cfr:Guard ; cfr:guardDescription "No existing leaf at hash(itemPubKey)" .
+bat:G_MetadataNotEmpty  a cfr:Guard ; cfr:guardDescription "Metadata ≠ empty" .
+bat:G_ReporterNone      a cfr:Guard ; cfr:guardDescription "reporter = Nothing" .
+bat:G_ReporterAssigned  a cfr:Guard ; cfr:guardDescription "reporter ≠ Nothing" .
+bat:G_RewardPositive    a cfr:Guard ; cfr:guardDescription "nextReward > 0" .
+bat:G_CommitmentNone    a cfr:Guard ; cfr:guardDescription "commitment = Nothing" .
+bat:G_CommitmentExists  a cfr:Guard ; cfr:guardDescription "commitment ≠ Nothing" .
+bat:G_ValidWindow       a cfr:Guard ; cfr:guardDescription "validFrom ≤ validUntil, validFrom ≥ lower slot" .
+bat:G_COSEValid         a cfr:Guard ; cfr:guardDescription "COSE_Sign1 signature valid (Ed25519 or secp256k1)" .
+bat:G_PayloadMatch      a cfr:Guard ; cfr:guardDescription "Payload validFrom/validUntil match commitment" .
+bat:G_Freshness         a cfr:Guard ; cfr:guardDescription "validFrom ≤ current_slot ≤ validUntil" .
+bat:G_ReporterKeyMatch  a cfr:Guard ; cfr:guardDescription "Reporter key matches assignment" .
+bat:G_ReporterSig       a cfr:Guard ; cfr:guardDescription "Reporter signature present (actor auth)" .
+bat:G_SellerSig         a cfr:Guard ; cfr:guardDescription "Seller signature present" .
+bat:G_BuyerSig          a cfr:Guard ; cfr:guardDescription "Buyer signature present" .
+bat:G_FreshReading      a cfr:Guard ; cfr:guardDescription "Fresh COSE_Sign1 BMS reading valid" .
+bat:G_CIP68Transfer     a cfr:Guard ; cfr:guardDescription "CIP-68 user token moves seller → buyer" .
+bat:G_NewOpIdentity     a cfr:Guard ; cfr:guardDescription "New operator key ∈ identity trie" .
+bat:G_NewOpQualified    a cfr:Guard ; cfr:guardDescription "New operator qualified (regulation trie)" .
+bat:G_BacklinkValid     a cfr:Guard ; cfr:guardDescription "Back-link Merkle proof valid against original root" .
+bat:G_MfrSig            a cfr:Guard ; cfr:guardDescription "Manufacturer signature present" ;
+    cfr:isUniversalGuard true .
+bat:G_MPTInsert         a cfr:Guard ; cfr:guardDescription "MPT insert proof valid" .
+bat:G_MPTUpdate         a cfr:Guard ; cfr:guardDescription "MPT update proof valid" .
+bat:G_MPTTransition     a cfr:Guard ; cfr:guardDescription "MPT transition proof valid (two-leaf update)" .
+
+# =============================================================================
+# Penalty
+# =============================================================================
+
+bat:Art93Penalty
+    a cfr:Penalty ;
+    cfr:penaltyDescription "Art. 93 Member State penalties, plus market restriction or withdrawal measures under the regulation" ;
+    cfr:maxFine "Member State defined — includes product ban" .
+
+# =============================================================================
+# Formal invariants
+# =============================================================================
+
+bat:CommitmentCleared
+    a cfr:FormalInvariant ;
+    cfr:invariantStatement "commitment_cleared_after_submit: After SubmitReading, commitment = Nothing" ;
+    cfr:proofStatus "Proved" .
+
+bat:RewardMonotonicity
+    a cfr:FormalInvariant ;
+    cfr:invariantStatement "credit_increases: reward > 0 → rewardsAccumulated strictly increases" ;
+    cfr:proofStatus "Proved" .
+
+bat:MPTConsistency
+    a cfr:FormalInvariant ;
+    cfr:invariantStatement "transition_preserves_consistency: two-leaf update preserves MPT validity" ;
+    cfr:proofStatus "Proved" .
+@prefix cfr:    <https://lambdasistemi.github.io/cardano-for-regulators/ontology#> .
+@prefix gdpr:   <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+
+# =============================================================================
+# GDPR — (EU) 2016/679
+# =============================================================================
+
+gdpr:GDPR
+    a cfr:EURegulation ;
+    rdfs:label "GDPR" ;
+    cfr:officialReference "(EU) 2016/679" ;
+    cfr:fullTextURL "https://eur-lex.europa.eu/eli/reg/2016/679/oj"^^xsd:anyURI ;
+    cfr:inForceDate "2018-05-25"^^xsd:date ;
+    cfr:hasFitAssessment cfr:StrongFit ;
+    cfr:hasMode cfr:ProcessMode ;
+
+    # Parties
+    cfr:hasParty gdpr:SupervisoryAuthority, gdpr:DataController,
+                 gdpr:DataProcessor, gdpr:DataSubject,
+                 gdpr:CertificationBody, gdpr:EDPB ;
+
+    # Obligations
+    cfr:hasObligation gdpr:BreachNotification72h, gdpr:RightsResponse1m,
+                      gdpr:ConsentRecord, gdpr:ProcessingRecordArt30,
+                      gdpr:DPIAObligation, gdpr:CertificationObligation,
+                      gdpr:ProcessorAgreement, gdpr:CrossBorderSafeguard,
+                      gdpr:BreachNotificationToSubjects ;
+
+    # Patterns
+    cfr:usesPattern cfr:CommitmentThenSubmit, cfr:LifecycleStateMachine,
+                    cfr:MPTPerOperator, cfr:OperatorAsAggregator,
+                    cfr:RelayStateMachine, cfr:CrossOperatorHandoff,
+                    cfr:TieredAccess ;
+
+    # Constraint assessments
+    cfr:hasConstraintAssessment gdpr:CA_DataCadence, gdpr:CA_Sequential,
+                               gdpr:CA_Liveness, gdpr:CA_Fee,
+                               gdpr:CA_Identity ;
+
+    # Trust model
+    cfr:hasTrustRelationship gdpr:TR_ControllerSubject,
+                            gdpr:TR_ControllerSA,
+                            gdpr:TR_ControllerProcessor,
+                            gdpr:TR_SubjectController,
+                            gdpr:TR_SAController,
+                            gdpr:TR_ControllerController ;
+
+    # Redeemer actions
+    cfr:hasRedeemerAction gdpr:CommitBreach, gdpr:SubmitBreachNotification,
+                          gdpr:CommitRightsRequest, gdpr:SubmitRightsResponse,
+                          gdpr:ExtendRightsDeadline, gdpr:RecordConsent,
+                          gdpr:WithdrawConsent, gdpr:UpdateProcessingRecord,
+                          gdpr:ReferenceCertification, gdpr:RecordDPIA ;
+
+    # Penalty
+    cfr:hasPenalty gdpr:Tier1Fine, gdpr:Tier2Fine ;
+
+    # Cross-regulation
+    cfr:convergsWith gdpr:NIS2_ref .
+
+# =============================================================================
+# Parties
+# =============================================================================
+
+gdpr:SupervisoryAuthority
+    a cfr:ConcreteParty ;
+    cfr:partyLabel "Supervisory Authority (DPA)" ;
+    cfr:mapsToRole cfr:RegulatorRole ;
+    rdfs:comment "National data protection authorities. 27+ in the EU. Art 51-59." .
+
+gdpr:DataController
+    a cfr:ConcreteParty ;
+    cfr:partyLabel "Data Controller" ;
+    cfr:mapsToRole cfr:OperatorRole ;
+    rdfs:comment "Determines purposes and means of processing. Art 4(7). Primary operator." .
+
+gdpr:DataProcessor
+    a cfr:ConcreteParty ;
+    cfr:partyLabel "Data Processor" ;
+    cfr:mapsToRole cfr:OperatorRole ;
+    rdfs:comment "Processes on behalf of controller. Art 4(8). Secondary operator." .
+
+gdpr:DataSubject
+    a cfr:ConcreteParty ;
+    cfr:partyLabel "Data Subject" ;
+    cfr:mapsToRole cfr:UserRole ;
+    rdfs:comment "Identified or identifiable natural person. Art 4(1). No wallet needed." .
+
+gdpr:CertificationBody
+    a cfr:ConcreteParty ;
+    cfr:partyLabel "Certification Body" ;
+    cfr:mapsToRole cfr:VerificationBody ;
+    rdfs:comment "Accredited body issuing Art 42 certifications." .
+
+gdpr:EDPB
+    a cfr:ConcreteParty ;
+    cfr:partyLabel "European Data Protection Board" ;
+    cfr:mapsToRole cfr:RegulatorRole ;
+    rdfs:comment "Cross-border consistency mechanism. Art 68-76." .
+
+# =============================================================================
+# Constraint assessments
+# =============================================================================
+
+gdpr:CA_DataCadence
+    a cfr:ConstraintAssessment ;
+    cfr:assessesConstraint cfr:DataCadence ;
+    cfr:assessmentResult "Pass" ;
+    cfr:assessmentJustification "Consent events, breach notifications (72h), rights requests (1 month), DPIAs — all event-driven or periodic. No real-time streaming." .
+
+gdpr:CA_Sequential
+    a cfr:ConstraintAssessment ;
+    cfr:assessesConstraint cfr:SequentialAccess ;
+    cfr:assessmentResult "Pass" ;
+    cfr:assessmentJustification "Single controller per trie. Rights requests follow a relay: subject → controller → response." .
+
+gdpr:CA_Liveness
+    a cfr:ConstraintAssessment ;
+    cfr:assessesConstraint cfr:Liveness ;
+    cfr:assessmentResult "Pass" ;
+    cfr:assessmentJustification "Up to €20M / 4% global turnover. 72h breach deadline. 1-month rights response. Strongest penalties of any regulation analysed." .
+
+gdpr:CA_Fee
+    a cfr:ConstraintAssessment ;
+    cfr:assessesConstraint cfr:FeeAlignment ;
+    cfr:assessmentResult "Pass" ;
+    cfr:assessmentJustification "Controllers pay. Compliance cost (~€0.10-0.15 per record) negligible vs fine exposure." .
+
+gdpr:CA_Identity
+    a cfr:ConstraintAssessment ;
+    cfr:assessesConstraint cfr:IdentityDelegation ;
+    cfr:assessmentResult "Pass" ;
+    cfr:assessmentJustification "Process mode. Data subjects exercise rights through digital channels. The signing function maps to the authenticated request." .
+
+# =============================================================================
+# Obligations
+# =============================================================================
+
+gdpr:BreachNotification72h
+    a cfr:Obligation ;
+    cfr:obligationLabel "Breach notification to SA" ;
+    cfr:legalBasis "Art 33" ;
+    cfr:deadline "72 hours" ;
+    cfr:implementedBy cfr:CommitmentThenSubmit ;
+    cfr:hasDataType cfr:EventDrivenData ;
+    cfr:hasAccessTier cfr:AuthorityAccess ;
+    cfr:producesRecord gdpr:BreachRecord ;
+    rdfs:comment "Controller notifies SA within 72h of becoming aware. Flagship on-chain use case." .
+
+gdpr:BreachRecord
+    a cfr:ComplianceRecord ;
+    cfr:onChainRepresentation "Commitment-then-submit: commit_slot, submit_slot, notification_hash, timely flag" .
+
+gdpr:RightsResponse1m
+    a cfr:Obligation ;
+    cfr:obligationLabel "Data subject rights response" ;
+    cfr:legalBasis "Art 12-22" ;
+    cfr:deadline "1 month (extendable to 3 months)" ;
+    cfr:implementedBy cfr:CommitmentThenSubmit ;
+    cfr:hasDataType cfr:EventDrivenData ;
+    cfr:hasAccessTier cfr:AuthorizedAccess ;
+    cfr:producesRecord gdpr:RightsRecord .
+
+gdpr:RightsRecord
+    a cfr:ComplianceRecord ;
+    cfr:onChainRepresentation "Commitment-then-submit: commit_slot, response_slot, request_type, response_hash, timely flag" .
+
+gdpr:ConsentRecord
+    a cfr:Obligation ;
+    cfr:obligationLabel "Consent given/withdrawn" ;
+    cfr:legalBasis "Art 7" ;
+    cfr:deadline "N/A — event-driven" ;
+    cfr:implementedBy cfr:LifecycleStateMachine ;
+    cfr:hasDataType cfr:EventDrivenData ;
+    cfr:hasAccessTier cfr:AuthorizedAccess ;
+    cfr:producesRecord gdpr:ConsentLeaf .
+
+gdpr:ConsentLeaf
+    a cfr:ComplianceRecord ;
+    cfr:onChainRepresentation "Lifecycle state machine: consent_state, purpose_hash, given_slot, withdrawn_slot" .
+
+gdpr:ProcessingRecordArt30
+    a cfr:Obligation ;
+    cfr:obligationLabel "Processing activity records" ;
+    cfr:legalBasis "Art 30" ;
+    cfr:deadline "Ongoing — maintained continuously" ;
+    cfr:implementedBy cfr:MPTPerOperator ;
+    cfr:hasDataType cfr:StaticData ;
+    cfr:hasAccessTier cfr:AuthorityAccess ;
+    cfr:producesRecord gdpr:ProcessingLeaf .
+
+gdpr:ProcessingLeaf
+    a cfr:ComplianceRecord ;
+    cfr:onChainRepresentation "Leaf in controller's trie: record_hash, updated_slot, previous_hash" .
+
+gdpr:DPIAObligation
+    a cfr:Obligation ;
+    cfr:obligationLabel "Data Protection Impact Assessment" ;
+    cfr:legalBasis "Art 35" ;
+    cfr:deadline "Before high-risk processing begins" ;
+    cfr:hasDataType cfr:EventDrivenData ;
+    cfr:hasAccessTier cfr:AuthorityAccess ;
+    cfr:producesRecord gdpr:DPIALeaf .
+
+gdpr:DPIALeaf
+    a cfr:ComplianceRecord ;
+    cfr:onChainRepresentation "Attestation hash + recorded_slot" .
+
+gdpr:CertificationObligation
+    a cfr:Obligation ;
+    cfr:obligationLabel "Data protection certification" ;
+    cfr:legalBasis "Art 42" ;
+    cfr:deadline "3-year validity, renewable" ;
+    cfr:hasDataType cfr:StaticData ;
+    cfr:hasAccessTier cfr:PublicAccess ;
+    cfr:producesRecord gdpr:CertLeaf .
+
+gdpr:CertLeaf
+    a cfr:ComplianceRecord ;
+    cfr:onChainRepresentation "Token with enforced expiry_slot, issuer key, scope_hash" .
+
+gdpr:ProcessorAgreement
+    a cfr:Obligation ;
+    cfr:obligationLabel "Processor agreement" ;
+    cfr:legalBasis "Art 28" ;
+    cfr:deadline "Before processing begins" ;
+    cfr:hasDataType cfr:StaticData ;
+    cfr:hasAccessTier cfr:AuthorizedAccess ;
+    cfr:producesRecord gdpr:AgreementLeaf .
+
+gdpr:AgreementLeaf
+    a cfr:ComplianceRecord ;
+    cfr:onChainRepresentation "Hash of agreement, cross-referenced in both controller and processor tries" .
+
+gdpr:CrossBorderSafeguard
+    a cfr:Obligation ;
+    cfr:obligationLabel "Cross-border transfer safeguard" ;
+    cfr:legalBasis "Art 44-49" ;
+    cfr:deadline "Before transfer" ;
+    cfr:hasDataType cfr:StaticData ;
+    cfr:hasAccessTier cfr:AuthorityAccess ;
+    cfr:producesRecord gdpr:TransferLeaf .
+
+gdpr:TransferLeaf
+    a cfr:ComplianceRecord ;
+    cfr:onChainRepresentation "Hash of SCC/BCR/adequacy reference" .
+
+gdpr:BreachNotificationToSubjects
+    a cfr:Obligation ;
+    cfr:obligationLabel "Breach notification to data subjects" ;
+    cfr:legalBasis "Art 34" ;
+    cfr:deadline "Without undue delay (high-risk breaches)" ;
+    cfr:hasDataType cfr:EventDrivenData ;
+    cfr:hasAccessTier cfr:AuthorizedAccess .
+
+# =============================================================================
+# Trust model
+# =============================================================================
+
+gdpr:TR_ControllerSubject
+    a cfr:TrustRelationship ;
+    cfr:trustPartyA gdpr:DataController ;
+    cfr:trustPartyB gdpr:DataSubject ;
+    cfr:hasTrustLevel cfr:LowTrust ;
+    cfr:trustRisk "Controller claims consent existed, subject denies" ;
+    cfr:blockchainMitigates "Immutable timestamped consent hash" .
+
+gdpr:TR_ControllerSA
+    a cfr:TrustRelationship ;
+    cfr:trustPartyA gdpr:DataController ;
+    cfr:trustPartyB gdpr:SupervisoryAuthority ;
+    cfr:hasTrustLevel cfr:MediumTrust ;
+    cfr:trustRisk "Controller backdates breach notification" ;
+    cfr:blockchainMitigates "Commitment proves on-chain ordering and submission slot once the controller commits" .
+
+gdpr:TR_ControllerProcessor
+    a cfr:TrustRelationship ;
+    cfr:trustPartyA gdpr:DataController ;
+    cfr:trustPartyB gdpr:DataProcessor ;
+    cfr:hasTrustLevel cfr:MediumTrust ;
+    cfr:trustRisk "Processor claims it followed instructions" ;
+    cfr:blockchainMitigates "On-chain agreement hash, activity proofs" .
+
+gdpr:TR_SubjectController
+    a cfr:TrustRelationship ;
+    cfr:trustPartyA gdpr:DataSubject ;
+    cfr:trustPartyB gdpr:DataController ;
+    cfr:hasTrustLevel cfr:LowTrust ;
+    cfr:trustRisk "Controller ignores rights request" ;
+    cfr:blockchainMitigates "Commitment-then-submit proves response timeline" .
+
+gdpr:TR_SAController
+    a cfr:TrustRelationship ;
+    cfr:trustPartyA gdpr:SupervisoryAuthority ;
+    cfr:trustPartyB gdpr:DataController ;
+    cfr:hasTrustLevel cfr:MediumTrust ;
+    cfr:trustRisk "Controller presents selective compliance evidence" ;
+    cfr:blockchainMitigates "Completeness via MPT — all records in trie" .
+
+gdpr:TR_ControllerController
+    a cfr:TrustRelationship ;
+    cfr:trustPartyA gdpr:DataController ;
+    cfr:trustPartyB gdpr:DataController ;
+    cfr:hasTrustLevel cfr:NoTrust ;
+    cfr:trustRisk "Portability disputes — who had data when" ;
+    cfr:blockchainMitigates "Transfer records with timestamps" .
+
+# =============================================================================
+# Redeemer actions
+# =============================================================================
+
+gdpr:CommitBreach          a cfr:RedeemerAction ; cfr:actionLabel "CommitBreach" ;
+    cfr:hasGuard gdpr:G_IdentityTrie, gdpr:G_StandingNotSuspended,
+                 gdpr:G_NoExistingCommitment, gdpr:G_ControllerSig, gdpr:G_MPTProof .
+
+gdpr:SubmitBreachNotification a cfr:RedeemerAction ; cfr:actionLabel "SubmitBreachNotification" ;
+    cfr:hasGuard gdpr:G_CommitmentExists, gdpr:G_HashNotEmpty,
+                 gdpr:G_ControllerSig, gdpr:G_MPTProof .
+
+gdpr:CommitRightsRequest   a cfr:RedeemerAction ; cfr:actionLabel "CommitRightsRequest" ;
+    cfr:hasGuard gdpr:G_IdentityTrie, gdpr:G_NoExistingCommitment,
+                 gdpr:G_ProcessSig, gdpr:G_ControllerSig, gdpr:G_MPTProof .
+
+gdpr:SubmitRightsResponse  a cfr:RedeemerAction ; cfr:actionLabel "SubmitRightsResponse" ;
+    cfr:hasGuard gdpr:G_CommitmentExists, gdpr:G_HashNotEmpty,
+                 gdpr:G_ControllerSig, gdpr:G_MPTProof .
+
+gdpr:ExtendRightsDeadline  a cfr:RedeemerAction ; cfr:actionLabel "ExtendRightsDeadline" ;
+    cfr:hasGuard gdpr:G_CommitmentExists, gdpr:G_NotAlreadyExtended,
+                 gdpr:G_WithinOriginalDeadline, gdpr:G_HashNotEmpty,
+                 gdpr:G_ControllerSig, gdpr:G_MPTProof .
+
+gdpr:RecordConsent         a cfr:RedeemerAction ; cfr:actionLabel "RecordConsent" ;
+    cfr:hasGuard gdpr:G_IdentityTrie, gdpr:G_ProcessSig,
+                 gdpr:G_PurposeHashNotEmpty, gdpr:G_ConsentNotGiven,
+                 gdpr:G_ControllerSig, gdpr:G_MPTProof .
+
+gdpr:WithdrawConsent       a cfr:RedeemerAction ; cfr:actionLabel "WithdrawConsent" ;
+    cfr:hasGuard gdpr:G_ConsentGiven, gdpr:G_ProcessSig,
+                 gdpr:G_ControllerSig, gdpr:G_MPTProof .
+
+gdpr:UpdateProcessingRecord a cfr:RedeemerAction ; cfr:actionLabel "UpdateProcessingRecord" ;
+    cfr:hasGuard gdpr:G_IdentityTrie, gdpr:G_StandingNotSuspended,
+                 gdpr:G_HashNotEmpty, gdpr:G_ControllerSig, gdpr:G_MPTProof .
+
+gdpr:ReferenceCertification a cfr:RedeemerAction ; cfr:actionLabel "ReferenceCertification" ;
+    cfr:hasGuard gdpr:G_CertTokenExists, gdpr:G_CertIssuerQualified,
+                 gdpr:G_ControllerSig, gdpr:G_MPTProof .
+
+gdpr:RecordDPIA            a cfr:RedeemerAction ; cfr:actionLabel "RecordDPIA" ;
+    cfr:hasGuard gdpr:G_IdentityTrie, gdpr:G_HashNotEmpty,
+                 gdpr:G_ControllerSig, gdpr:G_MPTProof .
+
+# --- Guards ---
+
+gdpr:G_IdentityTrie         a cfr:Guard ; cfr:guardDescription "Controller key ∈ identity trie" .
+gdpr:G_StandingNotSuspended  a cfr:Guard ; cfr:guardDescription "Controller standing ≠ suspended (regulation trie)" .
+gdpr:G_NoExistingCommitment  a cfr:Guard ; cfr:guardDescription "No existing commitment on leaf" .
+gdpr:G_CommitmentExists      a cfr:Guard ; cfr:guardDescription "Commitment exists on leaf" .
+gdpr:G_HashNotEmpty          a cfr:Guard ; cfr:guardDescription "Hash ≠ empty" .
+gdpr:G_ProcessSig            a cfr:Guard ; cfr:guardDescription "Process signature present (data subject signed)" .
+gdpr:G_ControllerSig         a cfr:Guard ; cfr:guardDescription "Controller signature present" ;
+    cfr:isUniversalGuard true .
+gdpr:G_MPTProof              a cfr:Guard ; cfr:guardDescription "MPT root hash consistent" ;
+    cfr:isUniversalGuard true .
+gdpr:G_ConsentGiven          a cfr:Guard ; cfr:guardDescription "Consent state = given" .
+gdpr:G_ConsentNotGiven       a cfr:Guard ; cfr:guardDescription "Consent state ≠ given (or absent)" .
+gdpr:G_NotAlreadyExtended    a cfr:Guard ; cfr:guardDescription "Rights deadline not already extended" .
+gdpr:G_WithinOriginalDeadline a cfr:Guard ; cfr:guardDescription "Current slot ≤ original deadline" .
+gdpr:G_PurposeHashNotEmpty   a cfr:Guard ; cfr:guardDescription "Purpose hash ≠ empty" .
+gdpr:G_CertTokenExists       a cfr:Guard ; cfr:guardDescription "Certification token exists and not expired" .
+gdpr:G_CertIssuerQualified   a cfr:Guard ; cfr:guardDescription "Cert issuer ∈ regulation trie (qualified body)" .
+
+# =============================================================================
+# Penalties
+# =============================================================================
+
+gdpr:Tier1Fine
+    a cfr:Penalty ;
+    cfr:penaltyDescription "Controller/processor obligation breaches (Art 8, 11, 25-39, 42, 43)" ;
+    cfr:maxFine "€10,000,000 or 2% global turnover" .
+
+gdpr:Tier2Fine
+    a cfr:Penalty ;
+    cfr:penaltyDescription "Processing principles, data subject rights, transfers (Art 5, 6, 7, 9, 12-22, 44-49)" ;
+    cfr:maxFine "€20,000,000 or 4% global turnover" .
+
+# =============================================================================
+# Bright line lifecycle
+# =============================================================================
+
+gdpr:GDPR
+    cfr:hasBrightLinePhase cfr:ActivePhase, cfr:RetentionPhase, cfr:PostErasurePhase .
+
+# =============================================================================
+# GDPR–blockchain tensions
+# =============================================================================
+
+gdpr:GDPR
+    cfr:hasTension gdpr:T_Erasure, gdpr:T_Rectification, gdpr:T_Storage,
+                   gdpr:T_Minimisation, gdpr:T_Controller, gdpr:T_CrossBorder,
+                   gdpr:T_AutomatedDecision, gdpr:T_LegalBasis .
+
+gdpr:T_Erasure
+    a cfr:Tension ;
+    cfr:tensionLabel "Immutability vs erasure (Art 17)" ;
+    cfr:standardFraming "Cannot delete on-chain personal data" ;
+    cfr:architectureResponse "Delete the off-chain pre-image. The on-chain hash becomes unlinkable — anonymous under Recital 26." ;
+    cfr:residualRisk "If the controller fails to delete all copies of the pre-image, the hash remains personal data." .
+
+gdpr:T_Rectification
+    a cfr:Tension ;
+    cfr:tensionLabel "Immutability vs rectification (Art 16)" ;
+    cfr:standardFraming "Cannot correct on-chain records" ;
+    cfr:architectureResponse "Compliance records are appended (new leaf for correction). History of corrections is accountability evidence." ;
+    cfr:residualRisk "Original hash persists alongside correction. Original pre-image should be deleted." .
+
+gdpr:T_Storage
+    a cfr:Tension ;
+    cfr:tensionLabel "Storage limitation (Art 5(1)(e))" ;
+    cfr:standardFraming "On-chain data persists forever" ;
+    cfr:architectureResponse "Active phase: legitimate retention under Art 6(1)(c). After retention period: delete pre-image, hash becomes anonymous." ;
+    cfr:residualRisk "Controller must track retention periods and actually delete pre-images when they expire." .
+
+gdpr:T_Minimisation
+    a cfr:Tension ;
+    cfr:tensionLabel "Data minimisation (Art 5(1)(c))" ;
+    cfr:standardFraming "Full node replication" ;
+    cfr:architectureResponse "Only hashes on-chain — one fixed-size hash per compliance record." ;
+    cfr:residualRisk "Low." .
+
+gdpr:T_Controller
+    a cfr:Tension ;
+    cfr:tensionLabel "Controller designation" ;
+    cfr:standardFraming "Who is the controller on a public chain?" ;
+    cfr:architectureResponse "The data controller is the operator of their own trie. Post-erasure the hash is anonymous and the question is moot." ;
+    cfr:residualRisk "During active phase the controller is clearly identifiable." .
+
+gdpr:T_CrossBorder
+    a cfr:Tension ;
+    cfr:tensionLabel "Cross-border transfers (Art 44-49)" ;
+    cfr:standardFraming "Nodes worldwide = transfer to every jurisdiction" ;
+    cfr:architectureResponse "During active phase: controller is the only party holding the link. Post-erasure: anonymous data, no transfer concern." ;
+    cfr:residualRisk "Breyer argument could theoretically apply to chain nodes during active phase, but nodes have no practical means to obtain the pre-image." .
+
+gdpr:T_AutomatedDecision
+    a cfr:Tension ;
+    cfr:tensionLabel "Automated decision-making (Art 22)" ;
+    cfr:standardFraming "Smart contracts make autonomous decisions" ;
+    cfr:architectureResponse "The smart contract validates format and timing. It does not make decisions about data subjects." ;
+    cfr:residualRisk "Low. No profiling, no legal effects on individuals." .
+
+gdpr:T_LegalBasis
+    a cfr:Tension ;
+    cfr:tensionLabel "Legal basis" ;
+    cfr:standardFraming "No clean basis for on-chain personal data" ;
+    cfr:architectureResponse "Active phase: Art 6(1)(c) — legal obligation to maintain compliance records. Post-erasure: no basis needed — data is anonymous." ;
+    cfr:residualRisk "Legal obligation basis must be established per jurisdiction." .
+
+# =============================================================================
+# Cross-regulation references
+# =============================================================================
+
+gdpr:NIS2_ref
+    a cfr:EURegulation ;
+    rdfs:label "NIS2 Directive" ;
+    cfr:officialReference "(EU) 2022/2555" ;
+    rdfs:comment "ISO 27001 + 27701 converge GDPR and NIS2 compliance evidence." .
+@prefix cfr:    <https://lambdasistemi.github.io/cardano-for-regulators/ontology#> .
+@prefix gdpr:   <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#> .
+@prefix bat:    <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#> .
+@prefix gb:     <https://lambdasistemi.github.io/graph-browser/vocab/terms#> .
+@prefix gbk:    <https://lambdasistemi.github.io/graph-browser/vocab/kinds#> .
+@prefix gbg:    <https://lambdasistemi.github.io/graph-browser/vocab/groups#> .
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+
+# =============================================================================
+# Graph-browser display annotations for the CFR ontology.
+# Layers on top of cfr.ttl + instances — does not modify core OWL definitions.
+# =============================================================================
+
+# --- Groups ---
+
+gbg:schema       gb:groupId "schema" .
+gbg:protocol     gb:groupId "protocol" .
+gbg:constraint   gb:groupId "constraint" .
+gbg:gdpr         gb:groupId "gdpr" .
+gbg:battery      gb:groupId "battery" .
+gbg:mechanism    gb:groupId "mechanism" .
+gbg:tension      gb:groupId "tension" .
+
+# =============================================================================
+# Schema parties
+# =============================================================================
+
+cfr:RegulatorRole         a gb:Node, gbk:party ;
+    gb:nodeId "regulator-role" ; gb:group gbg:schema ;
+    rdfs:label "Regulator" ;
+    gb:description "Defines rules. Maintains regulation trie and publishes the smart contract." .
+
+cfr:IdentityProviderRole  a gb:Node, gbk:party ;
+    gb:nodeId "identity-provider-role" ; gb:group gbg:schema ;
+    rdfs:label "Identity Provider" ;
+    gb:description "Maintains the identity trie of verified real-world entities." .
+
+cfr:OperatorRole          a gb:Node, gbk:party ;
+    gb:nodeId "operator-role" ; gb:group gbg:schema ;
+    rdfs:label "Operator" ;
+    gb:description "Manages a process trie. Transparent pipe: collects, verifies off-chain, submits, pays fees." .
+
+cfr:UserRole              a gb:Node, gbk:party ;
+    gb:nodeId "user-role" ; gb:group gbg:schema ;
+    rdfs:label "User" ;
+    gb:description "Acts via signing function. No wallet, no ADA, no blockchain knowledge." .
+
+# =============================================================================
+# On-chain artifacts
+# =============================================================================
+
+cfr:IdentityTrie    a gb:Node, gbk:artifact ;
+    gb:nodeId "identity-trie" ; gb:group gbg:schema ;
+    rdfs:label "Identity Trie" ;
+    gb:description "Attested actor public keys. Maintained by the identity provider." .
+
+cfr:RegulationTrie  a gb:Node, gbk:artifact ;
+    gb:nodeId "regulation-trie" ; gb:group gbg:schema ;
+    rdfs:label "Regulation Trie" ;
+    gb:description "Actor qualifications and operator standing. Maintained by the regulator." .
+
+cfr:ProcessTrie     a gb:Node, gbk:artifact ;
+    gb:nodeId "process-trie" ; gb:group gbg:schema ;
+    rdfs:label "Process Trie" ;
+    gb:description "Items, processes, and state. One per operator. Governed by the smart contract." .
+
+cfr:SmartContract   a gb:Node, gbk:artifact ;
+    gb:nodeId "smart-contract" ; gb:group gbg:schema ;
+    rdfs:label "Smart Contract" ;
+    gb:description "The regulation in executable form. Plutus validator. Reads identity and regulation tries as reference inputs." .
+
+# =============================================================================
+# Schema mechanisms
+# =============================================================================
+
+cfr:Beacon          a gb:Node, gbk:mechanism ;
+    gb:nodeId "beacon" ; gb:group gbg:mechanism ;
+    rdfs:label "Beacon" ;
+    gb:description "Regulator's policy carrier. Forces operator to sample standing and data policy before collecting attestations." .
+
+cfr:SigningFunction a gb:Node, gbk:mechanism ;
+    gb:nodeId "signing-function" ; gb:group gbg:mechanism ;
+    rdfs:label "Signing Function" ;
+    gb:description "Off-chain opaque capability that produces signatures. Hardware SE, phone enclave, server, TEE, or ZK circuit." .
+
+# =============================================================================
+# Protocol patterns
+# =============================================================================
+
+cfr:CommitmentThenSubmit    a gb:Node, gbk:protocol ;
+    gb:nodeId "commitment-then-submit" ; gb:group gbg:protocol ;
+    rdfs:label "Commitment-then-Submit" ;
+    gb:description "Proves an action occurred within a time window. Single-use, slot-bounded." .
+
+cfr:LifecycleStateMachine   a gb:Node, gbk:protocol ;
+    gb:nodeId "lifecycle-state-machine" ; gb:group gbg:protocol ;
+    rdfs:label "Lifecycle State Machine" ;
+    gb:description "Status field in MPT leaf with on-chain validated transitions. No backward transitions." .
+
+cfr:MPTPerOperator          a gb:Node, gbk:protocol ;
+    gb:nodeId "mpt-per-operator" ; gb:group gbg:protocol ;
+    rdfs:label "MPT-per-Operator" ;
+    gb:description "One UTxO per operator, items as leaves. Cost scales with operators not items." .
+
+cfr:DoubleSignature         a gb:Node, gbk:protocol ;
+    gb:nodeId "double-signature" ; gb:group gbg:protocol ;
+    rdfs:label "Double Signature" ;
+    gb:description "Every transition requires process signature (authentication) and actor signature (authorization)." .
+
+cfr:BatonPattern            a gb:Node, gbk:protocol ;
+    gb:nodeId "baton-pattern" ; gb:group gbg:protocol ;
+    rdfs:label "Baton Pattern" ;
+    gb:description "Authorization travels as a baton. Actor A's final submission includes Actor B's pubkey." .
+
+cfr:BeaconGatedAttestation  a gb:Node, gbk:protocol ;
+    gb:nodeId "beacon-gated-attestation" ; gb:group gbg:protocol ;
+    rdfs:label "Beacon-Gated Attestation" ;
+    gb:description "Operator cannot collect attestations without a current beacon carrying standing and data policy." .
+
+cfr:CrossOperatorHandoff    a gb:Node, gbk:protocol ;
+    gb:nodeId "cross-operator-handoff" ; gb:group gbg:protocol ;
+    rdfs:label "Cross-Operator Handoff" ;
+    gb:description "Responsibility transfer. Old leaf read-only, new leaf with back-link to original root." .
+
+cfr:RelayStateMachine       a gb:Node, gbk:protocol ;
+    gb:nodeId "relay-state-machine" ; gb:group gbg:protocol ;
+    rdfs:label "Relay State Machine" ;
+    gb:description "Multiple actors act in sequence. The regulation defines the ordering." .
+
+cfr:RewardDistribution      a gb:Node, gbk:protocol ;
+    gb:nodeId "reward-distribution" ; gb:group gbg:protocol ;
+    rdfs:label "Reward Distribution" ;
+    gb:description "Monotonically increasing reward accumulator in MPT leaf." .
+
+cfr:TieredAccess            a gb:Node, gbk:protocol ;
+    gb:nodeId "tiered-access" ; gb:group gbg:protocol ;
+    rdfs:label "Tiered Access" ;
+    gb:description "On-chain root hash only. Off-chain encrypted layers per access tier." .
+
+cfr:UpstreamVerification    a gb:Node, gbk:protocol ;
+    gb:nodeId "upstream-verification" ; gb:group gbg:protocol ;
+    rdfs:label "Upstream Verification" ;
+    gb:description "One operator's compliance depends on reading another operator's trie." .
+
+# =============================================================================
+# Constraints
+# =============================================================================
+
+cfr:DataCadence        a gb:Node, gbk:constraint ;
+    gb:nodeId "data-cadence" ; gb:group gbg:constraint ;
+    rdfs:label "Data Cadence" ;
+    gb:description "Update rhythm compatible with L1 settlement." .
+
+cfr:SequentialAccess   a gb:Node, gbk:constraint ;
+    gb:nodeId "sequential-access" ; gb:group gbg:constraint ;
+    rdfs:label "Sequential Access" ;
+    gb:description "No concurrent contention on the same data structure." .
+
+cfr:Liveness           a gb:Node, gbk:constraint ;
+    gb:nodeId "liveness" ; gb:group gbg:constraint ;
+    rdfs:label "Liveness" ;
+    gb:description "Deadlines and penalties incentivize participation." .
+
+cfr:FeeAlignment       a gb:Node, gbk:constraint ;
+    gb:nodeId "fee-alignment" ; gb:group gbg:constraint ;
+    rdfs:label "Fee Alignment" ;
+    gb:description "An actor benefits enough to sponsor on-chain activity." .
+
+cfr:IdentityDelegation a gb:Node, gbk:constraint ;
+    gb:nodeId "identity-delegation" ; gb:group gbg:constraint ;
+    rdfs:label "Identity Delegation" ;
+    gb:description "Non-crypto actors participate via cryptographic proxies." .
+
+# =============================================================================
+# Case studies
+# =============================================================================
+
+gdpr:GDPR              a gb:Node, gbk:case-study ;
+    gb:nodeId "gdpr" ; gb:group gbg:gdpr ;
+    rdfs:label "GDPR" ;
+    gb:description "EU 2016/679. Compliance evidence on-chain, personal data off-chain. Process mode." .
+
+bat:BatteryRegulation   a gb:Node, gbk:case-study ;
+    gb:nodeId "battery-regulation" ; gb:group gbg:battery ;
+    rdfs:label "EU Battery Regulation" ;
+    gb:description "EU 2023/1542. Product passport with NFC secure element. Physical mode." .
+
+# =============================================================================
+# GDPR concrete parties
+# =============================================================================
+
+gdpr:SupervisoryAuthority a gb:Node, gbk:gdpr-party ;
+    gb:nodeId "gdpr-sa" ; gb:group gbg:gdpr ;
+    rdfs:label "Supervisory Authority" ;
+    gb:description "National DPA. Maps to Regulator role." .
+
+gdpr:DataController     a gb:Node, gbk:gdpr-party ;
+    gb:nodeId "gdpr-controller" ; gb:group gbg:gdpr ;
+    rdfs:label "Data Controller" ;
+    gb:description "Determines purposes and means of processing. Maps to Operator role." .
+
+gdpr:DataSubject        a gb:Node, gbk:gdpr-party ;
+    gb:nodeId "gdpr-subject" ; gb:group gbg:gdpr ;
+    rdfs:label "Data Subject" ;
+    gb:description "Identified or identifiable natural person. Maps to User role." .
+
+# =============================================================================
+# GDPR key obligations
+# =============================================================================
+
+gdpr:BreachNotification72h a gb:Node, gbk:obligation ;
+    gb:nodeId "gdpr-breach-72h" ; gb:group gbg:gdpr ;
+    rdfs:label "Breach Notification (72h)" ;
+    gb:description "Art 33. Controller notifies SA within 72 hours. Flagship commitment-then-submit use case." .
+
+gdpr:RightsResponse1m   a gb:Node, gbk:obligation ;
+    gb:nodeId "gdpr-rights-1m" ; gb:group gbg:gdpr ;
+    rdfs:label "Rights Response (1 month)" ;
+    gb:description "Art 12-22. Controller responds to data subject rights within 1 month." .
+
+gdpr:ConsentRecord      a gb:Node, gbk:obligation ;
+    gb:nodeId "gdpr-consent" ; gb:group gbg:gdpr ;
+    rdfs:label "Consent Lifecycle" ;
+    gb:description "Art 7. None → Given → Withdrawn. Each transition timestamped on-chain." .
+
+# =============================================================================
+# GDPR tensions
+# =============================================================================
+
+gdpr:T_Erasure          a gb:Node, gbk:tension ;
+    gb:nodeId "tension-erasure" ; gb:group gbg:tension ;
+    rdfs:label "Immutability vs Erasure" ;
+    gb:description "Art 17. Delete off-chain pre-image → on-chain hash becomes anonymous under Recital 26." .
+
+# =============================================================================
+# Bright line phases
+# =============================================================================
+
+cfr:ActivePhase         a gb:Node, gbk:concept ;
+    gb:nodeId "bright-line-active" ; gb:group gbg:gdpr ;
+    rdfs:label "Active Phase" ;
+    gb:description "Pre-image exists. Hash is personal data under Breyer. Lawful under Art 6(1)(c)." .
+
+cfr:PostErasurePhase    a gb:Node, gbk:concept ;
+    gb:nodeId "bright-line-post-erasure" ; gb:group gbg:gdpr ;
+    rdfs:label "Post-Erasure Phase" ;
+    gb:description "Pre-image deleted. Hash is unlinkable — anonymous under Recital 26. Outside GDPR scope." .
+
+# =============================================================================
+# Battery concrete parties
+# =============================================================================
+
+bat:Manufacturer        a gb:Node, gbk:battery-party ;
+    gb:nodeId "bat-manufacturer" ; gb:group gbg:battery ;
+    rdfs:label "Manufacturer" ;
+    gb:description "Primary operator. Manages product passport trie. Pays all fees." .
+
+bat:Consumer            a gb:Node, gbk:battery-party ;
+    gb:nodeId "bat-consumer" ; gb:group gbg:battery ;
+    rdfs:label "Consumer" ;
+    gb:description "Taps NFC to trigger SE050 SoH reading. No wallet needed." .
+
+# =============================================================================
+# Battery key obligations
+# =============================================================================
+
+bat:SoHReading          a gb:Node, gbk:obligation ;
+    gb:nodeId "bat-soh" ; gb:group gbg:battery ;
+    rdfs:label "SoH Reading" ;
+    gb:description "Core obligation. SE050 signs COSE_Sign1 with SoH, cycles, voltage, temperature." .
+
+# =============================================================================
+# Edges (gb:EdgeAssertion)
+# =============================================================================
+
+# Schema edges
+_:e1  a gb:EdgeAssertion ; gb:from cfr:RegulatorRole ;   gb:to cfr:RegulationTrie ;  rdfs:label "maintains" ;
+    gb:description "The regulator maintains the regulation trie with standing and data policy." .
+_:e2  a gb:EdgeAssertion ; gb:from cfr:RegulatorRole ;   gb:to cfr:SmartContract ;   rdfs:label "publishes" ;
+    gb:description "Publishes the regulation as a Plutus validator." .
+_:e3  a gb:EdgeAssertion ; gb:from cfr:IdentityProviderRole ; gb:to cfr:IdentityTrie ; rdfs:label "maintains" ;
+    gb:description "Verifies entities and maintains attested public keys." .
+_:e4  a gb:EdgeAssertion ; gb:from cfr:OperatorRole ;    gb:to cfr:ProcessTrie ;     rdfs:label "manages" ;
+    gb:description "Each operator manages their own process trie." .
+_:e5  a gb:EdgeAssertion ; gb:from cfr:OperatorRole ;    gb:to cfr:SigningFunction ;  rdfs:label "mints" ;
+    gb:description "Generates key pairs, registers on-chain, distributes to users." .
+_:e6  a gb:EdgeAssertion ; gb:from cfr:OperatorRole ;    gb:to cfr:Beacon ;          rdfs:label "produces" ;
+    gb:description "Samples standing and data policy from regulation trie." .
+_:e7  a gb:EdgeAssertion ; gb:from cfr:UserRole ;        gb:to cfr:SigningFunction ;  rdfs:label "uses" ;
+    gb:description "Performs regulated actions via the signing function." .
+_:e8  a gb:EdgeAssertion ; gb:from cfr:UserRole ;        gb:to cfr:Beacon ;          rdfs:label "signs over" ;
+    gb:description "Verifies beacon, encrypts data for recipients, signs over it." .
+_:e9  a gb:EdgeAssertion ; gb:from cfr:SmartContract ;   gb:to cfr:ProcessTrie ;     rdfs:label "governs" ;
+    gb:description "Validates every state transition." .
+_:e10 a gb:EdgeAssertion ; gb:from cfr:SmartContract ;   gb:to cfr:IdentityTrie ;    rdfs:label "reads" ;
+    gb:description "Reference input: checks actor is attested." .
+_:e11 a gb:EdgeAssertion ; gb:from cfr:SmartContract ;   gb:to cfr:RegulationTrie ;  rdfs:label "reads" ;
+    gb:description "Reference input: checks actor is qualified." .
+
+# Beacon protocol edges
+_:e12 a gb:EdgeAssertion ; gb:from cfr:BeaconGatedAttestation ; gb:to cfr:Beacon ; rdfs:label "defines" ;
+    gb:description "The pattern defines how beacons are produced and validated." .
+_:e13 a gb:EdgeAssertion ; gb:from cfr:DoubleSignature ; gb:to cfr:SigningFunction ; rdfs:label "uses" ;
+    gb:description "Process signature comes from the signing function." .
+
+# Case study → pattern edges
+_:e20 a gb:EdgeAssertion ; gb:from gdpr:GDPR ; gb:to cfr:CommitmentThenSubmit ; rdfs:label "uses" ;
+    gb:description "72h breach notification and 1-month rights response." .
+_:e21 a gb:EdgeAssertion ; gb:from gdpr:GDPR ; gb:to cfr:LifecycleStateMachine ; rdfs:label "uses" ;
+    gb:description "Consent lifecycle: None → Given → Withdrawn." .
+_:e22 a gb:EdgeAssertion ; gb:from bat:BatteryRegulation ; gb:to cfr:CommitmentThenSubmit ; rdfs:label "uses" ;
+    gb:description "Authenticated SoH readings via two-transaction protocol." .
+_:e23 a gb:EdgeAssertion ; gb:from bat:BatteryRegulation ; gb:to cfr:RewardDistribution ; rdfs:label "uses" ;
+    gb:description "Incentivises third-party SoH data collection." .
+_:e24 a gb:EdgeAssertion ; gb:from bat:BatteryRegulation ; gb:to cfr:CrossOperatorHandoff ; rdfs:label "uses" ;
+    gb:description "Repurposing: new leaf in new operator's trie with back-link." .
+
+# Party mapping edges
+_:e30 a gb:EdgeAssertion ; gb:from gdpr:SupervisoryAuthority ; gb:to cfr:RegulatorRole ; rdfs:label "maps to" ;
+    gb:description "The SA maps to the regulator role in the schema." .
+_:e31 a gb:EdgeAssertion ; gb:from gdpr:DataController ; gb:to cfr:OperatorRole ; rdfs:label "maps to" ;
+    gb:description "The data controller maps to the operator role." .
+_:e32 a gb:EdgeAssertion ; gb:from gdpr:DataSubject ; gb:to cfr:UserRole ; rdfs:label "maps to" ;
+    gb:description "The data subject maps to the user role." .
+_:e33 a gb:EdgeAssertion ; gb:from bat:Manufacturer ; gb:to cfr:OperatorRole ; rdfs:label "maps to" ;
+    gb:description "The manufacturer maps to the operator role." .
+_:e34 a gb:EdgeAssertion ; gb:from bat:Consumer ; gb:to cfr:UserRole ; rdfs:label "maps to" ;
+    gb:description "The consumer maps to the user role." .
+
+# Obligation → pattern edges
+_:e40 a gb:EdgeAssertion ; gb:from gdpr:BreachNotification72h ; gb:to cfr:CommitmentThenSubmit ; rdfs:label "implemented by" ;
+    gb:description "The 72h deadline is enforced via the commitment protocol." .
+_:e41 a gb:EdgeAssertion ; gb:from gdpr:RightsResponse1m ; gb:to cfr:CommitmentThenSubmit ; rdfs:label "implemented by" ;
+    gb:description "The 1-month deadline is enforced via the commitment protocol." .
+_:e42 a gb:EdgeAssertion ; gb:from gdpr:ConsentRecord ; gb:to cfr:LifecycleStateMachine ; rdfs:label "implemented by" ;
+    gb:description "Consent transitions modelled as a lifecycle state machine." .
+_:e43 a gb:EdgeAssertion ; gb:from bat:SoHReading ; gb:to cfr:CommitmentThenSubmit ; rdfs:label "implemented by" ;
+    gb:description "Two-transaction protocol for authenticated readings." .
+
+# Constraint → pattern edges
+_:e50 a gb:EdgeAssertion ; gb:from cfr:MPTPerOperator ; gb:to cfr:SequentialAccess ; rdfs:label "satisfies" ;
+    gb:description "One writer per trie — no contention by design." .
+_:e51 a gb:EdgeAssertion ; gb:from cfr:MPTPerOperator ; gb:to cfr:DataCadence ; rdfs:label "satisfies" ;
+    gb:description "One transaction per batch regardless of item count." .
+_:e52 a gb:EdgeAssertion ; gb:from cfr:SigningFunction ; gb:to cfr:IdentityDelegation ; rdfs:label "implements" ;
+    gb:description "Cryptographic proxies for non-crypto actors." .
+
+# Missing pattern edges (were orphans)
+_:e53 a gb:EdgeAssertion ; gb:from gdpr:GDPR ; gb:to cfr:TieredAccess ; rdfs:label "uses" ;
+    gb:description "On-chain root hash only. Off-chain encrypted layers per access tier." .
+_:e54 a gb:EdgeAssertion ; gb:from gdpr:GDPR ; gb:to cfr:RelayStateMachine ; rdfs:label "uses" ;
+    gb:description "Rights request follows a relay: subject → controller → response." .
+_:e55 a gb:EdgeAssertion ; gb:from bat:BatteryRegulation ; gb:to cfr:BatonPattern ; rdfs:label "uses" ;
+    gb:description "Ownership baton passes from manufacturer to transporter to consumer." .
+_:e56 a gb:EdgeAssertion ; gb:from cfr:UpstreamVerification ; gb:to cfr:ProcessTrie ; rdfs:label "reads across" ;
+    gb:description "One operator's compliance depends on reading another operator's trie." .
+
+# Missing constraint edges
+_:e57 a gb:EdgeAssertion ; gb:from gdpr:GDPR ; gb:to cfr:FeeAlignment ; rdfs:label "satisfies" ;
+    gb:description "Controllers pay ~50-100 EUR/year vs potential fines of millions." .
+_:e58 a gb:EdgeAssertion ; gb:from gdpr:GDPR ; gb:to cfr:Liveness ; rdfs:label "satisfies" ;
+    gb:description "Up to 4% global turnover. Strongest liveness incentive of any regulation." .
+
+# Bright line edges
+_:e60 a gb:EdgeAssertion ; gb:from cfr:ActivePhase ; gb:to cfr:PostErasurePhase ; rdfs:label "delete pre-image" ;
+    gb:description "Controller deletes off-chain data. Hash transitions from personal data to anonymous." .
+_:e61 a gb:EdgeAssertion ; gb:from gdpr:T_Erasure ; gb:to cfr:PostErasurePhase ; rdfs:label "resolved by" ;
+    gb:description "Pre-image deletion makes the hash unlinkable. Immutability is not a problem." .
+@prefix gb: <https://lambdasistemi.github.io/graph-browser/vocab/terms#> .
+@prefix gbg: <https://lambdasistemi.github.io/graph-browser/vocab/groups#> .
+@prefix gbk: <https://lambdasistemi.github.io/graph-browser/vocab/kinds#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#CommitmentCleared> a gbk:invariant,
+        gb:Node ;
+    rdfs:label "Proved: commitment_cleared_after_submit: After SubmitReading, commit" ;
+    gb:description "commitment_cleared_after_submit: After SubmitReading, commitment = Nothing" ;
+    gb:group gbg:framework ;
+    gb:nodeId "commitmentcleared" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#MPTConsistency> a gbk:invariant,
+        gb:Node ;
+    rdfs:label "Proved: transition_preserves_consistency: two-leaf update preserves " ;
+    gb:description "transition_preserves_consistency: two-leaf update preserves MPT validity" ;
+    gb:group gbg:framework ;
+    gb:nodeId "mptconsistency" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#RewardMonotonicity> a gbk:invariant,
+        gb:Node ;
+    rdfs:label "Proved: credit_increases: reward > 0 → rewardsAccumulated strictly i" ;
+    gb:description "credit_increases: reward > 0 → rewardsAccumulated strictly increases" ;
+    gb:group gbg:framework ;
+    gb:nodeId "rewardmonotonicity" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_BacklinkValid> a gbk:guard,
+        gb:Node ;
+    rdfs:label "Back-link Merkle proof valid against original root" ;
+    gb:description "Back-link Merkle proof valid against original root" ;
+    gb:group gbg:framework ;
+    gb:nodeId "g-backlinkvalid" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_BuyerSig> a gbk:guard,
+        gb:Node ;
+    rdfs:label "Buyer signature present" ;
+    gb:description "Buyer signature present" ;
+    gb:group gbg:framework ;
+    gb:nodeId "g-buyersig" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_CIP68Transfer> a gbk:guard,
+        gb:Node ;
+    rdfs:label "CIP-68 user token moves seller → buyer" ;
+    gb:description "CIP-68 user token moves seller → buyer" ;
+    gb:group gbg:framework ;
+    gb:nodeId "g-cip68transfer" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_COSEValid> a gbk:guard,
+        gb:Node ;
+    rdfs:label "COSE_Sign1 signature valid (Ed25519 or secp256k1)" ;
+    gb:description "COSE_Sign1 signature valid (Ed25519 or secp256k1)" ;
+    gb:group gbg:framework ;
+    gb:nodeId "g-cosevalid" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_CommitmentExists> a gbk:guard,
+        gb:Node ;
+    rdfs:label "commitment ≠ Nothing" ;
+    gb:description "commitment ≠ Nothing" ;
+    gb:group gbg:framework ;
+    gb:nodeId "g-commitmentexists" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_Freshness> a gbk:guard,
+        gb:Node ;
+    rdfs:label "validFrom ≤ current_slot ≤ validUntil" ;
+    gb:description "validFrom ≤ current_slot ≤ validUntil" ;
+    gb:group gbg:framework ;
+    gb:nodeId "g-freshness" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_MPTInsert> a gbk:guard,
+        gb:Node ;
+    rdfs:label "MPT insert proof valid" ;
+    gb:description "MPT insert proof valid" ;
+    gb:group gbg:framework ;
+    gb:nodeId "g-mptinsert" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_MPTTransition> a gbk:guard,
+        gb:Node ;
+    rdfs:label "MPT transition proof valid (two-leaf update)" ;
+    gb:description "MPT transition proof valid (two-leaf update)" ;
+    gb:group gbg:framework ;
+    gb:nodeId "g-mpttransition" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_MetadataNotEmpty> a gbk:guard,
+        gb:Node ;
+    rdfs:label "Metadata ≠ empty" ;
+    gb:description "Metadata ≠ empty" ;
+    gb:group gbg:framework ;
+    gb:nodeId "g-metadatanotempty" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_NewOpIdentity> a gbk:guard,
+        gb:Node ;
+    rdfs:label "New operator key ∈ identity trie" ;
+    gb:description "New operator key ∈ identity trie" ;
+    gb:group gbg:framework ;
+    gb:nodeId "g-newopidentity" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_NewOpQualified> a gbk:guard,
+        gb:Node ;
+    rdfs:label "New operator qualified (regulation trie)" ;
+    gb:description "New operator qualified (regulation trie)" ;
+    gb:group gbg:framework ;
+    gb:nodeId "g-newopqualified" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_NoExistingLeaf> a gbk:guard,
+        gb:Node ;
+    rdfs:label "No existing leaf at hash(itemPubKey)" ;
+    gb:description "No existing leaf at hash(itemPubKey)" ;
+    gb:group gbg:framework ;
+    gb:nodeId "g-noexistingleaf" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_PayloadMatch> a gbk:guard,
+        gb:Node ;
+    rdfs:label "Payload validFrom/validUntil match commitment" ;
+    gb:description "Payload validFrom/validUntil match commitment" ;
+    gb:group gbg:framework ;
+    gb:nodeId "g-payloadmatch" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_ReporterAssigned> a gbk:guard,
+        gb:Node ;
+    rdfs:label "reporter ≠ Nothing" ;
+    gb:description "reporter ≠ Nothing" ;
+    gb:group gbg:framework ;
+    gb:nodeId "g-reporterassigned" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_ReporterKeyMatch> a gbk:guard,
+        gb:Node ;
+    rdfs:label "Reporter key matches assignment" ;
+    gb:description "Reporter key matches assignment" ;
+    gb:group gbg:framework ;
+    gb:nodeId "g-reporterkeymatch" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_ReporterNone> a gbk:guard,
+        gb:Node ;
+    rdfs:label "reporter = Nothing" ;
+    gb:description "reporter = Nothing" ;
+    gb:group gbg:framework ;
+    gb:nodeId "g-reporternone" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_ReporterSig> a gbk:guard,
+        gb:Node ;
+    rdfs:label "Reporter signature present (actor auth)" ;
+    gb:description "Reporter signature present (actor auth)" ;
+    gb:group gbg:framework ;
+    gb:nodeId "g-reportersig" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_SellerSig> a gbk:guard,
+        gb:Node ;
+    rdfs:label "Seller signature present" ;
+    gb:description "Seller signature present" ;
+    gb:group gbg:framework ;
+    gb:nodeId "g-sellersig" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_StandingOK> a gbk:guard,
+        gb:Node ;
+    rdfs:label "Standing ≠ suspended (regulation trie)" ;
+    gb:description "Standing ≠ suspended (regulation trie)" ;
+    gb:group gbg:framework ;
+    gb:nodeId "g-standingok" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_ValidWindow> a gbk:guard,
+        gb:Node ;
+    rdfs:label "validFrom ≤ validUntil, validFrom ≥ lower slot" ;
+    gb:description "validFrom ≤ validUntil, validFrom ≥ lower slot" ;
+    gb:group gbg:framework ;
+    gb:nodeId "g-validwindow" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_CertIssuerQualified> a gbk:guard,
+        gb:Node ;
+    rdfs:label "Cert issuer ∈ regulation trie (qualified body)" ;
+    gb:description "Cert issuer ∈ regulation trie (qualified body)" ;
+    gb:group gbg:framework ;
+    gb:nodeId "g-certissuerqualified" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_CertTokenExists> a gbk:guard,
+        gb:Node ;
+    rdfs:label "Certification token exists and not expired" ;
+    gb:description "Certification token exists and not expired" ;
+    gb:group gbg:framework ;
+    gb:nodeId "g-certtokenexists" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_ConsentGiven> a gbk:guard,
+        gb:Node ;
+    rdfs:label "Consent state = given" ;
+    gb:description "Consent state = given" ;
+    gb:group gbg:framework ;
+    gb:nodeId "g-consentgiven" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_ConsentNotGiven> a gbk:guard,
+        gb:Node ;
+    rdfs:label "Consent state ≠ given (or absent)" ;
+    gb:description "Consent state ≠ given (or absent)" ;
+    gb:group gbg:framework ;
+    gb:nodeId "g-consentnotgiven" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_NotAlreadyExtended> a gbk:guard,
+        gb:Node ;
+    rdfs:label "Rights deadline not already extended" ;
+    gb:description "Rights deadline not already extended" ;
+    gb:group gbg:framework ;
+    gb:nodeId "g-notalreadyextended" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_PurposeHashNotEmpty> a gbk:guard,
+        gb:Node ;
+    rdfs:label "Purpose hash ≠ empty" ;
+    gb:description "Purpose hash ≠ empty" ;
+    gb:group gbg:framework ;
+    gb:nodeId "g-purposehashnotempty" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_WithinOriginalDeadline> a gbk:guard,
+        gb:Node ;
+    rdfs:label "Current slot ≤ original deadline" ;
+    gb:description "Current slot ≤ original deadline" ;
+    gb:group gbg:framework ;
+    gb:nodeId "g-withinoriginaldeadline" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#CA_DataCadence> a gbk:assessment,
+        gb:Node ;
+    rdfs:label "Data Cadence: Pass" ;
+    gb:description "SoH readings monthly at most. Lifecycle events are rare." ;
+    gb:group gbg:eu-battery-regulation ;
+    gb:nodeId "ca-datacadence" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#CA_Fee> a gbk:assessment,
+        gb:Node ;
+    rdfs:label "Fee Alignment: Pass" ;
+    gb:description "Manufacturers pay ~$0.10-0.15 per reading. Compliance value far exceeds cost." ;
+    gb:group gbg:eu-battery-regulation ;
+    gb:nodeId "ca-fee" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#CA_Identity> a gbk:assessment,
+        gb:Node ;
+    rdfs:label "Identity Delegation: Pass" ;
+    gb:description "NFC secure element (SE050) signs readings. Consumer taps phone, no wallet." ;
+    gb:group gbg:eu-battery-regulation ;
+    gb:nodeId "ca-identity" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#CA_Liveness> a gbk:assessment,
+        gb:Node ;
+    rdfs:label "Liveness: Pass" ;
+    gb:description "Penalties are set by Member States under Art. 93. Slot-based timeouts for readings remain enforceable at protocol level." ;
+    gb:group gbg:eu-battery-regulation ;
+    gb:nodeId "ca-liveness" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#CA_Sequential> a gbk:assessment,
+        gb:Node ;
+    rdfs:label "Sequential Access: Pass" ;
+    gb:description "One manufacturer per trie. Relay on repurposing." ;
+    gb:group gbg:eu-battery-regulation ;
+    gb:nodeId "ca-sequential" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_FreshReading> a gbk:guard,
+        gb:Node ;
+    rdfs:label "Fresh COSE_Sign1 BMS reading valid" ;
+    gb:description "Fresh COSE_Sign1 BMS reading valid" ;
+    gb:group gbg:framework ;
+    gb:nodeId "g-freshreading" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_RewardPositive> a gbk:guard,
+        gb:Node ;
+    rdfs:label "nextReward > 0" ;
+    gb:description "nextReward > 0" ;
+    gb:group gbg:framework ;
+    gb:nodeId "g-rewardpositive" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#TR_MfrRegulator> a gbk:trust,
+        gb:Node ;
+    rdfs:label "Medium: Selective reporting" ;
+    gb:description "Risk: Selective reporting. Mitigation: Completeness proofs via MPT" ;
+    gb:group gbg:eu-battery-regulation ;
+    gb:nodeId "tr-mfrregulator" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#CA_DataCadence> a gbk:assessment,
+        gb:Node ;
+    rdfs:label "Data Cadence: Pass" ;
+    gb:description "Consent events, breach notifications (72h), rights requests (1 month), DPIAs — all event-driven or periodic. No real-time streaming." ;
+    gb:group gbg:gdpr ;
+    gb:nodeId "ca-datacadence" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#CA_Fee> a gbk:assessment,
+        gb:Node ;
+    rdfs:label "Fee Alignment: Pass" ;
+    gb:description "Controllers pay. Compliance cost (~€0.10-0.15 per record) negligible vs fine exposure." ;
+    gb:group gbg:gdpr ;
+    gb:nodeId "ca-fee" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#CA_Identity> a gbk:assessment,
+        gb:Node ;
+    rdfs:label "Identity Delegation: Pass" ;
+    gb:description "Process mode. Data subjects exercise rights through digital channels. The signing function maps to the authenticated request." ;
+    gb:group gbg:gdpr ;
+    gb:nodeId "ca-identity" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#CA_Liveness> a gbk:assessment,
+        gb:Node ;
+    rdfs:label "Liveness: Pass" ;
+    gb:description "Up to €20M / 4% global turnover. 72h breach deadline. 1-month rights response. Strongest penalties of any regulation analysed." ;
+    gb:group gbg:gdpr ;
+    gb:nodeId "ca-liveness" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#CA_Sequential> a gbk:assessment,
+        gb:Node ;
+    rdfs:label "Sequential Access: Pass" ;
+    gb:description "Single controller per trie. Rights requests follow a relay: subject → controller → response." ;
+    gb:group gbg:gdpr ;
+    gb:nodeId "ca-sequential" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_NoExistingCommitment> a gbk:guard,
+        gb:Node ;
+    rdfs:label "No existing commitment on leaf" ;
+    gb:description "No existing commitment on leaf" ;
+    gb:group gbg:framework ;
+    gb:nodeId "g-noexistingcommitment" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_StandingNotSuspended> a gbk:guard,
+        gb:Node ;
+    rdfs:label "Controller standing ≠ suspended (regulation trie)" ;
+    gb:description "Controller standing ≠ suspended (regulation trie)" ;
+    gb:group gbg:framework ;
+    gb:nodeId "g-standingnotsuspended" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#TR_ControllerProcessor> a gbk:trust,
+        gb:Node ;
+    rdfs:label "Medium: Processor claims it followed instructions" ;
+    gb:description "Risk: Processor claims it followed instructions. Mitigation: On-chain agreement hash, activity proofs" ;
+    gb:group gbg:gdpr ;
+    gb:nodeId "tr-controllerprocessor" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#TR_ConsumerConsumer> a gbk:trust,
+        gb:Node ;
+    rdfs:label "None: Counterfeit resale" ;
+    gb:description "Risk: Counterfeit resale. Mitigation: On-chain provenance" ;
+    gb:group gbg:eu-battery-regulation ;
+    gb:nodeId "tr-consumerconsumer" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#TR_MfrConsumer> a gbk:trust,
+        gb:Node ;
+    rdfs:label "Low: SoH manipulation" ;
+    gb:description "Risk: SoH manipulation. Mitigation: Immutable on-chain history" ;
+    gb:group gbg:eu-battery-regulation ;
+    gb:nodeId "tr-mfrconsumer" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#TR_SensorChain> a gbk:trust,
+        gb:Node ;
+    rdfs:label "Medium: Analog tampering" ;
+    gb:description "Risk: Analog tampering. Mitigation: Hardware SE — tampering is expensive, destructive" ;
+    gb:group gbg:eu-battery-regulation ;
+    gb:nodeId "tr-sensorchain" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_CommitmentExists> a gbk:guard,
+        gb:Node ;
+    rdfs:label "Commitment exists on leaf" ;
+    gb:description "Commitment exists on leaf" ;
+    gb:group gbg:framework ;
+    gb:nodeId "g-commitmentexists" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_ProcessSig> a gbk:guard,
+        gb:Node ;
+    rdfs:label "Process signature present (data subject signed)" ;
+    gb:description "Process signature present (data subject signed)" ;
+    gb:group gbg:framework ;
+    gb:nodeId "g-processsig" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#TR_ControllerController> a gbk:trust,
+        gb:Node ;
+    rdfs:label "None: Portability disputes — who had data when" ;
+    gb:description "Risk: Portability disputes — who had data when. Mitigation: Transfer records with timestamps" ;
+    gb:group gbg:gdpr ;
+    gb:nodeId "tr-controllercontroller" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#TR_ControllerSA> a gbk:trust,
+        gb:Node ;
+    rdfs:label "Medium: Controller backdates breach notification" ;
+    gb:description "Risk: Controller backdates breach notification. Mitigation: Commitment proves on-chain ordering and submission slot once the controller commits" ;
+    gb:group gbg:gdpr ;
+    gb:nodeId "tr-controllersa" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#TR_ControllerSubject> a gbk:trust,
+        gb:Node ;
+    rdfs:label "Low: Controller claims consent existed, subject denies" ;
+    gb:description "Risk: Controller claims consent existed, subject denies. Mitigation: Immutable timestamped consent hash" ;
+    gb:group gbg:gdpr ;
+    gb:nodeId "tr-controllersubject" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#TR_SAController> a gbk:trust,
+        gb:Node ;
+    rdfs:label "Medium: Controller presents selective compliance evidence" ;
+    gb:description "Risk: Controller presents selective compliance evidence. Mitigation: Completeness via MPT — all records in trie" ;
+    gb:group gbg:gdpr ;
+    gb:nodeId "tr-sacontroller" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#TR_SubjectController> a gbk:trust,
+        gb:Node ;
+    rdfs:label "Low: Controller ignores rights request" ;
+    gb:description "Risk: Controller ignores rights request. Mitigation: Commitment-then-submit proves response timeline" ;
+    gb:group gbg:gdpr ;
+    gb:nodeId "tr-subjectcontroller" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_CommitmentNone> a gbk:guard,
+        gb:Node ;
+    rdfs:label "commitment = Nothing" ;
+    gb:description "commitment = Nothing" ;
+    gb:group gbg:framework ;
+    gb:nodeId "g-commitmentnone" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_MPTUpdate> a gbk:guard,
+        gb:Node ;
+    rdfs:label "MPT update proof valid" ;
+    gb:description "MPT update proof valid" ;
+    gb:group gbg:framework ;
+    gb:nodeId "g-mptupdate" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_MfrIdentity> a gbk:guard,
+        gb:Node ;
+    rdfs:label "Manufacturer key ∈ identity trie" ;
+    gb:description "Manufacturer key ∈ identity trie" ;
+    gb:group gbg:framework ;
+    gb:nodeId "g-mfridentity" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_MfrSig> a gbk:guard,
+        gb:Node ;
+    rdfs:label "✓ Manufacturer signature present" ;
+    gb:description "Manufacturer signature present" ;
+    gb:group gbg:framework ;
+    gb:nodeId "g-mfrsig" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_HashNotEmpty> a gbk:guard,
+        gb:Node ;
+    rdfs:label "Hash ≠ empty" ;
+    gb:description "Hash ≠ empty" ;
+    gb:group gbg:framework ;
+    gb:nodeId "g-hashnotempty" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_IdentityTrie> a gbk:guard,
+        gb:Node ;
+    rdfs:label "Controller key ∈ identity trie" ;
+    gb:description "Controller key ∈ identity trie" ;
+    gb:group gbg:framework ;
+    gb:nodeId "g-identitytrie" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#RecordDPIA> a gbk:action,
+        gb:Node ;
+    rdfs:label "RecordDPIA" ;
+    gb:description "RecordDPIA" ;
+    gb:group gbg:gdpr ;
+    gb:nodeId "recorddpia" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#ReferenceCertification> a gbk:action,
+        gb:Node ;
+    rdfs:label "ReferenceCertification" ;
+    gb:description "ReferenceCertification" ;
+    gb:group gbg:gdpr ;
+    gb:nodeId "referencecertification" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#SubmitBreachNotification> a gbk:action,
+        gb:Node ;
+    rdfs:label "SubmitBreachNotification" ;
+    gb:description "SubmitBreachNotification" ;
+    gb:group gbg:gdpr ;
+    gb:nodeId "submitbreachnotification" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#SubmitRightsResponse> a gbk:action,
+        gb:Node ;
+    rdfs:label "SubmitRightsResponse" ;
+    gb:description "SubmitRightsResponse" ;
+    gb:group gbg:gdpr ;
+    gb:nodeId "submitrightsresponse" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#WithdrawConsent> a gbk:action,
+        gb:Node ;
+    rdfs:label "WithdrawConsent" ;
+    gb:description "WithdrawConsent" ;
+    gb:group gbg:gdpr ;
+    gb:nodeId "withdrawconsent" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#AssignReporter> a gbk:action,
+        gb:Node ;
+    rdfs:label "AssignReporter" ;
+    gb:description "AssignReporter" ;
+    gb:group gbg:eu-battery-regulation ;
+    gb:nodeId "assignreporter" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#ReassignReporter> a gbk:action,
+        gb:Node ;
+    rdfs:label "ReassignReporter" ;
+    gb:description "ReassignReporter" ;
+    gb:group gbg:eu-battery-regulation ;
+    gb:nodeId "reassignreporter" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#CommitBreach> a gbk:action,
+        gb:Node ;
+    rdfs:label "CommitBreach" ;
+    gb:description "CommitBreach" ;
+    gb:group gbg:gdpr ;
+    gb:nodeId "commitbreach" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#CommitRightsRequest> a gbk:action,
+        gb:Node ;
+    rdfs:label "CommitRightsRequest" ;
+    gb:description "CommitRightsRequest" ;
+    gb:group gbg:gdpr ;
+    gb:nodeId "commitrightsrequest" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#UpdateProcessingRecord> a gbk:action,
+        gb:Node ;
+    rdfs:label "UpdateProcessingRecord" ;
+    gb:description "UpdateProcessingRecord" ;
+    gb:group gbg:gdpr ;
+    gb:nodeId "updateprocessingrecord" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#CreateCommitment> a gbk:action,
+        gb:Node ;
+    rdfs:label "CreateCommitment" ;
+    gb:description "CreateCommitment" ;
+    gb:group gbg:eu-battery-regulation ;
+    gb:nodeId "createcommitment" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#RegisterItem> a gbk:action,
+        gb:Node ;
+    rdfs:label "RegisterItem" ;
+    gb:description "RegisterItem" ;
+    gb:group gbg:eu-battery-regulation ;
+    gb:nodeId "registeritem" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#Repurpose> a gbk:action,
+        gb:Node ;
+    rdfs:label "Repurpose" ;
+    gb:description "Repurpose" ;
+    gb:group gbg:eu-battery-regulation ;
+    gb:nodeId "repurpose" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#TransferOwnership> a gbk:action,
+        gb:Node ;
+    rdfs:label "TransferOwnership" ;
+    gb:description "TransferOwnership" ;
+    gb:group gbg:eu-battery-regulation ;
+    gb:nodeId "transferownership" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#ExtendRightsDeadline> a gbk:action,
+        gb:Node ;
+    rdfs:label "ExtendRightsDeadline" ;
+    gb:description "ExtendRightsDeadline" ;
+    gb:group gbg:gdpr ;
+    gb:nodeId "extendrightsdeadline" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#RecordConsent> a gbk:action,
+        gb:Node ;
+    rdfs:label "RecordConsent" ;
+    gb:description "RecordConsent" ;
+    gb:group gbg:gdpr ;
+    gb:nodeId "recordconsent" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#SubmitReading> a gbk:action,
+        gb:Node ;
+    rdfs:label "SubmitReading" ;
+    gb:description "Core transaction. Two-leaf atomic update (item + reporter)." ;
+    gb:group gbg:eu-battery-regulation ;
+    gb:nodeId "submitreading" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_ControllerSig> a gbk:guard,
+        gb:Node ;
+    rdfs:label "✓ Controller signature present" ;
+    gb:description "Controller signature present" ;
+    gb:group gbg:framework ;
+    gb:nodeId "g-controllersig" .
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_MPTProof> a gbk:guard,
+        gb:Node ;
+    rdfs:label "✓ MPT root hash consistent" ;
+    gb:description "MPT root hash consistent" ;
+    gb:group gbg:framework ;
+    gb:nodeId "g-mptproof" .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "Pass" ;
+    gb:description "SoH readings monthly at most. Lifecycle events are rare." ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#CA_DataCadence> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology#DataCadence> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "Pass" ;
+    gb:description "One manufacturer per trie. Relay on repurposing." ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#CA_Sequential> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology#SequentialAccess> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "Pass" ;
+    gb:description "Penalties are set by Member States under Art. 93. Slot-based timeouts for readings remain enforceable at protocol level." ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#CA_Liveness> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology#Liveness> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "Pass" ;
+    gb:description "Manufacturers pay ~$0.10-0.15 per reading. Compliance value far exceeds cost." ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#CA_Fee> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology#FeeAlignment> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "Pass" ;
+    gb:description "NFC secure element (SE050) signs readings. Consumer taps phone, no wallet." ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#CA_Identity> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology#IdentityDelegation> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "Pass" ;
+    gb:description "Consent events, breach notifications (72h), rights requests (1 month), DPIAs — all event-driven or periodic. No real-time streaming." ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#CA_DataCadence> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology#DataCadence> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "Pass" ;
+    gb:description "Single controller per trie. Rights requests follow a relay: subject → controller → response." ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#CA_Sequential> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology#SequentialAccess> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "Pass" ;
+    gb:description "Up to €20M / 4% global turnover. 72h breach deadline. 1-month rights response. Strongest penalties of any regulation analysed." ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#CA_Liveness> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology#Liveness> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "Pass" ;
+    gb:description "Controllers pay. Compliance cost (~€0.10-0.15 per record) negligible vs fine exposure." ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#CA_Fee> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology#FeeAlignment> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "Pass" ;
+    gb:description "Process mode. Data subjects exercise rights through digital channels. The signing function maps to the authenticated request." ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#CA_Identity> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology#IdentityDelegation> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "trust risk" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#Manufacturer> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#TR_MfrConsumer> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "affects" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#TR_MfrConsumer> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#Consumer> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "trust risk" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#Manufacturer> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#TR_MfrRegulator> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "trust risk" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#Consumer> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#TR_ConsumerConsumer> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "affects" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#TR_ConsumerConsumer> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#Consumer> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "trust risk" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#Consumer> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#TR_SensorChain> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "affects" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#TR_SensorChain> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#Consumer> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "trust risk" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#DataController> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#TR_ControllerSubject> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "affects" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#TR_ControllerSubject> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#DataSubject> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "trust risk" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#DataController> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#TR_ControllerSA> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "affects" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#TR_ControllerSA> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#SupervisoryAuthority> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "trust risk" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#DataController> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#TR_ControllerProcessor> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "trust risk" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#DataSubject> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#TR_SubjectController> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "affects" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#TR_SubjectController> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#DataController> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "trust risk" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#SupervisoryAuthority> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#TR_SAController> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "affects" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#TR_SAController> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#DataController> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "trust risk" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#DataController> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#TR_ControllerController> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "affects" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#TR_ControllerController> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#DataController> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#RegisterItem> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_MfrIdentity> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#RegisterItem> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_StandingOK> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#RegisterItem> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_NoExistingLeaf> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#RegisterItem> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_MetadataNotEmpty> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#RegisterItem> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_MfrSig> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#RegisterItem> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_MPTInsert> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#AssignReporter> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_MfrIdentity> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#AssignReporter> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_ReporterNone> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#AssignReporter> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_RewardPositive> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#AssignReporter> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_MfrSig> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#AssignReporter> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_MPTUpdate> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#ReassignReporter> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_MfrIdentity> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#ReassignReporter> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_CommitmentNone> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#ReassignReporter> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_RewardPositive> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#ReassignReporter> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_MfrSig> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#ReassignReporter> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_MPTUpdate> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#CreateCommitment> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_MfrIdentity> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#CreateCommitment> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_ReporterAssigned> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#CreateCommitment> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_CommitmentNone> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#CreateCommitment> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_ValidWindow> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#CreateCommitment> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_MfrSig> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#CreateCommitment> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_MPTUpdate> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#SubmitReading> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_CommitmentExists> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#SubmitReading> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_COSEValid> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#SubmitReading> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_PayloadMatch> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#SubmitReading> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_Freshness> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#SubmitReading> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_ReporterKeyMatch> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#SubmitReading> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_ReporterSig> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#SubmitReading> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_MPTTransition> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#TransferOwnership> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_SellerSig> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#TransferOwnership> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_BuyerSig> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#TransferOwnership> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_FreshReading> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#TransferOwnership> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_CIP68Transfer> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#TransferOwnership> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_CommitmentNone> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#TransferOwnership> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_MPTUpdate> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#Repurpose> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_MfrSig> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#Repurpose> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_NewOpIdentity> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#Repurpose> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_NewOpQualified> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#Repurpose> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_FreshReading> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#Repurpose> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_BacklinkValid> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#Repurpose> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#G_CommitmentNone> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#CommitBreach> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_IdentityTrie> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#CommitBreach> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_StandingNotSuspended> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#CommitBreach> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_NoExistingCommitment> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#CommitBreach> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_ControllerSig> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#CommitBreach> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_MPTProof> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#SubmitBreachNotification> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_CommitmentExists> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#SubmitBreachNotification> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_HashNotEmpty> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#SubmitBreachNotification> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_ControllerSig> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#SubmitBreachNotification> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_MPTProof> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#CommitRightsRequest> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_IdentityTrie> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#CommitRightsRequest> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_NoExistingCommitment> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#CommitRightsRequest> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_ProcessSig> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#CommitRightsRequest> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_ControllerSig> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#CommitRightsRequest> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_MPTProof> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#SubmitRightsResponse> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_CommitmentExists> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#SubmitRightsResponse> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_HashNotEmpty> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#SubmitRightsResponse> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_ControllerSig> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#SubmitRightsResponse> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_MPTProof> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#ExtendRightsDeadline> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_CommitmentExists> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#ExtendRightsDeadline> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_NotAlreadyExtended> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#ExtendRightsDeadline> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_WithinOriginalDeadline> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#ExtendRightsDeadline> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_HashNotEmpty> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#ExtendRightsDeadline> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_ControllerSig> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#ExtendRightsDeadline> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_MPTProof> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#RecordConsent> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_IdentityTrie> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#RecordConsent> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_ProcessSig> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#RecordConsent> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_PurposeHashNotEmpty> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#RecordConsent> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_ConsentNotGiven> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#RecordConsent> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_ControllerSig> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#RecordConsent> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_MPTProof> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#WithdrawConsent> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_ConsentGiven> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#WithdrawConsent> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_ProcessSig> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#WithdrawConsent> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_ControllerSig> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#WithdrawConsent> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_MPTProof> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#UpdateProcessingRecord> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_IdentityTrie> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#UpdateProcessingRecord> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_StandingNotSuspended> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#UpdateProcessingRecord> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_HashNotEmpty> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#UpdateProcessingRecord> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_ControllerSig> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#UpdateProcessingRecord> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_MPTProof> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#ReferenceCertification> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_CertTokenExists> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#ReferenceCertification> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_CertIssuerQualified> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#ReferenceCertification> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_ControllerSig> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#ReferenceCertification> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_MPTProof> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#RecordDPIA> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_IdentityTrie> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#RecordDPIA> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_HashNotEmpty> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#RecordDPIA> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_ControllerSig> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "checks" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#RecordDPIA> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#G_MPTProof> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "has action" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#BatteryRegulation> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#RegisterItem> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "has action" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#BatteryRegulation> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#AssignReporter> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "has action" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#BatteryRegulation> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#ReassignReporter> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "has action" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#BatteryRegulation> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#CreateCommitment> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "has action" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#BatteryRegulation> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#SubmitReading> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "has action" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#BatteryRegulation> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#TransferOwnership> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "has action" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#BatteryRegulation> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#Repurpose> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "assessed" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#BatteryRegulation> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#CA_DataCadence> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "assessed" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#BatteryRegulation> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#CA_Sequential> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "assessed" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#BatteryRegulation> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#CA_Liveness> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "assessed" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#BatteryRegulation> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#CA_Fee> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "assessed" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#BatteryRegulation> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#CA_Identity> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "trust model" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#BatteryRegulation> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#TR_MfrConsumer> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "trust model" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#BatteryRegulation> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#TR_MfrRegulator> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "trust model" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#BatteryRegulation> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#TR_ConsumerConsumer> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "trust model" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#BatteryRegulation> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#TR_SensorChain> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "has action" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#GDPR> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#CommitBreach> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "has action" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#GDPR> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#SubmitBreachNotification> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "has action" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#GDPR> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#CommitRightsRequest> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "has action" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#GDPR> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#SubmitRightsResponse> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "has action" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#GDPR> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#ExtendRightsDeadline> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "has action" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#GDPR> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#RecordConsent> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "has action" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#GDPR> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#WithdrawConsent> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "has action" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#GDPR> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#UpdateProcessingRecord> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "has action" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#GDPR> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#ReferenceCertification> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "has action" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#GDPR> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#RecordDPIA> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "assessed" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#GDPR> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#CA_DataCadence> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "assessed" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#GDPR> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#CA_Sequential> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "assessed" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#GDPR> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#CA_Liveness> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "assessed" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#GDPR> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#CA_Fee> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "assessed" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#GDPR> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#CA_Identity> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "trust model" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#GDPR> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#TR_ControllerSubject> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "trust model" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#GDPR> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#TR_ControllerSA> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "trust model" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#GDPR> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#TR_ControllerProcessor> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "trust model" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#GDPR> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#TR_SubjectController> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "trust model" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#GDPR> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#TR_SAController> .
+
+[] a gb:EdgeAssertion ;
+    rdfs:label "trust model" ;
+    gb:from <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#GDPR> ;
+    gb:to <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#TR_ControllerController> .
+

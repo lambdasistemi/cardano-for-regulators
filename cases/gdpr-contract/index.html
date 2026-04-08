@@ -1,0 +1,1959 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Framework for analyzing multi-party regulations and mapping them to Cardano compliance infrastructure">
+      
+      
+      
+        <link rel="canonical" href="https://lambdasistemi.github.io/cardano-for-regulators/cases/gdpr-contract/">
+      
+      
+        <link rel="prev" href="../gdpr/">
+      
+      
+        <link rel="next" href="../../generated/ontology/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>GDPR Smart Contract - Cardano for Regulators</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#gdpr-smart-contract" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Cardano for Regulators" class="md-header__button md-logo" aria-label="Cardano for Regulators" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Cardano for Regulators
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              GDPR Smart Contract
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/lambdasistemi/cardano-for-regulators" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    lambdasistemi/cardano-for-regulators
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Cardano for Regulators" class="md-nav__button md-logo" aria-label="Cardano for Regulators" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Cardano for Regulators
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/lambdasistemi/cardano-for-regulators" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    lambdasistemi/cardano-for-regulators
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../graph/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ontology Graph
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../thesis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Thesis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Framework
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Framework
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../framework/schema/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Regulator Schema
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../framework/constraints/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Five Constraints
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../framework/methodology/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Analysis Methodology
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../framework/patterns/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture Patterns
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Case Studies
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Case Studies
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../battery-regulation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EU Battery Regulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../battery-contract/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Battery Smart Contract
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gdpr/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GDPR
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GDPR Smart Contract
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GDPR Smart Contract
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-utxo-landscape" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The UTxO landscape
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#redeemer-actions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Redeemer actions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#utxo-state-transitions-per-action" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        UTxO state transitions per action
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="UTxO state transitions per action">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#commitbreach" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CommitBreach
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#submitbreachnotification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SubmitBreachNotification
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#commitrightsrequest" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CommitRightsRequest
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#submitrightsresponse" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SubmitRightsResponse
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#extendrightsdeadline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ExtendRightsDeadline
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recordconsent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RecordConsent
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#withdrawconsent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        WithdrawConsent
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#updateprocessingrecord" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        UpdateProcessingRecord
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#referencecertification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ReferenceCertification
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recorddpia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RecordDPIA
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#validator-guard-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Validator guard table
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lifecycle-state-machines" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lifecycle state machines
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Lifecycle state machines">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#breach-notification-lifecycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Breach notification lifecycle
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rights-request-lifecycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rights request lifecycle
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#consent-lifecycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Consent lifecycle
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#certification-lifecycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Certification lifecycle
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#processing-record-lifecycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Processing record lifecycle
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#composite-view-a-controllers-compliance-trie" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Composite view: a controller's compliance trie
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-full-transaction-breach-notification-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The full transaction: breach notification example
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sources
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ontology
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Ontology
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generated/ontology/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generated/gdpr/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GDPR
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generated/eu-battery-regulation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EU Battery Regulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="gdpr-smart-contract">GDPR Smart Contract</h1>
+<p>Visual specification of the Plutus validator that governs a data controller's
+compliance trie. Three complementary diagram types: UTxO state transitions
+(what the chain sees), the validator guard table (what the contract checks),
+and lifecycle state machines (how compliance records evolve).</p>
+<h2 id="the-utxo-landscape">The UTxO landscape</h2>
+<p>The validator governs one UTxO — the controller's compliance trie root. It
+reads two reference inputs: the identity trie (attested actor keys) and the
+regulation trie (controller standing, certification body qualifications).</p>
+<pre class="mermaid"><code>graph LR
+    subgraph Reference Inputs
+        ID_UTxO["Identity UTxO&lt;br/&gt;&lt;b&gt;identity trie root&lt;/b&gt;&lt;br/&gt;&lt;i&gt;attested actor keys&lt;/i&gt;"]
+        REG_UTxO["Regulation UTxO&lt;br/&gt;&lt;b&gt;regulation trie root&lt;/b&gt;&lt;br/&gt;&lt;i&gt;controller standing&lt;br/&gt;cert body qualifications&lt;/i&gt;"]
+    end
+
+    subgraph Spent + Produced
+        TRIE_IN["Compliance UTxO&lt;br/&gt;&lt;b&gt;root hash₁&lt;/b&gt;&lt;br/&gt;&lt;i&gt;datum: trie state&lt;/i&gt;"]
+        TX{{"Transaction&lt;br/&gt;&lt;i&gt;redeemer action&lt;/i&gt;"}}
+        TRIE_OUT["Compliance UTxO'&lt;br/&gt;&lt;b&gt;root hash₂&lt;/b&gt;&lt;br/&gt;&lt;i&gt;datum: trie state'&lt;/i&gt;"]
+    end
+
+    TRIE_IN --&gt;|spent| TX
+    TX --&gt;|produced| TRIE_OUT
+    ID_UTxO -.-&gt;|reference| TX
+    REG_UTxO -.-&gt;|reference| TX
+
+    subgraph Signatures Required
+        SIG_PROC["Process signature&lt;br/&gt;&lt;i&gt;signing function&lt;/i&gt;"]
+        SIG_ACTOR["Actor signature&lt;br/&gt;&lt;i&gt;baton holder&lt;/i&gt;"]
+    end
+
+    SIG_PROC -.-&gt; TX
+    SIG_ACTOR -.-&gt; TX</code></pre>
+<p>Every transaction follows this shape. What changes between redeemer actions
+is which guards the validator checks, what the datum transformation must
+look like, and which signatures are required.</p>
+<h2 id="redeemer-actions">Redeemer actions</h2>
+<p>The contract recognises ten redeemer actions, grouped by GDPR obligation.</p>
+<pre class="mermaid"><code>graph TB
+    subgraph "Breach Notification (Art 33–34)"
+        R1["CommitBreach"]
+        R2["SubmitBreachNotification"]
+    end
+
+    subgraph "Data Subject Rights (Art 12–22)"
+        R3["CommitRightsRequest"]
+        R4["SubmitRightsResponse"]
+        R5["ExtendRightsDeadline"]
+    end
+
+    subgraph "Consent (Art 7)"
+        R6["RecordConsent"]
+        R7["WithdrawConsent"]
+    end
+
+    subgraph "Processing Records (Art 30)"
+        R8["UpdateProcessingRecord"]
+    end
+
+    subgraph "Certification (Art 42)"
+        R9["ReferenceCertification"]
+    end
+
+    subgraph "Impact Assessment (Art 35)"
+        R10["RecordDPIA"]
+    end</code></pre>
+<h2 id="utxo-state-transitions-per-action">UTxO state transitions per action</h2>
+<h3 id="commitbreach">CommitBreach</h3>
+<p>The controller detects a breach and anchors the detection time on-chain.
+This is the first half of the 72-hour protocol.</p>
+<pre class="mermaid"><code>graph LR
+    subgraph Input
+        IN["Compliance UTxO&lt;br/&gt;&lt;b&gt;datum:&lt;/b&gt;&lt;br/&gt;breach_commitment: None"]
+    end
+
+    subgraph Transaction
+        TX{{"CommitBreach&lt;br/&gt;&lt;br/&gt;redeemer:&lt;br/&gt;leaf_key, breach_category"}}
+    end
+
+    subgraph Output
+        OUT["Compliance UTxO'&lt;br/&gt;&lt;b&gt;datum:&lt;/b&gt;&lt;br/&gt;breach_commitment:&lt;br/&gt;  commit_slot: current_slot&lt;br/&gt;  deadline: current_slot + 72h&lt;br/&gt;  category: breach_category"]
+    end
+
+    IN --&gt; TX --&gt; OUT
+
+    subgraph Guards
+        G1["controller key ∈ identity trie"]
+        G2["controller standing ≠ suspended&lt;br/&gt;(regulation trie)"]
+        G3["leaf has no existing&lt;br/&gt;breach commitment"]
+        G4["controller signature present"]
+    end
+
+    G1 -.-&gt; TX
+    G2 -.-&gt; TX
+    G3 -.-&gt; TX
+    G4 -.-&gt; TX</code></pre>
+<h3 id="submitbreachnotification">SubmitBreachNotification</h3>
+<p>The controller submits the notification hash, clearing the commitment. The
+chain records how many slots elapsed between commitment and submission.</p>
+<pre class="mermaid"><code>graph LR
+    subgraph Input
+        IN["Compliance UTxO&lt;br/&gt;&lt;b&gt;datum:&lt;/b&gt;&lt;br/&gt;breach_commitment:&lt;br/&gt;  commit_slot: S₁&lt;br/&gt;  deadline: S₁ + 72h&lt;br/&gt;  category: C"]
+    end
+
+    subgraph Transaction
+        TX{{"SubmitBreachNotification&lt;br/&gt;&lt;br/&gt;redeemer:&lt;br/&gt;leaf_key, notification_hash"}}
+    end
+
+    subgraph Output
+        OUT["Compliance UTxO'&lt;br/&gt;&lt;b&gt;datum:&lt;/b&gt;&lt;br/&gt;breach_commitment: None&lt;br/&gt;breach_record:&lt;br/&gt;  commit_slot: S₁&lt;br/&gt;  submit_slot: current_slot&lt;br/&gt;  notification_hash: H&lt;br/&gt;  timely: current_slot ≤ S₁ + 72h"]
+    end
+
+    IN --&gt; TX --&gt; OUT
+
+    subgraph Guards
+        G1["breach commitment exists"]
+        G2["notification_hash ≠ empty"]
+        G3["controller signature present"]
+        G4["current_slot within tx validity range"]
+    end
+
+    G1 -.-&gt; TX
+    G2 -.-&gt; TX
+    G3 -.-&gt; TX
+    G4 -.-&gt; TX</code></pre>
+<div class="admonition note">
+<p class="admonition-title">Timeliness is recorded, not enforced</p>
+<p>The validator does <strong>not</strong> reject late notifications. It records
+<code>timely: false</code> when <code>current_slot &gt; deadline</code>. The SA reads this
+flag — late submission is evidence for enforcement proceedings, not a
+transaction failure. A controller must be able to submit late rather
+than not submit at all.</p>
+</div>
+<h3 id="commitrightsrequest">CommitRightsRequest</h3>
+<p>A data subject submits a rights request. The controller anchors the
+receipt time.</p>
+<pre class="mermaid"><code>graph LR
+    subgraph Input
+        IN["Compliance UTxO&lt;br/&gt;&lt;b&gt;datum:&lt;/b&gt;&lt;br/&gt;rights_commitment: None"]
+    end
+
+    subgraph Transaction
+        TX{{"CommitRightsRequest&lt;br/&gt;&lt;br/&gt;redeemer:&lt;br/&gt;leaf_key, request_type,&lt;br/&gt;request_hash"}}
+    end
+
+    subgraph Output
+        OUT["Compliance UTxO'&lt;br/&gt;&lt;b&gt;datum:&lt;/b&gt;&lt;br/&gt;rights_commitment:&lt;br/&gt;  commit_slot: current_slot&lt;br/&gt;  deadline: current_slot + 1month&lt;br/&gt;  request_type: access|rectify|erase|...&lt;br/&gt;  request_hash: H"]
+    end
+
+    IN --&gt; TX --&gt; OUT
+
+    subgraph Guards
+        G1["controller key ∈ identity trie"]
+        G2["leaf has no existing&lt;br/&gt;rights commitment"]
+        G3["request_hash includes&lt;br/&gt;process signature&lt;br/&gt;(data subject signed)"]
+        G4["controller signature present"]
+    end
+
+    G1 -.-&gt; TX
+    G2 -.-&gt; TX
+    G3 -.-&gt; TX
+    G4 -.-&gt; TX</code></pre>
+<h3 id="submitrightsresponse">SubmitRightsResponse</h3>
+<p>The controller responds within the deadline window.</p>
+<pre class="mermaid"><code>graph LR
+    subgraph Input
+        IN["Compliance UTxO&lt;br/&gt;&lt;b&gt;datum:&lt;/b&gt;&lt;br/&gt;rights_commitment:&lt;br/&gt;  commit_slot: S₁&lt;br/&gt;  deadline: S₁ + 1month&lt;br/&gt;  request_type: T"]
+    end
+
+    subgraph Transaction
+        TX{{"SubmitRightsResponse&lt;br/&gt;&lt;br/&gt;redeemer:&lt;br/&gt;leaf_key, response_hash"}}
+    end
+
+    subgraph Output
+        OUT["Compliance UTxO'&lt;br/&gt;&lt;b&gt;datum:&lt;/b&gt;&lt;br/&gt;rights_commitment: None&lt;br/&gt;rights_record:&lt;br/&gt;  commit_slot: S₁&lt;br/&gt;  response_slot: current_slot&lt;br/&gt;  request_type: T&lt;br/&gt;  response_hash: H&lt;br/&gt;  timely: current_slot ≤ deadline"]
+    end
+
+    IN --&gt; TX --&gt; OUT
+
+    subgraph Guards
+        G1["rights commitment exists"]
+        G2["response_hash ≠ empty"]
+        G3["controller signature present"]
+    end
+
+    G1 -.-&gt; TX
+    G2 -.-&gt; TX
+    G3 -.-&gt; TX</code></pre>
+<h3 id="extendrightsdeadline">ExtendRightsDeadline</h3>
+<p>For complex requests, Art 12(3) allows extension to 3 months. The
+controller must notify the subject within the first month.</p>
+<pre class="mermaid"><code>graph LR
+    subgraph Input
+        IN["Compliance UTxO&lt;br/&gt;&lt;b&gt;datum:&lt;/b&gt;&lt;br/&gt;rights_commitment:&lt;br/&gt;  deadline: S₁ + 1month"]
+    end
+
+    subgraph Transaction
+        TX{{"ExtendRightsDeadline&lt;br/&gt;&lt;br/&gt;redeemer:&lt;br/&gt;leaf_key,&lt;br/&gt;extension_reason_hash"}}
+    end
+
+    subgraph Output
+        OUT["Compliance UTxO'&lt;br/&gt;&lt;b&gt;datum:&lt;/b&gt;&lt;br/&gt;rights_commitment:&lt;br/&gt;  deadline: S₁ + 3months&lt;br/&gt;  extended: true&lt;br/&gt;  extension_slot: current_slot&lt;br/&gt;  reason_hash: H"]
+    end
+
+    IN --&gt; TX --&gt; OUT
+
+    subgraph Guards
+        G1["rights commitment exists"]
+        G2["not already extended"]
+        G3["current_slot ≤ original deadline&lt;br/&gt;(must extend before expiry)"]
+        G4["extension_reason_hash ≠ empty"]
+        G5["controller signature present"]
+    end
+
+    G1 -.-&gt; TX
+    G2 -.-&gt; TX
+    G3 -.-&gt; TX
+    G4 -.-&gt; TX
+    G5 -.-&gt; TX</code></pre>
+<h3 id="recordconsent">RecordConsent</h3>
+<p>Consent given for a specific processing purpose.</p>
+<pre class="mermaid"><code>graph LR
+    subgraph Input
+        IN["Compliance UTxO&lt;br/&gt;&lt;b&gt;datum:&lt;/b&gt;&lt;br/&gt;consent leaf: absent&lt;br/&gt;or consent_state: withdrawn"]
+    end
+
+    subgraph Transaction
+        TX{{"RecordConsent&lt;br/&gt;&lt;br/&gt;redeemer:&lt;br/&gt;leaf_key, purpose_hash,&lt;br/&gt;consent_record_hash"}}
+    end
+
+    subgraph Output
+        OUT["Compliance UTxO'&lt;br/&gt;&lt;b&gt;datum:&lt;/b&gt;&lt;br/&gt;consent leaf:&lt;br/&gt;  consent_state: given&lt;br/&gt;  purpose_hash: P&lt;br/&gt;  record_hash: H&lt;br/&gt;  given_slot: current_slot"]
+    end
+
+    IN --&gt; TX --&gt; OUT
+
+    subgraph Guards
+        G1["controller key ∈ identity trie"]
+        G2["consent_record_hash includes&lt;br/&gt;process signature&lt;br/&gt;(data subject signed)"]
+        G3["purpose_hash ≠ empty"]
+        G4["if leaf exists: consent_state&lt;br/&gt;must be withdrawn or absent"]
+        G5["controller signature present"]
+    end
+
+    G1 -.-&gt; TX
+    G2 -.-&gt; TX
+    G3 -.-&gt; TX
+    G4 -.-&gt; TX
+    G5 -.-&gt; TX</code></pre>
+<h3 id="withdrawconsent">WithdrawConsent</h3>
+<p>Consent withdrawn. Must be as easy as giving it (Art 7(3)).</p>
+<pre class="mermaid"><code>graph LR
+    subgraph Input
+        IN["Compliance UTxO&lt;br/&gt;&lt;b&gt;datum:&lt;/b&gt;&lt;br/&gt;consent leaf:&lt;br/&gt;  consent_state: given&lt;br/&gt;  purpose_hash: P&lt;br/&gt;  given_slot: S₁"]
+    end
+
+    subgraph Transaction
+        TX{{"WithdrawConsent&lt;br/&gt;&lt;br/&gt;redeemer:&lt;br/&gt;leaf_key,&lt;br/&gt;withdrawal_record_hash"}}
+    end
+
+    subgraph Output
+        OUT["Compliance UTxO'&lt;br/&gt;&lt;b&gt;datum:&lt;/b&gt;&lt;br/&gt;consent leaf:&lt;br/&gt;  consent_state: withdrawn&lt;br/&gt;  purpose_hash: P&lt;br/&gt;  given_slot: S₁&lt;br/&gt;  withdrawn_slot: current_slot&lt;br/&gt;  withdrawal_hash: H"]
+    end
+
+    IN --&gt; TX --&gt; OUT
+
+    subgraph Guards
+        G1["consent leaf exists"]
+        G2["consent_state = given"]
+        G3["withdrawal_record_hash includes&lt;br/&gt;process signature&lt;br/&gt;(data subject signed)"]
+        G4["controller signature present"]
+    end
+
+    G1 -.-&gt; TX
+    G2 -.-&gt; TX
+    G3 -.-&gt; TX
+    G4 -.-&gt; TX</code></pre>
+<h3 id="updateprocessingrecord">UpdateProcessingRecord</h3>
+<p>Art 30 processing activity records — purposes, categories, recipients,
+transfers, retention periods.</p>
+<pre class="mermaid"><code>graph LR
+    subgraph Input
+        IN["Compliance UTxO&lt;br/&gt;&lt;b&gt;datum:&lt;/b&gt;&lt;br/&gt;processing_record leaf:&lt;br/&gt;  record_hash: H₁&lt;br/&gt;  updated_slot: S₁"]
+    end
+
+    subgraph Transaction
+        TX{{"UpdateProcessingRecord&lt;br/&gt;&lt;br/&gt;redeemer:&lt;br/&gt;leaf_key,&lt;br/&gt;new_record_hash"}}
+    end
+
+    subgraph Output
+        OUT["Compliance UTxO'&lt;br/&gt;&lt;b&gt;datum:&lt;/b&gt;&lt;br/&gt;processing_record leaf:&lt;br/&gt;  record_hash: H₂&lt;br/&gt;  updated_slot: current_slot&lt;br/&gt;  previous_hash: H₁"]
+    end
+
+    IN --&gt; TX --&gt; OUT
+
+    subgraph Guards
+        G1["controller key ∈ identity trie"]
+        G2["controller standing ≠ suspended"]
+        G3["new_record_hash ≠ old record_hash"]
+        G4["controller signature present"]
+    end
+
+    G1 -.-&gt; TX
+    G2 -.-&gt; TX
+    G3 -.-&gt; TX
+    G4 -.-&gt; TX</code></pre>
+<h3 id="referencecertification">ReferenceCertification</h3>
+<p>Controller references a valid Art 42 certification token.</p>
+<pre class="mermaid"><code>graph LR
+    subgraph Input
+        IN["Compliance UTxO&lt;br/&gt;&lt;b&gt;datum:&lt;/b&gt;&lt;br/&gt;certification_ref: None&lt;br/&gt;or expired"]
+    end
+
+    subgraph Transaction
+        TX{{"ReferenceCertification&lt;br/&gt;&lt;br/&gt;redeemer:&lt;br/&gt;cert_token_ref"}}
+    end
+
+    subgraph "Additional Reference Input"
+        CERT["Certification Token UTxO&lt;br/&gt;&lt;b&gt;datum:&lt;/b&gt;&lt;br/&gt;  issuer: cert_body_key&lt;br/&gt;  expiry_slot: S_exp&lt;br/&gt;  scope_hash: H"]
+    end
+
+    subgraph Output
+        OUT["Compliance UTxO'&lt;br/&gt;&lt;b&gt;datum:&lt;/b&gt;&lt;br/&gt;certification_ref:&lt;br/&gt;  token_ref: cert_token_ref&lt;br/&gt;  issuer: cert_body_key&lt;br/&gt;  expiry_slot: S_exp&lt;br/&gt;  referenced_slot: current_slot"]
+    end
+
+    IN --&gt; TX --&gt; OUT
+    CERT -.-&gt;|reference| TX
+
+    subgraph Guards
+        G1["cert token exists at&lt;br/&gt;referenced UTxO"]
+        G2["issuer key ∈ regulation trie&lt;br/&gt;(qualified cert body)"]
+        G3["expiry_slot &gt; current_slot&lt;br/&gt;(not expired)"]
+        G4["controller signature present"]
+    end
+
+    G1 -.-&gt; TX
+    G2 -.-&gt; TX
+    G3 -.-&gt; TX
+    G4 -.-&gt; TX</code></pre>
+<h3 id="recorddpia">RecordDPIA</h3>
+<p>DPIA attestation anchored with timestamp.</p>
+<pre class="mermaid"><code>graph LR
+    subgraph Input
+        IN["Compliance UTxO&lt;br/&gt;&lt;b&gt;datum:&lt;/b&gt;&lt;br/&gt;dpia leaf: absent&lt;br/&gt;or previous assessment"]
+    end
+
+    subgraph Transaction
+        TX{{"RecordDPIA&lt;br/&gt;&lt;br/&gt;redeemer:&lt;br/&gt;leaf_key,&lt;br/&gt;dpia_hash"}}
+    end
+
+    subgraph Output
+        OUT["Compliance UTxO'&lt;br/&gt;&lt;b&gt;datum:&lt;/b&gt;&lt;br/&gt;dpia leaf:&lt;br/&gt;  dpia_hash: H&lt;br/&gt;  recorded_slot: current_slot&lt;br/&gt;  previous_hash: H₁ or None"]
+    end
+
+    IN --&gt; TX --&gt; OUT
+
+    subgraph Guards
+        G1["controller key ∈ identity trie"]
+        G2["dpia_hash ≠ empty"]
+        G3["controller signature present"]
+    end
+
+    G1 -.-&gt; TX
+    G2 -.-&gt; TX
+    G3 -.-&gt; TX</code></pre>
+<h2 id="validator-guard-table">Validator guard table</h2>
+<p>All guards across all redeemer actions in a single matrix. This is the
+complete specification of what the validator checks.</p>
+<table>
+<thead>
+<tr>
+<th>Guard</th>
+<th style="text-align: center;">CommitBreach</th>
+<th style="text-align: center;">SubmitBreach</th>
+<th style="text-align: center;">CommitRights</th>
+<th style="text-align: center;">SubmitRights</th>
+<th style="text-align: center;">ExtendRights</th>
+<th style="text-align: center;">RecordConsent</th>
+<th style="text-align: center;">WithdrawConsent</th>
+<th style="text-align: center;">UpdateRecord</th>
+<th style="text-align: center;">RefCert</th>
+<th style="text-align: center;">RecordDPIA</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Controller key ∈ identity trie</td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>x</strong></td>
+</tr>
+<tr>
+<td>Controller standing ≠ suspended</td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td>No existing commitment on leaf</td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td>Commitment exists on leaf</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td>Hash ≠ empty</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>x</strong></td>
+</tr>
+<tr>
+<td>Process sig (data subject signed)</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td>Controller signature</td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"><strong>x</strong></td>
+</tr>
+<tr>
+<td>Consent state = given</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td>Consent state ≠ given (or absent)</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td>Not already extended</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td>Current slot ≤ original deadline</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td>Cert token exists + not expired</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td>Cert issuer ∈ regulation trie</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td>Root hash consistent (MPT)</td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"><strong>x</strong></td>
+<td style="text-align: center;"><strong>x</strong></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Universal guards</p>
+<p>Two guards apply to <strong>every</strong> action: controller signature and MPT root
+hash consistency. The controller must sign every transaction (they are
+the operator). The MPT root hash must be recomputed correctly after the
+leaf update (structural integrity of the trie).</p>
+</div>
+<h2 id="lifecycle-state-machines">Lifecycle state machines</h2>
+<h3 id="breach-notification-lifecycle">Breach notification lifecycle</h3>
+<pre class="mermaid"><code>stateDiagram-v2
+    [*] --&gt; NoBreach: normal operations
+
+    NoBreach --&gt; BreachDetected: CommitBreach&lt;br/&gt;(slot recorded)
+
+    BreachDetected --&gt; NotifiedTimely: SubmitBreachNotification&lt;br/&gt;(slot ≤ deadline)
+    BreachDetected --&gt; NotifiedLate: SubmitBreachNotification&lt;br/&gt;(slot &gt; deadline)
+
+    NotifiedTimely --&gt; [*]: record closed&lt;br/&gt;(timely: true)
+    NotifiedLate --&gt; [*]: record closed&lt;br/&gt;(timely: false)
+
+    note right of BreachDetected
+        72h countdown starts
+        SA can observe the
+        commitment on-chain
+    end note
+
+    note right of NotifiedLate
+        Late submission is evidence
+        for enforcement — not a
+        transaction rejection
+    end note</code></pre>
+<h3 id="rights-request-lifecycle">Rights request lifecycle</h3>
+<pre class="mermaid"><code>stateDiagram-v2
+    [*] --&gt; NoRequest: normal operations
+
+    NoRequest --&gt; RequestReceived: CommitRightsRequest&lt;br/&gt;(slot recorded, type tagged)
+
+    RequestReceived --&gt; Extended: ExtendRightsDeadline&lt;br/&gt;(complex request, max 3 months)
+    RequestReceived --&gt; RespondedTimely: SubmitRightsResponse&lt;br/&gt;(slot ≤ 1 month deadline)
+    RequestReceived --&gt; RespondedLate: SubmitRightsResponse&lt;br/&gt;(slot &gt; deadline)
+
+    Extended --&gt; RespondedTimely: SubmitRightsResponse&lt;br/&gt;(slot ≤ extended deadline)
+    Extended --&gt; RespondedLate: SubmitRightsResponse&lt;br/&gt;(slot &gt; extended deadline)
+
+    RespondedTimely --&gt; [*]: record closed&lt;br/&gt;(timely: true)
+    RespondedLate --&gt; [*]: record closed&lt;br/&gt;(timely: false)
+
+    note right of RequestReceived
+        1-month countdown starts
+        request_type: access, rectify,
+        erase, restrict, port, object
+    end note
+
+    note right of Extended
+        Extension must happen
+        within original deadline
+        and only once
+    end note</code></pre>
+<h3 id="consent-lifecycle">Consent lifecycle</h3>
+<pre class="mermaid"><code>stateDiagram-v2
+    [*] --&gt; NoConsent: no consent for this purpose
+
+    NoConsent --&gt; Given: RecordConsent&lt;br/&gt;(purpose hash + subject signature)
+    Given --&gt; Withdrawn: WithdrawConsent&lt;br/&gt;(subject signature)
+    Withdrawn --&gt; Given: RecordConsent&lt;br/&gt;(new consent event)
+
+    note right of Given
+        On-chain: purpose_hash,
+        record_hash, given_slot
+        Off-chain: actual consent
+        form, subject identity
+    end note
+
+    note right of Withdrawn
+        Triggers off-chain obligations:
+        cease processing, consider
+        erasure of data processed
+        under this consent
+    end note</code></pre>
+<h3 id="certification-lifecycle">Certification lifecycle</h3>
+<pre class="mermaid"><code>stateDiagram-v2
+    [*] --&gt; NoCert: no certification
+
+    NoCert --&gt; Active: ReferenceCertification&lt;br/&gt;(cert token valid)
+    Active --&gt; Expired: expiry_slot reached&lt;br/&gt;(no transaction needed)
+    Active --&gt; NoCert: cert body revokes token&lt;br/&gt;(token burned externally)
+    Expired --&gt; Active: ReferenceCertification&lt;br/&gt;(renewed token)
+    Expired --&gt; NoCert: certification lapses
+
+    note right of Active
+        Token referenced in
+        compliance trie. Must be
+        re-checked at each use:
+        expiry_slot &gt; current_slot
+    end note</code></pre>
+<h3 id="processing-record-lifecycle">Processing record lifecycle</h3>
+<pre class="mermaid"><code>stateDiagram-v2
+    [*] --&gt; Created: UpdateProcessingRecord&lt;br/&gt;(initial Art 30 record)
+
+    Created --&gt; Updated: UpdateProcessingRecord&lt;br/&gt;(new hash, previous linked)
+    Updated --&gt; Updated: UpdateProcessingRecord&lt;br/&gt;(chain of hashes)
+
+    note right of Updated
+        Each update links to
+        previous_hash — the trie
+        preserves the full history
+        of Art 30 record changes
+    end note</code></pre>
+<h2 id="composite-view-a-controllers-compliance-trie">Composite view: a controller's compliance trie</h2>
+<p>The trie is a Merkle Patricia Trie where each leaf is a compliance record.
+Different leaf types coexist under the same root.</p>
+<pre class="mermaid"><code>graph TD
+    ROOT["Compliance Trie Root&lt;br/&gt;&lt;b&gt;root_hash&lt;/b&gt;"]
+
+    ROOT --- CONSENT["consent/&lt;br/&gt;purpose-marketing"]
+    ROOT --- CONSENT2["consent/&lt;br/&gt;purpose-analytics"]
+    ROOT --- BREACH["breach/&lt;br/&gt;2026-03-15"]
+    ROOT --- RIGHTS["rights/&lt;br/&gt;req-00142"]
+    ROOT --- ART30["processing/&lt;br/&gt;customer-crm"]
+    ROOT --- ART30B["processing/&lt;br/&gt;payroll"]
+    ROOT --- DPIA["dpia/&lt;br/&gt;crm-assessment"]
+    ROOT --- CERT["certification/&lt;br/&gt;iso-27701"]
+    ROOT --- PROC["processor/&lt;br/&gt;cloud-provider-x"]
+
+    CONSENT --- CL1["consent_state: given&lt;br/&gt;purpose_hash: 0xab...&lt;br/&gt;given_slot: 48201000"]
+    CONSENT2 --- CL2["consent_state: withdrawn&lt;br/&gt;purpose_hash: 0xcd...&lt;br/&gt;withdrawn_slot: 49100200"]
+    BREACH --- BL["commit_slot: 50002100&lt;br/&gt;submit_slot: 50004800&lt;br/&gt;timely: true&lt;br/&gt;notification_hash: 0xef..."]
+    RIGHTS --- RL["commit_slot: 49800000&lt;br/&gt;response_slot: 49843200&lt;br/&gt;request_type: access&lt;br/&gt;timely: true"]
+    ART30 --- AL["record_hash: 0x12...&lt;br/&gt;updated_slot: 49500000&lt;br/&gt;previous_hash: 0x34..."]
+    DPIA --- DL["dpia_hash: 0x56...&lt;br/&gt;recorded_slot: 48000000"]
+    CERT --- CTL["token_ref: cert-utxo-id&lt;br/&gt;expiry_slot: 51000000&lt;br/&gt;issuer: cert-body-key"]
+    PROC --- PL["agreement_hash: 0x78...&lt;br/&gt;recorded_slot: 48100000"]</code></pre>
+<p>The key path structure (<code>consent/</code>, <code>breach/</code>, <code>rights/</code>, <code>processing/</code>,
+<code>dpia/</code>, <code>certification/</code>, <code>processor/</code>) is a convention — the validator
+identifies leaf type by the redeemer action, not by the key path. The
+path exists for off-chain tooling and auditor readability.</p>
+<h2 id="the-full-transaction-breach-notification-example">The full transaction: breach notification example</h2>
+<p>End-to-end UTxO flow for the flagship 72-hour protocol, showing both
+transactions.</p>
+<pre class="mermaid"><code>sequenceDiagram
+    participant C as Controller
+    participant V as Validator
+    participant IT as Identity Trie
+    participant RT as Regulation Trie
+
+    rect rgb(60, 60, 80)
+    Note over C,RT: Transaction 1: CommitBreach
+
+    C-&gt;&gt;V: Spend compliance UTxO&lt;br/&gt;redeemer: CommitBreach(leaf_key, category)
+    V-&gt;&gt;IT: Read reference: controller key present?
+    IT--&gt;&gt;V: ✓ attested
+    V-&gt;&gt;RT: Read reference: controller standing?
+    RT--&gt;&gt;V: ✓ not suspended
+    V-&gt;&gt;V: Check: no existing breach commitment on leaf
+    V-&gt;&gt;V: Check: controller signature present
+    V-&gt;&gt;V: Check: new root hash consistent
+    V--&gt;&gt;C: ✓ Produce compliance UTxO'&lt;br/&gt;datum: breach_commitment =&lt;br/&gt;  commit_slot: 50002100&lt;br/&gt;  deadline: 50005700 (72h)
+    end
+
+    Note over C: Off-chain: investigate breach,&lt;br/&gt;prepare notification to SA&lt;br/&gt;(nature, categories, numbers,&lt;br/&gt;consequences, measures taken)
+
+    rect rgb(60, 80, 60)
+    Note over C,RT: Transaction 2: SubmitBreachNotification
+
+    C-&gt;&gt;V: Spend compliance UTxO'&lt;br/&gt;redeemer: SubmitBreachNotification(leaf_key, hash)
+    V-&gt;&gt;V: Check: breach commitment exists
+    V-&gt;&gt;V: Check: notification_hash ≠ empty
+    V-&gt;&gt;V: Check: controller signature present
+    V-&gt;&gt;V: Compute: timely = (current_slot ≤ 50005700)
+    V-&gt;&gt;V: Check: new root hash consistent
+    V--&gt;&gt;C: ✓ Produce compliance UTxO''&lt;br/&gt;datum: breach_commitment = None&lt;br/&gt;  breach_record =&lt;br/&gt;    commit_slot: 50002100&lt;br/&gt;    submit_slot: 50004800&lt;br/&gt;    notification_hash: 0xef...&lt;br/&gt;    timely: true
+    end
+
+    Note over C: SA reads the trie:&lt;br/&gt;breach detected at slot 50002100&lt;br/&gt;notified at slot 50004800&lt;br/&gt;elapsed: 2700 slots (~67.5h)&lt;br/&gt;timely: ✓</code></pre>
+<h2 id="sources">Sources</h2>
+<p>The validator design follows patterns established in the framework:</p>
+<ul>
+<li><a href="../../framework/schema/">The Regulator Schema</a> — four-party architecture,
+  reference inputs, double signature, commitment protocol</li>
+<li><a href="../../framework/patterns/">Architecture Patterns</a> — commitment-then-submit,
+  lifecycle state machine, MPT-per-operator</li>
+<li><a href="../gdpr/">GDPR case study</a> — obligation map, data classification, protocol
+  patterns, trust model</li>
+<li><a href="../../framework/constraints/">The Five Constraints</a> — why the design
+  choices are the way they are</li>
+</ul>
+<p>For GDPR article references, see the <a href="../gdpr/#sources">GDPR case study sources</a>.</p>
+<p>For eUTxO diagram conventions, see:</p>
+<ul>
+<li><a href="https://omelkonian.github.io/data/publications/eutxo.pdf">The Extended UTXO Model (IOG)</a> —
+  the foundational paper establishing UTxO transaction diagram notation</li>
+<li><a href="https://cips.cardano.org/cip/CIP-0031">CIP-31: Reference Inputs</a> —
+  the Cardano feature enabling cross-trie verification without spending</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.expand", "toc.integrate", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+        <script src="../../javascripts/mermaid.mjs" type="module"></script>
+      
+    
+  </body>
+</html>

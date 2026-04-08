@@ -1,0 +1,2296 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Framework for analyzing multi-party regulations and mapping them to Cardano compliance infrastructure">
+      
+      
+      
+        <link rel="canonical" href="https://lambdasistemi.github.io/cardano-for-regulators/framework/schema/">
+      
+      
+        <link rel="prev" href="../../thesis/">
+      
+      
+        <link rel="next" href="../constraints/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>The Regulator Schema - Cardano for Regulators</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#the-regulator-schema" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Cardano for Regulators" class="md-header__button md-logo" aria-label="Cardano for Regulators" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Cardano for Regulators
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              The Regulator Schema
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/lambdasistemi/cardano-for-regulators" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    lambdasistemi/cardano-for-regulators
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Cardano for Regulators" class="md-nav__button md-logo" aria-label="Cardano for Regulators" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Cardano for Regulators
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/lambdasistemi/cardano-for-regulators" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    lambdasistemi/cardano-for-regulators
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../graph/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ontology Graph
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../thesis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Thesis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Framework
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Framework
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Regulator Schema
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Regulator Schema
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#four-parties-four-concerns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Four parties, four concerns
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-on-chain-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The on-chain architecture
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#on-chain-and-off-chain-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        On-chain and off-chain verification
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#institutional-responsibility" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Institutional responsibility
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-a-transaction-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How a transaction works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-the-regulator-produces" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What the regulator produces
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What the regulator produces">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#regulator-accountability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Regulator accountability
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-the-identity-provider-does" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What the identity provider does
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-the-operator-does" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What the operator does
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-the-user-does" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What the user does
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-signing-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The signing function
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The signing function">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-slots-and-reuse" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key slots and reuse
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-double-signature" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The double signature
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-commitment-protocol" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The commitment protocol
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The commitment protocol">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#time-as-the-neutral-witness" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Time as the neutral witness
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-beacon-protocol" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The beacon protocol
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The beacon protocol">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-data-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The data policy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#informed-consent-by-construction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Informed consent by construction
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#no-stale-reputation-no-stale-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        No stale reputation, no stale policy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-users-one-requirement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The user's one requirement
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-baton-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The baton pattern
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#two-modes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Two modes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Two modes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#physical-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Physical mode
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#process-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Process mode
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#same-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Same architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#privacy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Privacy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-availability-and-the-burden-of-proof" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data availability and the burden of proof
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-full-picture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The full picture
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-cardano" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Cardano
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../constraints/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Five Constraints
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../methodology/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Analysis Methodology
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../patterns/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture Patterns
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Case Studies
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Case Studies
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/battery-regulation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EU Battery Regulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/battery-contract/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Battery Smart Contract
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/gdpr/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GDPR
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/gdpr-contract/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GDPR Smart Contract
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ontology
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Ontology
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generated/ontology/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generated/gdpr/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GDPR
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generated/eu-battery-regulation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EU Battery Regulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="the-regulator-schema">The Regulator Schema</h1>
+<p>How a regulator can use Cardano to enforce a multi-party regulation without
+running infrastructure, managing identities, or trusting any single operator.</p>
+<h2 id="four-parties-four-concerns">Four parties, four concerns</h2>
+<p>A regulated process involves four independent parties. Each manages one
+concern and trusts no other party beyond what the chain enforces.</p>
+<pre class="mermaid"><code>graph TB
+    IDP[Identity Provider&lt;br/&gt;&lt;i&gt;identity trie&lt;/i&gt;]
+    REG[Regulator&lt;br/&gt;&lt;i&gt;regulation trie&lt;/i&gt;]
+    OP[Operator&lt;br/&gt;&lt;i&gt;process trie&lt;/i&gt;]
+    U[User&lt;br/&gt;&lt;i&gt;signing function&lt;/i&gt;]
+
+    REG --&gt;|publishes| SC{Smart Contract}
+    REG --&gt;|trusts| IDP
+    SC --&gt;|governs| OP
+    IDP -.-&gt;|reference input| SC
+    REG -.-&gt;|reference input| SC
+    OP --&gt;|distributes signing functions| U
+    U --&gt;|double-signed payloads| OP
+    OP --&gt;|submits transactions| SC</code></pre>
+<table>
+<thead>
+<tr>
+<th>Party</th>
+<th>Trie</th>
+<th>Contains</th>
+<th>Responsibility</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Identity provider</strong></td>
+<td>Identity trie</td>
+<td>Attested actor public keys</td>
+<td>Who exists as a verified entity</td>
+</tr>
+<tr>
+<td><strong>Regulator</strong></td>
+<td>Regulation trie</td>
+<td>Actor qualifications + operator standing</td>
+<td>Who is qualified, how operators perform</td>
+</tr>
+<tr>
+<td><strong>Operator</strong></td>
+<td>Process trie</td>
+<td>Items, processes, state</td>
+<td>What is happening</td>
+</tr>
+<tr>
+<td><strong>User</strong></td>
+<td>—</td>
+<td>Just acts via signing function</td>
+<td>Performing regulated actions</td>
+</tr>
+</tbody>
+</table>
+<p>No overlap. The identity provider doesn't know about processes. The regulator
+doesn't run infrastructure. The operator can't fake users. The user doesn't
+need to trust anyone.</p>
+<p>The <strong>smart contract</strong> is the regulation in executable form — published by
+the regulator, it governs the operator's trie and reads both the identity trie
+and regulation trie as reference inputs. The regulator audits that operators
+use the correct smart contract and follows the transactions over it.</p>
+<h2 id="the-on-chain-architecture">The on-chain architecture</h2>
+<p>Four Merkle Patricia Tries, four UTxOs, and a smart contract that ties
+them together.</p>
+<pre class="mermaid"><code>graph LR
+    subgraph Identity Provider
+        IDP_UTxO[Identity UTxO&lt;br/&gt;root hash]
+        IDP_T[Identity Trie]
+        IDP_UTxO --- IDP_T
+        IDP_T --- K1[Actor Key A]
+        IDP_T --- K2[Actor Key B]
+        IDP_T --- K3[Actor Key N]
+    end
+
+    subgraph Regulator
+        REG_UTxO[Regulation UTxO&lt;br/&gt;root hash]
+        REG_T[Regulation Trie]
+        REG_UTxO --- REG_T
+        REG_T --- R1[Actor A&lt;br/&gt;licensed carrier]
+        REG_T --- R2[Actor B&lt;br/&gt;authorized dispatcher]
+        REG_T --- R3[Operator X&lt;br/&gt;standing: compliant]
+        REG_T --- R4[Operator Y&lt;br/&gt;standing: under review]
+    end
+
+    subgraph Operator
+        OP_UTxO[Process UTxO&lt;br/&gt;root hash]
+        OP_T[Process Trie]
+        OP_UTxO --- OP_T
+        OP_T --- L1[Leaf 1&lt;br/&gt;item/process]
+        OP_T --- L2[Leaf 2&lt;br/&gt;item/process]
+        OP_T --- L3[Leaf N&lt;br/&gt;item/process]
+    end
+
+    subgraph Smart Contract
+        SC[Plutus Validator]
+    end
+
+    SC --&gt;|governs| OP_UTxO
+    IDP_UTxO -.-&gt;|reference input| SC
+    REG_UTxO -.-&gt;|reference input| SC</code></pre>
+<table>
+<thead>
+<tr>
+<th>Trie</th>
+<th>Owner</th>
+<th>Contains</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Identity trie</strong></td>
+<td>identity provider</td>
+<td>Attested actor public keys</td>
+<td>Who exists as a verified real-world entity</td>
+</tr>
+<tr>
+<td><strong>Regulation trie</strong></td>
+<td>Regulator</td>
+<td>Actor qualifications + operator standing</td>
+<td>Who is qualified to act, how operators are assessed</td>
+</tr>
+<tr>
+<td><strong>Process trie</strong></td>
+<td>Operator</td>
+<td>Items, processes, leaves with state</td>
+<td>What is happening</td>
+</tr>
+<tr>
+<td><strong>Commitment</strong></td>
+<td>Inside each process leaf</td>
+<td>Slot windows, expected actions</td>
+<td>When and how actions occur</td>
+</tr>
+</tbody>
+</table>
+<p>Both the identity trie and the regulation trie are <strong>reference inputs</strong> —
+read-only from the operator's perspective. The operator never spends them.
+The smart contract reads them at validation time to verify that the actor
+submitting a state transition is both an attested real-world entity (identity)
+and qualified for this specific regulation (regulation trie).</p>
+<h2 id="on-chain-and-off-chain-verification">On-chain and off-chain verification</h2>
+<p>Privacy requires splitting verification across two layers:</p>
+<pre class="mermaid"><code>graph TD
+    subgraph On-chain - Smart Contract
+        SIG[Signature verification&lt;br/&gt;&lt;i&gt;public keys, actor signatures&lt;/i&gt;]
+        IDP_CHECK[identity trie membership&lt;br/&gt;&lt;i&gt;actor key present?&lt;/i&gt;]
+        REG_CHECK[Regulation trie membership&lt;br/&gt;&lt;i&gt;actor qualified?&lt;/i&gt;]
+        HASH[Root hash consistency&lt;br/&gt;&lt;i&gt;MPT integrity&lt;/i&gt;]
+        SLOT[Slot window&lt;br/&gt;&lt;i&gt;commitment timing&lt;/i&gt;]
+    end
+
+    subgraph Off-chain - Operator
+        LEAF[Leaf data verification&lt;br/&gt;&lt;i&gt;actual claims behind hashes&lt;/i&gt;]
+        PAYLOAD[Payload content&lt;br/&gt;&lt;i&gt;what the user actually submitted&lt;/i&gt;]
+        MATCH[Claim matches attestation&lt;br/&gt;&lt;i&gt;user's claims vs trie leaves&lt;/i&gt;]
+    end
+
+    SIG --&gt; ACCEPT{Transaction&lt;br/&gt;accepted}
+    IDP_CHECK --&gt; ACCEPT
+    REG_CHECK --&gt; ACCEPT
+    HASH --&gt; ACCEPT
+    SLOT --&gt; ACCEPT
+    LEAF --&gt; SUBMIT[Operator submits&lt;br/&gt;transaction]
+    PAYLOAD --&gt; SUBMIT
+    MATCH --&gt; SUBMIT
+    SUBMIT --&gt; ACCEPT</code></pre>
+<p><strong>On-chain</strong>: the smart contract verifies what's public — signatures, public
+keys (actor in identity trie, actor qualified in regulation trie), commitment
+windows, root hash consistency. All it sees are hashes and signatures.</p>
+<p><strong>Off-chain</strong>: the operator verifies the actual leaf data — the claims behind
+the hashes. The smart contract can't see this data because only the hash
+appears on-chain. The operator checks that what the user claims matches
+what's in the leaf before submitting the transaction.</p>
+<p>This split is the source of privacy: the chain proves <em>that</em> the right actor
+with the right qualifications performed the right action at the right time,
+but it never sees <em>what</em> the actual qualifications or claims contain. Only
+hashes.</p>
+<h2 id="institutional-responsibility">Institutional responsibility</h2>
+<p>The responsibility for authentication and qualification lives with the
+institutions — not with the operator.</p>
+<pre class="mermaid"><code>graph TD
+    subgraph Institutions
+        KP[Identity Provider&lt;br/&gt;&lt;i&gt;attests identities&lt;br/&gt;revokes keys&lt;/i&gt;]
+        RG[Regulator&lt;br/&gt;&lt;i&gt;qualifies actors&lt;br/&gt;defines rules&lt;/i&gt;]
+    end
+
+    subgraph Operator
+        OP[Operator&lt;br/&gt;&lt;i&gt;cannot add keys to identity trie&lt;br/&gt;cannot add qualifications&lt;br/&gt;to regulation trie&lt;/i&gt;]
+    end
+
+    KP -.-&gt;|attestation| OP
+    RG -.-&gt;|qualification| OP
+    OP --&gt;|verified claims| TX[Transaction]
+
+    subgraph What the operator CAN do
+        V1[Verify attestations off-chain]
+        V2[Reject unattested submissions]
+        V3[Submit only verified payloads]
+    end
+
+    subgraph What the operator CANNOT do
+        X1[Fake users]
+        X2[Invent qualifications]
+        X3[Bypass identity or regulation trie]
+    end</code></pre>
+<p>The operator can verify attestations from the institutions and be sure they
+are operating with attested, qualified users. But they cannot invent fake
+processes involving non-attested users — the smart contract will reject any
+transaction where the actor's key is missing from the identity or regulation trie.</p>
+<h2 id="how-a-transaction-works">How a transaction works</h2>
+<p>Every state transition follows this flow:</p>
+<pre class="mermaid"><code>sequenceDiagram
+    participant KP as Identity Provider
+    participant R as Regulator
+    participant O as Operator
+    participant SF as Signing Function
+    participant U as User
+    participant C as Cardano
+
+    Note over KP: Independently maintains&lt;br/&gt;identity trie
+
+    Note over R: Independently maintains&lt;br/&gt;regulation trie
+
+    R-&gt;&gt;C: Publish smart contract&lt;br/&gt;(references identity + regulation UTxOs)
+
+    O-&gt;&gt;C: Deploy process trie&lt;br/&gt;(governed by smart contract)
+    O-&gt;&gt;SF: Mint signing function&lt;br/&gt;(register pubkey on-chain)
+
+    O-&gt;&gt;C: Mint beacon&lt;br/&gt;(samples operator standing)
+
+    O-&gt;&gt;C: Create commitment in leaf&lt;br/&gt;(slot window)
+
+    O-&gt;&gt;U: Relay beacon + query
+
+    U-&gt;&gt;SF: Request signature&lt;br/&gt;(payload + commitment + beacon)
+    SF-&gt;&gt;U: Signed payload
+
+    U-&gt;&gt;O: Submit double-signed payload&lt;br/&gt;(process sig + actor sig + beacon sig)
+
+    Note over O: Off-chain verification:&lt;br/&gt;leaf data matches claims
+
+    O-&gt;&gt;C: Submit transaction
+
+    Note over C: Validator checks:
+    Note over C: 1. Actor key in identity trie?&lt;br/&gt;(reference input)
+    Note over C: 2. Actor qualified in regulation trie?&lt;br/&gt;(reference input)
+    Note over C: 3. Beacon genuine and not expired?&lt;br/&gt;(minting policy)
+    Note over C: 4. Commitment exists?&lt;br/&gt;(expected action)
+    Note over C: 5. Slot in window?&lt;br/&gt;(timely)
+    Note over C: 6. Process signature valid?&lt;br/&gt;(authentic)
+    Note over C: 7. Actor key authorized?&lt;br/&gt;(baton holder)
+    Note over C: 8. Leaf update matches payload?&lt;br/&gt;(untampered)
+    Note over C: 9. New root hash consistent?&lt;br/&gt;(MPT integrity)
+
+    C-&gt;&gt;C: Clear commitment&lt;br/&gt;(no replay)</code></pre>
+<p>The validator has access to all the information it needs in a single
+evaluation: the process trie UTxO (spent input), the identity trie UTxO and
+regulation trie UTxO (reference inputs), the signatures, and the slot range.</p>
+<h2 id="what-the-regulator-produces">What the regulator produces</h2>
+<p>The regulator does three things: maintains a <strong>regulation trie</strong>, publishes
+a <strong>smart contract</strong>, and defines the <strong>beacon minting policy</strong>.</p>
+<pre class="mermaid"><code>graph TD
+    REG[Regulator]
+
+    REG --&gt;|maintains| RT[Regulation Trie]
+    RT --&gt; Q1[Actor qualifications&lt;br/&gt;&lt;i&gt;licensed carrier,&lt;br/&gt;authorized dispatcher&lt;/i&gt;]
+    RT --&gt; Q2[Operator standing&lt;br/&gt;&lt;i&gt;compliance scores,&lt;br/&gt;flags, warnings&lt;/i&gt;]
+
+    REG --&gt;|publishes| SC[Smart Contract]
+    SC --&gt; DS[Data Schema&lt;br/&gt;&lt;i&gt;what fields a leaf must contain&lt;/i&gt;]
+    SC --&gt; VT[Valid Transitions&lt;br/&gt;&lt;i&gt;what updates are allowed,&lt;br/&gt;in what order, by whom&lt;/i&gt;]
+    SC --&gt; CP[Commitment Protocol&lt;br/&gt;&lt;i&gt;how time windows work,&lt;br/&gt;what must be signed&lt;/i&gt;]
+    SC --&gt; AR[Authorization Rules&lt;br/&gt;&lt;i&gt;how the baton is assigned&lt;br/&gt;and passed&lt;/i&gt;]
+    SC --&gt; REF[Reference Inputs&lt;br/&gt;&lt;i&gt;which identity and regulation&lt;br/&gt;UTxOs to read&lt;/i&gt;]
+
+    REG --&gt;|defines| MP[Beacon Minting Policy&lt;br/&gt;&lt;i&gt;forces inclusion of&lt;br/&gt;operator standing&lt;/i&gt;]</code></pre>
+<p>The <strong>regulation trie</strong> serves two purposes:</p>
+<ul>
+<li><strong>Actor qualifications</strong> — process-specific credentials, not generic
+  identity (that's the identity provider's job). A traceability regulation
+  might qualify actors as licensed carriers, authorized dispatchers, or
+  certified inspectors.</li>
+<li><strong>Operator standing</strong> — the regulator's current assessment of each
+  operator: compliance scores, flags, warnings. The regulator updates this
+  whenever their off-chain evaluation changes. The standing inputs are
+  heterogeneous: on-chain data (inspecting operator trees), off-chain data
+  (audits, inspections, complaints), and cross-operator aggregations.</li>
+</ul>
+<p>The <strong>smart contract</strong> encodes the regulation as a Plutus validator. The
+regulator publishes it once. Every operator in the market operates under it.
+The regulator audits that operators use the correct smart contract and
+follows the transactions over it.</p>
+<p>The <strong>beacon minting policy</strong> forces the operator to sample their current
+standing from the regulation trie before collecting user attestations. See
+<a href="#the-beacon-protocol">The beacon protocol</a>.</p>
+<p>The regulator does not run the identity infrastructure. They decide <strong>which
+identity provider to trust</strong> — a government identity agency, eIDAS, a private
+service — and reference that provider's UTxO in their smart contract
+alongside their own regulation trie UTxO.</p>
+<p>The eUTxO model ensures the validator is evaluated at every transaction.
+Non-compliant updates are rejected by the chain itself. The regulation is
+enforced at the transaction level, not by inspectors after the fact.</p>
+<h3 id="regulator-accountability">Regulator accountability</h3>
+<p>The standing is the regulator's judgment — it cannot be independently
+recomputed because it fuses on-chain and off-chain inputs. This is the
+irreducible trust point in the system. But the chain guarantees
+<strong>accountability</strong>: every assessment is timestamped, public, and immutable.
+If the methodology is later shown to be flawed or biased, the historical
+record is there for everyone — operators, users, courts — to examine. The
+regulator cannot retroactively revise its own history.</p>
+<h2 id="what-the-identity-provider-does">What the identity provider does</h2>
+<p>The identity provider maintains a Merkle Patricia Trie of verified actors.</p>
+<pre class="mermaid"><code>graph TD
+    subgraph Off-chain Verification
+        V1[Identity check]
+        V2[Document verification]
+        V3[Institutional accreditation]
+    end
+
+    subgraph On-chain Identity Trie
+        ROOT[Identity UTxO&lt;br/&gt;root hash]
+        ROOT --- A1[Actor Key A&lt;br/&gt;&lt;i&gt;verified manufacturer&lt;/i&gt;]
+        ROOT --- A2[Actor Key B&lt;br/&gt;&lt;i&gt;verified inspector&lt;/i&gt;]
+        ROOT --- A3[Actor Key C&lt;br/&gt;&lt;i&gt;verified importer&lt;/i&gt;]
+        ROOT --- A4[Actor Key N&lt;br/&gt;&lt;i&gt;revoked&lt;/i&gt;]
+    end
+
+    V1 --&gt; ROOT
+    V2 --&gt; ROOT
+    V3 --&gt; ROOT</code></pre>
+<p>The identity provider:</p>
+<ol>
+<li><strong>Verifies real-world entities</strong> — through whatever process they use
+   (government ID, corporate registration, professional accreditation)</li>
+<li><strong>Adds public keys to their trie</strong> — each verified entity gets a leaf</li>
+<li><strong>Revokes keys</strong> — when an entity's status changes, their leaf is
+   updated or removed</li>
+<li><strong>Maintains the UTxO</strong> — independent of any specific regulation</li>
+</ol>
+<p>The same identity trie can serve multiple regulators and multiple regulations.
+One identity infrastructure, many smart contracts referencing it. Or
+different regulators can trust different providers — each contract points
+to its own.</p>
+<p>This is what prevents the operator from faking users. The operator can
+mint signing functions and simulate processes, but they cannot add keys to
+the identity provider's trie. Every actor in a regulated process must have a
+key that appears in the trusted identity trie. The validator checks this via
+reference input at every transaction.</p>
+<h2 id="what-the-operator-does">What the operator does</h2>
+<p>The operator participates in the regulated market. They manage a process
+trie — one UTxO holding the root hash — containing all items or processes
+under their responsibility.</p>
+<pre class="mermaid"><code>graph TD
+    OP[Operator] --&gt;|1| MK[Mint signing functions&lt;br/&gt;&lt;i&gt;generate keys, register on-chain,&lt;br/&gt;distribute capability&lt;/i&gt;]
+    OP --&gt;|2| CC[Create commitments&lt;br/&gt;&lt;i&gt;set time-bounded windows&lt;br/&gt;in trie leaves&lt;/i&gt;]
+    OP --&gt;|3| VF[Verify off-chain&lt;br/&gt;&lt;i&gt;check user claims against&lt;br/&gt;leaf data before submitting&lt;/i&gt;]
+    OP --&gt;|4| CS[Collect submissions&lt;br/&gt;&lt;i&gt;receive double-signed&lt;br/&gt;payloads from users&lt;/i&gt;]
+    OP --&gt;|5| ST[Submit transactions&lt;br/&gt;&lt;i&gt;batch updates to trie,&lt;br/&gt;pay all fees&lt;/i&gt;]</code></pre>
+<p>The operator is a <strong>transparent pipe</strong>. They choose <em>when</em> to batch, but
+not <em>what</em> goes in. The signed payload is the input, the leaf update is
+the output, and the contract verifies they match.</p>
+<p>The operator <strong>verifies off-chain</strong> what the smart contract cannot see:
+the actual data behind the hashes. This is the operator's added value —
+they leverage institutional attestations (from identity and regulation tries)
+to be sure they are operating with attested, qualified users, and they
+verify the actual claims before submitting the transaction.</p>
+<p>The operator cannot tamper with the data:</p>
+<pre class="mermaid"><code>graph LR
+    subgraph Cannot Tamper
+        P[Signed Payload] --&gt;|operator receives| O[Operator]
+        O --&gt;|operator submits| TX[Transaction]
+        TX --&gt;|validator checks| V{Payload = Leaf Update?}
+        V --&gt;|yes| OK[Accepted]
+        V --&gt;|no| REJECT[Rejected]
+    end
+
+    C[Commitment&lt;br/&gt;&lt;i&gt;defined by smart contract&lt;/i&gt;] --&gt;|constrains| TX
+    S[Signature&lt;br/&gt;&lt;i&gt;invalidated if modified&lt;/i&gt;] --&gt;|protects| P
+    R[Root Hash&lt;br/&gt;&lt;i&gt;must be consistent&lt;/i&gt;] --&gt;|constrains| TX</code></pre>
+<ul>
+<li>The commitment is defined by the smart contract</li>
+<li>The payload is signed (tampering invalidates the signature)</li>
+<li>The update is validated by the smart contract</li>
+<li>The new root hash must be consistent with the leaf change</li>
+</ul>
+<h2 id="what-the-user-does">What the user does</h2>
+<p>The user interacts with a regulated process without any blockchain knowledge.
+They don't have a wallet, don't hold ADA, don't know what Cardano is.</p>
+<pre class="mermaid"><code>graph LR
+    U[User] --&gt;|1. receive| SF[Signing&lt;br/&gt;Function]
+    U --&gt;|2. use| ACT[Tap / Scan / Click]
+    ACT --&gt; DS[Double-Signed&lt;br/&gt;Payload]
+    U --&gt;|3. pass on| NEXT[Next Actor's&lt;br/&gt;Public Key]
+    DS --&gt; OP[Operator]
+    NEXT --&gt; OP</code></pre>
+<ol>
+<li><strong>Receive a signing capability</strong> — a physical device, an app, or access
+   to a signing service</li>
+<li><strong>Perform the regulated action</strong> — tap an NFC chip, scan a QR code,
+   press a button in an app</li>
+<li><strong>Pass the baton</strong> — the final action designates the next authorized key</li>
+</ol>
+<p>From the user's perspective: tap, use, pass on. The cryptography is
+invisible.</p>
+<h2 id="the-signing-function">The signing function</h2>
+<p>The atomic unit of the system is not a key, not a device, not a user — it
+is a <strong>signing function</strong>. An opaque capability that produces signatures
+when invoked, without exposing the private key.</p>
+<pre class="mermaid"><code>graph TB
+    OP[Operator] --&gt;|mints| SF[Signing Function]
+    SF --&gt;|public key| CHAIN[On-chain Leaf]
+    SF --&gt;|capability| WORLD[Physical or Digital World]
+
+    subgraph Substrates
+        HW[Hardware SE&lt;br/&gt;&lt;i&gt;physical isolation&lt;/i&gt;]
+        PH[Phone Enclave&lt;br/&gt;&lt;i&gt;OS isolation&lt;/i&gt;]
+        SV[Server Endpoint&lt;br/&gt;&lt;i&gt;access control&lt;/i&gt;]
+        TEE[TEE / Enclave&lt;br/&gt;&lt;i&gt;HW-assisted SW&lt;/i&gt;]
+        ZK[ZK Circuit&lt;br/&gt;&lt;i&gt;cryptographic isolation&lt;/i&gt;]
+    end
+
+    WORLD --- HW
+    WORLD --- PH
+    WORLD --- SV
+    WORLD --- TEE
+    WORLD --- ZK</code></pre>
+<table>
+<thead>
+<tr>
+<th>Substrate</th>
+<th>Key protection</th>
+<th>When to use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hardware secure element (SE050)</td>
+<td>Physical isolation — key never leaves chip</td>
+<td>Sensor-bound, physical measurements</td>
+</tr>
+<tr>
+<td>Phone secure enclave</td>
+<td>OS-level isolation</td>
+<td>Consumer actions</td>
+</tr>
+<tr>
+<td>Server endpoint</td>
+<td>Access control</td>
+<td>Abstract processes, enterprise</td>
+</tr>
+<tr>
+<td>TEE / enclave</td>
+<td>Hardware-assisted software isolation</td>
+<td>High-assurance backends</td>
+</tr>
+<tr>
+<td>ZK circuit</td>
+<td>Cryptographic isolation</td>
+<td>Privacy-preserving proofs</td>
+</tr>
+</tbody>
+</table>
+<p>All substrates present the same interface to the chain: a public key
+registered in a leaf, and signatures the validator can verify.</p>
+<p>The signing function does not need to be secret. It signs whatever is
+asked of it. The security is not in the key's secrecy — it is in the
+double signature and the commitment protocol.</p>
+<h3 id="key-slots-and-reuse">Key slots and reuse</h3>
+<p>A signing device — physical or software — can hold multiple key slots.
+Each slot is an independent signing capability.</p>
+<pre class="mermaid"><code>graph TD
+    DEV[Signing Device]
+    DEV --&gt; S1[Slot 1&lt;br/&gt;&lt;i&gt;Battery Regulation&lt;br/&gt;Operator A&lt;/i&gt;]
+    DEV --&gt; S2[Slot 2&lt;br/&gt;&lt;i&gt;Logistics Tracking&lt;br/&gt;Operator B&lt;/i&gt;]
+    DEV --&gt; S3[Slot 3&lt;br/&gt;&lt;i&gt;Empty — available&lt;br/&gt;for future use&lt;/i&gt;]
+
+    S1 -.-&gt;|registered in| L1[Operator A's Trie&lt;br/&gt;Leaf #4721]
+    S2 -.-&gt;|registered in| L2[Operator B's Trie&lt;br/&gt;Leaf #89]</code></pre>
+<ul>
+<li><strong>One slot, one purpose</strong> — cheap, disposable. Lost? The on-chain key is
+  deauthorized.</li>
+<li><strong>Multiple slots, multiple operators</strong> — the same device participates in
+  different compliance schemes simultaneously. Each operator only sees
+  their own leaf.</li>
+<li><strong>Reflash and repurpose</strong> — new key, new on-chain registration, new
+  meaning. The device outlives any single use case.</li>
+</ul>
+<p>The device has no owner in the blockchain sense. It has a <em>holder</em>. The
+meaning of each slot is defined entirely by the on-chain leaf it's
+registered in. The same hardware can be recollected and reused indefinitely,
+as long as it has available slots.</p>
+<h2 id="the-double-signature">The double signature</h2>
+<p>Every state transition requires two signatures:</p>
+<pre class="mermaid"><code>graph TD
+    subgraph Process Signature
+        SF[Signing Function] --&gt;|signs| PL[Payload + Commitment]
+        PL --&gt; PS[Process Signature]
+        PS --&gt;|proves| ID[This process produced&lt;br/&gt;this data at this time]
+    end
+
+    subgraph Actor Signature
+        AK[Actor's Key] --&gt;|signs| SUB[Submission]
+        SUB --&gt; AS[Actor Signature]
+        AS --&gt;|proves| AUTH[The authorized party&lt;br/&gt;requests this transition]
+    end
+
+    PS --&gt; V{Validator}
+    AS --&gt; V
+    V --&gt;|both valid +&lt;br/&gt;actor in identity trie +&lt;br/&gt;actor in regulation trie| OK[State transition accepted]</code></pre>
+<ol>
+<li>
+<p><strong>The process signature</strong> — the signing function signs the payload,
+   including the commitment. This proves: <em>this specific process or item
+   produced this specific data at this specific time</em>. It is an identifier,
+   not an access control.</p>
+</li>
+<li>
+<p><strong>The actor signature</strong> — the current baton holder signs the submission.
+   This proves: <em>the authorized party is requesting this state transition</em>.
+   This is the access control.</p>
+</li>
+</ol>
+<p>Neither signature alone is sufficient:</p>
+<ul>
+<li>Process signature without actor signature → anyone could have called
+  the signing function, no authorization</li>
+<li>Actor signature without process signature → the actor could claim
+  anything about the process, no authentication</li>
+</ul>
+<p>Together they prove: an authorized, attested, qualified actor interacted
+with a specific process and is submitting a specific, time-bounded state
+update.</p>
+<h2 id="the-commitment-protocol">The commitment protocol</h2>
+<p>The commitment prevents replay, ensures timeliness, and binds each action
+to a specific moment in the on-chain state.</p>
+<pre class="mermaid"><code>sequenceDiagram
+    participant O as Operator
+    participant C as Chain
+    participant SF as Signing Function
+    participant U as User (Baton Holder)
+
+    O-&gt;&gt;C: 1. Create commitment in leaf&lt;br/&gt;(validFrom, validUntil)
+    Note over C: Leaf now expects an action
+
+    U-&gt;&gt;SF: 2. Feed payload + commitment
+    SF-&gt;&gt;U: Signed payload
+
+    U-&gt;&gt;U: 3. Sign submission with own key
+
+    U-&gt;&gt;O: 4. Send double-signed payload
+
+    O-&gt;&gt;C: 5. Submit transaction
+
+    Note over C: Validator checks:&lt;br/&gt;beacon valid ✓&lt;br/&gt;commitment exists ✓&lt;br/&gt;slot in window ✓&lt;br/&gt;process sig valid ✓&lt;br/&gt;actor in identity trie ✓&lt;br/&gt;actor in regulation trie ✓&lt;br/&gt;actor authorized ✓&lt;br/&gt;leaf update matches ✓
+
+    C-&gt;&gt;C: 6. Clear commitment
+    Note over C: Single-use — no replay</code></pre>
+<p>The commitment is the mechanism that turns a generic signing capability
+into a one-shot, time-bounded, authorized action. Because the signing
+function signs the commitment as part of the payload, and the smart
+contract defines what a valid commitment looks like, the operator has no
+room to manipulate timing or replay old submissions.</p>
+<h3 id="time-as-the-neutral-witness">Time as the neutral witness</h3>
+<p>If the user signs a timestamp, the regulator must trust the user's clock.
+If the operator signs it, the regulator must trust the operator's clock.
+Neither is neutral.</p>
+<p>The blockchain provides time certificates that neither party produced.
+When data is included in a block, it receives a temporal proof that is a
+consequence of consensus, not of anyone's claim. The on-chain anchor
+provides not just integrity but <strong>temporal integrity</strong> — verifiable proof
+of <em>when</em> something was committed, without trusting either party.</p>
+<h2 id="the-beacon-protocol">The beacon protocol</h2>
+<p>The beacon is the regulator's policy carrier. It forces the operator to
+sample their current standing from the regulation trie before collecting
+user attestations, and it carries the regulator's data policy — including
+who may receive the data and under what conditions.</p>
+<p>The operator cannot collect user attestations without first producing a
+beacon, and the minting policy won't produce one without reading the
+operator's current standing and the applicable data policy from the
+regulation trie.</p>
+<pre class="mermaid"><code>sequenceDiagram
+    participant R as Regulator
+    participant C as Chain
+    participant O as Operator
+    participant U as User
+
+    R-&gt;&gt;C: Update standing + data policy&lt;br/&gt;in regulation trie
+
+    O-&gt;&gt;C: Mint beacon&lt;br/&gt;(minting policy reads standing&lt;br/&gt;+ data policy from regulation trie)
+    Note over C: Beacon includes:&lt;br/&gt;operator standing&lt;br/&gt;data policy (recipient keys)&lt;br/&gt;expiry
+
+    O-&gt;&gt;U: Relay beacon + query
+
+    Note over U: Verifies beacon:&lt;br/&gt;- minting policy matches regulator&lt;br/&gt;- not expired&lt;br/&gt;- standing is current&lt;br/&gt;- data policy is present
+
+    U-&gt;&gt;U: Encrypt data for beacon recipients&lt;br/&gt;Sign encrypted data + beacon
+
+    U-&gt;&gt;O: Return signed payload
+
+    O-&gt;&gt;C: Submit batch&lt;br/&gt;(contract validates beacon&lt;br/&gt;is genuine and not expired)</code></pre>
+<p>The beacon carries two things:</p>
+<ol>
+<li><strong>Standing</strong> — the regulator's assessment of the operator (compliance
+   scores, flags, warnings). The user signs over it as proof of informed
+   awareness.</li>
+<li><strong>Data policy</strong> — who may receive the data (recipient public keys or
+   key classes). The user encrypts their contribution for the specified
+   recipients. The operator cannot read data not addressed to them.</li>
+</ol>
+<p>Both travel through the same channel — not because the operator chose to
+include them, but because the smart contract forced it.</p>
+<h3 id="the-data-policy">The data policy</h3>
+<p>The regulator defines, through the beacon policy, who may decrypt each
+class of data. This is not a fixed recipient list — it is a
+<strong>parameterized rule</strong> that the regulation trie encodes:</p>
+<table>
+<thead>
+<tr>
+<th>Context</th>
+<th>Recipients</th>
+<th>Who triggers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Routine reading</td>
+<td>Owner + regulator</td>
+<td>Automatic — every beacon</td>
+</tr>
+<tr>
+<td>Pre-sale disclosure</td>
+<td>Owner + prospective buyer + regulator</td>
+<td>Owner requests</td>
+</tr>
+<tr>
+<td>Regulatory audit</td>
+<td>Regulator only</td>
+<td>Regulator requests</td>
+</tr>
+<tr>
+<td>Repurposing assessment</td>
+<td>Original owner + new operator + regulator</td>
+<td>Either party requests</td>
+</tr>
+<tr>
+<td>Emergency recall</td>
+<td>All affected owners + regulator</td>
+<td>Regulator requests</td>
+</tr>
+</tbody>
+</table>
+<p>The owner can request a disclosure beacon that adds a prospective buyer
+to the recipient set. The regulator's policy governs which disclosure
+contexts are permitted. The operator produces the beacon — the minting
+policy validates that the requested context is authorized by the
+regulation trie.</p>
+<pre class="mermaid"><code>sequenceDiagram
+    participant OW as Owner
+    participant O as Operator
+    participant C as Chain
+    participant BU as Prospective Buyer
+
+    OW-&gt;&gt;O: Request pre-sale disclosure&lt;br/&gt;for Buyer's public key
+
+    O-&gt;&gt;C: Mint disclosure beacon&lt;br/&gt;(policy validates: pre-sale context&lt;br/&gt;+ owner authorization&lt;br/&gt;+ buyer key)
+    Note over C: Beacon includes:&lt;br/&gt;recipients: Owner + Buyer + Regulator&lt;br/&gt;context: pre-sale&lt;br/&gt;expiry
+
+    O-&gt;&gt;OW: Relay disclosure beacon
+
+    Note over OW: Fresh SoH reading via NFC tap&lt;br/&gt;SE050 signs&lt;br/&gt;Phone encrypts for beacon recipients
+
+    OW-&gt;&gt;O: Submit encrypted + signed payload
+
+    O-&gt;&gt;C: Submit to trie&lt;br/&gt;(hash on-chain, ciphertext off-chain)
+
+    O-&gt;&gt;BU: Relay ciphertext
+
+    Note over BU: Decrypts with own key&lt;br/&gt;Inspects SoH history&lt;br/&gt;Decides whether to buy</code></pre>
+<p>The operator relays the ciphertext but cannot read it. The buyer verifies
+the SoH before committing to the purchase. The regulator can always
+decrypt (their key is in every recipient set). The chain proves the
+disclosure was authorized by a valid beacon.</p>
+<h3 id="informed-consent-by-construction">Informed consent by construction</h3>
+<p>The user signs over the beacon as part of their payload. This is
+cryptographic proof of awareness: the user cannot claim ignorance of the
+operator's standing, the data policy, or who will receive their data.
+Informed consent is enforced by protocol, not by policy.</p>
+<h3 id="no-stale-reputation-no-stale-policy">No stale reputation, no stale policy</h3>
+<p>The beacon expires. An operator whose compliance status just dropped
+cannot keep presenting yesterday's clean beacon. A disclosure beacon
+for a prospective buyer expires too — the buyer cannot use a stale
+authorization to access future readings.</p>
+<p>The minting policy reads the current state of the regulation trie — if the
+regulator has updated the standing or the data policy, the next beacon
+reflects it. Transparency is bounded by the beacon's expiry window.</p>
+<h3 id="the-users-one-requirement">The user's one requirement</h3>
+<p>The user needs one thing: the regulator's beacon policy identifier and
+trust anchor. With it, they can verify that the beacon was minted under
+the regulator's declared policy before signing over it. This identifier
+is public by definition — published on official channels, embedded in the
+smart contract, and verifiable on-chain.</p>
+<h2 id="the-baton-pattern">The baton pattern</h2>
+<p>Authorization to act on a process is a baton that travels through
+the real world — physical or digital.</p>
+<pre class="mermaid"><code>graph LR
+    subgraph Lifecycle
+        O[Operator creates leaf&lt;br/&gt;&lt;i&gt;no actor assigned&lt;/i&gt;]
+        O --&gt; A1[First tap&lt;br/&gt;&lt;i&gt;Actor A becomes&lt;br/&gt;baton holder&lt;/i&gt;]
+        A1 --&gt; U1[Actor A uses&lt;br/&gt;&lt;i&gt;submits readings,&lt;br/&gt;progresses state&lt;/i&gt;]
+        U1 --&gt; P1[Actor A passes&lt;br/&gt;&lt;i&gt;final submission includes&lt;br/&gt;Actor B's pubkey&lt;/i&gt;]
+        P1 --&gt; A2[Actor B holds baton&lt;br/&gt;&lt;i&gt;Actor A locked out&lt;/i&gt;]
+        A2 --&gt; U2[Actor B uses]
+        U2 --&gt; P2[Actor B passes&lt;br/&gt;&lt;i&gt;to Actor C&lt;/i&gt;]
+        P2 --&gt; A3[Actor C holds baton]
+        A3 --&gt; END[End of lifecycle]
+    end</code></pre>
+<p>The baton passes atomically with the last action. There is no gap where
+nobody holds authorization — the transfer is part of the state transition,
+validated by the smart contract.</p>
+<p>No user registration. No identity database. No login. Authorization is
+determined entirely by the on-chain state. You hold the baton or you
+don't.</p>
+<h2 id="two-modes">Two modes</h2>
+<p>The same architecture supports two fundamentally different modes:</p>
+<pre class="mermaid"><code>graph TB
+    subgraph Physical Mode
+        SENSOR[Physical Sensor] --&gt;|I2C| SE[Secure Element]
+        SE --&gt;|COSE_Sign1| NFC[NFC Interface]
+        NFC --&gt;|tap| PHONE[Phone]
+        PHONE --&gt;|payload| OP1[Operator]
+        OP1 --&gt;|tx| CHAIN1[Chain]
+
+        NOTE1[Object is the identity&lt;br/&gt;AND the witness]
+    end
+
+    subgraph Process Mode
+        SERVER[Server] --&gt;|hosts| SFUNC[Signing Function]
+        APP[App / API] --&gt;|invokes| SFUNC
+        SFUNC --&gt;|signed payload| OP2[Operator]
+        OP2 --&gt;|tx| CHAIN2[Chain]
+
+        NOTE2[Identity is abstract&lt;br/&gt;Protocol is the witness]
+    end</code></pre>
+<h3 id="physical-mode">Physical mode</h3>
+<p>The object carries its own identity and can attest its own state.</p>
+<ul>
+<li>A battery with a sensor and secure element signs "my state of health
+  is 87%"</li>
+<li>The data comes from the thing itself — a physical measurement</li>
+<li>No server needed — the object is both the identifier and the witness</li>
+<li>Trust comes from the hardware: the sensor measured reality, the secure
+  element signed it, the chain anchored it</li>
+</ul>
+<p>Use when: the regulation requires physical measurements, sensor data,
+or tamper-evident attestation from the object itself.</p>
+<h3 id="process-mode">Process mode</h3>
+<p>There is no physical object — just a logical process advancing through
+stages.</p>
+<ul>
+<li>A permit application moves from applicant → reviewer → approver</li>
+<li>A certification workflow passes through inspector → auditor → issuer</li>
+<li>A supply chain declaration flows from producer → transporter → customs</li>
+</ul>
+<p>The signing function lives on a server. The operator mints a key pair,
+registers the public key on-chain, and makes the signing function
+available. The identity is abstract — it represents a process, not a
+thing.</p>
+<p>Trust comes from the protocol: the double signature proves the right
+actor performed the right action, the commitment proves timeliness, the
+smart contract proves correctness.</p>
+<p>Use when: the regulation governs a multi-party workflow where what
+matters is that the right sequence of actions happened, not what a
+physical sensor measured.</p>
+<h3 id="same-architecture">Same architecture</h3>
+<pre class="mermaid"><code>graph TD
+    subgraph Shared Architecture
+        MPT[Merkle Patricia Trie]
+        COMMIT[Commitment Protocol]
+        DSIG[Double Signature]
+        BATON[Baton Pattern]
+        BEACON[Beacon Protocol]
+        SC[Smart Contract Validation]
+        IDPC[Identity Trie Reference]
+        REGC[Regulation Trie Reference]
+    end
+
+    PHYS[Physical Mode] --&gt; MPT
+    PROC[Process Mode] --&gt; MPT
+    PHYS --&gt; COMMIT
+    PROC --&gt; COMMIT
+    PHYS --&gt; DSIG
+    PROC --&gt; DSIG
+    PHYS --&gt; BATON
+    PROC --&gt; BATON
+    PHYS --&gt; BEACON
+    PROC --&gt; BEACON
+    PHYS --&gt; SC
+    PROC --&gt; SC
+    PHYS --&gt; IDPC
+    PROC --&gt; IDPC
+    PHYS --&gt; REGC
+    PROC --&gt; REGC</code></pre>
+<p>The difference is the trust basis: hardware attestation vs protocol
+enforcement. Physical mode is strictly stronger (you get process
+guarantees <em>plus</em> physical attestation), but process mode covers
+regulations that have no physical component.</p>
+<h2 id="privacy">Privacy</h2>
+<p>No single party has the full picture:</p>
+<pre class="mermaid"><code>graph TD
+    subgraph Knowledge Boundaries
+        OP[Operator&lt;br/&gt;&lt;i&gt;verifies claims off-chain&lt;br/&gt;doesn't know real identities&lt;/i&gt;]
+        U[User&lt;br/&gt;&lt;i&gt;knows they acted&lt;br/&gt;doesn't know the private key&lt;/i&gt;]
+        CH[Chain&lt;br/&gt;&lt;i&gt;knows pubkeys + hashes&lt;br/&gt;no real-world data&lt;/i&gt;]
+        KP[Identity Provider&lt;br/&gt;&lt;i&gt;knows identities&lt;br/&gt;doesn't know which process&lt;/i&gt;]
+        RG[Regulator&lt;br/&gt;&lt;i&gt;knows qualifications&lt;br/&gt;doesn't see process data&lt;/i&gt;]
+    end
+
+    OP -.-|no link| U
+    U -.-|no link| CH
+    KP -.-|no link| OP
+    RG -.-|no link| OP</code></pre>
+<table>
+<thead>
+<tr>
+<th>Party</th>
+<th>Knows</th>
+<th>Doesn't know</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Identity provider</strong></td>
+<td>Real-world identity behind each attested key</td>
+<td>Which processes the key participates in</td>
+</tr>
+<tr>
+<td><strong>Regulator</strong></td>
+<td>Which actors are qualified for their regulation</td>
+<td>Process data, operator activity</td>
+</tr>
+<tr>
+<td><strong>Operator</strong></td>
+<td>Claims and leaf data (verified off-chain)</td>
+<td>Real-world identity behind the keys</td>
+</tr>
+<tr>
+<td><strong>User</strong></td>
+<td>That they interacted with a signing function</td>
+<td>The private key</td>
+</tr>
+<tr>
+<td><strong>Chain</strong></td>
+<td>Public keys, hashes, and valid signatures</td>
+<td>Any actual data or real-world identities</td>
+</tr>
+</tbody>
+</table>
+<p>The identity provider knows identities but not processes. The regulator knows
+qualifications but not process data. The operator verifies claims but
+doesn't know identities. The chain sees only hashes and signatures. No
+single party can reconstruct the full picture.</p>
+<p>Privacy is structural, not policy-based. The chain only stores hashes —
+the actual data behind the leaves is verified off-chain by the operator.
+The on-chain proofs (signatures, trie membership) establish <em>that</em> the
+right things happened without revealing <em>what</em> the actual content is.</p>
+<h2 id="data-availability-and-the-burden-of-proof">Data availability and the burden of proof</h2>
+<p>The tries store hashes on-chain, not full content. There is no guarantee
+that the pre-image behind a leaf hash can be reconstructed from the chain
+alone. This is a deliberate trade-off — storing full data on-chain would
+be prohibitively expensive.</p>
+<p>The auditability burden falls on the party that wants to challenge:</p>
+<ul>
+<li><strong>The operator</strong> received every assessment the regulator issued. To
+  challenge in court, the operator must have kept its history.</li>
+<li><strong>The user</strong> signed over beacons containing the operator's standing. To
+  challenge the operator, the user must have kept the beacons.</li>
+</ul>
+<p>The chain serves as the arbiter of <em>whether</em> presented data matches the
+on-chain hash — not as the archive itself. If a challenger produces data
+and its hash matches the leaf at that point in time, the content is proved
+authentic.</p>
+<h2 id="the-full-picture">The full picture</h2>
+<pre class="mermaid"><code>graph TB
+    subgraph Identity Layer
+        IDP_P[Identity Provider&lt;br/&gt;&lt;i&gt;off-chain verification&lt;/i&gt;]
+        IDP_UTxO[Identity UTxO&lt;br/&gt;&lt;i&gt;identity trie root&lt;/i&gt;]
+        IDP_P --&gt;|maintains| IDP_UTxO
+    end
+
+    subgraph Regulator Layer
+        REG[Regulator&lt;br/&gt;&lt;i&gt;qualifies actors&lt;/i&gt;]
+        REG_UTxO[Regulation UTxO&lt;br/&gt;&lt;i&gt;qualification trie root&lt;/i&gt;]
+        SC[Smart Contract&lt;br/&gt;&lt;i&gt;Plutus validator&lt;/i&gt;]
+        REG --&gt;|maintains| REG_UTxO
+        REG --&gt;|publishes| SC
+        SC --&gt;|references| IDP_UTxO
+        SC --&gt;|references| REG_UTxO
+    end
+
+    subgraph Operator Layer
+        OP[Operator&lt;br/&gt;&lt;i&gt;transparent pipe&lt;/i&gt;]
+        TRIE[Process Trie UTxO&lt;br/&gt;&lt;i&gt;items / processes&lt;/i&gt;]
+        SF1[Signing Function 1]
+        SF2[Signing Function 2]
+        SF3[Signing Function N]
+        OP --&gt;|manages| TRIE
+        OP --&gt;|mints| SF1
+        OP --&gt;|mints| SF2
+        OP --&gt;|mints| SF3
+        SC --&gt;|governs| TRIE
+    end
+
+    subgraph User Layer
+        U1[User A&lt;br/&gt;&lt;i&gt;holds baton&lt;/i&gt;]
+        U2[User B&lt;br/&gt;&lt;i&gt;next in line&lt;/i&gt;]
+        U3[User N&lt;br/&gt;&lt;i&gt;future actor&lt;/i&gt;]
+    end
+
+    SF1 -.-&gt;|signing capability| U1
+    SF2 -.-&gt;|signing capability| U2
+    SF3 -.-&gt;|signing capability| U3
+
+    U1 --&gt;|double-signed payload| OP
+    U1 --&gt;|passes baton to| U2</code></pre>
+<h2 id="summary">Summary</h2>
+<p>The regulator's workflow:</p>
+<ol>
+<li><strong>Analyze the regulation</strong> — extract the data schema, valid transitions,
+   parties, qualifications, and deadlines</li>
+<li><strong>Maintain a regulation trie</strong> — qualify actors with process-specific
+   credentials and maintain operator standing (compliance scores, flags)</li>
+<li><strong>Choose an identity provider</strong> — decide which identity infrastructure to
+   trust, reference its UTxO</li>
+<li><strong>Publish the smart contract</strong> — encode the regulation as a Plutus
+   validator that references both the identity and regulation tries</li>
+<li><strong>Define the beacon minting policy</strong> — force operators to sample their
+   standing before collecting user attestations</li>
+<li><strong>Audit</strong> — verify that operators use the correct smart contract and
+   follow the transactions over it</li>
+</ol>
+<p>The identity provider's workflow:</p>
+<ol>
+<li><strong>Verify entities</strong> — through off-chain identity checks</li>
+<li><strong>Maintain the trie</strong> — add, update, or revoke actor keys</li>
+<li><strong>Serve multiple regulators</strong> — the same trie can be referenced by
+   many smart contracts</li>
+</ol>
+<p>The operator's workflow:</p>
+<ol>
+<li><strong>Deploy a trie</strong> — create a UTxO governed by the regulator's contract</li>
+<li><strong>Mint signing functions</strong> — generate keys, register on-chain, distribute</li>
+<li><strong>Mint beacons</strong> — sample standing from regulation trie, relay to users</li>
+<li><strong>Verify off-chain</strong> — check user claims against leaf data before
+   submitting</li>
+<li><strong>Collect and submit</strong> — receive double-signed payloads, batch into
+   transactions</li>
+<li><strong>Pay fees</strong> — compliance is cheaper than non-compliance</li>
+</ol>
+<p>The user's workflow:</p>
+<ol>
+<li><strong>Receive</strong> — get a device or access to a signing function</li>
+<li><strong>Use</strong> — tap, scan, click</li>
+<li><strong>Pass on</strong> — designate the next actor in your final submission</li>
+</ol>
+<p>No blockchain knowledge required at any level. The regulator qualifies
+actors and publishes rules. The identity provider attests identities. The
+operator leverages institutional attestations and follows the rules.
+The user participates. The chain enforces.</p>
+<h2 id="why-cardano">Why Cardano</h2>
+<p>This analysis is based on Cardano's capabilities. The design patterns
+described here — signing functions, double signatures, commitment
+protocols, the baton pattern — are conceptual and other blockchains are
+free to find their own way to implement them.</p>
+<p>That said, the on-chain requirements are non-trivial:</p>
+<ul>
+<li><strong>Merkle Patricia Trie verification in the validator</strong> — the smart
+  contract must verify that a leaf update produces the correct new root
+  hash. This is Merkle proof verification at every transaction.</li>
+<li><strong>Reference inputs</strong> — the validator must read the identity and regulation
+  trie UTxOs without spending them. This is a Cardano-native feature
+  (CIP-31) that enables cross-trie verification without coordination.</li>
+<li><strong>Native signature verification</strong> — Ed25519 and secp256k1 must be
+  available as cheap built-in operations, not expensive general-purpose
+  computation.</li>
+<li><strong>Full transaction context</strong> — the validator must see the previous state,
+  the new state, all signatures, and the current slot range in a single
+  evaluation.</li>
+<li><strong>Deterministic payload parsing</strong> — CBOR/COSE decoding inside the
+  validator to check that signed data matches the state update.</li>
+<li><strong>Economically viable validator complexity</strong> — all of the above must
+  fit within the execution budget of a single transaction at reasonable
+  cost.</li>
+</ul>
+<p>Cardano's eUTxO model and Plutus built-ins meet these requirements. The
+UTxO model naturally maps to the operator-owns-their-trie pattern — one
+UTxO per operator, the validator sees the full spend-and-produce context,
+reference inputs enable cross-trie identity and regulation checks, and native
+built-ins for Ed25519 and secp256k1 make signature verification practical.</p>
+<p>Other chains may offer equivalent primitives. The schema does not depend
+on Cardano-specific features at the design level — but the implementation
+does depend on a chain that can handle non-trivial smart contract logic
+at reasonable cost.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.expand", "toc.integrate", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+        <script src="../../javascripts/mermaid.mjs" type="module"></script>
+      
+    
+  </body>
+</html>

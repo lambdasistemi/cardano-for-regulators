@@ -1,0 +1,1976 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Framework for analyzing multi-party regulations and mapping them to Cardano compliance infrastructure">
+      
+      
+      
+        <link rel="canonical" href="https://lambdasistemi.github.io/cardano-for-regulators/generated/ontology/">
+      
+      
+        <link rel="prev" href="../../cases/gdpr-contract/">
+      
+      
+        <link rel="next" href="../gdpr/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>Overview - Cardano for Regulators</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ontology" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Cardano for Regulators" class="md-header__button md-logo" aria-label="Cardano for Regulators" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Cardano for Regulators
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Overview
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/lambdasistemi/cardano-for-regulators" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    lambdasistemi/cardano-for-regulators
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Cardano for Regulators" class="md-nav__button md-logo" aria-label="Cardano for Regulators" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Cardano for Regulators
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/lambdasistemi/cardano-for-regulators" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    lambdasistemi/cardano-for-regulators
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../graph/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ontology Graph
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../thesis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Thesis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Framework
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Framework
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../framework/schema/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Regulator Schema
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../framework/constraints/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Five Constraints
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../framework/methodology/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Analysis Methodology
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../framework/patterns/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture Patterns
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Case Studies
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Case Studies
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/battery-regulation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EU Battery Regulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/battery-contract/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Battery Smart Contract
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/gdpr/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GDPR
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cases/gdpr-contract/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GDPR Smart Contract
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ontology
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Ontology
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#class-hierarchy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Class hierarchy
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Class hierarchy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#on-chain-artifact" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        On-chain Artifact
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#party" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Party
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#protocol-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Protocol Pattern
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#regulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Regulation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#schema-mechanism" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Schema Mechanism
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#standalone-classes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Standalone classes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#property-map" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Property map
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Property map">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#object-properties" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Object properties
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#datatype-properties" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Datatype properties
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#named-individuals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Named individuals
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gdpr/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GDPR
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../eu-battery-regulation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EU Battery Regulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="ontology">Ontology</h1>
+<p><em>Generated from <a href="https://github.com/lambdasistemi/cardano-for-regulators/blob/main/ontology/cfr.ttl"><code>ontology/cfr.ttl</code></a>.</em></p>
+<h2 id="class-hierarchy">Class hierarchy</h2>
+<h3 id="on-chain-artifact">On-chain Artifact</h3>
+<pre class="mermaid"><code>graph LR
+    On_chain_Artifact["On-chain Artifact"]
+    On_chain_Artifact --&gt; Merkle_Patricia_Trie["Merkle Patricia Trie"]
+    Merkle_Patricia_Trie --&gt; Identity_Trie["Identity Trie"]
+    Merkle_Patricia_Trie --&gt; Process_Trie["Process Trie"]
+    Merkle_Patricia_Trie --&gt; Regulation_Trie["Regulation Trie"]
+    On_chain_Artifact --&gt; Smart_Contract["Smart Contract"]</code></pre>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>On-chain Artifact</strong></td>
+<td>An on-chain data structure or mechanism in the architecture.</td>
+</tr>
+<tr>
+<td>Merkle Patricia Trie</td>
+<td>An MPT stored in a single UTxO. Three types: identity trie, regulation trie, process trie.</td>
+</tr>
+<tr>
+<td>↳ Identity Trie</td>
+<td>Attested actor public keys. Maintained by the identity provider.</td>
+</tr>
+<tr>
+<td>↳ Process Trie</td>
+<td>Items, processes, and state. One per operator. Governed by the smart contract.</td>
+</tr>
+<tr>
+<td>↳ Regulation Trie</td>
+<td>Actor qualifications and operator standing. Maintained by the regulator. Reference input for the smart contract.</td>
+</tr>
+<tr>
+<td>Smart Contract</td>
+<td>The regulation in executable form. A Plutus validator published by the regulator. Governs the process trie, reads identity and regulation tries as reference inputs.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="party">Party</h3>
+<pre class="mermaid"><code>graph LR
+    Party["Party"]
+    Party --&gt; Beneficiary["Beneficiary"]
+    Party --&gt; Identity_Provider["Identity Provider"]
+    Party --&gt; Operator["Operator"]
+    Party --&gt; Regulator["Regulator"]
+    Party --&gt; User["User"]
+    Party --&gt; Verification_Body["Verification Body"]</code></pre>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Party</strong></td>
+<td>An actor in a regulated process. The schema defines four canonical roles; each regulation maps its actors to these roles.</td>
+</tr>
+<tr>
+<td>Beneficiary</td>
+<td>A party that benefits from the transparency the regulation creates.</td>
+</tr>
+<tr>
+<td>Identity Provider</td>
+<td>Maintains the identity trie of verified real-world entities. Attests actor public keys. Can serve multiple regulators.</td>
+</tr>
+<tr>
+<td>Operator</td>
+<td>Participates in the regulated market. Manages a process trie. A transparent pipe: collects user payloads, verifies off-chain, submits transactions, pays fees.</td>
+</tr>
+<tr>
+<td>Regulator</td>
+<td>The institution that defines the rules. Maintains the regulation trie, publishes the smart contract, defines the beacon minting policy. Does not run infrastructure.</td>
+</tr>
+<tr>
+<td>User</td>
+<td>Interacts with the process via a signing function. No wallet, no ADA, no blockchain knowledge. Receive, use, pass on.</td>
+</tr>
+<tr>
+<td>Verification Body</td>
+<td>An entity that checks compliance — auditors, notified bodies, certification bodies, market surveillance authorities.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="protocol-pattern">Protocol Pattern</h3>
+<pre class="mermaid"><code>graph LR
+    Protocol_Pattern["Protocol Pattern"]
+    Protocol_Pattern --&gt; Baton_Pattern["Baton Pattern"]
+    Protocol_Pattern --&gt; Beacon_Gated_Attestation["Beacon-Gated Attestation"]
+    Protocol_Pattern --&gt; Commitment_then_Submit["Commitment-then-Submit"]
+    Protocol_Pattern --&gt; Cross_Operator_Handoff["Cross-Operator Handoff"]
+    Protocol_Pattern --&gt; Double_Signature["Double Signature"]
+    Protocol_Pattern --&gt; Lifecycle_State_Machine["Lifecycle State Machine"]
+    Protocol_Pattern --&gt; MPT_per_Operator["MPT-per-Operator"]
+    Protocol_Pattern --&gt; Operator_as_Aggregator["Operator-as-Aggregator"]
+    Protocol_Pattern --&gt; Relay_State_Machine["Relay State Machine"]
+    Protocol_Pattern --&gt; Reward_Distribution["Reward Distribution"]
+    Protocol_Pattern --&gt; Tiered_Access["Tiered Access"]
+    Protocol_Pattern --&gt; Upstream_Verification["Upstream Verification"]</code></pre>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Protocol Pattern</strong></td>
+<td>A reusable on-chain pattern extracted from the framework. Each addresses a specific class of regulatory requirement.</td>
+</tr>
+<tr>
+<td>Baton Pattern</td>
+<td>Authorization travels as a baton. Actor A's final submission includes Actor B's pubkey. Atomic transfer, no gap.</td>
+</tr>
+<tr>
+<td>Beacon-Gated Attestation</td>
+<td>Operator must mint a beacon (sampling standing from regulation trie) before collecting user attestations. Forces transparency.</td>
+</tr>
+<tr>
+<td>Commitment-then-Submit</td>
+<td>Proves an action occurred within a time window. Single-use, slot-bounded, no off-chain timestamp trust.</td>
+</tr>
+<tr>
+<td>Cross-Operator Handoff</td>
+<td>Responsibility transfer. Old leaf read-only, new leaf in receiving operator's trie with back-link to original root.</td>
+</tr>
+<tr>
+<td>Double Signature</td>
+<td>Every transition requires two signatures: process (authentication) and actor (authorization).</td>
+</tr>
+<tr>
+<td>Lifecycle State Machine</td>
+<td>Status field in MPT leaf with on-chain validated transitions. No backward transitions unless explicitly allowed.</td>
+</tr>
+<tr>
+<td>MPT-per-Operator</td>
+<td>One UTxO per operator, items as leaves. Cost scales with operators not items.</td>
+</tr>
+<tr>
+<td>Operator-as-Aggregator</td>
+<td>Users have no wallet. Operator collects and batches actions into transactions, pays all fees.</td>
+</tr>
+<tr>
+<td>Relay State Machine</td>
+<td>Multiple actors act in sequence. The regulation defines the ordering. Timeout/escalation if an actor stalls.</td>
+</tr>
+<tr>
+<td>Reward Distribution</td>
+<td>Monotonically increasing reward accumulator in MPT leaf. Each valid action adds to the reporter's total.</td>
+</tr>
+<tr>
+<td>Tiered Access</td>
+<td>On-chain: root hash only. Off-chain: encrypted layers per access tier (public, authorized, authority-only).</td>
+</tr>
+<tr>
+<td>Upstream Verification</td>
+<td>One operator's compliance depends on reading another operator's trie. Supply chain cascading.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="regulation">Regulation</h3>
+<pre class="mermaid"><code>graph LR
+    Regulation["Regulation"]
+    Regulation --&gt; EU_Regulation["EU Regulation"]
+    Regulation --&gt; ISO_Standard["ISO Standard"]
+    Regulation --&gt; Industry_Certification["Industry Certification"]</code></pre>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Regulation</strong></td>
+<td>A regulation, directive, standard, or certification scheme analyzed through the framework. The top-level entity for each case study.</td>
+</tr>
+<tr>
+<td>EU Regulation</td>
+<td>A regulation or directive issued by the European Union.</td>
+</tr>
+<tr>
+<td>ISO Standard</td>
+<td>An ISO/IEC management system or product standard.</td>
+</tr>
+<tr>
+<td>Industry Certification</td>
+<td>A sector-specific certification scheme (TISAX, PCI DSS, etc.).</td>
+</tr>
+</tbody>
+</table>
+<h3 id="schema-mechanism">Schema Mechanism</h3>
+<pre class="mermaid"><code>graph LR
+    Schema_Mechanism["Schema Mechanism"]
+    Schema_Mechanism --&gt; Beacon["Beacon"]
+    Schema_Mechanism --&gt; Signing_Function["Signing Function"]</code></pre>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Schema Mechanism</strong></td>
+<td>A core mechanism in the schema that connects parties to the chain. Not an on-chain artifact per se — these are the conceptual constructions that make the protocol work.</td>
+</tr>
+<tr>
+<td>Beacon</td>
+<td>The regulator's policy carrier. Forces the operator to sample their standing and the applicable data policy from the regulation trie before collecting user attestations. Carries two things: standing (the regulator's assessment) and data policy (who may receive the data and under what conditions). The user encrypts their contribution for the beacon's recipients and signs over the beacon. Expires to prevent stale reputation and stale disclosure authorization.</td>
+</tr>
+<tr>
+<td>Signing Function</td>
+<td>An off-chain opaque capability that produces signatures. Lives on hardware (SE050), phone enclave, server, TEE, or ZK circuit. Only its public key and signatures appear on-chain.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="standalone-classes">Standalone classes</h3>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Access Tier</strong></td>
+<td>Visibility level for a data element.</td>
+</tr>
+<tr>
+<td><strong>Bright Line Phase</strong></td>
+<td>A phase in the lifecycle of an on-chain hash's personal data status. The hash transitions from personal data (with lawful basis) to anonymous data (outside GDPR scope) when the off-chain pre-image is deleted.</td>
+</tr>
+<tr>
+<td><strong>Compliance Record</strong></td>
+<td>A specific record type stored as a leaf in the process trie. The on-chain representation of an obligation.</td>
+</tr>
+<tr>
+<td><strong>Concrete Party</strong></td>
+<td>A specific real-world actor type in a regulation, mapped to a schema role. E.g., 'Data Controller' maps to OperatorRole.</td>
+</tr>
+<tr>
+<td><strong>Constraint</strong></td>
+<td>A constraint that must hold for a regulation to be a good blockchain candidate. All five must pass.</td>
+</tr>
+<tr>
+<td><strong>Constraint Assessment</strong></td>
+<td>The result of evaluating a constraint against a specific regulation: pass or fail with justification.</td>
+</tr>
+<tr>
+<td><strong>Data Policy</strong></td>
+<td>The beacon's second payload. Defines who may receive the data (recipient public keys or key classes) and under what conditions. The regulator encodes parameterized disclosure rules in the regulation trie; the beacon carries the applicable rule for each interaction.</td>
+</tr>
+<tr>
+<td><strong>Data Type</strong></td>
+<td>Classification of a data element in a regulation.</td>
+</tr>
+<tr>
+<td><strong>Disclosure Context</strong></td>
+<td>A parameterized rule that determines encryption recipients based on the purpose of the interaction. Examples: routine reading (owner + regulator), pre-sale disclosure (owner + buyer + regulator), regulatory audit (regulator only), repurposing (both operators + regulator).</td>
+</tr>
+<tr>
+<td><strong>Fit Assessment</strong></td>
+<td>Overall blockchain fit assessment for a regulation.</td>
+</tr>
+<tr>
+<td><strong>Formal Invariant</strong></td>
+<td>A property that must hold for a protocol pattern. If it cannot be stated precisely, the design is incomplete.</td>
+</tr>
+<tr>
+<td><strong>Guard</strong></td>
+<td>A condition the validator checks for a specific redeemer action. Universal guards apply to all actions.</td>
+</tr>
+<tr>
+<td><strong>Lifecycle State</strong></td>
+<td>A state in a lifecycle state machine.</td>
+</tr>
+<tr>
+<td><strong>Mode</strong></td>
+<td>Physical mode (hardware attestation) or process mode (protocol enforcement).</td>
+</tr>
+<tr>
+<td><strong>Obligation</strong></td>
+<td>A specific reporting or compliance obligation within a regulation, mapped to a protocol pattern.</td>
+</tr>
+<tr>
+<td><strong>Penalty</strong></td>
+<td>The consequence of non-compliance.</td>
+</tr>
+<tr>
+<td><strong>Redeemer Action</strong></td>
+<td>A specific action the smart contract recognises. Each action has guards (conditions the validator checks).</td>
+</tr>
+<tr>
+<td><strong>State Transition</strong></td>
+<td>A valid transition between lifecycle states, triggered by a redeemer action.</td>
+</tr>
+<tr>
+<td><strong>Tension</strong></td>
+<td>A conflict between a GDPR principle and a blockchain architectural property. Each tension has a standard framing, the architecture's response, and a residual risk.</td>
+</tr>
+<tr>
+<td><strong>Three-Question Pre-filter</strong></td>
+<td>Quick screening: multi-party data, institutional anchor, verifiable history. All three must hold.</td>
+</tr>
+<tr>
+<td><strong>Token Type</strong></td>
+<td>Something that behaves like a token in the regulation.</td>
+</tr>
+<tr>
+<td><strong>Trust Level</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Trust Relationship</strong></td>
+<td>The trust level between two parties, the risk if trust is misplaced, and whether blockchain mitigates it.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="property-map">Property map</h2>
+<pre class="mermaid"><code>graph LR
+    Regulation["Regulation"] --&gt;|has fit assessment| Fit_Assessment["Fit Assessment"]
+    Regulation["Regulation"] --&gt;|uses mode| Mode["Mode"]
+    Regulation["Regulation"] --&gt;|has party| Concrete_Party["Concrete Party"]
+    Concrete_Party["Concrete Party"] --&gt;|maps to role| Party["Party"]
+    Regulation["Regulation"] --&gt;|has obligation| Obligation["Obligation"]
+    Obligation["Obligation"] --&gt;|implemented by| Protocol_Pattern["Protocol Pattern"]
+    Obligation["Obligation"] --&gt;|has data type| Data_Type["Data Type"]
+    Obligation["Obligation"] --&gt;|has access tier| Access_Tier["Access Tier"]
+    Obligation["Obligation"] --&gt;|produces record| Compliance_Record["Compliance Record"]
+    Regulation["Regulation"] --&gt;|has constraint assessment| Constraint_Assessment["Constraint Assessment"]
+    Constraint_Assessment["Constraint Assessment"] --&gt;|assesses constraint| Constraint["Constraint"]
+    Regulation["Regulation"] --&gt;|has trust relationship| Trust_Relationship["Trust Relationship"]
+    Trust_Relationship["Trust Relationship"] --&gt;|party A| Concrete_Party["Concrete Party"]
+    Trust_Relationship["Trust Relationship"] --&gt;|party B| Concrete_Party["Concrete Party"]
+    Trust_Relationship["Trust Relationship"] --&gt;|has trust level| Trust_Level["Trust Level"]
+    Regulation["Regulation"] --&gt;|has token| Token_Type["Token Type"]
+    Regulation["Regulation"] --&gt;|has penalty| Penalty["Penalty"]
+    Regulation["Regulation"] --&gt;|uses pattern| Protocol_Pattern["Protocol Pattern"]
+    Protocol_Pattern["Protocol Pattern"] --&gt;|has invariant| Formal_Invariant["Formal Invariant"]
+    Regulation["Regulation"] --&gt;|has redeemer action| Redeemer_Action["Redeemer Action"]
+    Redeemer_Action["Redeemer Action"] --&gt;|has guard| Guard["Guard"]
+    Regulation["Regulation"] --&gt;|has lifecycle| Lifecycle_State_Machine["Lifecycle State Machine"]
+    Lifecycle_State_Machine["Lifecycle State Machine"] --&gt;|has state| Lifecycle_State["Lifecycle State"]
+    Lifecycle_State_Machine["Lifecycle State Machine"] --&gt;|has transition| State_Transition["State Transition"]
+    State_Transition["State Transition"] --&gt;|from state| Lifecycle_State["Lifecycle State"]
+    State_Transition["State Transition"] --&gt;|to state| Lifecycle_State["Lifecycle State"]
+    State_Transition["State Transition"] --&gt;|triggered by| Redeemer_Action["Redeemer Action"]
+    On_chain_Artifact["On-chain Artifact"] --&gt;|maintained by| Party["Party"]
+    Merkle_Patricia_Trie["Merkle Patricia Trie"] --&gt;|governed by| Smart_Contract["Smart Contract"]
+    Smart_Contract["Smart Contract"] --&gt;|reads as reference input| Merkle_Patricia_Trie["Merkle Patricia Trie"]
+    Beacon["Beacon"] --&gt;|has data policy| Data_Policy["Data Policy"]
+    Data_Policy["Data Policy"] --&gt;|has disclosure context| Disclosure_Context["Disclosure Context"]
+    Regulation["Regulation"] --&gt;|has bright line phase| Bright_Line_Phase["Bright Line Phase"]
+    Regulation["Regulation"] --&gt;|has tension| Tension["Tension"]
+    Regulation["Regulation"] --&gt;|converges with| Regulation["Regulation"]
+    Regulation["Regulation"] --&gt;|complemented by| Regulation["Regulation"]</code></pre>
+<h3 id="object-properties">Object properties</h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Domain</th>
+<th>Range</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>assesses constraint</code></td>
+<td>Constraint Assessment</td>
+<td>Constraint</td>
+<td></td>
+</tr>
+<tr>
+<td><code>complemented by</code></td>
+<td>Regulation</td>
+<td>Regulation</td>
+<td>A standard that operationalises a regulation (e.g., ISO 27001 for NIS2).</td>
+</tr>
+<tr>
+<td><code>converges with</code></td>
+<td>Regulation</td>
+<td>Regulation</td>
+<td>Compliance evidence from one regulation satisfies requirements of another. The same trie serves multiple smart contracts.</td>
+</tr>
+<tr>
+<td><code>from state</code></td>
+<td>State Transition</td>
+<td>Lifecycle State</td>
+<td></td>
+</tr>
+<tr>
+<td><code>governed by</code></td>
+<td>Merkle Patricia Trie</td>
+<td>Smart Contract</td>
+<td></td>
+</tr>
+<tr>
+<td><code>has access tier</code></td>
+<td>Obligation</td>
+<td>Access Tier</td>
+<td></td>
+</tr>
+<tr>
+<td><code>has bright line phase</code></td>
+<td>Regulation</td>
+<td>Bright Line Phase</td>
+<td>A phase in the hash personal-data lifecycle for this regulation.</td>
+</tr>
+<tr>
+<td><code>has constraint assessment</code></td>
+<td>Regulation</td>
+<td>Constraint Assessment</td>
+<td></td>
+</tr>
+<tr>
+<td><code>has data policy</code></td>
+<td>Beacon</td>
+<td>Data Policy</td>
+<td>The data policy carried by this beacon.</td>
+</tr>
+<tr>
+<td><code>has data type</code></td>
+<td>Obligation</td>
+<td>Data Type</td>
+<td></td>
+</tr>
+<tr>
+<td><code>has disclosure context</code></td>
+<td>Data Policy</td>
+<td>Disclosure Context</td>
+<td>A disclosure context permitted by this data policy.</td>
+</tr>
+<tr>
+<td><code>has fit assessment</code></td>
+<td>Regulation</td>
+<td>Fit Assessment</td>
+<td></td>
+</tr>
+<tr>
+<td><code>has guard</code></td>
+<td>Redeemer Action</td>
+<td>Guard</td>
+<td></td>
+</tr>
+<tr>
+<td><code>has invariant</code></td>
+<td>Protocol Pattern</td>
+<td>Formal Invariant</td>
+<td></td>
+</tr>
+<tr>
+<td><code>has lifecycle</code></td>
+<td>Regulation</td>
+<td>Lifecycle State Machine</td>
+<td></td>
+</tr>
+<tr>
+<td><code>has obligation</code></td>
+<td>Regulation</td>
+<td>Obligation</td>
+<td></td>
+</tr>
+<tr>
+<td><code>has party</code></td>
+<td>Regulation</td>
+<td>Concrete Party</td>
+<td>A concrete actor type in this regulation.</td>
+</tr>
+<tr>
+<td><code>has penalty</code></td>
+<td>Regulation</td>
+<td>Penalty</td>
+<td></td>
+</tr>
+<tr>
+<td><code>has redeemer action</code></td>
+<td>Regulation</td>
+<td>Redeemer Action</td>
+<td></td>
+</tr>
+<tr>
+<td><code>has state</code></td>
+<td>Lifecycle State Machine</td>
+<td>Lifecycle State</td>
+<td></td>
+</tr>
+<tr>
+<td><code>has tension</code></td>
+<td>Regulation</td>
+<td>Tension</td>
+<td></td>
+</tr>
+<tr>
+<td><code>has token</code></td>
+<td>Regulation</td>
+<td>Token Type</td>
+<td></td>
+</tr>
+<tr>
+<td><code>has transition</code></td>
+<td>Lifecycle State Machine</td>
+<td>State Transition</td>
+<td></td>
+</tr>
+<tr>
+<td><code>has trust level</code></td>
+<td>Trust Relationship</td>
+<td>Trust Level</td>
+<td></td>
+</tr>
+<tr>
+<td><code>has trust relationship</code></td>
+<td>Regulation</td>
+<td>Trust Relationship</td>
+<td></td>
+</tr>
+<tr>
+<td><code>implemented by</code></td>
+<td>Obligation</td>
+<td>Protocol Pattern</td>
+<td>The protocol pattern that realises this obligation on-chain.</td>
+</tr>
+<tr>
+<td><code>maintained by</code></td>
+<td>On-chain Artifact</td>
+<td>Party</td>
+<td></td>
+</tr>
+<tr>
+<td><code>maps to role</code></td>
+<td>Concrete Party</td>
+<td>Party</td>
+<td>The schema role this concrete party maps to.</td>
+</tr>
+<tr>
+<td><code>party A</code></td>
+<td>Trust Relationship</td>
+<td>Concrete Party</td>
+<td></td>
+</tr>
+<tr>
+<td><code>party B</code></td>
+<td>Trust Relationship</td>
+<td>Concrete Party</td>
+<td></td>
+</tr>
+<tr>
+<td><code>produces record</code></td>
+<td>Obligation</td>
+<td>Compliance Record</td>
+<td>The on-chain compliance record type this obligation creates.</td>
+</tr>
+<tr>
+<td><code>reads as reference input</code></td>
+<td>Smart Contract</td>
+<td>Merkle Patricia Trie</td>
+<td></td>
+</tr>
+<tr>
+<td><code>to state</code></td>
+<td>State Transition</td>
+<td>Lifecycle State</td>
+<td></td>
+</tr>
+<tr>
+<td><code>triggered by</code></td>
+<td>State Transition</td>
+<td>Redeemer Action</td>
+<td></td>
+</tr>
+<tr>
+<td><code>uses mode</code></td>
+<td>Regulation</td>
+<td>Mode</td>
+<td></td>
+</tr>
+<tr>
+<td><code>uses pattern</code></td>
+<td>Regulation</td>
+<td>Protocol Pattern</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="datatype-properties">Datatype properties</h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Domain</th>
+<th>Range</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>action label</code></td>
+<td>Redeemer Action</td>
+<td>string</td>
+<td></td>
+</tr>
+<tr>
+<td><code>architecture response</code></td>
+<td>Tension</td>
+<td>string</td>
+<td>How this architecture addresses the tension.</td>
+</tr>
+<tr>
+<td><code>behavior</code></td>
+<td>Token Type</td>
+<td>string</td>
+<td></td>
+</tr>
+<tr>
+<td><code>deadline</code></td>
+<td>Obligation</td>
+<td>string</td>
+<td>E.g., '72 hours', '1 month', '3-year cycle'.</td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td>Guard</td>
+<td>string</td>
+<td></td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td>Penalty</td>
+<td>string</td>
+<td></td>
+</tr>
+<tr>
+<td><code>formal statement</code></td>
+<td>Formal Invariant</td>
+<td>string</td>
+<td></td>
+</tr>
+<tr>
+<td><code>full text URL</code></td>
+<td>Regulation</td>
+<td>anyURI</td>
+<td>Link to the official regulation text (EUR-Lex, ISO, etc.).</td>
+</tr>
+<tr>
+<td><code>in force date</code></td>
+<td>Regulation</td>
+<td>date</td>
+<td></td>
+</tr>
+<tr>
+<td><code>is universal</code></td>
+<td>Guard</td>
+<td>boolean</td>
+<td>True if this guard applies to every redeemer action.</td>
+</tr>
+<tr>
+<td><code>justification</code></td>
+<td>Constraint Assessment</td>
+<td>string</td>
+<td></td>
+</tr>
+<tr>
+<td><code>legal basis</code></td>
+<td>Obligation</td>
+<td>string</td>
+<td>Article reference, e.g., 'Art 33'.</td>
+</tr>
+<tr>
+<td><code>maximum fine</code></td>
+<td>Penalty</td>
+<td>string</td>
+<td>E.g., '€20M / 4% global turnover'.</td>
+</tr>
+<tr>
+<td><code>mitigation</code></td>
+<td>Trust Relationship</td>
+<td>string</td>
+<td></td>
+</tr>
+<tr>
+<td><code>obligation label</code></td>
+<td>Obligation</td>
+<td>string</td>
+<td></td>
+</tr>
+<tr>
+<td><code>official reference</code></td>
+<td>Regulation</td>
+<td>string</td>
+<td>Official identifier, e.g., '(EU) 2016/679'.</td>
+</tr>
+<tr>
+<td><code>on-chain representation</code></td>
+<td>Compliance Record</td>
+<td>string</td>
+<td>What is stored on-chain, e.g., 'hash of consent record + timestamp'.</td>
+</tr>
+<tr>
+<td><code>party label</code></td>
+<td>Concrete Party</td>
+<td>string</td>
+<td>E.g., 'Data Controller', 'Manufacturer', 'Supervisory Authority'.</td>
+</tr>
+<tr>
+<td><code>proof status</code></td>
+<td>Formal Invariant</td>
+<td>string</td>
+<td>'Proved', 'Conjectured', 'Open'.</td>
+</tr>
+<tr>
+<td><code>residual risk</code></td>
+<td>Tension</td>
+<td>string</td>
+<td>The remaining risk after the architecture addresses the tension.</td>
+</tr>
+<tr>
+<td><code>result</code></td>
+<td>Constraint Assessment</td>
+<td>string</td>
+<td>'Pass' or 'Fail'.</td>
+</tr>
+<tr>
+<td><code>risk</code></td>
+<td>Trust Relationship</td>
+<td>string</td>
+<td></td>
+</tr>
+<tr>
+<td><code>standard framing</code></td>
+<td>Tension</td>
+<td>string</td>
+<td>How the literature frames this tension.</td>
+</tr>
+<tr>
+<td><code>tension label</code></td>
+<td>Tension</td>
+<td>string</td>
+<td></td>
+</tr>
+<tr>
+<td><code>token label</code></td>
+<td>Token Type</td>
+<td>string</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="named-individuals">Named individuals</h2>
+<table>
+<thead>
+<tr>
+<th>Individual</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Active Compliance</td>
+<td>Bright Line Phase</td>
+</tr>
+<tr>
+<td>Authorities Only</td>
+<td>Access Tier</td>
+</tr>
+<tr>
+<td>Authorized Operators</td>
+<td>Access Tier</td>
+</tr>
+<tr>
+<td>Certificate</td>
+<td>Token Type</td>
+</tr>
+<tr>
+<td>Credit</td>
+<td>Token Type</td>
+</tr>
+<tr>
+<td>Data Cadence</td>
+<td>Constraint</td>
+</tr>
+<tr>
+<td>Dynamic</td>
+<td>Data Type</td>
+</tr>
+<tr>
+<td>Emergency Recall</td>
+<td>Disclosure Context</td>
+</tr>
+<tr>
+<td>Event-driven</td>
+<td>Data Type</td>
+</tr>
+<tr>
+<td>Fee Alignment</td>
+<td>Constraint</td>
+</tr>
+<tr>
+<td>Good</td>
+<td>Fit Assessment</td>
+</tr>
+<tr>
+<td>High</td>
+<td>Trust Level</td>
+</tr>
+<tr>
+<td>Identity Delegation</td>
+<td>Constraint</td>
+</tr>
+<tr>
+<td>Liveness</td>
+<td>Constraint</td>
+</tr>
+<tr>
+<td>Low</td>
+<td>Trust Level</td>
+</tr>
+<tr>
+<td>Medium</td>
+<td>Fit Assessment</td>
+</tr>
+<tr>
+<td>Medium</td>
+<td>Trust Level</td>
+</tr>
+<tr>
+<td>None</td>
+<td>Trust Level</td>
+</tr>
+<tr>
+<td>Obligation</td>
+<td>Token Type</td>
+</tr>
+<tr>
+<td>Physical Mode</td>
+<td>Mode</td>
+</tr>
+<tr>
+<td>Post-Erasure</td>
+<td>Bright Line Phase</td>
+</tr>
+<tr>
+<td>Pre-sale Disclosure</td>
+<td>Disclosure Context</td>
+</tr>
+<tr>
+<td>Process Mode</td>
+<td>Mode</td>
+</tr>
+<tr>
+<td>Public</td>
+<td>Access Tier</td>
+</tr>
+<tr>
+<td>Regulatory Audit</td>
+<td>Disclosure Context</td>
+</tr>
+<tr>
+<td>Repurposing Assessment</td>
+<td>Disclosure Context</td>
+</tr>
+<tr>
+<td>Restricted</td>
+<td>Access Tier</td>
+</tr>
+<tr>
+<td>Retention under Exception</td>
+<td>Bright Line Phase</td>
+</tr>
+<tr>
+<td>Reward</td>
+<td>Token Type</td>
+</tr>
+<tr>
+<td>Right</td>
+<td>Token Type</td>
+</tr>
+<tr>
+<td>Routine Reading</td>
+<td>Disclosure Context</td>
+</tr>
+<tr>
+<td>Sequential Access</td>
+<td>Constraint</td>
+</tr>
+<tr>
+<td>Static</td>
+<td>Data Type</td>
+</tr>
+<tr>
+<td>Strong</td>
+<td>Fit Assessment</td>
+</tr>
+<tr>
+<td>Weak</td>
+<td>Fit Assessment</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.expand", "toc.integrate", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+        <script src="../../javascripts/mermaid.mjs" type="module"></script>
+      
+    
+  </body>
+</html>

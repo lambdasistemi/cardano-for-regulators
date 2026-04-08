@@ -1,0 +1,17 @@
+[
+  {
+    "name": "Framework",
+    "description": "Schema roles, artifacts, patterns, constraints.",
+    "file": "framework.json"
+  },
+  {
+    "name": "EU Battery Regulation",
+    "description": "EU Battery Regulation instance: parties, obligations, trust model, validator.",
+    "file": "eu-battery-regulation.json"
+  },
+  {
+    "name": "GDPR",
+    "description": "GDPR instance: parties, obligations, trust model, validator.",
+    "file": "gdpr.json"
+  }
+]
