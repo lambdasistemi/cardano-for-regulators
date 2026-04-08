@@ -43,6 +43,8 @@
           cp $src/ontology/viewer-config.json $out/data/config.json
           cat $src/ontology/cfr.ttl \
               $src/ontology/instances/*.ttl \
+              $src/ontology/process.ttl \
+              $src/ontology/processes/*.ttl \
               $src/ontology/display.ttl \
               $out/data/generated-display.ttl \
               > $out/data/ontology.ttl
