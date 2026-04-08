@@ -1,0 +1,59 @@
+[
+  {
+    "id": "by-kind",
+    "name": "Nodes by Kind",
+    "description": "All nodes of a selected kind.",
+    "sparql": "PREFIX gbk: <https://lambdasistemi.github.io/graph-browser/vocab/kinds#>\nSELECT ?node WHERE { ?node a gbk:$kind }",
+    "parameters": [{ "name": "kind", "label": "Kind", "type": "kind" }],
+    "tags": []
+  },
+  {
+    "id": "parties",
+    "name": "Parties & Roles",
+    "description": "All schema roles, GDPR parties, and battery regulation parties.",
+    "sparql": "PREFIX gbk: <https://lambdasistemi.github.io/graph-browser/vocab/kinds#>\nSELECT DISTINCT ?node WHERE {\n  { ?node a gbk:party }\n  UNION { ?node a gbk:gdpr-party }\n  UNION { ?node a gbk:battery-party }\n}",
+    "tags": ["view"]
+  },
+  {
+    "id": "protocols-and-constraints",
+    "name": "Protocols & Constraints",
+    "description": "Protocol patterns and the constraints they satisfy.",
+    "sparql": "PREFIX gbk: <https://lambdasistemi.github.io/graph-browser/vocab/kinds#>\nSELECT DISTINCT ?node WHERE {\n  { ?node a gbk:protocol }\n  UNION { ?node a gbk:constraint }\n}",
+    "tags": ["view"]
+  },
+  {
+    "id": "on-chain",
+    "name": "On-chain Artifacts",
+    "description": "Everything that lives on the Cardano ledger.",
+    "sparql": "PREFIX gbk: <https://lambdasistemi.github.io/graph-browser/vocab/kinds#>\nSELECT ?node WHERE { ?node a gbk:artifact }",
+    "tags": []
+  },
+  {
+    "id": "obligations",
+    "name": "Obligations & Mechanisms",
+    "description": "Regulatory obligations and the mechanisms that enforce them.",
+    "sparql": "PREFIX gbk: <https://lambdasistemi.github.io/graph-browser/vocab/kinds#>\nSELECT DISTINCT ?node WHERE {\n  { ?node a gbk:obligation }\n  UNION { ?node a gbk:mechanism }\n}",
+    "tags": ["view"]
+  },
+  {
+    "id": "case-studies",
+    "name": "Case Studies",
+    "description": "GDPR and Battery Regulation case studies and their connected elements.",
+    "sparql": "PREFIX gbk: <https://lambdasistemi.github.io/graph-browser/vocab/kinds#>\nPREFIX gb: <https://lambdasistemi.github.io/graph-browser/vocab/terms#>\nSELECT DISTINCT ?node WHERE {\n  { ?node a gbk:case-study }\n  UNION {\n    ?e a gb:EdgeAssertion .\n    ?e gb:from ?cs . ?cs a gbk:case-study .\n    ?e gb:to ?node\n  }\n  UNION {\n    ?e a gb:EdgeAssertion .\n    ?e gb:to ?cs . ?cs a gbk:case-study .\n    ?e gb:from ?node\n  }\n}",
+    "tags": ["view"]
+  },
+  {
+    "id": "tensions",
+    "name": "Tensions & Resolutions",
+    "description": "Regulatory tensions and what resolves them.",
+    "sparql": "PREFIX gbk: <https://lambdasistemi.github.io/graph-browser/vocab/kinds#>\nPREFIX gb: <https://lambdasistemi.github.io/graph-browser/vocab/terms#>\nSELECT DISTINCT ?node WHERE {\n  { ?node a gbk:tension }\n  UNION {\n    ?e a gb:EdgeAssertion .\n    ?e gb:from ?t . ?t a gbk:tension .\n    ?e gb:to ?node\n  }\n  UNION {\n    ?e a gb:EdgeAssertion .\n    ?e gb:to ?t . ?t a gbk:tension .\n    ?e gb:from ?node\n  }\n}",
+    "tags": []
+  },
+  {
+    "id": "hub-nodes",
+    "name": "Hub Nodes",
+    "description": "The most connected elements in the ontology.",
+    "sparql": "PREFIX gb: <https://lambdasistemi.github.io/graph-browser/vocab/terms#>\nSELECT ?node WHERE {\n  { SELECT ?node (COUNT(*) AS ?c) WHERE {\n    { ?e a gb:EdgeAssertion . ?e gb:from ?node }\n    UNION { ?e a gb:EdgeAssertion . ?e gb:to ?node }\n  } GROUP BY ?node HAVING (COUNT(*) > 3) }\n}",
+    "tags": []
+  }
+]

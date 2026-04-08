@@ -41,6 +41,7 @@
           cp ${viewer}/index.html $out/
           cp ${viewer}/index.js $out/
           cp $src/ontology/viewer-config.json $out/data/config.json
+          cp $src/ontology/queries.json $out/data/queries.json
           cat $src/ontology/cfr.ttl \
               $src/ontology/instances/*.ttl \
               $src/ontology/process.ttl \
