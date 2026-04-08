@@ -18,8 +18,11 @@ import sys
 from rdflib import Graph, Namespace, RDF, RDFS
 
 CFR = Namespace("https://lambdasistemi.github.io/cardano-for-regulators/ontology#")
+PROC = Namespace("https://lambdasistemi.github.io/cardano-for-regulators/ontology/process#")
 
 ONTOLOGY = "ontology/cfr.ttl"
+PROCESS_ONTOLOGY = "ontology/process.ttl"
+PROCESSES_GLOB = "ontology/processes/*.ttl"
 INSTANCES_GLOB = "ontology/instances/*.ttl"
 
 
@@ -134,6 +137,68 @@ def main():
             if not obligations:
                 errors.append(f"Regulation {s.n3()} has no cfr:hasObligation")
 
+    # 7. Validate process ontology and instances
+    import os
+    process_files = sorted(glob.glob(PROCESSES_GLOB))
+    if os.path.exists(PROCESS_ONTOLOGY):
+        try:
+            combined.parse(PROCESS_ONTOLOGY, format="turtle")
+            n = len(combined) - total_before if 'total_before' in dir() else 0
+            print(f"OK: {PROCESS_ONTOLOGY}")
+        except Exception as e:
+            errors.append(f"{PROCESS_ONTOLOGY} — parse error: {e}")
+
+    for f in process_files:
+        try:
+            combined.parse(f, format="turtle")
+            print(f"OK: {f}")
+        except Exception as e:
+            errors.append(f"{f} — parse error: {e}")
+
+    # Process-specific checks
+    for proc in combined.subjects(RDF.type, PROC.Process):
+        proc_label = str(list(combined.objects(proc, RDFS.label))[0]) if list(combined.objects(proc, RDFS.label)) else str(proc)
+
+        # Check: has at least one step
+        steps = list(combined.objects(proc, PROC.hasStep))
+        if not steps:
+            errors.append(f"Process {proc_label} has no proc:hasStep")
+
+        # Check: proc:implements references a valid cfr:Obligation
+        impls = list(combined.objects(proc, PROC.implements))
+        for impl in impls:
+            if not list(combined.objects(impl, RDF.type)):
+                errors.append(f"Process {proc_label} implements unknown: {impl}")
+
+        # Check on-chain steps
+        for step in steps:
+            if (step, RDF.type, PROC.OnChainStep) in combined:
+                step_label = str(list(combined.objects(step, RDFS.label))[0]) if list(combined.objects(step, RDFS.label)) else str(step)
+
+                # Must have at least one check
+                checks_list = list(combined.objects(step, PROC.checks))
+                if not checks_list:
+                    errors.append(f"OnChainStep {step_label} has no proc:checks")
+
+                # Must have at least one signature
+                sigs = list(combined.objects(step, PROC.requiresSig))
+                if not sigs:
+                    errors.append(f"OnChainStep {step_label} has no proc:requiresSig")
+
+                # usesAction must reference a valid RedeemerAction
+                actions = list(combined.objects(step, PROC.usesAction))
+                for action in actions:
+                    if (action, RDF.type, CFR.RedeemerAction) not in combined:
+                        errors.append(f"OnChainStep {step_label} usesAction references unknown: {action}")
+
+        # Check step order uniqueness
+        orders = []
+        for step in steps:
+            for o in combined.objects(step, PROC.stepOrder):
+                orders.append(int(str(o)))
+        if len(orders) != len(set(orders)):
+            errors.append(f"Process {proc_label} has duplicate step orders: {orders}")
+
     # Report
     if errors:
         print(f"\n{len(errors)} validation error(s):")
@@ -145,7 +210,8 @@ def main():
         regs = len(list(combined.subjects(RDF.type, CFR.EURegulation)))
         regs += len(list(combined.subjects(RDF.type, CFR.ISOStandard)))
         regs += len(list(combined.subjects(RDF.type, CFR.IndustryCertification)))
-        print(f"\nAll checks passed: {total} triples, {regs} regulation(s), {len(instance_files)} instance file(s)")
+        procs = len(list(combined.subjects(RDF.type, PROC.Process)))
+        print(f"\nAll checks passed: {total} triples, {regs} regulation(s), {procs} process(es), {len(instance_files)} instance file(s)")
 
 
 if __name__ == "__main__":
