@@ -1,0 +1,1213 @@
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/edge/55> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "The Battery Regulation uses reward distribution to incentivise third-party SoH data collection. Reporters accumulate rewards stored monotonically in the MPT alongside item data." ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "used in" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#used%20in> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/battery-regulation> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/reward-distribution> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> 55 ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/reward-distribution> <https://lambdasistemi.github.io/graph-browser/vocab/edges#used%20in> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/battery-regulation> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/edge/54> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "Identity delegation is implemented via signing functions — cryptographic proxies that allow non-crypto actors to make meaningful on-chain state transitions." ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "implemented via" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#implemented%20via> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/signing-function> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/constraint-identity-delegation> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> 54 ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/constraint-identity-delegation> <https://lambdasistemi.github.io/graph-browser/vocab/edges#implemented%20via> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/signing-function> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/edge/53> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "Liveness is critical for relay state machines: if one actor stops participating, the chain stalls. The regulation's penalties and on-chain timeouts provide the escalation path." ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "critical for" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#critical%20for> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/relay-state-machine> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/constraint-liveness> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> 53 ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/constraint-liveness> <https://lambdasistemi.github.io/graph-browser/vocab/edges#critical%20for> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/relay-state-machine> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/edge/52> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "In process mode, the signing function lives on a server endpoint or phone enclave. The identity is abstract — it represents a process, not a physical thing." ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "substrate is server" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#substrate%20is%20server> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/signing-function> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/process-mode> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> 52 ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/process-mode> <https://lambdasistemi.github.io/graph-browser/vocab/edges#substrate%20is%20server> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/signing-function> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/edge/51> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "In physical mode, the signing function lives in a hardware secure element (SE050). The key never leaves the chip. NFC energy harvesting powers the signing operation." ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "substrate is hardware" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#substrate%20is%20hardware> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/signing-function> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/physical-mode> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> 51 ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/physical-mode> <https://lambdasistemi.github.io/graph-browser/vocab/edges#substrate%20is%20hardware> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/signing-function> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/edge/50> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "GDPR compliance is pure process mode: no sensors, no physical objects. Server-side signing functions, digital workflows, and abstract compliance records." ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "uses" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#uses> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/process-mode> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> 50 ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr> <https://lambdasistemi.github.io/graph-browser/vocab/edges#uses> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/process-mode> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/edge/49> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "The Battery Regulation is the reference case for physical mode: NFC secure element signs SoH readings, the object carries its own identity and attests its own state." ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "uses" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#uses> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/physical-mode> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/battery-regulation> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> 49 ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/battery-regulation> <https://lambdasistemi.github.io/graph-browser/vocab/edges#uses> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/physical-mode> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/edge/48> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "Consent withdrawal (Art 7(3)) may trigger a cascade of rights: erasure of data processed under that consent, cessation of processing. The on-chain timeline proves the sequence." ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "withdrawal triggers" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#withdrawal%20triggers> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-rights-requests> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-consent> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> 48 ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-consent> <https://lambdasistemi.github.io/graph-browser/vocab/edges#withdrawal%20triggers> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-rights-requests> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/edge/47> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "DPIA attestation hashes are stored in the process trie with timestamps, proving when the assessment was conducted relative to processing start." ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "attested in" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#attested%20in> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/process-trie> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-dpia> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> 47 ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-dpia> <https://lambdasistemi.github.io/graph-browser/vocab/edges#attested%20in> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/process-trie> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/edge/46> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "On-chain hashes are not personal data, so they do not constitute a cross-border transfer regardless of where blockchain nodes are located. The bright line eliminates this tension entirely." ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "resolved by" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#resolved%20by> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/bright-line> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-cross-border> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> 46 ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-cross-border> <https://lambdasistemi.github.io/graph-browser/vocab/edges#resolved%20by> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/bright-line> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/edge/45> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "The 72-hour breach notification deadline is the strongest example of why temporal integrity matters. Self-reported timestamps are not neutral evidence in enforcement proceedings." ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "requires" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#requires> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/temporal-integrity> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-breach-notification> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> 45 ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-breach-notification> <https://lambdasistemi.github.io/graph-browser/vocab/edges#requires> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/temporal-integrity> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/edge/44> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "Art 30 processing records are leaves in the controller's compliance trie: purposes, data categories, recipients, transfers, retention periods — all as hashes." ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "stored in" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#stored%20in> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/process-trie> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-processing-records> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> 44 ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-processing-records> <https://lambdasistemi.github.io/graph-browser/vocab/edges#stored%20in> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/process-trie> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/edge/43> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "The magnitude of GDPR fines makes on-chain compliance costs (~50-100 EUR/year) negligible by comparison, strongly justifying fee alignment." ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "justifies" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#justifies> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/constraint-fee-alignment> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-fines> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> 43 ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-fines> <https://lambdasistemi.github.io/graph-browser/vocab/edges#justifies> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/constraint-fee-alignment> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/edge/42> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "GDPR fines (up to 4% global turnover) provide the strongest liveness incentive of any regulation analysed. Controllers are powerfully motivated to participate in on-chain compliance." ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "provides" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#provides> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/constraint-liveness> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-fines> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> 42 ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-fines> <https://lambdasistemi.github.io/graph-browser/vocab/edges#provides> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/constraint-liveness> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/edge/41> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "GDPR certifications are represented on-chain as tokens with enforced expiry, minted by authorised certification bodies qualified in the regulation trie." ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "on-chain as" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#on-chain%20as> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/beacon> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-certification> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> 41 ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-certification> <https://lambdasistemi.github.io/graph-browser/vocab/edges#on-chain%20as> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/beacon> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/edge/40> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "The supervisory authority maps to the regulator role: maintains the regulation trie, publishes the smart contract, audits operators. 27+ national DPAs in the EU." ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "maps to" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#maps%20to> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/regulator> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-supervisory-authority> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> 40 ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-supervisory-authority> <https://lambdasistemi.github.io/graph-browser/vocab/edges#maps%20to> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/regulator> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/edge/39> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "The data subject maps to the user role: exercises rights via signing function in process mode. No wallet, no blockchain knowledge. The authenticated session is the signing function." ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "maps to" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#maps%20to> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/user> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-data-subject> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> 39 ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-data-subject> <https://lambdasistemi.github.io/graph-browser/vocab/edges#maps%20to> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/user> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/edge/38> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "The GDPR processor is a secondary operator with their own compliance trie, constrained by the controller's instructions. The Art 28 agreement is a cross-referenced static leaf." ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "maps to" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#maps%20to> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/operator> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-processor> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> 38 ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-processor> <https://lambdasistemi.github.io/graph-browser/vocab/edges#maps%20to> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/operator> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/edge/37> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "The GDPR data controller maps to the operator role in the schema: maintains their own compliance trie, pays fees, submits transactions. Bears primary accountability." ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "maps to" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#maps%20to> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/operator> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-controller> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> 37 ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-controller> <https://lambdasistemi.github.io/graph-browser/vocab/edges#maps%20to> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/operator> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/edge/36> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "Only hashes on-chain — the minimum required to prove integrity. The bright line ensures data minimisation is satisfied by design, not by policy." ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "resolves" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#resolves> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/tension-minimisation> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/bright-line> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> 36 ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/bright-line> <https://lambdasistemi.github.io/graph-browser/vocab/edges#resolves> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/tension-minimisation> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/edge/35> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "With the bright line, controller designation is clear: the data controller is the operator of their own trie. No ambiguity about who determines purposes and means." ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "resolves" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#resolves> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/tension-controller-designation> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/bright-line> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> 35 ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/bright-line> <https://lambdasistemi.github.io/graph-browser/vocab/edges#resolves> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/tension-controller-designation> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/edge/34> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "The bright line resolves the erasure tension: there is no personal data on-chain to erase. Compliance records are the controller's proof of accountability, not subject to Art 17." ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "resolves" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#resolves> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/tension-erasure> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/bright-line> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> 34 ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/bright-line> <https://lambdasistemi.github.io/graph-browser/vocab/edges#resolves> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/tension-erasure> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/edge/33> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "The entire GDPR case study depends on the bright line principle: personal data off-chain, compliance evidence on-chain. Without this separation, every GDPR-blockchain tension applies." ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "depends on" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#depends%20on> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/bright-line> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> 33 ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr> <https://lambdasistemi.github.io/graph-browser/vocab/edges#depends%20on> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/bright-line> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/edge/32> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "A rights request follows a relay: data subject submits request, controller processes it, response is submitted. The regulation defines the ordering and the deadline." ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "models" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#models> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-rights-requests> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/relay-state-machine> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> 32 ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/relay-state-machine> <https://lambdasistemi.github.io/graph-browser/vocab/edges#models> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-rights-requests> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/edge/31> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "GDPR data portability (Art 20) maps to cross-operator handoff: the originating controller's record becomes read-only, the receiving controller gets a new leaf with provenance." ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "used in" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#used%20in> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/cross-operator-handoff> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> 31 ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/cross-operator-handoff> <https://lambdasistemi.github.io/graph-browser/vocab/edges#used%20in> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/edge/30> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "Battery repurposing triggers a cross-operator handoff: old leaf becomes read-only, new leaf in the receiving operator's trie with a back-link to the original." ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "used in" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#used%20in> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/battery-regulation> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/cross-operator-handoff> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> 30 ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/cross-operator-handoff> <https://lambdasistemi.github.io/graph-browser/vocab/edges#used%20in> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/battery-regulation> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/edge/29> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "The smart contract validates both signatures at every transaction. Neither alone is sufficient — together they prove an authorized, attested actor interacted with a specific process." ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "verified by" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#verified%20by> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/smart-contract> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/double-signature> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> 29 ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/double-signature> <https://lambdasistemi.github.io/graph-browser/vocab/edges#verified%20by> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/smart-contract> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/edge/28> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "The process signature comes from the signing function (authentication — this process produced this data). Combined with the actor signature (authorization — this actor requests this transition)." ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "uses" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#uses> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/signing-function> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/double-signature> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> 28 ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/double-signature> <https://lambdasistemi.github.io/graph-browser/vocab/edges#uses> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/signing-function> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/edge/27> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "By requiring the user to sign over the beacon, the protocol enforces informed consent by construction. The user cannot interact without seeing the regulator's disclosure." ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "enforces" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#enforces> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/informed-consent> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/beacon-protocol> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> 27 ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/beacon-protocol> <https://lambdasistemi.github.io/graph-browser/vocab/edges#enforces> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/informed-consent> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/edge/26> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "The beacon-gated attestation pattern defines how the beacon is produced, relayed to users, signed over, and validated at batch submission." ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "defines use of" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#defines%20use%20of> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/beacon> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/beacon-protocol> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> 26 ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/beacon-protocol> <https://lambdasistemi.github.io/graph-browser/vocab/edges#defines%20use%20of> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/beacon> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/edge/25> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "Battery lifecycle follows: Virgin to Active to Repurposed to Recycled. Each transition may change the responsible operator via cross-operator handoff." ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "models" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#models> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/battery-regulation> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/lifecycle-state-machine> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> 25 ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/lifecycle-state-machine> <https://lambdasistemi.github.io/graph-browser/vocab/edges#models> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/battery-regulation> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/edge/24> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "GDPR consent follows a lifecycle state machine: None to Given to Withdrawn. Each transition is a leaf update in the controller's trie with an immutable timestamped hash." ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "models" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#models> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-consent> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/lifecycle-state-machine> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> 24 ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/lifecycle-state-machine> <https://lambdasistemi.github.io/graph-browser/vocab/edges#models> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-consent> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/edge/23> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "The commitment protocol proves that rights-request responses were submitted within the 1-month (or 3-month extended) window, with timeout as provable non-compliance." ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "proves timeliness of" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#proves%20timeliness%20of> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-rights-requests> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/commitment-protocol> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> 23 ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/commitment-protocol> <https://lambdasistemi.github.io/graph-browser/vocab/edges#proves%20timeliness%20of> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-rights-requests> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/edge/22> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "The commitment-then-submit protocol turns the 72-hour breach notification deadline from a self-reported claim into a verifiable on-chain fact with neutral timestamps." ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "proves timeliness of" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#proves%20timeliness%20of> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-breach-notification> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/commitment-protocol> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> 22 ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/commitment-protocol> <https://lambdasistemi.github.io/graph-browser/vocab/edges#proves%20timeliness%20of> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-breach-notification> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/edge/21> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "The MPT-per-operator pattern is the concrete implementation of the process trie concept. Each operator's trie is a Merkle Patricia Trie stored in a single UTxO." ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "implements" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#implements> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/process-trie> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/mpt-per-operator> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> 21 ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/mpt-per-operator> <https://lambdasistemi.github.io/graph-browser/vocab/edges#implements> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/process-trie> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/edge/20> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "Each operator submits one transaction per batch regardless of item count. This decouples the on-chain data rate from the number of items, making even high-volume regulations fit L1 settlement." ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "satisfies" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#satisfies> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/constraint-data-cadence> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/mpt-per-operator> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> 20 ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/mpt-per-operator> <https://lambdasistemi.github.io/graph-browser/vocab/edges#satisfies> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/constraint-data-cadence> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/edge/19> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "MPT-per-operator inherently satisfies sequential access: one writer per trie, no contention. The UTxO model naturally enforces this — only one transaction can consume and recreate it per block." ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "satisfies" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#satisfies> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/constraint-sequential-access> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/mpt-per-operator> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> 19 ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/mpt-per-operator> <https://lambdasistemi.github.io/graph-browser/vocab/edges#satisfies> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/constraint-sequential-access> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/edge/18> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "If the three-question test fails (only 1-2 hold), a traditional database with audit logs suffices and the five constraints need not be evaluated." ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "gates" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#gates> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/constraint-sequential-access> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/three-question-test> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> 18 ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/three-question-test> <https://lambdasistemi.github.io/graph-browser/vocab/edges#gates> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/constraint-sequential-access> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/edge/17> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "The three-question pre-filter (multi-party data, institutional anchor, verifiable history) must pass before running the five constraints. It is the quick screening step." ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "gates" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#gates> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/constraint-data-cadence> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/three-question-test> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> 17 ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/three-question-test> <https://lambdasistemi.github.io/graph-browser/vocab/edges#gates> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/constraint-data-cadence> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/edge/16> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "The smart contract reads the regulation trie as a reference input, verifying that the actor is qualified for the specific regulation and checking operator standing." ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "reads" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#reads> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/regulation-trie> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/smart-contract> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> 16 ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/smart-contract> <https://lambdasistemi.github.io/graph-browser/vocab/edges#reads> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/regulation-trie> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/edge/15> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "The smart contract reads the identity trie as a reference input at validation time, verifying that the actor submitting a state transition is an attested real-world entity." ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "reads" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#reads> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/identity-trie> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/smart-contract> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> 15 ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/smart-contract> <https://lambdasistemi.github.io/graph-browser/vocab/edges#reads> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/identity-trie> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/edge/14> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "The smart contract validates every state transition on the process trie: checking signatures, trie membership, beacon validity, commitment windows, and root hash consistency." ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "governs" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#governs> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/process-trie> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/smart-contract> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> 14 ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/smart-contract> <https://lambdasistemi.github.io/graph-browser/vocab/edges#governs> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/process-trie> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/edge/13> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "The user verifies the beacon is current and authentic using the regulator's published beacon policy identifier and trust anchor, then signs their data together with the beacon. This creates cryptographic proof of informed awareness." ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "signs over" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#signs%20over> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/beacon> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/user> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> 13 ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/user> <https://lambdasistemi.github.io/graph-browser/vocab/edges#signs%20over> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/beacon> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/edge/12> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "The user performs regulated actions via the signing function — tap, scan, or click. The signing function produces signatures without exposing the private key. The user never interacts with blockchain directly." ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "uses" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#uses> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/signing-function> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/user> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> 12 ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/user> <https://lambdasistemi.github.io/graph-browser/vocab/edges#uses> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/signing-function> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/edge/11> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "The operator produces a beacon by sampling their standing from the regulation trie. Cannot collect user attestations without a current, valid beacon." ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "produces" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#produces> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/beacon> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/operator> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> 11 ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/operator> <https://lambdasistemi.github.io/graph-browser/vocab/edges#produces> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/beacon> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/edge/10> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "The operator generates key pairs, registers public keys on-chain, and distributes signing capabilities as physical devices or digital credentials to users." ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "mints" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#mints> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/signing-function> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/operator> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> 10 ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/operator> <https://lambdasistemi.github.io/graph-browser/vocab/edges#mints> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/signing-function> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/edge/9> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "Each operator manages their own process trie — one UTxO holding the root hash. Contains all items or processes under their responsibility. Governed by the regulator's smart contract." ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "manages" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#manages> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/process-trie> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/operator> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> 9 ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/operator> <https://lambdasistemi.github.io/graph-browser/vocab/edges#manages> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/process-trie> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/edge/8> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "The identity provider verifies real-world entities and adds their public keys to the identity trie. The same trie can serve multiple regulators and regulations." ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "maintains" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#maintains> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/identity-trie> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/identity-provider> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> 8 ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/identity-provider> <https://lambdasistemi.github.io/graph-browser/vocab/edges#maintains> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/identity-trie> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/edge/7> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "The regulator decides which identity provider to trust (government agency, eIDAS, private service) and references that provider's UTxO in the smart contract alongside the regulation trie." ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "trusts" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#trusts> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/identity-provider> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/regulator> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> 7 ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/regulator> <https://lambdasistemi.github.io/graph-browser/vocab/edges#trusts> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/identity-provider> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/edge/6> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "The regulator publishes the smart contract — the regulation in executable form. Every operator in the market operates under it. The regulator audits that operators use the correct contract." ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "publishes" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#publishes> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/smart-contract> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/regulator> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> 6 ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/regulator> <https://lambdasistemi.github.io/graph-browser/vocab/edges#publishes> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/smart-contract> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/edge/5> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "The regulator maintains the regulation trie containing actor qualifications and operator standing. This is the regulator's official, verifiable, public record of every operator's compliance status." ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "maintains" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#maintains> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/regulation-trie> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/regulator> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> 5 ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/regulator> <https://lambdasistemi.github.io/graph-browser/vocab/edges#maintains> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/regulation-trie> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/edge/4> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "Informed consent by construction is enforced via the beacon mechanism: the user signs over the beacon (which includes the regulator's assessment), making the signature cryptographic proof of awareness." ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "enforced via" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#enforced%20via> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/beacon> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/informed-consent> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> 4 ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/informed-consent> <https://lambdasistemi.github.io/graph-browser/vocab/edges#enforced%20via> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/beacon> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/edge/3> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "Temporal integrity — the need for a neutral timestamp — is implemented by the commitment-then-submit protocol, where the chain's slot number serves as the trusted clock." ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "implemented by" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#implemented%20by> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/commitment-protocol> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/temporal-integrity> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> 3 ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/temporal-integrity> <https://lambdasistemi.github.io/graph-browser/vocab/edges#implemented%20by> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/commitment-protocol> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/edge/2> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "The sponsor-pays economic model from the thesis is formalised as the fee alignment constraint: there must always be an actor who benefits enough from on-chain compliance to pay." ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "formalised as" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#formalised%20as> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/constraint-fee-alignment> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/sponsor-pays> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> 2 ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/sponsor-pays> <https://lambdasistemi.github.io/graph-browser/vocab/edges#formalised%20as> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/constraint-fee-alignment> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/edge/1> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "The thesis identifies that neither the user's nor the operator's clock is neutral, arguing for blockchain-provided time certificates as the foundation of verifiable compliance." ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "argues for" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#argues%20for> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/temporal-integrity> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/thesis> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> 1 ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/thesis> <https://lambdasistemi.github.io/graph-browser/vocab/edges#argues%20for> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/temporal-integrity> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/edge/0> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "The thesis establishes that users will not pay per action, leading to the sponsor-pays model where the regulated entity absorbs blockchain costs as a compliance expense." ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "derives" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#derives> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/sponsor-pays> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/thesis> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> 0 ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/thesis> <https://lambdasistemi.github.io/graph-browser/vocab/edges#derives> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/sponsor-pays> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/user> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/user/link/0> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/user/link/0> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://lambdasistemi.github.io/cardano-for-regulators/framework/schema/#what-the-user-does"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Schema section" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/user> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "Interacts with a regulated process without any blockchain knowledge. No wallet, no ADA, no keys. Receives a signing capability (device or app), performs the regulated action (tap, scan, click), and passes the baton to the next actor. From the user's perspective: receive, use, pass on. The cryptography is invisible." ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#group> <https://lambdasistemi.github.io/graph-browser/vocab/groups#schema> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "User" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#nodeId> "user" ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/kinds#party> , <https://lambdasistemi.github.io/graph-browser/vocab/terms#Node> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/three-question-test> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/three-question-test/link/0> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/three-question-test/link/0> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://lambdasistemi.github.io/cardano-for-regulators/framework/constraints/#the-three-question-pre-filter"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Constraint docs" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/three-question-test> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "Quick assessment before running the full five constraints. All three must hold: (1) Multi-party data — multiple independent parties share a common data set. (2) Institutional anchor — an institution defines what is valid but does not want to run infrastructure. (3) Verifiable history — historical integrity matters, parties must not rewrite past records. If only 1-2 hold, a traditional database suffices." ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#group> <https://lambdasistemi.github.io/graph-browser/vocab/groups#constraints> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Three-Question Pre-filter" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#nodeId> "three-question-test" ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/kinds#constraint> , <https://lambdasistemi.github.io/graph-browser/vocab/terms#Node> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/thesis> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/thesis/link/0> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/thesis/link/0> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://lambdasistemi.github.io/cardano-for-regulators/thesis/"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Full text" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/thesis> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "The economic and philosophical foundation. Web3 is expensive because it is honest — the cost buys guarantees Web2 cannot provide. Users will not pay per action, so a sponsor must absorb the cost. Regulation is the forcing function that compels businesses to need blockchain guarantees, making sponsorship the cheapest way to comply." ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#group> <https://lambdasistemi.github.io/graph-browser/vocab/groups#foundation> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "The Thesis" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#nodeId> "thesis" ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/kinds#concept> , <https://lambdasistemi.github.io/graph-browser/vocab/terms#Node> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/tension-minimisation> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/tension-minimisation/link/0> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/tension-minimisation/link/0> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://gdpr-info.eu/art-5-gdpr/"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "GDPR Art 5" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/tension-minimisation> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "GDPR requires collecting only what is necessary (Art 5(1)(c)). Blockchain replicates all data to every full node. Resolution: only hashes on-chain — minimal by design. The actual data behind the leaves is verified off-chain by the operator. The on-chain footprint per compliance record is a single hash, which is the minimum required to prove integrity." ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#group> <https://lambdasistemi.github.io/graph-browser/vocab/groups#tensions> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Data Minimisation vs Replication" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#nodeId> "tension-minimisation" ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/kinds#risk> , <https://lambdasistemi.github.io/graph-browser/vocab/terms#Node> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/tension-erasure> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/tension-erasure/link/0> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/tension-erasure/link/0> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://gdpr-info.eu/art-17-gdpr/"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "GDPR Art 17" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/tension-erasure> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "The most cited GDPR-blockchain conflict. Art 17 grants the right to erasure — but blockchain data cannot be deleted. Resolution: no personal data on-chain. Compliance records are not subject to erasure — they are the controller's proof of accountability. The right to erasure applies to the off-chain personal data, which remains under the controller's custody." ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#group> <https://lambdasistemi.github.io/graph-browser/vocab/groups#tensions> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Immutability vs Erasure" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#nodeId> "tension-erasure" ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/kinds#risk> , <https://lambdasistemi.github.io/graph-browser/vocab/terms#Node> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/tension-controller-designation> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/tension-controller-designation/link/0> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/tension-controller-designation/link/0> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://www.cnil.fr/en/blockchain-and-gdpr-solutions-responsible-use-blockchain-context-personal-data"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "CNIL blockchain guidance" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/tension-controller-designation> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "GDPR requires identifiable controllers and processors. Public blockchains have no central controller. Resolution: the data controller is the operator of their own trie — clearly identifiable. The identity provider, SA, and chain validators are not controllers of the compliance data. CNIL's 2018 guidance supports this: smart contract deployers who determine purposes and means are controllers." ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#group> <https://lambdasistemi.github.io/graph-browser/vocab/groups#tensions> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Controller Designation" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#nodeId> "tension-controller-designation" ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/kinds#risk> , <https://lambdasistemi.github.io/graph-browser/vocab/terms#Node> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/temporal-integrity> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/temporal-integrity/link/0> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/temporal-integrity/link/0> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://lambdasistemi.github.io/cardano-for-regulators/thesis/#time-as-the-neutral-witness"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Thesis section" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/temporal-integrity> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "The blockchain provides time certificates that neither party produced. When data is included in a block, it receives a temporal proof that is a consequence of consensus, not of anyone's claim. This is critical for regulations with deadlines — the 72-hour breach notification, the 1-month rights response — where self-reported timestamps are not neutral." ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#group> <https://lambdasistemi.github.io/graph-browser/vocab/groups#foundation> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Temporal Integrity" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#nodeId> "temporal-integrity" ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/kinds#concept> , <https://lambdasistemi.github.io/graph-browser/vocab/terms#Node> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/sponsor-pays> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/sponsor-pays/link/0> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/sponsor-pays/link/0> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://lambdasistemi.github.io/cardano-for-regulators/thesis/#the-sponsor-pays"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Thesis section" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/sponsor-pays> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "The entity that benefits from on-chain guarantees pays for them — not the user. In regulated industries, the obligated party (manufacturer, importer, controller) already pays for compliance infrastructure. Sponsoring blockchain transactions is a different line item, potentially cheaper than proprietary audit systems or manual inspections." ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#group> <https://lambdasistemi.github.io/graph-browser/vocab/groups#foundation> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Sponsor Pays" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#nodeId> "sponsor-pays" ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/kinds#concept> , <https://lambdasistemi.github.io/graph-browser/vocab/terms#Node> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/smart-contract> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/smart-contract/link/0> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/smart-contract/link/0> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://lambdasistemi.github.io/cardano-for-regulators/framework/schema/#the-on-chain-architecture"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Schema section" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/smart-contract> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "The regulation in executable form. Published by the regulator as a Plutus validator. Governs the operator's trie and reads both the identity trie and regulation trie as reference inputs. Validates every state transition: actor key in identity trie, actor qualified in regulation trie, beacon genuine, commitment exists, slot in window, signatures valid, leaf update matches payload, root hash consistent." ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#group> <https://lambdasistemi.github.io/graph-browser/vocab/groups#schema> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Smart Contract" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#nodeId> "smart-contract" ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/kinds#artifact> , <https://lambdasistemi.github.io/graph-browser/vocab/terms#Node> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/signing-function> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/signing-function/link/0> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/signing-function/link/0> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://lambdasistemi.github.io/cardano-for-regulators/framework/schema/#the-signing-function"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Schema section" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/signing-function> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "An off-chain opaque capability that produces signatures when invoked without exposing the private key. Lives on hardware (SE050), phone enclave, server endpoint, TEE, or ZK circuit. Only its public key and signatures appear on-chain. All substrates present the same interface to the validator." ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#group> <https://lambdasistemi.github.io/graph-browser/vocab/groups#schema> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Signing Function" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#nodeId> "signing-function" ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/kinds#concept> , <https://lambdasistemi.github.io/graph-browser/vocab/terms#Node> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/reward-distribution> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/reward-distribution/link/0> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/reward-distribution/link/0> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://lambdasistemi.github.io/cardano-for-regulators/framework/patterns/#reward-distribution"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Pattern docs" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/reward-distribution> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "Incentivizes third-party data collection. Reporters accumulate rewards in a monotonically increasing counter stored in the MPT alongside item data. Each valid reading adds to the reporter's accumulated total. Withdrawal is a separate transaction. The invariant is formally proved: rewards never decrease." ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#group> <https://lambdasistemi.github.io/graph-browser/vocab/groups#protocols> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Reward Distribution" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#nodeId> "reward-distribution" ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/kinds#protocol> , <https://lambdasistemi.github.io/graph-browser/vocab/terms#Node> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/relay-state-machine> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/relay-state-machine/link/0> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/relay-state-machine/link/0> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://lambdasistemi.github.io/cardano-for-regulators/framework/patterns/#relay-state-machine"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Pattern docs" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/relay-state-machine> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "Multiple actors act in sequence, each contributing their part. The regulation defines the ordering. Each actor can only act when it is their turn. Timeout or escalation if an actor misses the deadline. The trie serializes access naturally — no contention because the regulation already requires sequential processing." ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#group> <https://lambdasistemi.github.io/graph-browser/vocab/groups#protocols> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Relay State Machine" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#nodeId> "relay-state-machine" ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/kinds#protocol> , <https://lambdasistemi.github.io/graph-browser/vocab/terms#Node> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/regulator> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/regulator/link/0> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/regulator/link/0> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://lambdasistemi.github.io/cardano-for-regulators/framework/schema/#what-the-regulator-produces"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Schema: what the regulator produces" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/regulator> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "The institution that defines the rules. Maintains the regulation trie (actor qualifications, operator standing), publishes the smart contract encoding the regulation, and defines the beacon minting policy. Does not run infrastructure or manage identities. Audits that operators use the correct smart contract. Cannot retroactively revise its own history — the chain makes the regulator answerable." ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#group> <https://lambdasistemi.github.io/graph-browser/vocab/groups#schema> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Regulator" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#nodeId> "regulator" ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/kinds#party> , <https://lambdasistemi.github.io/graph-browser/vocab/terms#Node> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/regulation-trie> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/regulation-trie/link/0> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/regulation-trie/link/0> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://lambdasistemi.github.io/cardano-for-regulators/framework/schema/#what-the-regulator-produces"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Schema section" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/regulation-trie> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "A Merkle Patricia Trie maintained by the regulator. Serves two purposes: actor qualifications (process-specific credentials like licensed carrier, authorized dispatcher) and operator standing (compliance scores, flags, warnings). The standing is the regulator's judgment — it fuses on-chain and off-chain inputs and cannot be independently recomputed." ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#group> <https://lambdasistemi.github.io/graph-browser/vocab/groups#schema> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Regulation Trie" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#nodeId> "regulation-trie" ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/kinds#artifact> , <https://lambdasistemi.github.io/graph-browser/vocab/terms#Node> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/process-trie> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/process-trie/link/0> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/process-trie/link/0> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://lambdasistemi.github.io/cardano-for-regulators/framework/schema/#what-the-operator-does"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Schema section" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/process-trie> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "A Merkle Patricia Trie maintained by each operator. Contains items, processes, and state — one UTxO per operator regardless of item count. Governed by the regulator's smart contract. The operator is the sole writer, eliminating contention. Items are leaves; updates recompute the root hash." ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#group> <https://lambdasistemi.github.io/graph-browser/vocab/groups#schema> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Process Trie" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#nodeId> "process-trie" ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/kinds#artifact> , <https://lambdasistemi.github.io/graph-browser/vocab/terms#Node> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/process-mode> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/process-mode/link/0> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/process-mode/link/0> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://lambdasistemi.github.io/cardano-for-regulators/framework/schema/#process-mode"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Schema section" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/process-mode> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "No physical object — just a logical process advancing through stages. A permit application, a certification workflow, a supply chain declaration, or a GDPR compliance record. The signing function lives on a server. Trust comes from protocol: double signature proves the right actor performed the right action, commitment proves timeliness, smart contract proves correctness." ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#group> <https://lambdasistemi.github.io/graph-browser/vocab/groups#modes> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Process Mode" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#nodeId> "process-mode" ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/kinds#concept> , <https://lambdasistemi.github.io/graph-browser/vocab/terms#Node> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/physical-mode> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/physical-mode/link/0> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/physical-mode/link/0> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://lambdasistemi.github.io/cardano-for-regulators/framework/schema/#physical-mode"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Schema section" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/physical-mode> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "The object carries its own identity and attests its own state. A battery with a sensor and secure element signs its state of health. The data comes from the thing itself — a physical measurement. Trust comes from hardware: the sensor measured reality, the secure element signed it, the chain anchored it. Strictly stronger than process mode." ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#group> <https://lambdasistemi.github.io/graph-browser/vocab/groups#modes> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Physical Mode" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#nodeId> "physical-mode" ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/kinds#concept> , <https://lambdasistemi.github.io/graph-browser/vocab/terms#Node> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/operator> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/operator/link/0> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/operator/link/0> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://lambdasistemi.github.io/cardano-for-regulators/framework/schema/#what-the-operator-does"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Schema section" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/operator> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "Participates in the regulated market. Manages a process trie containing items or processes under their responsibility. A transparent pipe: chooses when to batch, but not what goes in. Mints signing functions, creates commitments, verifies off-chain claims against leaf data, collects double-signed payloads, submits transactions, and pays all fees." ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#group> <https://lambdasistemi.github.io/graph-browser/vocab/groups#schema> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Operator" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#nodeId> "operator" ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/kinds#party> , <https://lambdasistemi.github.io/graph-browser/vocab/terms#Node> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/mpt-per-operator> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/mpt-per-operator/link/0> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/mpt-per-operator/link/0> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://lambdasistemi.github.io/cardano-for-regulators/framework/patterns/#mpt-per-operator"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Pattern docs" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/mpt-per-operator> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "The primary storage pattern. One UTxO per operator, items as leaves. Cost scales with operators (hundreds) not items (millions). The operator is the sole writer — no contention by design. A manufacturer updating 10,000 batteries or a controller recording 10,000 consent events pays for one root hash update, not 10,000 individual transactions." ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#group> <https://lambdasistemi.github.io/graph-browser/vocab/groups#protocols> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "MPT-per-Operator" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#nodeId> "mpt-per-operator" ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/kinds#protocol> , <https://lambdasistemi.github.io/graph-browser/vocab/terms#Node> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/lifecycle-state-machine> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/lifecycle-state-machine/link/0> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/lifecycle-state-machine/link/0> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://lambdasistemi.github.io/cardano-for-regulators/framework/patterns/#lifecycle-state-machine"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Pattern docs" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/lifecycle-state-machine> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "Status is a field in the MPT leaf. Transitions are validated on-chain with the invariant that no backward transitions occur unless explicitly allowed. Each transition may change the responsible operator. For the Battery Regulation: Virgin to Active to Repurposed to Recycled. For GDPR consent: None to Given to Withdrawn." ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#group> <https://lambdasistemi.github.io/graph-browser/vocab/groups#protocols> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Lifecycle State Machine" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#nodeId> "lifecycle-state-machine" ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/kinds#protocol> , <https://lambdasistemi.github.io/graph-browser/vocab/terms#Node> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/informed-consent> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/informed-consent/link/0> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/informed-consent/link/0> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://lambdasistemi.github.io/cardano-for-regulators/thesis/#informed-consent-by-construction"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Thesis section" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/informed-consent> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "The beacon turns the blockchain into a disclosure channel. The user signs over the beacon — which includes the regulator's assessment of the operator — as part of their payload. This is cryptographic proof of awareness. The user cannot claim ignorance when the chain shows they signed over the disclosure. Consent enforced by protocol, not by policy." ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#group> <https://lambdasistemi.github.io/graph-browser/vocab/groups#foundation> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Informed Consent by Construction" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#nodeId> "informed-consent" ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/kinds#concept> , <https://lambdasistemi.github.io/graph-browser/vocab/terms#Node> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/identity-trie> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/identity-trie/link/0> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/identity-trie/link/0> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://lambdasistemi.github.io/cardano-for-regulators/framework/schema/#what-the-identity-provider-does"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Schema section" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/identity-trie> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "A Merkle Patricia Trie maintained by the identity provider. Contains attested actor public keys. Used as a reference input by the smart contract — read-only from the operator's perspective. Prevents the operator from inventing fake actors. The validator checks membership at every transaction." ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#group> <https://lambdasistemi.github.io/graph-browser/vocab/groups#schema> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Identity Trie" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#nodeId> "identity-trie" ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/kinds#artifact> , <https://lambdasistemi.github.io/graph-browser/vocab/terms#Node> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/identity-provider> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/identity-provider/link/0> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/identity-provider/link/0> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://lambdasistemi.github.io/cardano-for-regulators/framework/schema/#what-the-identity-provider-does"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Schema section" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/identity-provider> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "Maintains a Merkle Patricia Trie of verified real-world entities. Each verified entity gets a leaf with their attested public key. The same identity trie can serve multiple regulators and multiple regulations. Prevents the operator from faking users — every actor in a regulated process must have a key in the trusted identity trie." ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#group> <https://lambdasistemi.github.io/graph-browser/vocab/groups#schema> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Identity Provider" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#nodeId> "identity-provider" ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/kinds#party> , <https://lambdasistemi.github.io/graph-browser/vocab/terms#Node> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-supervisory-authority> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-supervisory-authority/link/1> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-supervisory-authority/link/1> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://gdpr-info.eu/art-58-gdpr/"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "GDPR Art 58" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-supervisory-authority> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-supervisory-authority/link/0> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-supervisory-authority/link/0> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://gdpr-info.eu/art-51-gdpr/"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "GDPR Art 51-59" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-supervisory-authority> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "Independent public authority monitoring GDPR application (Art 51). Maps to the regulator role — maintains the regulation trie with controller standing and certification status. Has investigative, corrective, and advisory powers (Art 58). 27+ national DPAs with EDPB for cross-border consistency. Lead authority mechanism (Art 56) for cross-border processing." ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#group> <https://lambdasistemi.github.io/graph-browser/vocab/groups#gdpr> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Supervisory Authority" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#nodeId> "gdpr-supervisory-authority" ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/kinds#gdpr-element> , <https://lambdasistemi.github.io/graph-browser/vocab/terms#Node> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-rights-requests> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-rights-requests/link/1> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-rights-requests/link/1> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://gdpr-info.eu/art-15-gdpr/"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "GDPR Art 15-22" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-rights-requests> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-rights-requests/link/0> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-rights-requests/link/0> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://gdpr-info.eu/art-12-gdpr/"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "GDPR Art 12" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-rights-requests> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "Data subjects may exercise rights of access (Art 15), rectification (Art 16), erasure (Art 17), restriction (Art 18), portability (Art 20), and objection (Art 21). Controller must respond within one month (Art 12(3)), extendable to three months for complex requests. On-chain: commitment-then-submit with slot-bounded window. Timeout without submission is provable non-compliance." ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#group> <https://lambdasistemi.github.io/graph-browser/vocab/groups#gdpr> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Data Subject Rights (1 month)" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#nodeId> "gdpr-rights-requests" ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/kinds#gdpr-element> , <https://lambdasistemi.github.io/graph-browser/vocab/terms#Node> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-processor> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-processor/link/0> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-processor/link/0> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://gdpr-info.eu/art-28-gdpr/"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "GDPR Art 28" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-processor> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "Processes personal data on behalf of the controller (Art 4(8)). A secondary operator maintaining their own compliance trie, constrained by the controller's documented instructions. The Art 28 processing agreement is a static leaf in both tries. Sub-processors create multi-level trie references — a chain of accountability." ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#group> <https://lambdasistemi.github.io/graph-browser/vocab/groups#gdpr> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Data Processor" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#nodeId> "gdpr-processor" ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/kinds#gdpr-element> , <https://lambdasistemi.github.io/graph-browser/vocab/terms#Node> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-processing-records> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-processing-records/link/0> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-processing-records/link/0> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://gdpr-info.eu/art-30-gdpr/"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "GDPR Art 30" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-processing-records> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "Controllers must maintain records of processing activities: purposes, data categories, recipients, transfers, retention periods, security measures. On-chain: leaves in the controller's trie, all stored as hashes. The SA queries via reference input. On audit, the controller produces pre-images. Hash match proves authenticity and timestamp." ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#group> <https://lambdasistemi.github.io/graph-browser/vocab/groups#gdpr> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Processing Records (Art 30)" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#nodeId> "gdpr-processing-records" ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/kinds#gdpr-element> , <https://lambdasistemi.github.io/graph-browser/vocab/terms#Node> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-fines> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-fines/link/1> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-fines/link/1> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://www.enforcementtracker.com/"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Enforcement Tracker" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-fines> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-fines/link/0> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-fines/link/0> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://gdpr-info.eu/art-83-gdpr/"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "GDPR Art 83" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-fines> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "Two-tier penalty system. Tier 1: up to 10M EUR or 2% global turnover for controller/processor obligation breaches. Tier 2: up to 20M EUR or 4% global turnover for violations of processing principles, data subject rights, and cross-border transfer rules (Art 83). Plus right to compensation (Art 82) and criminal penalties (Art 84). The strongest liveness incentive of any regulation analysed." ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#group> <https://lambdasistemi.github.io/graph-browser/vocab/groups#gdpr> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "GDPR Fines" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#nodeId> "gdpr-fines" ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/kinds#gdpr-element> , <https://lambdasistemi.github.io/graph-browser/vocab/terms#Node> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-dpia> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-dpia/link/0> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-dpia/link/0> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://gdpr-info.eu/art-35-gdpr/"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "GDPR Art 35" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-dpia> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "Mandatory when processing is likely to result in high risk (Art 35). Must assess necessity, proportionality, risks, and mitigating measures. On-chain: attestation hash with timestamp proving when the DPIA was conducted relative to processing start. If the SA requires prior consultation (Art 36), the consultation record is also anchored." ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#group> <https://lambdasistemi.github.io/graph-browser/vocab/groups#gdpr> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Data Protection Impact Assessment" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#nodeId> "gdpr-dpia" ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/kinds#gdpr-element> , <https://lambdasistemi.github.io/graph-browser/vocab/terms#Node> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-data-subject> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-data-subject/link/1> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-data-subject/link/1> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://gdpr-info.eu/chapter-3/"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "GDPR Chapter III" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-data-subject> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-data-subject/link/0> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-data-subject/link/0> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://gdpr-info.eu/art-4-gdpr/"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "GDPR Art 4(1)" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-data-subject> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "Any identified or identifiable natural person. Maps to the user role — exercises rights via signing function in process mode. No wallet needed. Interacts through the controller's portal. The signing function is the authenticated session. Has extensive rights (access, rectification, erasure, portability, objection) that create commitment-then-submit obligations for the controller." ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#group> <https://lambdasistemi.github.io/graph-browser/vocab/groups#gdpr> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Data Subject" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#nodeId> "gdpr-data-subject" ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/kinds#gdpr-element> , <https://lambdasistemi.github.io/graph-browser/vocab/terms#Node> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-cross-border> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-cross-border/link/0> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-cross-border/link/0> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://gdpr-info.eu/art-44-gdpr/"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "GDPR Art 44-49" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-cross-border> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "Any transfer to a third country requires safeguards: adequacy decisions (Art 45), Standard Contractual Clauses (Art 46), Binding Corporate Rules (Art 47), or derogations (Art 49). On-chain: hash of the transfer safeguard referenced in the controller's trie. Critical nuance: the on-chain hashes themselves do not constitute a cross-border transfer because they are not personal data." ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#group> <https://lambdasistemi.github.io/graph-browser/vocab/groups#gdpr> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Cross-Border Transfers" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#nodeId> "gdpr-cross-border" ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/kinds#gdpr-element> , <https://lambdasistemi.github.io/graph-browser/vocab/terms#Node> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-controller> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-controller/link/1> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-controller/link/1> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://gdpr-info.eu/art-24-gdpr/"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "GDPR Art 24" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-controller> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-controller/link/0> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-controller/link/0> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://gdpr-info.eu/art-4-gdpr/"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "GDPR Art 4" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-controller> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "The natural or legal person that determines the purposes and means of processing personal data (Art 4(7)). Maps to the operator role in the schema — maintains their own compliance trie governed by the SA's smart contract. Bears primary accountability. Must demonstrate compliance via the accountability principle (Art 5(2)). Joint controllers (Art 26) may share or cross-reference tries." ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#group> <https://lambdasistemi.github.io/graph-browser/vocab/groups#gdpr> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Data Controller" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#nodeId> "gdpr-controller" ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/kinds#gdpr-element> , <https://lambdasistemi.github.io/graph-browser/vocab/terms#Node> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-consent> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-consent/link/0> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-consent/link/0> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://gdpr-info.eu/art-7-gdpr/"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "GDPR Art 7" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-consent> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "Freely given, specific, informed, and unambiguous indication of the data subject's wishes (Art 4(11)). On-chain representation: lifecycle state machine (None to Given to Withdrawn). Each transition is a leaf update with timestamped hash. The controller must demonstrate consent existed (Art 7(1)). Withdrawal must be as easy as giving (Art 7(3)) — maps to a single leaf update." ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#group> <https://lambdasistemi.github.io/graph-browser/vocab/groups#gdpr> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Consent" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#nodeId> "gdpr-consent" ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/kinds#gdpr-element> , <https://lambdasistemi.github.io/graph-browser/vocab/terms#Node> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-certification> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-certification/link/0> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-certification/link/0> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://gdpr-info.eu/art-42-gdpr/"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "GDPR Art 42" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-certification> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "Voluntary data protection certification mechanisms, valid for maximum three years, renewable. Issued by accredited certification bodies or by the SA. On-chain: token with enforced expiry minted by an authorised party in the regulation trie. Expired or revoked tokens cannot be referenced in new compliance submissions. Adherence demonstrates compliance (Art 24(3))." ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#group> <https://lambdasistemi.github.io/graph-browser/vocab/groups#gdpr> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "GDPR Certification (Art 42)" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#nodeId> "gdpr-certification" ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/kinds#gdpr-element> , <https://lambdasistemi.github.io/graph-browser/vocab/terms#Node> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-breach-notification> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-breach-notification/link/1> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-breach-notification/link/1> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://gdpr-info.eu/art-34-gdpr/"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "GDPR Art 34" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-breach-notification> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-breach-notification/link/0> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-breach-notification/link/0> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://gdpr-info.eu/art-33-gdpr/"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "GDPR Art 33" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr-breach-notification> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "Controller must notify the supervisory authority within 72 hours of becoming aware of a personal data breach (Art 33). The flagship on-chain use case. Currently self-reported with no neutral witness. Commitment-then-submit turns this into a verifiable on-chain fact. Absence of a timely commitment, when a breach becomes known through other channels, is evidence of non-compliance." ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#group> <https://lambdasistemi.github.io/graph-browser/vocab/groups#gdpr> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Breach Notification (72h)" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#nodeId> "gdpr-breach-notification" ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/kinds#gdpr-element> , <https://lambdasistemi.github.io/graph-browser/vocab/terms#Node> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr/link/1> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr/link/1> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://eur-lex.europa.eu/eli/reg/2016/679/oj"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "GDPR full text (EUR-Lex)" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr/link/0> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr/link/0> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://lambdasistemi.github.io/cardano-for-regulators/cases/gdpr/"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Case study" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/gdpr> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "GDPR (EU 2016/679) analysed through the framework. The key reframing: personal data never touches the chain — only compliance evidence (consent hashes, breach notification timestamps, rights-request response proofs). Pure process mode. All five constraints pass. Strongest penalties of any regulation analysed (up to 4% global turnover). Flagship protocol: 72-hour breach notification via commitment-then-submit." ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#group> <https://lambdasistemi.github.io/graph-browser/vocab/groups#cases> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "GDPR" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#nodeId> "gdpr" ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/kinds#case-study> , <https://lambdasistemi.github.io/graph-browser/vocab/terms#Node> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/double-signature> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/double-signature/link/0> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/double-signature/link/0> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://lambdasistemi.github.io/cardano-for-regulators/framework/schema/#the-double-signature"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Schema section" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/double-signature> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "Every state transition requires two signatures. The process signature proves this specific process produced this data at this time (authentication). The actor signature proves the authorized party requests this transition (authorization). Neither alone is sufficient — together they prove an authorized, attested, qualified actor interacted with a specific process." ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#group> <https://lambdasistemi.github.io/graph-browser/vocab/groups#protocols> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Double Signature" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#nodeId> "double-signature" ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/kinds#protocol> , <https://lambdasistemi.github.io/graph-browser/vocab/terms#Node> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/cross-operator-handoff> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/cross-operator-handoff/link/0> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/cross-operator-handoff/link/0> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://lambdasistemi.github.io/cardano-for-regulators/framework/patterns/#cross-operator-handoff"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Pattern docs" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/cross-operator-handoff> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "Transfers responsibility between parties. Old leaf becomes read-only in the originating trie. New leaf is created in the receiving operator's trie with a back-link to the original root, preserving full provenance. Used in Battery Regulation for repurposing and in GDPR for data portability between controllers." ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#group> <https://lambdasistemi.github.io/graph-browser/vocab/groups#protocols> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Cross-Operator Handoff" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#nodeId> "cross-operator-handoff" ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/kinds#protocol> , <https://lambdasistemi.github.io/graph-browser/vocab/terms#Node> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/constraint-sequential-access> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/constraint-sequential-access/link/0> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/constraint-sequential-access/link/0> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://lambdasistemi.github.io/cardano-for-regulators/framework/constraints/#2-sequential-access"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Constraint docs" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/constraint-sequential-access> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "Writes to the shared state must be naturally serialized — no concurrent contention. Either a single operator writes (most common), or multiple actors relay in sequence where the regulation defines the ordering. The MPT stored in a single UTxO is inherently sequential: only one transaction can consume and recreate it per block." ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#group> <https://lambdasistemi.github.io/graph-browser/vocab/groups#constraints> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Sequential Access" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#nodeId> "constraint-sequential-access" ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/kinds#constraint> , <https://lambdasistemi.github.io/graph-browser/vocab/terms#Node> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/constraint-liveness> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/constraint-liveness/link/0> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/constraint-liveness/link/0> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://lambdasistemi.github.io/cardano-for-regulators/framework/constraints/#3-liveness"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Constraint docs" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/constraint-liveness> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "The regulation must provide deadlines and penalties that incentivize continued participation. If one actor in a relay stops, the chain stalls. External liveness comes from the legal system (fines, market withdrawal, license loss). Protocol escalation adds on-chain mechanisms: slot-based timeouts, bond/deposit slashing, fallback operators." ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#group> <https://lambdasistemi.github.io/graph-browser/vocab/groups#constraints> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Liveness" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#nodeId> "constraint-liveness" ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/kinds#constraint> , <https://lambdasistemi.github.io/graph-browser/vocab/terms#Node> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/constraint-identity-delegation> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/constraint-identity-delegation/link/0> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/constraint-identity-delegation/link/0> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://lambdasistemi.github.io/cardano-for-regulators/framework/constraints/#5-identity-delegation"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Constraint docs" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/constraint-identity-delegation> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "Actors who will never have wallets must make meaningful on-chain state transitions through cryptographic proxies. A secure element in a product, an institutional smart card, a mobile credential, or a QR challenge. The proxy bridges the physical world to the chain: proving who, what, and when without blockchain knowledge." ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#group> <https://lambdasistemi.github.io/graph-browser/vocab/groups#constraints> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Identity Delegation" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#nodeId> "constraint-identity-delegation" ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/kinds#constraint> , <https://lambdasistemi.github.io/graph-browser/vocab/terms#Node> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/constraint-fee-alignment> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/constraint-fee-alignment/link/0> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/constraint-fee-alignment/link/0> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://lambdasistemi.github.io/cardano-for-regulators/framework/constraints/#4-fee-alignment"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Constraint docs" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/constraint-fee-alignment> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "There must be an actor who benefits enough from on-chain compliance to pay — the sponsor. Users do not pay. The regulation mandates the obligated party, and the cost per operation is negligible at scale. Happy path: operator pays willingly. Sad path: user has leverage via escrow, bond, or direct submission." ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#group> <https://lambdasistemi.github.io/graph-browser/vocab/groups#constraints> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Fee Alignment" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#nodeId> "constraint-fee-alignment" ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/kinds#constraint> , <https://lambdasistemi.github.io/graph-browser/vocab/terms#Node> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/constraint-data-cadence> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/constraint-data-cadence/link/0> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/constraint-data-cadence/link/0> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://lambdasistemi.github.io/cardano-for-regulators/framework/constraints/#1-data-cadence"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Constraint docs" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/constraint-data-cadence> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "The regulation's data update rhythm must be compatible with L1 settlement. Periodic reporting, event-driven updates, and batch submissions all fit. Real-time sensor telemetry at 100ms intervals does not. The MPT-per-operator pattern means each operator submits one transaction per batch regardless of how many items were updated." ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#group> <https://lambdasistemi.github.io/graph-browser/vocab/groups#constraints> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Data Cadence" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#nodeId> "constraint-data-cadence" ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/kinds#constraint> , <https://lambdasistemi.github.io/graph-browser/vocab/terms#Node> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/commitment-protocol> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/commitment-protocol/link/0> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/commitment-protocol/link/0> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://lambdasistemi.github.io/cardano-for-regulators/framework/patterns/#commitment-then-submit"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Pattern docs" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/commitment-protocol> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "Proves that an action occurred within a specific time window. The operator creates a commitment in a trie leaf with validFrom and validUntil slots. The user's reading or response clears the commitment. Single-use (prevents replay), slot-bounded (validator checks the window), and requires no off-chain timestamp trust. The core mechanism for GDPR's 72h breach notification and 1-month rights response." ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#group> <https://lambdasistemi.github.io/graph-browser/vocab/groups#protocols> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Commitment-then-Submit" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#nodeId> "commitment-protocol" ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/kinds#protocol> , <https://lambdasistemi.github.io/graph-browser/vocab/terms#Node> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/bright-line> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/bright-line/link/1> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/bright-line/link/1> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://www.cnil.fr/en/blockchain-and-gdpr-solutions-responsible-use-blockchain-context-personal-data"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "CNIL blockchain guidance" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/bright-line> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/bright-line/link/0> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/bright-line/link/0> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://gdpr-info.eu/recitals/no-26/"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "GDPR Recital 26" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/bright-line> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "The architectural principle that resolves every GDPR-blockchain tension: personal data off-chain, compliance evidence on-chain. No names, identifiers, health data, location, or behavioural profiles ever touch the chain — not even encrypted. The chain stores hashes of compliance records. Under Recital 26's 'means reasonably likely' test, properly segregated hashes are not personal data." ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#group> <https://lambdasistemi.github.io/graph-browser/vocab/groups#gdpr> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "The Bright Line" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#nodeId> "bright-line" ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/kinds#concept> , <https://lambdasistemi.github.io/graph-browser/vocab/terms#Node> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/beacon-protocol> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/beacon-protocol/link/0> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/beacon-protocol/link/0> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://lambdasistemi.github.io/cardano-for-regulators/framework/patterns/#beacon-gated-attestation"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Pattern docs" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/beacon-protocol> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "The regulator requires that user contributions can only be validated if the operator's current standing is disclosed. The operator samples their standing from the regulation trie and relays it to the user. The user signs their data together with this disclosure. The smart contract enforces that the standing was current at submission time. The operator cannot filter or suppress the regulator's assessment." ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#group> <https://lambdasistemi.github.io/graph-browser/vocab/groups#protocols> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Beacon-Gated Attestation" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#nodeId> "beacon-protocol" ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/kinds#protocol> , <https://lambdasistemi.github.io/graph-browser/vocab/terms#Node> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/beacon> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/beacon/link/0> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/beacon/link/0> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://lambdasistemi.github.io/cardano-for-regulators/framework/schema/#the-beacon-protocol"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Schema section" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/beacon> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "The regulator's policy carrier. Forces the operator to sample their standing and the applicable data policy from the regulation trie before collecting user attestations. Carries two things: standing (the regulator's assessment of the operator) and data policy (who may receive the data — recipient keys per context). The user encrypts their contribution for the beacon's recipients and signs over the beacon. Expires to prevent stale reputation and stale disclosure authorization." ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#group> <https://lambdasistemi.github.io/graph-browser/vocab/groups#schema> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Beacon" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#nodeId> "beacon" ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/kinds#concept> , <https://lambdasistemi.github.io/graph-browser/vocab/terms#Node> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/battery-regulation> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/battery-regulation/link/0> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/battery-regulation/link/0> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://lambdasistemi.github.io/cardano-for-regulators/cases/battery-regulation/"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Case study" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/battery-regulation> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "The reference case — (EU) 2023/1542 on batteries and waste batteries. All five constraints pass. Physical mode with NFC secure element signing SoH readings. MPT-per-operator with ~200 manufacturers, ~5M batteries/year. Commitment-then-submit for authenticated readings. Hardware cost $1.91 per module at volume. Annual on-chain cost ~$1,800-3,600 for the entire market." ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#group> <https://lambdasistemi.github.io/graph-browser/vocab/groups#cases> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "EU Battery Regulation" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#nodeId> "battery-regulation" ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/kinds#case-study> , <https://lambdasistemi.github.io/graph-browser/vocab/terms#Node> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/baton-pattern> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/baton-pattern/link/0> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/baton-pattern/link/0> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://lambdasistemi.github.io/cardano-for-regulators/framework/schema/#the-baton-pattern"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Schema section" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/baton-pattern> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "Authorization to act on a process travels as a baton through the real world. The first tap makes Actor A the holder. Actor A's final submission includes Actor B's pubkey, atomically transferring the baton. No gap where nobody holds authorization — the transfer is part of the state transition. No user registration, no identity database, no login." ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#group> <https://lambdasistemi.github.io/graph-browser/vocab/groups#protocols> ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Baton Pattern" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#nodeId> "baton-pattern" ;
+	<http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-for-regulators/rdf> ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/kinds#protocol> , <https://lambdasistemi.github.io/graph-browser/vocab/terms#Node> .
+<https://lambdasistemi.github.io/graph-browser/vocab/edges#withdrawal%20triggers> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeLabel> "withdrawal triggers" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "withdrawal triggers" ;
+	a <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://lambdasistemi.github.io/graph-browser/vocab/edges#verified%20by> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeLabel> "verified by" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "verified by" ;
+	a <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://lambdasistemi.github.io/graph-browser/vocab/edges#uses> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeLabel> "uses" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "uses" ;
+	a <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://lambdasistemi.github.io/graph-browser/vocab/edges#used%20in> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeLabel> "used in" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "used in" ;
+	a <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://lambdasistemi.github.io/graph-browser/vocab/edges#trusts> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeLabel> "trusts" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "trusts" ;
+	a <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://lambdasistemi.github.io/graph-browser/vocab/edges#substrate%20is%20server> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeLabel> "substrate is server" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "substrate is server" ;
+	a <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://lambdasistemi.github.io/graph-browser/vocab/edges#substrate%20is%20hardware> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeLabel> "substrate is hardware" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "substrate is hardware" ;
+	a <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://lambdasistemi.github.io/graph-browser/vocab/edges#stored%20in> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeLabel> "stored in" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "stored in" ;
+	a <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://lambdasistemi.github.io/graph-browser/vocab/edges#signs%20over> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeLabel> "signs over" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "signs over" ;
+	a <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://lambdasistemi.github.io/graph-browser/vocab/edges#satisfies> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeLabel> "satisfies" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "satisfies" ;
+	a <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://lambdasistemi.github.io/graph-browser/vocab/edges#resolves> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeLabel> "resolves" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "resolves" ;
+	a <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://lambdasistemi.github.io/graph-browser/vocab/edges#resolved%20by> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeLabel> "resolved by" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "resolved by" ;
+	a <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://lambdasistemi.github.io/graph-browser/vocab/edges#requires> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeLabel> "requires" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "requires" ;
+	a <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://lambdasistemi.github.io/graph-browser/vocab/edges#reads> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeLabel> "reads" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "reads" ;
+	a <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://lambdasistemi.github.io/graph-browser/vocab/edges#publishes> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeLabel> "publishes" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "publishes" ;
+	a <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://lambdasistemi.github.io/graph-browser/vocab/edges#provides> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeLabel> "provides" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "provides" ;
+	a <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://lambdasistemi.github.io/graph-browser/vocab/edges#proves%20timeliness%20of> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeLabel> "proves timeliness of" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "proves timeliness of" ;
+	a <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://lambdasistemi.github.io/graph-browser/vocab/edges#produces> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeLabel> "produces" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "produces" ;
+	a <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://lambdasistemi.github.io/graph-browser/vocab/edges#on-chain%20as> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeLabel> "on-chain as" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "on-chain as" ;
+	a <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://lambdasistemi.github.io/graph-browser/vocab/edges#models> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeLabel> "models" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "models" ;
+	a <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://lambdasistemi.github.io/graph-browser/vocab/edges#mints> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeLabel> "mints" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "mints" ;
+	a <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://lambdasistemi.github.io/graph-browser/vocab/edges#maps%20to> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeLabel> "maps to" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "maps to" ;
+	a <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://lambdasistemi.github.io/graph-browser/vocab/edges#manages> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeLabel> "manages" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "manages" ;
+	a <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://lambdasistemi.github.io/graph-browser/vocab/edges#maintains> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeLabel> "maintains" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "maintains" ;
+	a <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://lambdasistemi.github.io/graph-browser/vocab/edges#justifies> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeLabel> "justifies" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "justifies" ;
+	a <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://lambdasistemi.github.io/graph-browser/vocab/edges#implements> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeLabel> "implements" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "implements" ;
+	a <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://lambdasistemi.github.io/graph-browser/vocab/edges#implemented%20via> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeLabel> "implemented via" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "implemented via" ;
+	a <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://lambdasistemi.github.io/graph-browser/vocab/edges#implemented%20by> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeLabel> "implemented by" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "implemented by" ;
+	a <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://lambdasistemi.github.io/graph-browser/vocab/edges#governs> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeLabel> "governs" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "governs" ;
+	a <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://lambdasistemi.github.io/graph-browser/vocab/edges#gates> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeLabel> "gates" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "gates" ;
+	a <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://lambdasistemi.github.io/graph-browser/vocab/edges#formalised%20as> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeLabel> "formalised as" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "formalised as" ;
+	a <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://lambdasistemi.github.io/graph-browser/vocab/edges#enforces> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeLabel> "enforces" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "enforces" ;
+	a <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://lambdasistemi.github.io/graph-browser/vocab/edges#enforced%20via> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeLabel> "enforced via" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "enforced via" ;
+	a <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://lambdasistemi.github.io/graph-browser/vocab/edges#derives> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeLabel> "derives" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "derives" ;
+	a <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://lambdasistemi.github.io/graph-browser/vocab/edges#depends%20on> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeLabel> "depends on" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "depends on" ;
+	a <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://lambdasistemi.github.io/graph-browser/vocab/edges#defines%20use%20of> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeLabel> "defines use of" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "defines use of" ;
+	a <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://lambdasistemi.github.io/graph-browser/vocab/edges#critical%20for> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeLabel> "critical for" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "critical for" ;
+	a <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://lambdasistemi.github.io/graph-browser/vocab/edges#attested%20in> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeLabel> "attested in" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "attested in" ;
+	a <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://lambdasistemi.github.io/graph-browser/vocab/edges#argues%20for> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeLabel> "argues for" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "argues for" ;
+	a <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://lambdasistemi.github.io/graph-browser/vocab/groups#tensions> <https://lambdasistemi.github.io/graph-browser/vocab/terms#groupId> "tensions" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "tensions" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#Group> .
+<https://lambdasistemi.github.io/graph-browser/vocab/groups#schema> <https://lambdasistemi.github.io/graph-browser/vocab/terms#groupId> "schema" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "schema" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#Group> .
+<https://lambdasistemi.github.io/graph-browser/vocab/groups#protocols> <https://lambdasistemi.github.io/graph-browser/vocab/terms#groupId> "protocols" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "protocols" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#Group> .
+<https://lambdasistemi.github.io/graph-browser/vocab/groups#modes> <https://lambdasistemi.github.io/graph-browser/vocab/terms#groupId> "modes" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "modes" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#Group> .
+<https://lambdasistemi.github.io/graph-browser/vocab/groups#gdpr> <https://lambdasistemi.github.io/graph-browser/vocab/terms#groupId> "gdpr" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "gdpr" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#Group> .
+<https://lambdasistemi.github.io/graph-browser/vocab/groups#foundation> <https://lambdasistemi.github.io/graph-browser/vocab/terms#groupId> "foundation" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "foundation" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#Group> .
+<https://lambdasistemi.github.io/graph-browser/vocab/groups#constraints> <https://lambdasistemi.github.io/graph-browser/vocab/terms#groupId> "constraints" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "constraints" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#Group> .
+<https://lambdasistemi.github.io/graph-browser/vocab/groups#cases> <https://lambdasistemi.github.io/graph-browser/vocab/terms#groupId> "cases" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "cases" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#Group> .
+<https://lambdasistemi.github.io/graph-browser/vocab/kinds#risk> <https://lambdasistemi.github.io/graph-browser/vocab/terms#shape> "triangle" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#color> "#f85149" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#kindId> "risk" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Risk / Tension" ;
+	a <http://www.w3.org/2000/01/rdf-schema#Class> .
+<https://lambdasistemi.github.io/graph-browser/vocab/kinds#protocol> <https://lambdasistemi.github.io/graph-browser/vocab/terms#shape> "diamond" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#color> "#f778ba" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#kindId> "protocol" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Protocol Pattern" ;
+	a <http://www.w3.org/2000/01/rdf-schema#Class> .
+<https://lambdasistemi.github.io/graph-browser/vocab/kinds#party> <https://lambdasistemi.github.io/graph-browser/vocab/terms#shape> "round-octagon" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#color> "#58a6ff" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#kindId> "party" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Party" ;
+	a <http://www.w3.org/2000/01/rdf-schema#Class> .
+<https://lambdasistemi.github.io/graph-browser/vocab/kinds#gdpr-element> <https://lambdasistemi.github.io/graph-browser/vocab/terms#shape> "ellipse" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#color> "#79c0ff" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#kindId> "gdpr-element" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "GDPR Element" ;
+	a <http://www.w3.org/2000/01/rdf-schema#Class> .
+<https://lambdasistemi.github.io/graph-browser/vocab/kinds#constraint> <https://lambdasistemi.github.io/graph-browser/vocab/terms#shape> "round-pentagon" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#color> "#e3b341" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#kindId> "constraint" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Constraint" ;
+	a <http://www.w3.org/2000/01/rdf-schema#Class> .
+<https://lambdasistemi.github.io/graph-browser/vocab/kinds#concept> <https://lambdasistemi.github.io/graph-browser/vocab/terms#shape> "star" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#color> "#56d364" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#kindId> "concept" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Concept" ;
+	a <http://www.w3.org/2000/01/rdf-schema#Class> .
+<https://lambdasistemi.github.io/graph-browser/vocab/kinds#case-study> <https://lambdasistemi.github.io/graph-browser/vocab/terms#shape> "barrel" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#color> "#f0883e" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#kindId> "case-study" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "Case Study" ;
+	a <http://www.w3.org/2000/01/rdf-schema#Class> .
+<https://lambdasistemi.github.io/graph-browser/vocab/kinds#artifact> <https://lambdasistemi.github.io/graph-browser/vocab/terms#shape> "round-rectangle" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#color> "#d2a8ff" ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#kindId> "artifact" ;
+	<http://www.w3.org/2000/01/rdf-schema#label> "On-chain Artifact" ;
+	a <http://www.w3.org/2000/01/rdf-schema#Class> .
+<https://github.com/lambdasistemi/cardano-for-regulators/rdf> <https://lambdasistemi.github.io/graph-browser/vocab/terms#sourceRepository> "https://github.com/lambdasistemi/cardano-for-regulators"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeCount> 56 ;
+	<https://lambdasistemi.github.io/graph-browser/vocab/terms#nodeCount> 49 ;
+	<http://purl.org/dc/terms/description> "Framework for analyzing multi-party regulations and mapping them to Cardano compliance infrastructure — thesis, schema, constraints, patterns, and case studies." ;
+	<http://purl.org/dc/terms/title> "Cardano for Regulators" ;
+	a <https://lambdasistemi.github.io/graph-browser/vocab/terms#Dataset> .

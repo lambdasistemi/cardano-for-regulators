@@ -1,0 +1,320 @@
+@prefix gb: <https://lambdasistemi.github.io/graph-browser/vocab/terms#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://lambdasistemi.github.io/graph-browser/vocab/ontology> a owl:Ontology ;
+  rdfs:label "Graph Browser core vocabulary" ;
+  dcterms:description "Shared graph-browser ontology for datasets, views, tutorials, queries, and edge assertions." ;
+  owl:versionInfo "0.1.0" .
+
+gb:Dataset a owl:Class ;
+  rdfs:label "Dataset" ;
+  dcterms:description "A graph-browser dataset exported to RDF." .
+
+gb:Node a owl:Class ;
+  rdfs:label "Node" ;
+  dcterms:description "A graph-browser node resource." .
+
+gb:Group a owl:Class ;
+  rdfs:label "Group" ;
+  dcterms:description "An organizational group used by graph-browser nodes." .
+
+gb:EdgeAssertion a owl:Class ;
+  rdfs:label "Edge assertion" ;
+  dcterms:description "Metadata resource preserving the original graph-browser edge record." .
+
+gb:ExternalLink a owl:Class ;
+  rdfs:label "External link" ;
+  dcterms:description "External URL associated with a graph-browser node." .
+
+gb:Tutorial a owl:Class ;
+  rdfs:label "Tutorial" ;
+  dcterms:description "A guided tour through a graph-browser graph." .
+
+gb:TutorialStop a owl:Class ;
+  rdfs:label "Tutorial stop" ;
+  dcterms:description "An ordered stop within a graph-browser tutorial." .
+
+gb:View a owl:Class ;
+  rdfs:label "View" ;
+  dcterms:description "A named graph-browser view selecting a subset of graph edges, with optional scoped tours." .
+
+gb:EdgeReference a owl:Class ;
+  rdfs:label "Edge reference" ;
+  dcterms:description "A structural reference to an edge triple inside a view definition." .
+
+gb:QueryCatalog a owl:Class ;
+  rdfs:label "Query catalog" ;
+  dcterms:description "A collection of named graph-browser queries." .
+
+gb:NamedQuery a owl:Class ;
+  rdfs:label "Named query" ;
+  dcterms:description "A named SPARQL query used for graph-browser navigation, views, or tours." .
+
+gb:QueryParameter a owl:Class ;
+  rdfs:label "Query parameter" ;
+  dcterms:description "A parameter placeholder bound when executing a named query." .
+
+gb:Node rdfs:subClassOf
+  [ a owl:Restriction ;
+    owl:onProperty gb:nodeId ;
+    owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+    owl:onDataRange xsd:string
+  ] ,
+  [ a owl:Restriction ;
+    owl:onProperty gb:group ;
+    owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+    owl:onClass gb:Group
+  ] .
+
+gb:Tutorial rdfs:subClassOf
+  [ a owl:Restriction ;
+    owl:onProperty gb:hasStop ;
+    owl:allValuesFrom gb:TutorialStop
+  ] .
+
+gb:View rdfs:subClassOf
+  [ a owl:Restriction ;
+    owl:onProperty gb:hasEdgeReference ;
+    owl:allValuesFrom gb:EdgeReference
+  ] ,
+  [ a owl:Restriction ;
+    owl:onProperty gb:hasScopedTutorial ;
+    owl:allValuesFrom gb:Tutorial
+  ] .
+
+gb:QueryCatalog rdfs:subClassOf
+  [ a owl:Restriction ;
+    owl:onProperty gb:hasNamedQuery ;
+    owl:allValuesFrom gb:NamedQuery
+  ] .
+
+gb:NamedQuery rdfs:subClassOf
+  [ a owl:Restriction ;
+    owl:onProperty gb:queryText ;
+    owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+    owl:onDataRange xsd:string
+  ] ,
+  [ a owl:Restriction ;
+    owl:onProperty gb:hasParameter ;
+    owl:allValuesFrom gb:QueryParameter
+  ] .
+
+gb:QueryParameter rdfs:subClassOf
+  [ a owl:Restriction ;
+    owl:onProperty gb:parameterName ;
+    owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+    owl:onDataRange xsd:string
+  ] ,
+  [ a owl:Restriction ;
+    owl:onProperty gb:parameterType ;
+    owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+    owl:onDataRange xsd:string
+  ] ,
+  [ a owl:Restriction ;
+    owl:onProperty gb:defaultValue ;
+    owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+    owl:onDataRange xsd:string
+  ] .
+
+gb:EdgeAssertion rdfs:subClassOf
+  [ a owl:Restriction ;
+    owl:onProperty gb:from ;
+    owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+    owl:onClass gb:Node
+  ] ,
+  [ a owl:Restriction ;
+    owl:onProperty gb:to ;
+    owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+    owl:onClass gb:Node
+  ] ,
+  [ a owl:Restriction ;
+    owl:onProperty gb:predicate ;
+    owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+    owl:onClass rdf:Property
+  ] .
+
+gb:EdgeRelation a owl:ObjectProperty ;
+  rdfs:label "edge relation" ;
+  dcterms:description "A direct relationship predicate between two graph-browser nodes." ;
+  rdfs:domain gb:Node ;
+  rdfs:range gb:Node .
+
+gb:sourceRepository a owl:DatatypeProperty ;
+  rdfs:label "source repository" ;
+  dcterms:description "Repository URL from config.sourceUrl." ;
+  rdfs:domain gb:Dataset ;
+  rdfs:range xsd:anyURI .
+
+gb:nodeCount a owl:DatatypeProperty ;
+  rdfs:label "node count" ;
+  rdfs:domain gb:Dataset ;
+  rdfs:range xsd:integer .
+
+gb:edgeCount a owl:DatatypeProperty ;
+  rdfs:label "edge count" ;
+  rdfs:domain gb:Dataset ;
+  rdfs:range xsd:integer .
+
+gb:kindId a owl:AnnotationProperty ;
+  rdfs:label "kind id" .
+
+gb:color a owl:AnnotationProperty ;
+  rdfs:label "color" .
+
+gb:shape a owl:AnnotationProperty ;
+  rdfs:label "shape" .
+
+gb:groupId a owl:AnnotationProperty ;
+  rdfs:label "group id" .
+
+gb:edgeLabel a owl:AnnotationProperty ;
+  rdfs:label "edge label" .
+
+gb:nodeId a owl:DatatypeProperty ;
+  rdfs:label "node id" ;
+  rdfs:domain gb:Node ;
+  rdfs:range xsd:string .
+
+gb:group a owl:ObjectProperty ;
+  rdfs:label "group" ;
+  rdfs:domain gb:Node ;
+  rdfs:range gb:Group .
+
+gb:description a owl:DatatypeProperty ;
+  rdfs:label "description" ;
+  rdfs:domain gb:Node ;
+  rdfs:range xsd:string .
+
+gb:externalLink a owl:ObjectProperty ;
+  rdfs:label "external link" ;
+  rdfs:domain gb:Node ;
+  rdfs:range gb:ExternalLink .
+
+gb:url a owl:DatatypeProperty ;
+  rdfs:label "url" ;
+  rdfs:domain gb:ExternalLink ;
+  rdfs:range xsd:anyURI .
+
+gb:hasTutorial a owl:ObjectProperty ;
+  rdfs:label "has tutorial" ;
+  rdfs:domain gb:Dataset ;
+  rdfs:range gb:Tutorial .
+
+gb:hasStop a owl:ObjectProperty ;
+  rdfs:label "has stop" ;
+  rdfs:domain gb:Tutorial ;
+  rdfs:range gb:TutorialStop .
+
+gb:focusNode a owl:ObjectProperty ;
+  rdfs:label "focus node" ;
+  rdfs:domain gb:TutorialStop ;
+  rdfs:range gb:Node .
+
+gb:depth a owl:DatatypeProperty ;
+  rdfs:label "depth" ;
+  rdfs:domain gb:TutorialStop ;
+  rdfs:range xsd:integer .
+
+gb:narrative a owl:DatatypeProperty ;
+  rdfs:label "narrative" ;
+  rdfs:domain gb:TutorialStop ;
+  rdfs:range xsd:string .
+
+gb:stepIndex a owl:DatatypeProperty ;
+  rdfs:label "step index" ;
+  rdfs:domain gb:TutorialStop ;
+  rdfs:range xsd:integer .
+
+gb:hasView a owl:ObjectProperty ;
+  rdfs:label "has view" ;
+  rdfs:domain gb:Dataset ;
+  rdfs:range gb:View .
+
+gb:hasEdgeReference a owl:ObjectProperty ;
+  rdfs:label "has edge reference" ;
+  rdfs:domain gb:View ;
+  rdfs:range gb:EdgeReference .
+
+gb:edgeSource a owl:ObjectProperty ;
+  rdfs:label "edge source" ;
+  rdfs:domain gb:EdgeReference ;
+  rdfs:range gb:Node .
+
+gb:edgeTarget a owl:ObjectProperty ;
+  rdfs:label "edge target" ;
+  rdfs:domain gb:EdgeReference ;
+  rdfs:range gb:Node .
+
+gb:edgeReferenceLabel a owl:DatatypeProperty ;
+  rdfs:label "edge reference label" ;
+  rdfs:domain gb:EdgeReference ;
+  rdfs:range xsd:string .
+
+gb:hasScopedTutorial a owl:ObjectProperty ;
+  rdfs:label "has scoped tutorial" ;
+  rdfs:domain gb:View ;
+  rdfs:range gb:Tutorial .
+
+gb:hasQueryCatalog a owl:ObjectProperty ;
+  rdfs:label "has query catalog" ;
+  rdfs:domain gb:Dataset ;
+  rdfs:range gb:QueryCatalog .
+
+gb:hasNamedQuery a owl:ObjectProperty ;
+  rdfs:label "has named query" ;
+  rdfs:domain gb:QueryCatalog ;
+  rdfs:range gb:NamedQuery .
+
+gb:queryText a owl:DatatypeProperty ;
+  rdfs:label "query text" ;
+  rdfs:domain gb:NamedQuery ;
+  rdfs:range xsd:string .
+
+gb:hasParameter a owl:ObjectProperty ;
+  rdfs:label "has parameter" ;
+  rdfs:domain gb:NamedQuery ;
+  rdfs:range gb:QueryParameter .
+
+gb:parameterName a owl:DatatypeProperty ;
+  rdfs:label "parameter name" ;
+  rdfs:domain gb:QueryParameter ;
+  rdfs:range xsd:string .
+
+gb:parameterType a owl:DatatypeProperty ;
+  rdfs:label "parameter type" ;
+  rdfs:domain gb:QueryParameter ;
+  rdfs:range xsd:string .
+
+gb:defaultValue a owl:DatatypeProperty ;
+  rdfs:label "default value" ;
+  rdfs:domain gb:QueryParameter ;
+  rdfs:range xsd:string .
+
+gb:tag a owl:DatatypeProperty ;
+  rdfs:label "tag" ;
+  rdfs:domain gb:NamedQuery ;
+  rdfs:range xsd:string .
+
+gb:predicate a owl:ObjectProperty ;
+  rdfs:label "predicate" ;
+  rdfs:domain gb:EdgeAssertion ;
+  rdfs:range rdf:Property .
+
+gb:from a owl:ObjectProperty ;
+  rdfs:label "from" ;
+  rdfs:domain gb:EdgeAssertion ;
+  rdfs:range gb:Node .
+
+gb:to a owl:ObjectProperty ;
+  rdfs:label "to" ;
+  rdfs:domain gb:EdgeAssertion ;
+  rdfs:range gb:Node .
+
+gb:edgeIndex a owl:DatatypeProperty ;
+  rdfs:label "edge index" ;
+  rdfs:domain gb:EdgeAssertion ;
+  rdfs:range xsd:integer .

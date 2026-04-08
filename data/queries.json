@@ -1,0 +1,81 @@
+[
+  {
+    "id": "by-kind",
+    "name": "Nodes by Kind",
+    "description": "All nodes of a selected kind.",
+    "sparql": "PREFIX gbk: <https://lambdasistemi.github.io/graph-browser/vocab/kinds#>\nSELECT ?node WHERE { ?node a gbk:$kind }",
+    "parameters": [{ "name": "kind", "label": "Kind", "type": "kind" }],
+    "tags": []
+  },
+  {
+    "id": "by-group",
+    "name": "Nodes by Group",
+    "description": "All nodes in a selected group.",
+    "sparql": "PREFIX gb: <https://lambdasistemi.github.io/graph-browser/vocab/terms#>\nSELECT ?node WHERE { ?node gb:group \"$group\" }",
+    "parameters": [{ "name": "group", "label": "Group", "type": "group" }],
+    "tags": []
+  },
+  {
+    "id": "parties-and-constraints",
+    "name": "Parties & Constraints",
+    "description": "All regulatory parties and the constraints that govern them.",
+    "sparql": "PREFIX gbk: <https://lambdasistemi.github.io/graph-browser/vocab/kinds#>\nSELECT DISTINCT ?node WHERE {\n  { ?node a gbk:party }\n  UNION { ?node a gbk:constraint }\n}",
+    "tags": ["view"]
+  },
+  {
+    "id": "gdpr-landscape",
+    "name": "GDPR Landscape",
+    "description": "All GDPR elements and the on-chain artifacts they relate to.",
+    "sparql": "PREFIX gbk: <https://lambdasistemi.github.io/graph-browser/vocab/kinds#>\nSELECT DISTINCT ?node WHERE {\n  { ?node a gbk:gdpr-element }\n  UNION { ?node a gbk:artifact }\n}",
+    "tags": ["view"]
+  },
+  {
+    "id": "protocol-patterns",
+    "name": "Protocol Patterns",
+    "description": "All protocol patterns and the constraints they satisfy.",
+    "sparql": "PREFIX gbk: <https://lambdasistemi.github.io/graph-browser/vocab/kinds#>\nSELECT DISTINCT ?node WHERE {\n  { ?node a gbk:protocol }\n  UNION { ?node a gbk:constraint }\n}",
+    "tags": ["view"]
+  },
+  {
+    "id": "on-chain-artifacts",
+    "name": "On-chain Artifacts",
+    "description": "Everything that lives on-chain and the protocols that produce them.",
+    "sparql": "PREFIX gbk: <https://lambdasistemi.github.io/graph-browser/vocab/kinds#>\nPREFIX gb: <https://lambdasistemi.github.io/graph-browser/vocab/terms#>\nSELECT DISTINCT ?node WHERE {\n  { ?node a gbk:artifact }\n  UNION {\n    ?e a gb:EdgeAssertion .\n    ?e gb:to ?art . ?art a gbk:artifact .\n    ?e gb:from ?node\n  }\n}",
+    "tags": ["view"]
+  },
+  {
+    "id": "risks-and-tensions",
+    "name": "Risks & Tensions",
+    "description": "Risk nodes and what they connect to — the unresolved tensions in the framework.",
+    "sparql": "PREFIX gbk: <https://lambdasistemi.github.io/graph-browser/vocab/kinds#>\nPREFIX gb: <https://lambdasistemi.github.io/graph-browser/vocab/terms#>\nSELECT DISTINCT ?node WHERE {\n  { ?node a gbk:risk }\n  UNION {\n    ?e a gb:EdgeAssertion .\n    ?e gb:from ?r . ?r a gbk:risk .\n    ?e gb:to ?node\n  }\n  UNION {\n    ?e a gb:EdgeAssertion .\n    ?e gb:to ?r . ?r a gbk:risk .\n    ?e gb:from ?node\n  }\n}",
+    "tags": ["view"]
+  },
+  {
+    "id": "case-studies",
+    "name": "Case Studies",
+    "description": "Case study nodes and all elements they reference.",
+    "sparql": "PREFIX gbk: <https://lambdasistemi.github.io/graph-browser/vocab/kinds#>\nPREFIX gb: <https://lambdasistemi.github.io/graph-browser/vocab/terms#>\nSELECT DISTINCT ?node WHERE {\n  { ?node a gbk:case-study }\n  UNION {\n    ?e a gb:EdgeAssertion .\n    ?e gb:from ?cs . ?cs a gbk:case-study .\n    ?e gb:to ?node\n  }\n  UNION {\n    ?e a gb:EdgeAssertion .\n    ?e gb:to ?cs . ?cs a gbk:case-study .\n    ?e gb:from ?node\n  }\n}",
+    "tags": ["view"]
+  },
+  {
+    "id": "signing-chain",
+    "name": "Signing & Attestation",
+    "description": "The signing function and everything connected to cryptographic attestation.",
+    "sparql": "PREFIX gb: <https://lambdasistemi.github.io/graph-browser/vocab/terms#>\nSELECT DISTINCT ?node WHERE {\n  { ?node gb:nodeId \"signing-function\" }\n  UNION {\n    <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/signing-function> ?p ?node .\n    ?node a ?type\n  }\n  UNION {\n    ?node ?p <https://github.com/lambdasistemi/cardano-for-regulators/rdf/node/signing-function> .\n    ?node a ?type\n  }\n}",
+    "tags": []
+  },
+  {
+    "id": "trust-model",
+    "name": "Trust Model",
+    "description": "Nodes connected by trust relationships.",
+    "sparql": "PREFIX gb: <https://lambdasistemi.github.io/graph-browser/vocab/terms#>\nPREFIX gbe: <https://lambdasistemi.github.io/graph-browser/vocab/edges#>\nSELECT DISTINCT ?node WHERE {\n  { ?node gbe:trusts ?other }\n  UNION { ?other gbe:trusts ?node }\n}",
+    "tags": []
+  },
+  {
+    "id": "hub-nodes",
+    "name": "Hub Nodes",
+    "description": "The most connected concepts — architectural load-bearing elements.",
+    "sparql": "PREFIX gb: <https://lambdasistemi.github.io/graph-browser/vocab/terms#>\nSELECT ?node WHERE {\n  { SELECT ?node (COUNT(*) AS ?c) WHERE {\n    { ?e a gb:EdgeAssertion . ?e gb:from ?node }\n    UNION { ?e a gb:EdgeAssertion . ?e gb:to ?node }\n  } GROUP BY ?node HAVING (COUNT(*) > 4) }\n}",
+    "tags": []
+  }
+]
