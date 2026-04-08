@@ -1,0 +1,248 @@
+@prefix proc:   <https://lambdasistemi.github.io/cardano-for-regulators/ontology/process#> .
+@prefix cfr:    <https://lambdasistemi.github.io/cardano-for-regulators/ontology#> .
+@prefix owl:    <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+
+# =============================================================================
+# Process State Machine Ontology
+#
+# Extends cfr: with process-level concepts: ordered steps, actor binding,
+# signature requirements, datum changes, and deadlines. Processes reference
+# existing cfr:RedeemerAction, cfr:Guard, cfr:LifecycleState instances.
+# =============================================================================
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/process>
+    a owl:Ontology ;
+    rdfs:label "Cardano for Regulators — Process Ontology" ;
+    rdfs:comment """State machine ontology for regulated processes on Cardano.
+        Expresses the choreography of transactions, signatures, checks, and
+        state transitions over time.""" .
+
+# =============================================================================
+# Classes
+# =============================================================================
+
+proc:Process
+    a owl:Class ;
+    rdfs:label "Process" ;
+    rdfs:comment """A named, ordered sequence of steps that implements a
+        regulatory obligation. References the obligation it covers via
+        proc:implements.""" .
+
+proc:Step
+    a owl:Class ;
+    rdfs:label "Step" ;
+    rdfs:comment """Abstract base for steps in a process. Either an on-chain
+        transaction or an off-chain activity. Steps have a presentation order
+        and an actor.""" .
+
+proc:OnChainStep
+    a owl:Class ;
+    rdfs:subClassOf proc:Step ;
+    rdfs:label "On-Chain Step" ;
+    rdfs:comment """A transaction step. Wraps a cfr:RedeemerAction with
+        context: actor, signatures, validator checks, datum changes, and
+        state transition.""" .
+
+proc:OffChainStep
+    a owl:Class ;
+    rdfs:subClassOf proc:Step ;
+    rdfs:label "Off-Chain Step" ;
+    rdfs:comment """An off-chain activity between transactions. No redeemer
+        action, no validator checks, no datum changes. Has a narrative
+        describing what happens off-chain.""" .
+
+proc:DatumField
+    a owl:Class ;
+    rdfs:label "Datum Field" ;
+    rdfs:comment "A named field in the UTxO datum." .
+
+proc:DatumChange
+    a owl:Class ;
+    rdfs:label "Datum Change" ;
+    rdfs:comment """A specific field in the UTxO datum that changes value
+        during a transition. References the field, the value before, and
+        the value after.""" .
+
+proc:SignatureReq
+    a owl:Class ;
+    rdfs:label "Signature Requirement" ;
+    rdfs:comment """A signature that must be present for a transition to
+        be valid. References the party who signs and the signature type
+        (process or actor).""" .
+
+proc:Deadline
+    a owl:Class ;
+    rdfs:label "Deadline" ;
+    rdfs:comment """A slot-bounded constraint between two states. The process
+        must reach the deadline state within the specified duration after
+        entering the start state.""" .
+
+# =============================================================================
+# Process properties
+# =============================================================================
+
+proc:implements
+    a owl:ObjectProperty ;
+    rdfs:domain proc:Process ;
+    rdfs:range cfr:Obligation ;
+    rdfs:label "implements" ;
+    rdfs:comment "The regulatory obligation this process covers." .
+
+proc:hasStep
+    a owl:ObjectProperty ;
+    rdfs:domain proc:Process ;
+    rdfs:range proc:Step ;
+    rdfs:label "has step" .
+
+proc:deadline
+    a owl:ObjectProperty ;
+    rdfs:domain proc:Process ;
+    rdfs:range proc:Deadline ;
+    rdfs:label "has deadline" .
+
+proc:processLabel
+    a owl:DatatypeProperty ;
+    rdfs:domain proc:Process ;
+    rdfs:range xsd:string ;
+    rdfs:label "process label" .
+
+# =============================================================================
+# Step properties
+# =============================================================================
+
+proc:stepOrder
+    a owl:DatatypeProperty ;
+    rdfs:domain proc:Step ;
+    rdfs:range xsd:integer ;
+    rdfs:label "step order" ;
+    rdfs:comment "Presentation order within the process (1-based)." .
+
+proc:actor
+    a owl:ObjectProperty ;
+    rdfs:domain proc:Step ;
+    rdfs:range cfr:ConcreteParty ;
+    rdfs:label "actor" ;
+    rdfs:comment "The party that triggers this step." .
+
+proc:narrative
+    a owl:DatatypeProperty ;
+    rdfs:domain proc:Step ;
+    rdfs:range xsd:string ;
+    rdfs:label "narrative" ;
+    rdfs:comment "Human-readable description of what happens at this step." .
+
+# =============================================================================
+# On-chain step properties
+# =============================================================================
+
+proc:fromState
+    a owl:ObjectProperty ;
+    rdfs:domain proc:OnChainStep ;
+    rdfs:range cfr:LifecycleState ;
+    rdfs:label "from state" .
+
+proc:toState
+    a owl:ObjectProperty ;
+    rdfs:domain proc:OnChainStep ;
+    rdfs:range cfr:LifecycleState ;
+    rdfs:label "to state" .
+
+proc:usesAction
+    a owl:ObjectProperty ;
+    rdfs:domain proc:OnChainStep ;
+    rdfs:range cfr:RedeemerAction ;
+    rdfs:label "uses action" ;
+    rdfs:comment "The redeemer action this step executes." .
+
+proc:requiresSig
+    a owl:ObjectProperty ;
+    rdfs:domain proc:OnChainStep ;
+    rdfs:range proc:SignatureReq ;
+    rdfs:label "requires signature" .
+
+proc:checks
+    a owl:ObjectProperty ;
+    rdfs:domain proc:OnChainStep ;
+    rdfs:range cfr:Guard ;
+    rdfs:label "checks" ;
+    rdfs:comment "Validator checks for this step. Reuses cfr:Guard instances." .
+
+proc:changes
+    a owl:ObjectProperty ;
+    rdfs:domain proc:OnChainStep ;
+    rdfs:range proc:DatumChange ;
+    rdfs:label "changes" ;
+    rdfs:comment "Datum fields that change during this step." .
+
+# =============================================================================
+# Datum properties
+# =============================================================================
+
+proc:fieldName
+    a owl:DatatypeProperty ;
+    rdfs:domain proc:DatumField ;
+    rdfs:range xsd:string ;
+    rdfs:label "field name" .
+
+proc:changesField
+    a owl:ObjectProperty ;
+    rdfs:domain proc:DatumChange ;
+    rdfs:range proc:DatumField ;
+    rdfs:label "changes field" .
+
+proc:beforeValue
+    a owl:DatatypeProperty ;
+    rdfs:domain proc:DatumChange ;
+    rdfs:range xsd:string ;
+    rdfs:label "before value" .
+
+proc:afterValue
+    a owl:DatatypeProperty ;
+    rdfs:domain proc:DatumChange ;
+    rdfs:range xsd:string ;
+    rdfs:label "after value" .
+
+# =============================================================================
+# Signature properties
+# =============================================================================
+
+proc:sigParty
+    a owl:ObjectProperty ;
+    rdfs:domain proc:SignatureReq ;
+    rdfs:range cfr:ConcreteParty ;
+    rdfs:label "signing party" .
+
+proc:sigType
+    a owl:DatatypeProperty ;
+    rdfs:domain proc:SignatureReq ;
+    rdfs:range xsd:string ;
+    rdfs:label "signature type" ;
+    rdfs:comment "'process' (authentication) or 'actor' (authorization)." .
+
+# =============================================================================
+# Deadline properties
+# =============================================================================
+
+proc:deadlineFrom
+    a owl:ObjectProperty ;
+    rdfs:domain proc:Deadline ;
+    rdfs:range cfr:LifecycleState ;
+    rdfs:label "deadline from" ;
+    rdfs:comment "The state where the countdown starts." .
+
+proc:deadlineTo
+    a owl:ObjectProperty ;
+    rdfs:domain proc:Deadline ;
+    rdfs:range cfr:LifecycleState ;
+    rdfs:label "deadline to" ;
+    rdfs:comment "The state that must be reached before the deadline." .
+
+proc:slotDuration
+    a owl:DatatypeProperty ;
+    rdfs:domain proc:Deadline ;
+    rdfs:range xsd:string ;
+    rdfs:label "slot duration" ;
+    rdfs:comment "Human-readable duration, e.g., '72h', '1 month', '3 months'." .

@@ -1,0 +1,125 @@
+@prefix proc:   <https://lambdasistemi.github.io/cardano-for-regulators/ontology/process#> .
+@prefix cfr:    <https://lambdasistemi.github.io/cardano-for-regulators/ontology#> .
+@prefix gdpr:   <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#> .
+@prefix rights: <https://lambdasistemi.github.io/cardano-for-regulators/ontology/process/gdpr-rights#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+
+# =============================================================================
+# GDPR Rights Request Response (1 month, extendable to 3)
+#
+# Art 12-22: Data subject exercises rights. Controller responds within
+# 1 month. Complex requests extendable to 3 months.
+# =============================================================================
+
+# --- Lifecycle states ---
+
+rights:NoRequest       a cfr:LifecycleState ; rdfs:label "No Request" .
+rights:RequestReceived a cfr:LifecycleState ; rdfs:label "Request Received" ;
+    rdfs:comment "Rights request anchored on-chain. 1-month countdown starts." .
+rights:Extended        a cfr:LifecycleState ; rdfs:label "Extended" ;
+    rdfs:comment "Deadline extended to 3 months for complex requests." .
+rights:RespondedTimely a cfr:LifecycleState ; rdfs:label "Responded (Timely)" .
+rights:RespondedLate   a cfr:LifecycleState ; rdfs:label "Responded (Late)" .
+
+# --- Datum fields ---
+
+rights:RightsCommitmentField a proc:DatumField ; proc:fieldName "rights_commitment" .
+rights:RightsRecordField     a proc:DatumField ; proc:fieldName "rights_record" .
+
+# --- Signatures ---
+
+rights:ControllerSig a proc:SignatureReq ;
+    proc:sigParty gdpr:DataController ; proc:sigType "actor" ;
+    rdfs:label "Controller signature" .
+
+rights:SubjectProcessSig a proc:SignatureReq ;
+    proc:sigParty gdpr:DataSubject ; proc:sigType "process" ;
+    rdfs:label "Data subject signature (process)" .
+
+# --- The process ---
+
+rights:RightsResponse1m
+    a proc:Process ;
+    proc:processLabel "GDPR Rights Request Response (1 month)" ;
+    rdfs:label "GDPR Rights Request Response" ;
+    rdfs:comment "Art 12-22. Controller responds to data subject rights within 1 month." ;
+    proc:implements gdpr:RightsResponse1m ;
+    proc:hasStep rights:Step1_CommitRequest,
+                 rights:Step2_ProcessRequest,
+                 rights:Step3_SubmitResponse ;
+    proc:deadline rights:Deadline1m .
+
+rights:Deadline1m
+    a proc:Deadline ;
+    rdfs:label "1-month deadline" ;
+    proc:deadlineFrom rights:RequestReceived ;
+    proc:deadlineTo rights:RespondedTimely ;
+    proc:slotDuration "1 month" .
+
+# --- Step 1: CommitRightsRequest (on-chain) ---
+
+rights:Step1_CommitRequest
+    a proc:OnChainStep ;
+    proc:stepOrder 1 ;
+    rdfs:label "Commit Rights Request" ;
+    proc:narrative """Data subject submits a rights request (access, rectification,
+        erasure, portability, or objection). The controller anchors the receipt
+        time on-chain, starting the 1-month countdown.""" ;
+    proc:actor gdpr:DataController ;
+    proc:usesAction gdpr:CommitRightsRequest ;
+    proc:fromState rights:NoRequest ;
+    proc:toState rights:RequestReceived ;
+    proc:requiresSig rights:ControllerSig, rights:SubjectProcessSig ;
+    proc:checks gdpr:G_IdentityTrie,
+                gdpr:G_NoExistingCommitment,
+                gdpr:G_ProcessSig,
+                gdpr:G_ControllerSig,
+                gdpr:G_MPTProof ;
+    proc:changes rights:Change1_CreateCommitment .
+
+rights:Change1_CreateCommitment
+    a proc:DatumChange ;
+    proc:changesField rights:RightsCommitmentField ;
+    proc:beforeValue "None" ;
+    proc:afterValue "commit_slot: current_slot, deadline: current_slot + 1 month, request_type: T" ;
+    rdfs:label "Create rights commitment" .
+
+# --- Step 2: Process request (off-chain) ---
+
+rights:Step2_ProcessRequest
+    a proc:OffChainStep ;
+    proc:stepOrder 2 ;
+    rdfs:label "Process Request" ;
+    proc:narrative """Controller processes the request off-chain: retrieves
+        relevant data, prepares the response. For complex requests, the
+        controller may extend the deadline to 3 months via ExtendRightsDeadline
+        (not shown in this basic flow).""" ;
+    proc:actor gdpr:DataController .
+
+# --- Step 3: SubmitResponse (on-chain) ---
+
+rights:Step3_SubmitResponse
+    a proc:OnChainStep ;
+    proc:stepOrder 3 ;
+    rdfs:label "Submit Response" ;
+    proc:narrative """Controller submits the response hash, clearing the
+        commitment. The chain records whether the response was within the
+        1-month (or extended 3-month) window.""" ;
+    proc:actor gdpr:DataController ;
+    proc:usesAction gdpr:SubmitRightsResponse ;
+    proc:fromState rights:RequestReceived ;
+    proc:toState rights:RespondedTimely ;
+    proc:requiresSig rights:ControllerSig ;
+    proc:checks gdpr:G_CommitmentExists,
+                gdpr:G_HashNotEmpty,
+                gdpr:G_ControllerSig,
+                gdpr:G_MPTProof ;
+    proc:changes rights:Change3_ClearCommitment .
+
+rights:Change3_ClearCommitment
+    a proc:DatumChange ;
+    proc:changesField rights:RightsCommitmentField ;
+    proc:beforeValue "Just(commit_slot: S1, deadline: S1 + 1 month)" ;
+    proc:afterValue "None" ;
+    rdfs:label "Clear rights commitment" .

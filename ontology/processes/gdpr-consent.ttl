@@ -1,0 +1,110 @@
+@prefix proc:    <https://lambdasistemi.github.io/cardano-for-regulators/ontology/process#> .
+@prefix cfr:     <https://lambdasistemi.github.io/cardano-for-regulators/ontology#> .
+@prefix gdpr:    <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#> .
+@prefix consent: <https://lambdasistemi.github.io/cardano-for-regulators/ontology/process/gdpr-consent#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+
+# =============================================================================
+# GDPR Consent Lifecycle
+#
+# Art 7: Consent given and withdrawn. No deadline — withdrawal must be
+# "as easy as giving" (Art 7(3)).
+# =============================================================================
+
+# --- Lifecycle states ---
+
+consent:NoConsent  a cfr:LifecycleState ; rdfs:label "No Consent" .
+consent:Given      a cfr:LifecycleState ; rdfs:label "Consent Given" ;
+    rdfs:comment "Data subject has given consent for a specific purpose." .
+consent:Withdrawn  a cfr:LifecycleState ; rdfs:label "Consent Withdrawn" ;
+    rdfs:comment "Data subject has withdrawn consent. Processing must cease." .
+
+# --- Datum fields ---
+
+consent:ConsentStateField  a proc:DatumField ; proc:fieldName "consent_state" .
+consent:PurposeHashField   a proc:DatumField ; proc:fieldName "purpose_hash" .
+consent:GivenSlotField     a proc:DatumField ; proc:fieldName "given_slot" .
+consent:WithdrawnSlotField a proc:DatumField ; proc:fieldName "withdrawn_slot" .
+
+# --- Signatures ---
+
+consent:ControllerSig a proc:SignatureReq ;
+    proc:sigParty gdpr:DataController ; proc:sigType "actor" ;
+    rdfs:label "Controller signature" .
+
+consent:SubjectSig a proc:SignatureReq ;
+    proc:sigParty gdpr:DataSubject ; proc:sigType "process" ;
+    rdfs:label "Data subject signature (process)" .
+
+# --- The process ---
+
+consent:ConsentLifecycle
+    a proc:Process ;
+    proc:processLabel "GDPR Consent Lifecycle" ;
+    rdfs:label "GDPR Consent Lifecycle" ;
+    rdfs:comment """Art 7. Consent given for a specific processing purpose,
+        then withdrawn. No deadline — but withdrawal must be as easy as
+        giving consent (Art 7(3)).""" ;
+    proc:implements gdpr:ConsentRecord ;
+    proc:hasStep consent:Step1_GiveConsent,
+                 consent:Step2_WithdrawConsent .
+
+# --- Step 1: RecordConsent (on-chain) ---
+
+consent:Step1_GiveConsent
+    a proc:OnChainStep ;
+    proc:stepOrder 1 ;
+    rdfs:label "Give Consent" ;
+    proc:narrative """Data subject gives consent for a specific processing
+        purpose. The controller records the consent hash on-chain with a
+        timestamp. The data subject's process signature proves they
+        consented.""" ;
+    proc:actor gdpr:DataController ;
+    proc:usesAction gdpr:RecordConsent ;
+    proc:fromState consent:NoConsent ;
+    proc:toState consent:Given ;
+    proc:requiresSig consent:ControllerSig, consent:SubjectSig ;
+    proc:checks gdpr:G_IdentityTrie,
+                gdpr:G_ProcessSig,
+                gdpr:G_PurposeHashNotEmpty,
+                gdpr:G_ConsentNotGiven,
+                gdpr:G_ControllerSig,
+                gdpr:G_MPTProof ;
+    proc:changes consent:Change1_SetGiven .
+
+consent:Change1_SetGiven
+    a proc:DatumChange ;
+    proc:changesField consent:ConsentStateField ;
+    proc:beforeValue "absent or withdrawn" ;
+    proc:afterValue "given" ;
+    rdfs:label "Set consent state to given" .
+
+# --- Step 2: WithdrawConsent (on-chain) ---
+
+consent:Step2_WithdrawConsent
+    a proc:OnChainStep ;
+    proc:stepOrder 2 ;
+    rdfs:label "Withdraw Consent" ;
+    proc:narrative """Data subject withdraws consent. The controller records
+        the withdrawal hash and timestamp. Processing under this consent
+        must cease. The data subject's process signature proves they
+        requested withdrawal. Withdrawal must be as easy as giving consent
+        (Art 7(3)).""" ;
+    proc:actor gdpr:DataController ;
+    proc:usesAction gdpr:WithdrawConsent ;
+    proc:fromState consent:Given ;
+    proc:toState consent:Withdrawn ;
+    proc:requiresSig consent:ControllerSig, consent:SubjectSig ;
+    proc:checks gdpr:G_ConsentGiven,
+                gdpr:G_ProcessSig,
+                gdpr:G_ControllerSig,
+                gdpr:G_MPTProof ;
+    proc:changes consent:Change2_SetWithdrawn .
+
+consent:Change2_SetWithdrawn
+    a proc:DatumChange ;
+    proc:changesField consent:ConsentStateField ;
+    proc:beforeValue "given" ;
+    proc:afterValue "withdrawn" ;
+    rdfs:label "Set consent state to withdrawn" .

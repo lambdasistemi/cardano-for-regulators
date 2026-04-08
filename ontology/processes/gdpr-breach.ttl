@@ -1,0 +1,156 @@
+@prefix proc:   <https://lambdasistemi.github.io/cardano-for-regulators/ontology/process#> .
+@prefix cfr:    <https://lambdasistemi.github.io/cardano-for-regulators/ontology#> .
+@prefix gdpr:   <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#> .
+@prefix breach: <https://lambdasistemi.github.io/cardano-for-regulators/ontology/process/gdpr-breach#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+
+# =============================================================================
+# GDPR Breach Notification Process (72 hours)
+#
+# Art 33: Controller notifies SA within 72 hours of becoming aware.
+# Three steps: commit → investigate (off-chain) → submit notification.
+# =============================================================================
+
+# --- Lifecycle states ---
+
+breach:NoBreach
+    a cfr:LifecycleState ;
+    rdfs:label "No Breach" ;
+    rdfs:comment "Normal operations. No breach detected." .
+
+breach:BreachDetected
+    a cfr:LifecycleState ;
+    rdfs:label "Breach Detected" ;
+    rdfs:comment "Breach detected, commitment created on-chain. 72h countdown starts." .
+
+breach:NotifiedTimely
+    a cfr:LifecycleState ;
+    rdfs:label "Notified (Timely)" ;
+    rdfs:comment "Notification submitted within 72h. timely: true." .
+
+breach:NotifiedLate
+    a cfr:LifecycleState ;
+    rdfs:label "Notified (Late)" ;
+    rdfs:comment "Notification submitted after 72h. timely: false. Evidence for enforcement." .
+
+# --- Datum fields ---
+
+breach:BreachCommitmentField
+    a proc:DatumField ;
+    proc:fieldName "breach_commitment" .
+
+breach:BreachRecordField
+    a proc:DatumField ;
+    proc:fieldName "breach_record" .
+
+# --- Signature requirements ---
+
+breach:ControllerActorSig
+    a proc:SignatureReq ;
+    proc:sigParty gdpr:DataController ;
+    proc:sigType "actor" ;
+    rdfs:label "Controller signature (actor authorization)" .
+
+# --- The process ---
+
+breach:BreachNotification72h
+    a proc:Process ;
+    proc:processLabel "GDPR Breach Notification (72h)" ;
+    rdfs:label "GDPR Breach Notification (72h)" ;
+    rdfs:comment """Art 33. Controller notifies SA within 72 hours of becoming
+        aware of a personal data breach. The commitment protocol turns the
+        self-reported deadline into a verifiable on-chain fact.""" ;
+    proc:implements gdpr:BreachNotification72h ;
+    proc:hasStep breach:Step1_CommitBreach,
+                 breach:Step2_Investigate,
+                 breach:Step3_SubmitNotification ;
+    proc:deadline breach:Deadline72h .
+
+# --- Deadline ---
+
+breach:Deadline72h
+    a proc:Deadline ;
+    rdfs:label "72-hour deadline" ;
+    proc:deadlineFrom breach:BreachDetected ;
+    proc:deadlineTo breach:NotifiedTimely ;
+    proc:slotDuration "72h" ;
+    rdfs:comment "Art 33(1): without undue delay, not later than 72 hours." .
+
+# --- Step 1: CommitBreach (on-chain) ---
+
+breach:Step1_CommitBreach
+    a proc:OnChainStep ;
+    proc:stepOrder 1 ;
+    rdfs:label "Commit Breach" ;
+    proc:narrative """Controller detects a personal data breach and anchors
+        the detection time on-chain. This creates an immutable record of
+        when the controller committed to the breach, starting the 72-hour
+        countdown.""" ;
+    proc:actor gdpr:DataController ;
+    proc:usesAction gdpr:CommitBreach ;
+    proc:fromState breach:NoBreach ;
+    proc:toState breach:BreachDetected ;
+    proc:requiresSig breach:ControllerActorSig ;
+    proc:checks gdpr:G_IdentityTrie,
+                gdpr:G_StandingNotSuspended,
+                gdpr:G_NoExistingCommitment,
+                gdpr:G_ControllerSig,
+                gdpr:G_MPTProof ;
+    proc:changes breach:Change1_CreateCommitment .
+
+breach:Change1_CreateCommitment
+    a proc:DatumChange ;
+    proc:changesField breach:BreachCommitmentField ;
+    proc:beforeValue "None" ;
+    proc:afterValue "Just(commit_slot: current_slot, deadline: current_slot + 72h)" ;
+    rdfs:label "Create breach commitment" .
+
+# --- Step 2: Investigate (off-chain) ---
+
+breach:Step2_Investigate
+    a proc:OffChainStep ;
+    proc:stepOrder 2 ;
+    rdfs:label "Investigate Breach" ;
+    proc:narrative """Controller investigates the breach off-chain. Determines
+        the nature of the breach, categories and approximate number of data
+        subjects affected, likely consequences, and measures taken or proposed.
+        No transaction — time passes while the 72-hour countdown continues.""" ;
+    proc:actor gdpr:DataController .
+
+# --- Step 3: SubmitNotification (on-chain) ---
+
+breach:Step3_SubmitNotification
+    a proc:OnChainStep ;
+    proc:stepOrder 3 ;
+    rdfs:label "Submit Notification" ;
+    proc:narrative """Controller submits the notification hash to the SA,
+        clearing the commitment. The chain records how many slots elapsed
+        between commitment and submission. If within 72 hours, the timely
+        flag is set to true. The SA can now query the trie to verify
+        timeliness.""" ;
+    proc:actor gdpr:DataController ;
+    proc:usesAction gdpr:SubmitBreachNotification ;
+    proc:fromState breach:BreachDetected ;
+    proc:toState breach:NotifiedTimely ;
+    proc:requiresSig breach:ControllerActorSig ;
+    proc:checks gdpr:G_CommitmentExists,
+                gdpr:G_HashNotEmpty,
+                gdpr:G_ControllerSig,
+                gdpr:G_MPTProof ;
+    proc:changes breach:Change3_ClearCommitment,
+                 breach:Change3_CreateRecord .
+
+breach:Change3_ClearCommitment
+    a proc:DatumChange ;
+    proc:changesField breach:BreachCommitmentField ;
+    proc:beforeValue "Just(commit_slot: S1, deadline: S1 + 72h)" ;
+    proc:afterValue "None" ;
+    rdfs:label "Clear breach commitment" .
+
+breach:Change3_CreateRecord
+    a proc:DatumChange ;
+    proc:changesField breach:BreachRecordField ;
+    proc:beforeValue "None" ;
+    proc:afterValue "commit_slot: S1, submit_slot: current_slot, notification_hash: H, timely: true" ;
+    rdfs:label "Create breach record" .
