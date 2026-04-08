@@ -1726,6 +1726,645 @@ gdpr:NIS2_ref
     rdfs:label "NIS2 Directive" ;
     cfr:officialReference "(EU) 2022/2555" ;
     rdfs:comment "ISO 27001 + 27701 converge GDPR and NIS2 compliance evidence." .
+@prefix proc:   <https://lambdasistemi.github.io/cardano-for-regulators/ontology/process#> .
+@prefix cfr:    <https://lambdasistemi.github.io/cardano-for-regulators/ontology#> .
+@prefix owl:    <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+
+# =============================================================================
+# Process State Machine Ontology
+#
+# Extends cfr: with process-level concepts: ordered steps, actor binding,
+# signature requirements, datum changes, and deadlines. Processes reference
+# existing cfr:RedeemerAction, cfr:Guard, cfr:LifecycleState instances.
+# =============================================================================
+
+<https://lambdasistemi.github.io/cardano-for-regulators/ontology/process>
+    a owl:Ontology ;
+    rdfs:label "Cardano for Regulators — Process Ontology" ;
+    rdfs:comment """State machine ontology for regulated processes on Cardano.
+        Expresses the choreography of transactions, signatures, checks, and
+        state transitions over time.""" .
+
+# =============================================================================
+# Classes
+# =============================================================================
+
+proc:Process
+    a owl:Class ;
+    rdfs:label "Process" ;
+    rdfs:comment """A named, ordered sequence of steps that implements a
+        regulatory obligation. References the obligation it covers via
+        proc:implements.""" .
+
+proc:Step
+    a owl:Class ;
+    rdfs:label "Step" ;
+    rdfs:comment """Abstract base for steps in a process. Either an on-chain
+        transaction or an off-chain activity. Steps have a presentation order
+        and an actor.""" .
+
+proc:OnChainStep
+    a owl:Class ;
+    rdfs:subClassOf proc:Step ;
+    rdfs:label "On-Chain Step" ;
+    rdfs:comment """A transaction step. Wraps a cfr:RedeemerAction with
+        context: actor, signatures, validator checks, datum changes, and
+        state transition.""" .
+
+proc:OffChainStep
+    a owl:Class ;
+    rdfs:subClassOf proc:Step ;
+    rdfs:label "Off-Chain Step" ;
+    rdfs:comment """An off-chain activity between transactions. No redeemer
+        action, no validator checks, no datum changes. Has a narrative
+        describing what happens off-chain.""" .
+
+proc:DatumField
+    a owl:Class ;
+    rdfs:label "Datum Field" ;
+    rdfs:comment "A named field in the UTxO datum." .
+
+proc:DatumChange
+    a owl:Class ;
+    rdfs:label "Datum Change" ;
+    rdfs:comment """A specific field in the UTxO datum that changes value
+        during a transition. References the field, the value before, and
+        the value after.""" .
+
+proc:SignatureReq
+    a owl:Class ;
+    rdfs:label "Signature Requirement" ;
+    rdfs:comment """A signature that must be present for a transition to
+        be valid. References the party who signs and the signature type
+        (process or actor).""" .
+
+proc:Deadline
+    a owl:Class ;
+    rdfs:label "Deadline" ;
+    rdfs:comment """A slot-bounded constraint between two states. The process
+        must reach the deadline state within the specified duration after
+        entering the start state.""" .
+
+# =============================================================================
+# Process properties
+# =============================================================================
+
+proc:implements
+    a owl:ObjectProperty ;
+    rdfs:domain proc:Process ;
+    rdfs:range cfr:Obligation ;
+    rdfs:label "implements" ;
+    rdfs:comment "The regulatory obligation this process covers." .
+
+proc:hasStep
+    a owl:ObjectProperty ;
+    rdfs:domain proc:Process ;
+    rdfs:range proc:Step ;
+    rdfs:label "has step" .
+
+proc:deadline
+    a owl:ObjectProperty ;
+    rdfs:domain proc:Process ;
+    rdfs:range proc:Deadline ;
+    rdfs:label "has deadline" .
+
+proc:processLabel
+    a owl:DatatypeProperty ;
+    rdfs:domain proc:Process ;
+    rdfs:range xsd:string ;
+    rdfs:label "process label" .
+
+# =============================================================================
+# Step properties
+# =============================================================================
+
+proc:stepOrder
+    a owl:DatatypeProperty ;
+    rdfs:domain proc:Step ;
+    rdfs:range xsd:integer ;
+    rdfs:label "step order" ;
+    rdfs:comment "Presentation order within the process (1-based)." .
+
+proc:actor
+    a owl:ObjectProperty ;
+    rdfs:domain proc:Step ;
+    rdfs:range cfr:ConcreteParty ;
+    rdfs:label "actor" ;
+    rdfs:comment "The party that triggers this step." .
+
+proc:narrative
+    a owl:DatatypeProperty ;
+    rdfs:domain proc:Step ;
+    rdfs:range xsd:string ;
+    rdfs:label "narrative" ;
+    rdfs:comment "Human-readable description of what happens at this step." .
+
+# =============================================================================
+# On-chain step properties
+# =============================================================================
+
+proc:fromState
+    a owl:ObjectProperty ;
+    rdfs:domain proc:OnChainStep ;
+    rdfs:range cfr:LifecycleState ;
+    rdfs:label "from state" .
+
+proc:toState
+    a owl:ObjectProperty ;
+    rdfs:domain proc:OnChainStep ;
+    rdfs:range cfr:LifecycleState ;
+    rdfs:label "to state" .
+
+proc:usesAction
+    a owl:ObjectProperty ;
+    rdfs:domain proc:OnChainStep ;
+    rdfs:range cfr:RedeemerAction ;
+    rdfs:label "uses action" ;
+    rdfs:comment "The redeemer action this step executes." .
+
+proc:requiresSig
+    a owl:ObjectProperty ;
+    rdfs:domain proc:OnChainStep ;
+    rdfs:range proc:SignatureReq ;
+    rdfs:label "requires signature" .
+
+proc:checks
+    a owl:ObjectProperty ;
+    rdfs:domain proc:OnChainStep ;
+    rdfs:range cfr:Guard ;
+    rdfs:label "checks" ;
+    rdfs:comment "Validator checks for this step. Reuses cfr:Guard instances." .
+
+proc:changes
+    a owl:ObjectProperty ;
+    rdfs:domain proc:OnChainStep ;
+    rdfs:range proc:DatumChange ;
+    rdfs:label "changes" ;
+    rdfs:comment "Datum fields that change during this step." .
+
+# =============================================================================
+# Datum properties
+# =============================================================================
+
+proc:fieldName
+    a owl:DatatypeProperty ;
+    rdfs:domain proc:DatumField ;
+    rdfs:range xsd:string ;
+    rdfs:label "field name" .
+
+proc:changesField
+    a owl:ObjectProperty ;
+    rdfs:domain proc:DatumChange ;
+    rdfs:range proc:DatumField ;
+    rdfs:label "changes field" .
+
+proc:beforeValue
+    a owl:DatatypeProperty ;
+    rdfs:domain proc:DatumChange ;
+    rdfs:range xsd:string ;
+    rdfs:label "before value" .
+
+proc:afterValue
+    a owl:DatatypeProperty ;
+    rdfs:domain proc:DatumChange ;
+    rdfs:range xsd:string ;
+    rdfs:label "after value" .
+
+# =============================================================================
+# Signature properties
+# =============================================================================
+
+proc:sigParty
+    a owl:ObjectProperty ;
+    rdfs:domain proc:SignatureReq ;
+    rdfs:range cfr:ConcreteParty ;
+    rdfs:label "signing party" .
+
+proc:sigType
+    a owl:DatatypeProperty ;
+    rdfs:domain proc:SignatureReq ;
+    rdfs:range xsd:string ;
+    rdfs:label "signature type" ;
+    rdfs:comment "'process' (authentication) or 'actor' (authorization)." .
+
+# =============================================================================
+# Deadline properties
+# =============================================================================
+
+proc:deadlineFrom
+    a owl:ObjectProperty ;
+    rdfs:domain proc:Deadline ;
+    rdfs:range cfr:LifecycleState ;
+    rdfs:label "deadline from" ;
+    rdfs:comment "The state where the countdown starts." .
+
+proc:deadlineTo
+    a owl:ObjectProperty ;
+    rdfs:domain proc:Deadline ;
+    rdfs:range cfr:LifecycleState ;
+    rdfs:label "deadline to" ;
+    rdfs:comment "The state that must be reached before the deadline." .
+
+proc:slotDuration
+    a owl:DatatypeProperty ;
+    rdfs:domain proc:Deadline ;
+    rdfs:range xsd:string ;
+    rdfs:label "slot duration" ;
+    rdfs:comment "Human-readable duration, e.g., '72h', '1 month', '3 months'." .
+@prefix proc:   <https://lambdasistemi.github.io/cardano-for-regulators/ontology/process#> .
+@prefix cfr:    <https://lambdasistemi.github.io/cardano-for-regulators/ontology#> .
+@prefix gdpr:   <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#> .
+@prefix breach: <https://lambdasistemi.github.io/cardano-for-regulators/ontology/process/gdpr-breach#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+
+# =============================================================================
+# GDPR Breach Notification Process (72 hours)
+#
+# Art 33: Controller notifies SA within 72 hours of becoming aware.
+# Three steps: commit → investigate (off-chain) → submit notification.
+# =============================================================================
+
+# --- Lifecycle states ---
+
+breach:NoBreach
+    a cfr:LifecycleState ;
+    rdfs:label "No Breach" ;
+    rdfs:comment "Normal operations. No breach detected." .
+
+breach:BreachDetected
+    a cfr:LifecycleState ;
+    rdfs:label "Breach Detected" ;
+    rdfs:comment "Breach detected, commitment created on-chain. 72h countdown starts." .
+
+breach:NotifiedTimely
+    a cfr:LifecycleState ;
+    rdfs:label "Notified (Timely)" ;
+    rdfs:comment "Notification submitted within 72h. timely: true." .
+
+breach:NotifiedLate
+    a cfr:LifecycleState ;
+    rdfs:label "Notified (Late)" ;
+    rdfs:comment "Notification submitted after 72h. timely: false. Evidence for enforcement." .
+
+# --- Datum fields ---
+
+breach:BreachCommitmentField
+    a proc:DatumField ;
+    proc:fieldName "breach_commitment" .
+
+breach:BreachRecordField
+    a proc:DatumField ;
+    proc:fieldName "breach_record" .
+
+# --- Signature requirements ---
+
+breach:ControllerActorSig
+    a proc:SignatureReq ;
+    proc:sigParty gdpr:DataController ;
+    proc:sigType "actor" ;
+    rdfs:label "Controller signature (actor authorization)" .
+
+# --- The process ---
+
+breach:BreachNotification72h
+    a proc:Process ;
+    proc:processLabel "GDPR Breach Notification (72h)" ;
+    rdfs:label "GDPR Breach Notification (72h)" ;
+    rdfs:comment """Art 33. Controller notifies SA within 72 hours of becoming
+        aware of a personal data breach. The commitment protocol turns the
+        self-reported deadline into a verifiable on-chain fact.""" ;
+    proc:implements gdpr:BreachNotification72h ;
+    proc:hasStep breach:Step1_CommitBreach,
+                 breach:Step2_Investigate,
+                 breach:Step3_SubmitNotification ;
+    proc:deadline breach:Deadline72h .
+
+# --- Deadline ---
+
+breach:Deadline72h
+    a proc:Deadline ;
+    rdfs:label "72-hour deadline" ;
+    proc:deadlineFrom breach:BreachDetected ;
+    proc:deadlineTo breach:NotifiedTimely ;
+    proc:slotDuration "72h" ;
+    rdfs:comment "Art 33(1): without undue delay, not later than 72 hours." .
+
+# --- Step 1: CommitBreach (on-chain) ---
+
+breach:Step1_CommitBreach
+    a proc:OnChainStep ;
+    proc:stepOrder 1 ;
+    rdfs:label "Commit Breach" ;
+    proc:narrative """Controller detects a personal data breach and anchors
+        the detection time on-chain. This creates an immutable record of
+        when the controller committed to the breach, starting the 72-hour
+        countdown.""" ;
+    proc:actor gdpr:DataController ;
+    proc:usesAction gdpr:CommitBreach ;
+    proc:fromState breach:NoBreach ;
+    proc:toState breach:BreachDetected ;
+    proc:requiresSig breach:ControllerActorSig ;
+    proc:checks gdpr:G_IdentityTrie,
+                gdpr:G_StandingNotSuspended,
+                gdpr:G_NoExistingCommitment,
+                gdpr:G_ControllerSig,
+                gdpr:G_MPTProof ;
+    proc:changes breach:Change1_CreateCommitment .
+
+breach:Change1_CreateCommitment
+    a proc:DatumChange ;
+    proc:changesField breach:BreachCommitmentField ;
+    proc:beforeValue "None" ;
+    proc:afterValue "Just(commit_slot: current_slot, deadline: current_slot + 72h)" ;
+    rdfs:label "Create breach commitment" .
+
+# --- Step 2: Investigate (off-chain) ---
+
+breach:Step2_Investigate
+    a proc:OffChainStep ;
+    proc:stepOrder 2 ;
+    rdfs:label "Investigate Breach" ;
+    proc:narrative """Controller investigates the breach off-chain. Determines
+        the nature of the breach, categories and approximate number of data
+        subjects affected, likely consequences, and measures taken or proposed.
+        No transaction — time passes while the 72-hour countdown continues.""" ;
+    proc:actor gdpr:DataController .
+
+# --- Step 3: SubmitNotification (on-chain) ---
+
+breach:Step3_SubmitNotification
+    a proc:OnChainStep ;
+    proc:stepOrder 3 ;
+    rdfs:label "Submit Notification" ;
+    proc:narrative """Controller submits the notification hash to the SA,
+        clearing the commitment. The chain records how many slots elapsed
+        between commitment and submission. If within 72 hours, the timely
+        flag is set to true. The SA can now query the trie to verify
+        timeliness.""" ;
+    proc:actor gdpr:DataController ;
+    proc:usesAction gdpr:SubmitBreachNotification ;
+    proc:fromState breach:BreachDetected ;
+    proc:toState breach:NotifiedTimely ;
+    proc:requiresSig breach:ControllerActorSig ;
+    proc:checks gdpr:G_CommitmentExists,
+                gdpr:G_HashNotEmpty,
+                gdpr:G_ControllerSig,
+                gdpr:G_MPTProof ;
+    proc:changes breach:Change3_ClearCommitment,
+                 breach:Change3_CreateRecord .
+
+breach:Change3_ClearCommitment
+    a proc:DatumChange ;
+    proc:changesField breach:BreachCommitmentField ;
+    proc:beforeValue "Just(commit_slot: S1, deadline: S1 + 72h)" ;
+    proc:afterValue "None" ;
+    rdfs:label "Clear breach commitment" .
+
+breach:Change3_CreateRecord
+    a proc:DatumChange ;
+    proc:changesField breach:BreachRecordField ;
+    proc:beforeValue "None" ;
+    proc:afterValue "commit_slot: S1, submit_slot: current_slot, notification_hash: H, timely: true" ;
+    rdfs:label "Create breach record" .
+@prefix proc:    <https://lambdasistemi.github.io/cardano-for-regulators/ontology/process#> .
+@prefix cfr:     <https://lambdasistemi.github.io/cardano-for-regulators/ontology#> .
+@prefix gdpr:    <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#> .
+@prefix consent: <https://lambdasistemi.github.io/cardano-for-regulators/ontology/process/gdpr-consent#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+
+# =============================================================================
+# GDPR Consent Lifecycle
+#
+# Art 7: Consent given and withdrawn. No deadline — withdrawal must be
+# "as easy as giving" (Art 7(3)).
+# =============================================================================
+
+# --- Lifecycle states ---
+
+consent:NoConsent  a cfr:LifecycleState ; rdfs:label "No Consent" .
+consent:Given      a cfr:LifecycleState ; rdfs:label "Consent Given" ;
+    rdfs:comment "Data subject has given consent for a specific purpose." .
+consent:Withdrawn  a cfr:LifecycleState ; rdfs:label "Consent Withdrawn" ;
+    rdfs:comment "Data subject has withdrawn consent. Processing must cease." .
+
+# --- Datum fields ---
+
+consent:ConsentStateField  a proc:DatumField ; proc:fieldName "consent_state" .
+consent:PurposeHashField   a proc:DatumField ; proc:fieldName "purpose_hash" .
+consent:GivenSlotField     a proc:DatumField ; proc:fieldName "given_slot" .
+consent:WithdrawnSlotField a proc:DatumField ; proc:fieldName "withdrawn_slot" .
+
+# --- Signatures ---
+
+consent:ControllerSig a proc:SignatureReq ;
+    proc:sigParty gdpr:DataController ; proc:sigType "actor" ;
+    rdfs:label "Controller signature" .
+
+consent:SubjectSig a proc:SignatureReq ;
+    proc:sigParty gdpr:DataSubject ; proc:sigType "process" ;
+    rdfs:label "Data subject signature (process)" .
+
+# --- The process ---
+
+consent:ConsentLifecycle
+    a proc:Process ;
+    proc:processLabel "GDPR Consent Lifecycle" ;
+    rdfs:label "GDPR Consent Lifecycle" ;
+    rdfs:comment """Art 7. Consent given for a specific processing purpose,
+        then withdrawn. No deadline — but withdrawal must be as easy as
+        giving consent (Art 7(3)).""" ;
+    proc:implements gdpr:ConsentRecord ;
+    proc:hasStep consent:Step1_GiveConsent,
+                 consent:Step2_WithdrawConsent .
+
+# --- Step 1: RecordConsent (on-chain) ---
+
+consent:Step1_GiveConsent
+    a proc:OnChainStep ;
+    proc:stepOrder 1 ;
+    rdfs:label "Give Consent" ;
+    proc:narrative """Data subject gives consent for a specific processing
+        purpose. The controller records the consent hash on-chain with a
+        timestamp. The data subject's process signature proves they
+        consented.""" ;
+    proc:actor gdpr:DataController ;
+    proc:usesAction gdpr:RecordConsent ;
+    proc:fromState consent:NoConsent ;
+    proc:toState consent:Given ;
+    proc:requiresSig consent:ControllerSig, consent:SubjectSig ;
+    proc:checks gdpr:G_IdentityTrie,
+                gdpr:G_ProcessSig,
+                gdpr:G_PurposeHashNotEmpty,
+                gdpr:G_ConsentNotGiven,
+                gdpr:G_ControllerSig,
+                gdpr:G_MPTProof ;
+    proc:changes consent:Change1_SetGiven .
+
+consent:Change1_SetGiven
+    a proc:DatumChange ;
+    proc:changesField consent:ConsentStateField ;
+    proc:beforeValue "absent or withdrawn" ;
+    proc:afterValue "given" ;
+    rdfs:label "Set consent state to given" .
+
+# --- Step 2: WithdrawConsent (on-chain) ---
+
+consent:Step2_WithdrawConsent
+    a proc:OnChainStep ;
+    proc:stepOrder 2 ;
+    rdfs:label "Withdraw Consent" ;
+    proc:narrative """Data subject withdraws consent. The controller records
+        the withdrawal hash and timestamp. Processing under this consent
+        must cease. The data subject's process signature proves they
+        requested withdrawal. Withdrawal must be as easy as giving consent
+        (Art 7(3)).""" ;
+    proc:actor gdpr:DataController ;
+    proc:usesAction gdpr:WithdrawConsent ;
+    proc:fromState consent:Given ;
+    proc:toState consent:Withdrawn ;
+    proc:requiresSig consent:ControllerSig, consent:SubjectSig ;
+    proc:checks gdpr:G_ConsentGiven,
+                gdpr:G_ProcessSig,
+                gdpr:G_ControllerSig,
+                gdpr:G_MPTProof ;
+    proc:changes consent:Change2_SetWithdrawn .
+
+consent:Change2_SetWithdrawn
+    a proc:DatumChange ;
+    proc:changesField consent:ConsentStateField ;
+    proc:beforeValue "given" ;
+    proc:afterValue "withdrawn" ;
+    rdfs:label "Set consent state to withdrawn" .
+@prefix proc:   <https://lambdasistemi.github.io/cardano-for-regulators/ontology/process#> .
+@prefix cfr:    <https://lambdasistemi.github.io/cardano-for-regulators/ontology#> .
+@prefix gdpr:   <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#> .
+@prefix rights: <https://lambdasistemi.github.io/cardano-for-regulators/ontology/process/gdpr-rights#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+
+# =============================================================================
+# GDPR Rights Request Response (1 month, extendable to 3)
+#
+# Art 12-22: Data subject exercises rights. Controller responds within
+# 1 month. Complex requests extendable to 3 months.
+# =============================================================================
+
+# --- Lifecycle states ---
+
+rights:NoRequest       a cfr:LifecycleState ; rdfs:label "No Request" .
+rights:RequestReceived a cfr:LifecycleState ; rdfs:label "Request Received" ;
+    rdfs:comment "Rights request anchored on-chain. 1-month countdown starts." .
+rights:Extended        a cfr:LifecycleState ; rdfs:label "Extended" ;
+    rdfs:comment "Deadline extended to 3 months for complex requests." .
+rights:RespondedTimely a cfr:LifecycleState ; rdfs:label "Responded (Timely)" .
+rights:RespondedLate   a cfr:LifecycleState ; rdfs:label "Responded (Late)" .
+
+# --- Datum fields ---
+
+rights:RightsCommitmentField a proc:DatumField ; proc:fieldName "rights_commitment" .
+rights:RightsRecordField     a proc:DatumField ; proc:fieldName "rights_record" .
+
+# --- Signatures ---
+
+rights:ControllerSig a proc:SignatureReq ;
+    proc:sigParty gdpr:DataController ; proc:sigType "actor" ;
+    rdfs:label "Controller signature" .
+
+rights:SubjectProcessSig a proc:SignatureReq ;
+    proc:sigParty gdpr:DataSubject ; proc:sigType "process" ;
+    rdfs:label "Data subject signature (process)" .
+
+# --- The process ---
+
+rights:RightsResponse1m
+    a proc:Process ;
+    proc:processLabel "GDPR Rights Request Response (1 month)" ;
+    rdfs:label "GDPR Rights Request Response" ;
+    rdfs:comment "Art 12-22. Controller responds to data subject rights within 1 month." ;
+    proc:implements gdpr:RightsResponse1m ;
+    proc:hasStep rights:Step1_CommitRequest,
+                 rights:Step2_ProcessRequest,
+                 rights:Step3_SubmitResponse ;
+    proc:deadline rights:Deadline1m .
+
+rights:Deadline1m
+    a proc:Deadline ;
+    rdfs:label "1-month deadline" ;
+    proc:deadlineFrom rights:RequestReceived ;
+    proc:deadlineTo rights:RespondedTimely ;
+    proc:slotDuration "1 month" .
+
+# --- Step 1: CommitRightsRequest (on-chain) ---
+
+rights:Step1_CommitRequest
+    a proc:OnChainStep ;
+    proc:stepOrder 1 ;
+    rdfs:label "Commit Rights Request" ;
+    proc:narrative """Data subject submits a rights request (access, rectification,
+        erasure, portability, or objection). The controller anchors the receipt
+        time on-chain, starting the 1-month countdown.""" ;
+    proc:actor gdpr:DataController ;
+    proc:usesAction gdpr:CommitRightsRequest ;
+    proc:fromState rights:NoRequest ;
+    proc:toState rights:RequestReceived ;
+    proc:requiresSig rights:ControllerSig, rights:SubjectProcessSig ;
+    proc:checks gdpr:G_IdentityTrie,
+                gdpr:G_NoExistingCommitment,
+                gdpr:G_ProcessSig,
+                gdpr:G_ControllerSig,
+                gdpr:G_MPTProof ;
+    proc:changes rights:Change1_CreateCommitment .
+
+rights:Change1_CreateCommitment
+    a proc:DatumChange ;
+    proc:changesField rights:RightsCommitmentField ;
+    proc:beforeValue "None" ;
+    proc:afterValue "commit_slot: current_slot, deadline: current_slot + 1 month, request_type: T" ;
+    rdfs:label "Create rights commitment" .
+
+# --- Step 2: Process request (off-chain) ---
+
+rights:Step2_ProcessRequest
+    a proc:OffChainStep ;
+    proc:stepOrder 2 ;
+    rdfs:label "Process Request" ;
+    proc:narrative """Controller processes the request off-chain: retrieves
+        relevant data, prepares the response. For complex requests, the
+        controller may extend the deadline to 3 months via ExtendRightsDeadline
+        (not shown in this basic flow).""" ;
+    proc:actor gdpr:DataController .
+
+# --- Step 3: SubmitResponse (on-chain) ---
+
+rights:Step3_SubmitResponse
+    a proc:OnChainStep ;
+    proc:stepOrder 3 ;
+    rdfs:label "Submit Response" ;
+    proc:narrative """Controller submits the response hash, clearing the
+        commitment. The chain records whether the response was within the
+        1-month (or extended 3-month) window.""" ;
+    proc:actor gdpr:DataController ;
+    proc:usesAction gdpr:SubmitRightsResponse ;
+    proc:fromState rights:RequestReceived ;
+    proc:toState rights:RespondedTimely ;
+    proc:requiresSig rights:ControllerSig ;
+    proc:checks gdpr:G_CommitmentExists,
+                gdpr:G_HashNotEmpty,
+                gdpr:G_ControllerSig,
+                gdpr:G_MPTProof ;
+    proc:changes rights:Change3_ClearCommitment .
+
+rights:Change3_ClearCommitment
+    a proc:DatumChange ;
+    proc:changesField rights:RightsCommitmentField ;
+    proc:beforeValue "Just(commit_slot: S1, deadline: S1 + 1 month)" ;
+    proc:afterValue "None" ;
+    rdfs:label "Clear rights commitment" .
 @prefix cfr:    <https://lambdasistemi.github.io/cardano-for-regulators/ontology#> .
 @prefix gdpr:   <https://lambdasistemi.github.io/cardano-for-regulators/ontology/gdpr#> .
 @prefix bat:    <https://lambdasistemi.github.io/cardano-for-regulators/ontology/battery#> .

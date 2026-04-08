@@ -3,114 +3,24 @@
   "description": "EU Battery Regulation instance.",
   "edges": [
     [
-      "submitreading",
-      "g-cosevalid",
-      "checks"
-    ],
-    [
-      "createcommitment",
-      "g-validwindow",
-      "checks"
-    ],
-    [
-      "reassignreporter",
-      "g-mfridentity",
-      "checks"
-    ],
-    [
-      "battery-regulation",
-      "tr-mfrconsumer",
-      "trust model"
-    ],
-    [
-      "battery-regulation",
-      "repurpose",
-      "has action"
-    ],
-    [
-      "createcommitment",
-      "g-reporterassigned",
-      "checks"
-    ],
-    [
-      "battery-regulation",
-      "assignreporter",
-      "has action"
-    ],
-    [
-      "repurpose",
-      "g-freshreading",
-      "checks"
-    ],
-    [
-      "assignreporter",
-      "g-mptupdate",
-      "checks"
-    ],
-    [
-      "registeritem",
-      "g-standingok",
-      "checks"
-    ],
-    [
-      "repurpose",
-      "g-mfrsig",
-      "checks"
-    ],
-    [
       "battery-regulation",
       "ca-fee",
       "assessed"
     ],
     [
-      "ca-liveness",
-      "liveness",
-      "Pass"
-    ],
-    [
-      "battery-regulation",
-      "tr-consumerconsumer",
-      "trust model"
-    ],
-    [
-      "ca-liveness",
-      "liveness",
-      "Pass"
-    ],
-    [
-      "reassignreporter",
-      "g-rewardpositive",
-      "checks"
-    ],
-    [
-      "reassignreporter",
-      "g-mptupdate",
-      "checks"
-    ],
-    [
-      "ca-fee",
-      "fee-alignment",
-      "Pass"
-    ],
-    [
-      "battery-regulation",
-      "submitreading",
-      "has action"
-    ],
-    [
-      "bat-consumer",
-      "tr-consumerconsumer",
+      "bat-manufacturer",
+      "tr-mfrconsumer",
       "trust risk"
     ],
     [
-      "assignreporter",
-      "g-mfrsig",
-      "checks"
+      "ca-liveness",
+      "liveness",
+      "Pass"
     ],
     [
-      "ca-datacadence",
-      "data-cadence",
-      "Pass"
+      "reassignreporter",
+      "g-mfrsig",
+      "checks"
     ],
     [
       "repurpose",
@@ -118,53 +28,33 @@
       "checks"
     ],
     [
-      "battery-regulation",
-      "ca-datacadence",
-      "assessed"
-    ],
-    [
-      "transferownership",
-      "g-mptupdate",
-      "checks"
-    ],
-    [
-      "reassignreporter",
-      "g-commitmentnone",
-      "checks"
-    ],
-    [
-      "bat-manufacturer",
-      "tr-mfrregulator",
-      "trust risk"
-    ],
-    [
-      "tr-consumerconsumer",
+      "tr-mfrconsumer",
       "bat-consumer",
       "affects"
     ],
     [
       "battery-regulation",
-      "transferownership",
-      "has action"
-    ],
-    [
-      "ca-fee",
-      "fee-alignment",
-      "Pass"
-    ],
-    [
-      "battery-regulation",
-      "tr-mfrregulator",
+      "tr-sensorchain",
       "trust model"
     ],
     [
-      "transferownership",
-      "g-sellersig",
+      "submitreading",
+      "g-payloadmatch",
       "checks"
     ],
     [
+      "battery-regulation",
       "assignreporter",
-      "g-mfridentity",
+      "has action"
+    ],
+    [
+      "transferownership",
+      "g-buyersig",
+      "checks"
+    ],
+    [
+      "repurpose",
+      "g-freshreading",
       "checks"
     ],
     [
@@ -173,193 +63,38 @@
       "checks"
     ],
     [
-      "ca-identity",
-      "identity-delegation",
-      "Pass"
-    ],
-    [
-      "repurpose",
-      "g-backlinkvalid",
-      "checks"
-    ],
-    [
-      "submitreading",
-      "g-commitmentexists",
-      "checks"
-    ],
-    [
-      "transferownership",
-      "g-buyersig",
-      "checks"
-    ],
-    [
-      "bat-manufacturer",
-      "tr-mfrconsumer",
-      "trust risk"
-    ],
-    [
-      "registeritem",
-      "g-mfridentity",
-      "checks"
-    ],
-    [
-      "createcommitment",
-      "g-mptupdate",
-      "checks"
-    ],
-    [
       "repurpose",
       "g-newopidentity",
       "checks"
     ],
     [
-      "battery-regulation",
-      "ca-liveness",
-      "assessed"
-    ],
-    [
-      "submitreading",
-      "g-payloadmatch",
-      "checks"
-    ],
-    [
-      "submitreading",
-      "g-freshness",
-      "checks"
-    ],
-    [
-      "ca-sequential",
-      "sequential-access",
-      "Pass"
-    ],
-    [
-      "registeritem",
-      "g-mptinsert",
-      "checks"
-    ],
-    [
-      "ca-sequential",
-      "sequential-access",
-      "Pass"
-    ],
-    [
-      "assignreporter",
-      "g-rewardpositive",
-      "checks"
-    ],
-    [
-      "repurpose",
-      "g-commitmentnone",
-      "checks"
-    ],
-    [
-      "createcommitment",
-      "g-commitmentnone",
-      "checks"
-    ],
-    [
-      "submitreading",
-      "g-mpttransition",
-      "checks"
-    ],
-    [
-      "reassignreporter",
-      "g-mfrsig",
-      "checks"
-    ],
-    [
-      "createcommitment",
-      "g-mfrsig",
-      "checks"
-    ],
-    [
-      "createcommitment",
-      "g-mfridentity",
-      "checks"
-    ],
-    [
-      "tr-sensorchain",
       "bat-consumer",
-      "affects"
-    ],
-    [
-      "battery-regulation",
-      "reassignreporter",
-      "has action"
-    ],
-    [
-      "registeritem",
-      "g-mfrsig",
-      "checks"
-    ],
-    [
-      "battery-regulation",
-      "createcommitment",
-      "has action"
-    ],
-    [
-      "ca-identity",
-      "identity-delegation",
-      "Pass"
-    ],
-    [
-      "transferownership",
-      "g-freshreading",
-      "checks"
-    ],
-    [
-      "battery-regulation",
-      "ca-sequential",
-      "assessed"
-    ],
-    [
-      "battery-regulation",
-      "tr-sensorchain",
-      "trust model"
-    ],
-    [
-      "submitreading",
-      "g-reportersig",
-      "checks"
-    ],
-    [
-      "submitreading",
-      "g-reporterkeymatch",
-      "checks"
-    ],
-    [
-      "battery-regulation",
-      "ca-identity",
-      "assessed"
-    ],
-    [
-      "tr-mfrconsumer",
-      "bat-consumer",
-      "affects"
-    ],
-    [
-      "transferownership",
-      "g-commitmentnone",
-      "checks"
-    ],
-    [
-      "bat-consumer",
-      "tr-sensorchain",
+      "tr-consumerconsumer",
       "trust risk"
     ],
     [
-      "registeritem",
-      "g-noexistingleaf",
+      "assignreporter",
+      "g-mptupdate",
       "checks"
     ],
     [
       "transferownership",
-      "g-cip68transfer",
+      "g-sellersig",
       "checks"
     ],
     [
       "battery-regulation",
-      "registeritem",
+      "reassignreporter",
+      "has action"
+    ],
+    [
+      "ca-fee",
+      "fee-alignment",
+      "Pass"
+    ],
+    [
+      "battery-regulation",
+      "submitreading",
       "has action"
     ],
     [
@@ -368,114 +103,279 @@
       "Pass"
     ],
     [
+      "battery-regulation",
+      "ca-sequential",
+      "assessed"
+    ],
+    [
+      "transferownership",
+      "g-commitmentnone",
+      "checks"
+    ],
+    [
+      "battery-regulation",
+      "tr-consumerconsumer",
+      "trust model"
+    ],
+    [
+      "registeritem",
+      "g-standingok",
+      "checks"
+    ],
+    [
+      "submitreading",
+      "g-reporterkeymatch",
+      "checks"
+    ],
+    [
+      "repurpose",
+      "g-commitmentnone",
+      "checks"
+    ],
+    [
+      "createcommitment",
+      "g-mfridentity",
+      "checks"
+    ],
+    [
+      "battery-regulation",
+      "registeritem",
+      "has action"
+    ],
+    [
+      "ca-sequential",
+      "sequential-access",
+      "Pass"
+    ],
+    [
+      "createcommitment",
+      "g-mptupdate",
+      "checks"
+    ],
+    [
+      "createcommitment",
+      "g-mfrsig",
+      "checks"
+    ],
+    [
+      "ca-fee",
+      "fee-alignment",
+      "Pass"
+    ],
+    [
+      "reassignreporter",
+      "g-rewardpositive",
+      "checks"
+    ],
+    [
+      "registeritem",
+      "g-noexistingleaf",
+      "checks"
+    ],
+    [
+      "tr-sensorchain",
+      "bat-consumer",
+      "affects"
+    ],
+    [
+      "ca-sequential",
+      "sequential-access",
+      "Pass"
+    ],
+    [
+      "reassignreporter",
+      "g-mptupdate",
+      "checks"
+    ],
+    [
+      "ca-identity",
+      "identity-delegation",
+      "Pass"
+    ],
+    [
+      "battery-regulation",
+      "ca-datacadence",
+      "assessed"
+    ],
+    [
+      "ca-liveness",
+      "liveness",
+      "Pass"
+    ],
+    [
+      "createcommitment",
+      "g-validwindow",
+      "checks"
+    ],
+    [
+      "repurpose",
+      "g-mfrsig",
+      "checks"
+    ],
+    [
+      "registeritem",
+      "g-mptinsert",
+      "checks"
+    ],
+    [
+      "ca-datacadence",
+      "data-cadence",
+      "Pass"
+    ],
+    [
+      "transferownership",
+      "g-mptupdate",
+      "checks"
+    ],
+    [
+      "registeritem",
+      "g-mfrsig",
+      "checks"
+    ],
+    [
+      "battery-regulation",
+      "repurpose",
+      "has action"
+    ],
+    [
+      "battery-regulation",
+      "ca-liveness",
+      "assessed"
+    ],
+    [
+      "assignreporter",
+      "g-mfridentity",
+      "checks"
+    ],
+    [
+      "reassignreporter",
+      "g-commitmentnone",
+      "checks"
+    ],
+    [
+      "battery-regulation",
+      "tr-mfrconsumer",
+      "trust model"
+    ],
+    [
+      "submitreading",
+      "g-freshness",
+      "checks"
+    ],
+    [
+      "registeritem",
+      "g-mfridentity",
+      "checks"
+    ],
+    [
+      "submitreading",
+      "g-reportersig",
+      "checks"
+    ],
+    [
+      "ca-identity",
+      "identity-delegation",
+      "Pass"
+    ],
+    [
+      "battery-regulation",
+      "ca-identity",
+      "assessed"
+    ],
+    [
+      "battery-regulation",
+      "createcommitment",
+      "has action"
+    ],
+    [
       "registeritem",
       "g-metadatanotempty",
       "checks"
     ],
     [
-      "operator-role",
-      "signing-function",
-      "mints"
-    ],
-    [
-      "battery-regulation",
-      "reward-distribution",
-      "uses"
-    ],
-    [
       "bat-consumer",
-      "user-role",
-      "maps to"
+      "tr-sensorchain",
+      "trust risk"
     ],
     [
-      "regulator-role",
-      "regulation-trie",
-      "maintains"
+      "assignreporter",
+      "g-rewardpositive",
+      "checks"
     ],
     [
-      "gdpr",
-      "commitment-then-submit",
-      "uses"
+      "transferownership",
+      "g-freshreading",
+      "checks"
     ],
     [
-      "mpt-per-operator",
-      "data-cadence",
-      "satisfies"
+      "bat-manufacturer",
+      "tr-mfrregulator",
+      "trust risk"
     ],
     [
-      "gdpr-sa",
-      "regulator-role",
-      "maps to"
-    ],
-    [
-      "operator-role",
-      "process-trie",
-      "manages"
-    ],
-    [
-      "identity-provider-role",
-      "identity-trie",
-      "maintains"
-    ],
-    [
-      "gdpr-breach-72h",
-      "commitment-then-submit",
-      "implemented by"
+      "submitreading",
+      "g-commitmentexists",
+      "checks"
     ],
     [
       "battery-regulation",
-      "baton-pattern",
-      "uses"
+      "transferownership",
+      "has action"
     ],
     [
-      "gdpr",
-      "tiered-access",
-      "uses"
+      "transferownership",
+      "g-cip68transfer",
+      "checks"
     ],
     [
-      "gdpr-consent",
-      "lifecycle-state-machine",
-      "implemented by"
+      "tr-consumerconsumer",
+      "bat-consumer",
+      "affects"
     ],
     [
-      "double-signature",
-      "signing-function",
-      "uses"
+      "submitreading",
+      "g-mpttransition",
+      "checks"
     ],
     [
-      "gdpr",
-      "liveness",
-      "satisfies"
+      "submitreading",
+      "g-cosevalid",
+      "checks"
     ],
     [
-      "operator-role",
-      "beacon",
-      "produces"
+      "reassignreporter",
+      "g-mfridentity",
+      "checks"
     ],
     [
-      "user-role",
-      "beacon",
-      "signs over"
+      "createcommitment",
+      "g-commitmentnone",
+      "checks"
     ],
     [
-      "smart-contract",
-      "identity-trie",
-      "reads"
+      "repurpose",
+      "g-backlinkvalid",
+      "checks"
     ],
     [
-      "signing-function",
-      "identity-delegation",
-      "implements"
+      "createcommitment",
+      "g-reporterassigned",
+      "checks"
     ],
     [
-      "smart-contract",
-      "process-trie",
-      "governs"
+      "assignreporter",
+      "g-mfrsig",
+      "checks"
     ],
     [
       "battery-regulation",
+      "tr-mfrregulator",
+      "trust model"
+    ],
+    [
+      "bat-soh",
       "commitment-then-submit",
-      "uses"
+      "implemented by"
     ],
     [
       "mpt-per-operator",
@@ -483,14 +383,9 @@
       "satisfies"
     ],
     [
-      "bat-manufacturer",
       "operator-role",
-      "maps to"
-    ],
-    [
-      "gdpr",
-      "fee-alignment",
-      "satisfies"
+      "process-trie",
+      "manages"
     ],
     [
       "smart-contract",
@@ -498,49 +393,49 @@
       "reads"
     ],
     [
-      "gdpr-subject",
-      "user-role",
+      "identity-provider-role",
+      "identity-trie",
+      "maintains"
+    ],
+    [
+      "gdpr-sa",
+      "regulator-role",
       "maps to"
     ],
     [
-      "battery-regulation",
-      "cross-operator-handoff",
-      "uses"
-    ],
-    [
-      "upstream-verification",
-      "process-trie",
-      "reads across"
-    ],
-    [
-      "gdpr-controller",
+      "bat-manufacturer",
       "operator-role",
       "maps to"
     ],
     [
       "regulator-role",
-      "smart-contract",
-      "publishes"
+      "regulation-trie",
+      "maintains"
     ],
     [
       "gdpr",
-      "lifecycle-state-machine",
+      "liveness",
+      "satisfies"
+    ],
+    [
+      "gdpr",
+      "tiered-access",
       "uses"
     ],
     [
-      "user-role",
-      "signing-function",
-      "uses"
-    ],
-    [
-      "beacon-gated-attestation",
-      "beacon",
-      "defines"
-    ],
-    [
-      "bat-soh",
+      "battery-regulation",
       "commitment-then-submit",
-      "implemented by"
+      "uses"
+    ],
+    [
+      "gdpr",
+      "relay-state-machine",
+      "uses"
+    ],
+    [
+      "battery-regulation",
+      "baton-pattern",
+      "uses"
     ],
     [
       "gdpr-rights-1m",
@@ -549,8 +444,113 @@
     ],
     [
       "gdpr",
-      "relay-state-machine",
+      "commitment-then-submit",
       "uses"
+    ],
+    [
+      "gdpr",
+      "lifecycle-state-machine",
+      "uses"
+    ],
+    [
+      "gdpr",
+      "fee-alignment",
+      "satisfies"
+    ],
+    [
+      "user-role",
+      "beacon",
+      "signs over"
+    ],
+    [
+      "upstream-verification",
+      "process-trie",
+      "reads across"
+    ],
+    [
+      "smart-contract",
+      "identity-trie",
+      "reads"
+    ],
+    [
+      "double-signature",
+      "signing-function",
+      "uses"
+    ],
+    [
+      "signing-function",
+      "identity-delegation",
+      "implements"
+    ],
+    [
+      "operator-role",
+      "signing-function",
+      "mints"
+    ],
+    [
+      "smart-contract",
+      "process-trie",
+      "governs"
+    ],
+    [
+      "gdpr-subject",
+      "user-role",
+      "maps to"
+    ],
+    [
+      "user-role",
+      "signing-function",
+      "uses"
+    ],
+    [
+      "operator-role",
+      "beacon",
+      "produces"
+    ],
+    [
+      "mpt-per-operator",
+      "data-cadence",
+      "satisfies"
+    ],
+    [
+      "gdpr-controller",
+      "operator-role",
+      "maps to"
+    ],
+    [
+      "battery-regulation",
+      "reward-distribution",
+      "uses"
+    ],
+    [
+      "battery-regulation",
+      "cross-operator-handoff",
+      "uses"
+    ],
+    [
+      "regulator-role",
+      "smart-contract",
+      "publishes"
+    ],
+    [
+      "gdpr-breach-72h",
+      "commitment-then-submit",
+      "implemented by"
+    ],
+    [
+      "gdpr-consent",
+      "lifecycle-state-machine",
+      "implemented by"
+    ],
+    [
+      "beacon-gated-attestation",
+      "beacon",
+      "defines"
+    ],
+    [
+      "bat-consumer",
+      "user-role",
+      "maps to"
     ]
   ]
 }
