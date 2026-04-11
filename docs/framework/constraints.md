@@ -210,3 +210,24 @@ Before running the full five constraints, apply this quick filter:
 
 If all three hold → proceed with the five constraints.
 If only 1-2 hold → a traditional database with audit logs may suffice.
+
+## Tie-breaker: unlinkability requirement
+
+Some regulations pass all five constraints but seem marginal — a traditional
+database with strong access controls could arguably suffice. The deciding
+factor may be **unlinkability**: does the regulation require that the operator
+cannot correlate a user's actions across interactions?
+
+If yes, no traditional database achieves this. The operator runs the database
+and can always query it. Access control policies can be circumvented by the
+administrator. Only cryptographic unlinkability — where correlation is
+mathematically impossible, not just forbidden — satisfies the requirement.
+
+Pairing-based anonymous credentials (BBS+) on Cardano provide this. See the
+[unlinkable authorization pattern](patterns.md#unlinkable-authorization-via-anonymous-credentials)
+for details.
+
+This makes the unlinkability requirement a tie-breaker: when the five
+constraints are met but the case for blockchain over a database is weak,
+a regulation that demands unlinkability tips the balance decisively toward
+on-chain infrastructure.
