@@ -669,6 +669,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#tie-breaker-unlinkability-requirement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tie-breaker: unlinkability requirement
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1304,6 +1315,22 @@ a tool for crypto-native participants only.</p>
 </ol>
 <p>If all three hold → proceed with the five constraints.
 If only 1-2 hold → a traditional database with audit logs may suffice.</p>
+<h2 id="tie-breaker-unlinkability-requirement">Tie-breaker: unlinkability requirement</h2>
+<p>Some regulations pass all five constraints but seem marginal — a traditional
+database with strong access controls could arguably suffice. The deciding
+factor may be <strong>unlinkability</strong>: does the regulation require that the operator
+cannot correlate a user's actions across interactions?</p>
+<p>If yes, no traditional database achieves this. The operator runs the database
+and can always query it. Access control policies can be circumvented by the
+administrator. Only cryptographic unlinkability — where correlation is
+mathematically impossible, not just forbidden — satisfies the requirement.</p>
+<p>Pairing-based anonymous credentials (BBS+) on Cardano provide this. See the
+<a href="../patterns/#unlinkable-authorization-via-anonymous-credentials">unlinkable authorization pattern</a>
+for details.</p>
+<p>This makes the unlinkability requirement a tie-breaker: when the five
+constraints are met but the case for blockchain over a database is weak,
+a regulation that demands unlinkability tips the balance decisively toward
+on-chain infrastructure.</p>
 
 
 

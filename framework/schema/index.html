@@ -744,6 +744,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Privacy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#unlinkability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Unlinkability
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2096,6 +2113,21 @@ single party can reconstruct the full picture.</p>
 the actual data behind the leaves is verified off-chain by the operator.
 The on-chain proofs (signatures, trie membership) establish <em>that</em> the
 right things happened without revealing <em>what</em> the actual content is.</p>
+<h3 id="unlinkability">Unlinkability</h3>
+<p>The privacy model above prevents the operator from knowing real identities,
+but does not prevent correlation. When the same public key appears across
+multiple transactions, the operator can link all actions from that user —
+building activity profiles, identifying patterns, inferring behavior.</p>
+<p>For regulations that forbid this (e.g., GDPR Art. 5(1)(b) purpose limitation),
+structural privacy is insufficient. The <em>unlinkable authorization</em> pattern
+(see <a href="../patterns/#unlinkable-authorization-via-anonymous-credentials">Architecture Patterns</a>)
+closes this gap: the identity provider issues BBS+ credentials, and the user
+derives a fresh zero-knowledge proof for each interaction. The operator
+verifies authorization without being able to correlate submissions from the
+same user.</p>
+<p>This strengthens the privacy table: the operator not only doesn't know
+identities — they cannot even tell whether two authorized actions came from
+the same person.</p>
 <h2 id="data-availability-and-the-burden-of-proof">Data availability and the burden of proof</h2>
 <p>The tries store hashes on-chain, not full content. There is no guarantee
 that the pre-image behind a leaf hash can be reconstructed from the chain

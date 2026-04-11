@@ -3,8 +3,13 @@
   "description": "Schema roles, artifacts, patterns, constraints.",
   "edges": [
     [
-      "ca-liveness",
-      "liveness",
+      "ca-identity",
+      "identity-delegation",
+      "Pass"
+    ],
+    [
+      "ca-datacadence",
+      "data-cadence",
       "Pass"
     ],
     [
@@ -18,18 +23,8 @@
       "Pass"
     ],
     [
-      "ca-sequential",
-      "sequential-access",
-      "Pass"
-    ],
-    [
       "ca-fee",
       "fee-alignment",
-      "Pass"
-    ],
-    [
-      "ca-sequential",
-      "sequential-access",
       "Pass"
     ],
     [
@@ -43,24 +38,39 @@
       "Pass"
     ],
     [
-      "ca-datacadence",
-      "data-cadence",
+      "ca-sequential",
+      "sequential-access",
       "Pass"
     ],
     [
-      "ca-identity",
-      "identity-delegation",
+      "ca-sequential",
+      "sequential-access",
       "Pass"
     ],
     [
-      "bat-soh",
+      "ca-liveness",
+      "liveness",
+      "Pass"
+    ],
+    [
+      "smart-contract",
+      "identity-trie",
+      "reads"
+    ],
+    [
+      "battery-regulation",
       "commitment-then-submit",
-      "implemented by"
+      "uses"
     ],
     [
-      "mpt-per-operator",
-      "sequential-access",
-      "satisfies"
+      "bat-consumer",
+      "user-role",
+      "maps to"
+    ],
+    [
+      "user-role",
+      "signing-function",
+      "uses"
     ],
     [
       "operator-role",
@@ -68,64 +78,14 @@
       "manages"
     ],
     [
-      "smart-contract",
-      "regulation-trie",
-      "reads"
-    ],
-    [
-      "identity-provider-role",
-      "identity-trie",
-      "maintains"
-    ],
-    [
-      "gdpr-sa",
-      "regulator-role",
-      "maps to"
-    ],
-    [
-      "bat-manufacturer",
-      "operator-role",
-      "maps to"
+      "battery-regulation",
+      "reward-distribution",
+      "uses"
     ],
     [
       "regulator-role",
       "regulation-trie",
       "maintains"
-    ],
-    [
-      "gdpr",
-      "liveness",
-      "satisfies"
-    ],
-    [
-      "gdpr",
-      "tiered-access",
-      "uses"
-    ],
-    [
-      "battery-regulation",
-      "commitment-then-submit",
-      "uses"
-    ],
-    [
-      "gdpr",
-      "relay-state-machine",
-      "uses"
-    ],
-    [
-      "battery-regulation",
-      "baton-pattern",
-      "uses"
-    ],
-    [
-      "gdpr-rights-1m",
-      "commitment-then-submit",
-      "implemented by"
-    ],
-    [
-      "gdpr",
-      "commitment-then-submit",
-      "uses"
     ],
     [
       "gdpr",
@@ -133,54 +93,9 @@
       "uses"
     ],
     [
-      "gdpr",
-      "fee-alignment",
-      "satisfies"
-    ],
-    [
-      "user-role",
-      "beacon",
-      "signs over"
-    ],
-    [
-      "upstream-verification",
-      "process-trie",
-      "reads across"
-    ],
-    [
-      "smart-contract",
-      "identity-trie",
-      "reads"
-    ],
-    [
-      "double-signature",
-      "signing-function",
-      "uses"
-    ],
-    [
-      "signing-function",
-      "identity-delegation",
-      "implements"
-    ],
-    [
-      "operator-role",
-      "signing-function",
-      "mints"
-    ],
-    [
-      "smart-contract",
-      "process-trie",
-      "governs"
-    ],
-    [
       "gdpr-subject",
       "user-role",
       "maps to"
-    ],
-    [
-      "user-role",
-      "signing-function",
-      "uses"
     ],
     [
       "operator-role",
@@ -188,23 +103,58 @@
       "produces"
     ],
     [
-      "mpt-per-operator",
-      "data-cadence",
+      "double-signature",
+      "signing-function",
+      "uses"
+    ],
+    [
+      "gdpr",
+      "tiered-access",
+      "uses"
+    ],
+    [
+      "upstream-verification",
+      "process-trie",
+      "reads across"
+    ],
+    [
+      "gdpr",
+      "fee-alignment",
       "satisfies"
     ],
     [
-      "gdpr-controller",
+      "bat-manufacturer",
       "operator-role",
       "maps to"
     ],
     [
-      "battery-regulation",
-      "reward-distribution",
-      "uses"
+      "user-role",
+      "beacon",
+      "signs over"
     ],
     [
-      "battery-regulation",
-      "cross-operator-handoff",
+      "smart-contract",
+      "regulation-trie",
+      "reads"
+    ],
+    [
+      "gdpr-sa",
+      "regulator-role",
+      "maps to"
+    ],
+    [
+      "beacon-gated-attestation",
+      "beacon",
+      "defines"
+    ],
+    [
+      "smart-contract",
+      "process-trie",
+      "governs"
+    ],
+    [
+      "gdpr",
+      "commitment-then-submit",
       "uses"
     ],
     [
@@ -213,9 +163,14 @@
       "publishes"
     ],
     [
-      "gdpr-breach-72h",
-      "commitment-then-submit",
-      "implemented by"
+      "battery-regulation",
+      "cross-operator-handoff",
+      "uses"
+    ],
+    [
+      "gdpr-controller",
+      "operator-role",
+      "maps to"
     ],
     [
       "gdpr-consent",
@@ -223,14 +178,59 @@
       "implemented by"
     ],
     [
-      "beacon-gated-attestation",
-      "beacon",
-      "defines"
+      "mpt-per-operator",
+      "data-cadence",
+      "satisfies"
     ],
     [
-      "bat-consumer",
-      "user-role",
-      "maps to"
+      "gdpr-rights-1m",
+      "commitment-then-submit",
+      "implemented by"
+    ],
+    [
+      "battery-regulation",
+      "baton-pattern",
+      "uses"
+    ],
+    [
+      "bat-soh",
+      "commitment-then-submit",
+      "implemented by"
+    ],
+    [
+      "gdpr",
+      "liveness",
+      "satisfies"
+    ],
+    [
+      "operator-role",
+      "signing-function",
+      "mints"
+    ],
+    [
+      "mpt-per-operator",
+      "sequential-access",
+      "satisfies"
+    ],
+    [
+      "signing-function",
+      "identity-delegation",
+      "implements"
+    ],
+    [
+      "gdpr",
+      "relay-state-machine",
+      "uses"
+    ],
+    [
+      "gdpr-breach-72h",
+      "commitment-then-submit",
+      "implemented by"
+    ],
+    [
+      "identity-provider-role",
+      "identity-trie",
+      "maintains"
     ]
   ]
 }

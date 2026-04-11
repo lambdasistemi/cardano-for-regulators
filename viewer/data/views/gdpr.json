@@ -4,28 +4,63 @@
   "edges": [
     [
       "updateprocessingrecord",
-      "g-mptproof",
+      "g-controllersig",
       "checks"
+    ],
+    [
+      "gdpr",
+      "submitbreachnotification",
+      "has action"
+    ],
+    [
+      "gdpr",
+      "recordconsent",
+      "has action"
+    ],
+    [
+      "updateprocessingrecord",
+      "g-standingnotsuspended",
+      "checks"
+    ],
+    [
+      "gdpr",
+      "tr-controllercontroller",
+      "trust model"
     ],
     [
       "referencecertification",
+      "g-controllersig",
+      "checks"
+    ],
+    [
+      "recordconsent",
+      "g-purposehashnotempty",
+      "checks"
+    ],
+    [
+      "withdrawconsent",
+      "g-consentgiven",
+      "checks"
+    ],
+    [
+      "updateprocessingrecord",
       "g-mptproof",
       "checks"
     ],
     [
-      "tr-controllersubject",
-      "gdpr-subject",
-      "affects"
+      "withdrawconsent",
+      "g-mptproof",
+      "checks"
     ],
     [
-      "gdpr-sa",
-      "tr-sacontroller",
-      "trust risk"
+      "submitbreachnotification",
+      "g-commitmentexists",
+      "checks"
     ],
     [
-      "ca-liveness",
-      "liveness",
-      "Pass"
+      "recordconsent",
+      "g-mptproof",
+      "checks"
     ],
     [
       "commitrightsrequest",
@@ -34,27 +69,62 @@
     ],
     [
       "gdpr",
+      "withdrawconsent",
+      "has action"
+    ],
+    [
+      "recordconsent",
+      "g-controllersig",
+      "checks"
+    ],
+    [
+      "gdpr-controller",
+      "tr-controllersubject",
+      "trust risk"
+    ],
+    [
+      "gdpr",
+      "ca-liveness",
+      "assessed"
+    ],
+    [
+      "gdpr-subject",
+      "tr-subjectcontroller",
+      "trust risk"
+    ],
+    [
+      "gdpr",
+      "recorddpia",
+      "has action"
+    ],
+    [
+      "gdpr",
       "ca-identity",
       "assessed"
     ],
     [
-      "commitbreach",
-      "g-controllersig",
+      "submitbreachnotification",
+      "g-mptproof",
       "checks"
     ],
     [
-      "recorddpia",
-      "g-controllersig",
+      "extendrightsdeadline",
+      "g-notalreadyextended",
       "checks"
     ],
     [
-      "updateprocessingrecord",
-      "g-identitytrie",
+      "recordconsent",
+      "g-processsig",
       "checks"
     ],
     [
-      "commitbreach",
-      "g-standingnotsuspended",
+      "gdpr",
+      "referencecertification",
+      "has action"
+    ],
+    [
+      "withdrawconsent",
+      "g-processsig",
       "checks"
     ],
     [
@@ -64,282 +134,12 @@
     ],
     [
       "gdpr",
-      "recorddpia",
-      "has action"
-    ],
-    [
-      "gdpr",
-      "ca-sequential",
-      "assessed"
-    ],
-    [
-      "gdpr-controller",
-      "tr-controllerprocessor",
-      "trust risk"
-    ],
-    [
-      "ca-fee",
-      "fee-alignment",
-      "Pass"
-    ],
-    [
-      "recordconsent",
-      "g-mptproof",
-      "checks"
-    ],
-    [
-      "submitrightsresponse",
-      "g-mptproof",
-      "checks"
-    ],
-    [
-      "gdpr",
       "ca-fee",
       "assessed"
-    ],
-    [
-      "gdpr",
-      "tr-controllercontroller",
-      "trust model"
-    ],
-    [
-      "ca-datacadence",
-      "data-cadence",
-      "Pass"
-    ],
-    [
-      "gdpr",
-      "commitrightsrequest",
-      "has action"
-    ],
-    [
-      "recordconsent",
-      "g-purposehashnotempty",
-      "checks"
-    ],
-    [
-      "gdpr",
-      "ca-liveness",
-      "assessed"
-    ],
-    [
-      "tr-subjectcontroller",
-      "gdpr-controller",
-      "affects"
-    ],
-    [
-      "gdpr",
-      "extendrightsdeadline",
-      "has action"
-    ],
-    [
-      "extendrightsdeadline",
-      "g-notalreadyextended",
-      "checks"
-    ],
-    [
-      "gdpr-controller",
-      "tr-controllersa",
-      "trust risk"
-    ],
-    [
-      "withdrawconsent",
-      "g-consentgiven",
-      "checks"
-    ],
-    [
-      "ca-sequential",
-      "sequential-access",
-      "Pass"
-    ],
-    [
-      "submitrightsresponse",
-      "g-hashnotempty",
-      "checks"
-    ],
-    [
-      "recordconsent",
-      "g-identitytrie",
-      "checks"
-    ],
-    [
-      "ca-fee",
-      "fee-alignment",
-      "Pass"
-    ],
-    [
-      "submitbreachnotification",
-      "g-controllersig",
-      "checks"
-    ],
-    [
-      "recordconsent",
-      "g-controllersig",
-      "checks"
-    ],
-    [
-      "submitrightsresponse",
-      "g-controllersig",
-      "checks"
-    ],
-    [
-      "withdrawconsent",
-      "g-processsig",
-      "checks"
-    ],
-    [
-      "ca-sequential",
-      "sequential-access",
-      "Pass"
-    ],
-    [
-      "gdpr",
-      "tr-sacontroller",
-      "trust model"
-    ],
-    [
-      "submitrightsresponse",
-      "g-commitmentexists",
-      "checks"
-    ],
-    [
-      "ca-identity",
-      "identity-delegation",
-      "Pass"
-    ],
-    [
-      "gdpr",
-      "commitbreach",
-      "has action"
-    ],
-    [
-      "gdpr",
-      "referencecertification",
-      "has action"
-    ],
-    [
-      "ca-liveness",
-      "liveness",
-      "Pass"
-    ],
-    [
-      "gdpr",
-      "updateprocessingrecord",
-      "has action"
-    ],
-    [
-      "updateprocessingrecord",
-      "g-hashnotempty",
-      "checks"
-    ],
-    [
-      "ca-datacadence",
-      "data-cadence",
-      "Pass"
-    ],
-    [
-      "submitbreachnotification",
-      "g-hashnotempty",
-      "checks"
-    ],
-    [
-      "commitbreach",
-      "g-mptproof",
-      "checks"
-    ],
-    [
-      "tr-controllersa",
-      "gdpr-sa",
-      "affects"
-    ],
-    [
-      "gdpr",
-      "submitrightsresponse",
-      "has action"
-    ],
-    [
-      "gdpr-controller",
-      "tr-controllercontroller",
-      "trust risk"
-    ],
-    [
-      "commitrightsrequest",
-      "g-controllersig",
-      "checks"
-    ],
-    [
-      "commitrightsrequest",
-      "g-processsig",
-      "checks"
-    ],
-    [
-      "updateprocessingrecord",
-      "g-standingnotsuspended",
-      "checks"
-    ],
-    [
-      "commitbreach",
-      "g-identitytrie",
-      "checks"
-    ],
-    [
-      "extendrightsdeadline",
-      "g-commitmentexists",
-      "checks"
-    ],
-    [
-      "withdrawconsent",
-      "g-mptproof",
-      "checks"
-    ],
-    [
-      "gdpr-controller",
-      "tr-controllersubject",
-      "trust risk"
-    ],
-    [
-      "gdpr",
-      "submitbreachnotification",
-      "has action"
-    ],
-    [
-      "ca-identity",
-      "identity-delegation",
-      "Pass"
-    ],
-    [
-      "recorddpia",
-      "g-hashnotempty",
-      "checks"
     ],
     [
       "referencecertification",
-      "g-controllersig",
-      "checks"
-    ],
-    [
-      "gdpr",
-      "withdrawconsent",
-      "has action"
-    ],
-    [
-      "withdrawconsent",
-      "g-controllersig",
-      "checks"
-    ],
-    [
-      "extendrightsdeadline",
-      "g-withinoriginaldeadline",
-      "checks"
-    ],
-    [
-      "gdpr",
-      "tr-controllerprocessor",
-      "trust model"
-    ],
-    [
-      "extendrightsdeadline",
-      "g-controllersig",
+      "g-mptproof",
       "checks"
     ],
     [
@@ -348,34 +148,29 @@
       "checks"
     ],
     [
+      "tr-controllersubject",
+      "gdpr-subject",
+      "affects"
+    ],
+    [
       "submitbreachnotification",
+      "g-hashnotempty",
+      "checks"
+    ],
+    [
+      "extendrightsdeadline",
       "g-commitmentexists",
       "checks"
     ],
     [
-      "gdpr-subject",
-      "tr-subjectcontroller",
-      "trust risk"
-    ],
-    [
-      "gdpr",
       "tr-controllersa",
-      "trust model"
+      "gdpr-sa",
+      "affects"
     ],
     [
-      "referencecertification",
-      "g-certissuerqualified",
+      "recorddpia",
+      "g-hashnotempty",
       "checks"
-    ],
-    [
-      "commitrightsrequest",
-      "g-noexistingcommitment",
-      "checks"
-    ],
-    [
-      "gdpr",
-      "tr-subjectcontroller",
-      "trust model"
     ],
     [
       "tr-sacontroller",
@@ -383,22 +178,17 @@
       "affects"
     ],
     [
-      "extendrightsdeadline",
-      "g-mptproof",
-      "checks"
+      "ca-identity",
+      "identity-delegation",
+      "Pass"
     ],
     [
-      "recordconsent",
-      "g-processsig",
+      "commitbreach",
+      "g-mptproof",
       "checks"
     ],
     [
       "recorddpia",
-      "g-mptproof",
-      "checks"
-    ],
-    [
-      "commitrightsrequest",
       "g-mptproof",
       "checks"
     ],
@@ -408,28 +198,58 @@
       "affects"
     ],
     [
-      "recorddpia",
-      "g-identitytrie",
-      "checks"
+      "tr-subjectcontroller",
+      "gdpr-controller",
+      "affects"
     ],
     [
-      "recordconsent",
-      "g-consentnotgiven",
-      "checks"
-    ],
-    [
-      "gdpr",
-      "tr-controllersubject",
-      "trust model"
-    ],
-    [
-      "updateprocessingrecord",
+      "extendrightsdeadline",
       "g-controllersig",
       "checks"
     ],
     [
-      "extendrightsdeadline",
+      "updateprocessingrecord",
       "g-hashnotempty",
+      "checks"
+    ],
+    [
+      "extendrightsdeadline",
+      "g-withinoriginaldeadline",
+      "checks"
+    ],
+    [
+      "submitrightsresponse",
+      "g-hashnotempty",
+      "checks"
+    ],
+    [
+      "submitrightsresponse",
+      "g-commitmentexists",
+      "checks"
+    ],
+    [
+      "gdpr",
+      "submitrightsresponse",
+      "has action"
+    ],
+    [
+      "referencecertification",
+      "g-certissuerqualified",
+      "checks"
+    ],
+    [
+      "gdpr",
+      "updateprocessingrecord",
+      "has action"
+    ],
+    [
+      "commitbreach",
+      "g-controllersig",
+      "checks"
+    ],
+    [
+      "commitbreach",
+      "g-standingnotsuspended",
       "checks"
     ],
     [
@@ -439,23 +259,213 @@
     ],
     [
       "gdpr",
-      "recordconsent",
+      "commitrightsrequest",
       "has action"
     ],
     [
-      "submitbreachnotification",
+      "commitrightsrequest",
+      "g-controllersig",
+      "checks"
+    ],
+    [
+      "commitbreach",
+      "g-identitytrie",
+      "checks"
+    ],
+    [
+      "gdpr",
+      "extendrightsdeadline",
+      "has action"
+    ],
+    [
+      "gdpr-controller",
+      "tr-controllercontroller",
+      "trust risk"
+    ],
+    [
+      "submitrightsresponse",
+      "g-controllersig",
+      "checks"
+    ],
+    [
+      "gdpr",
+      "tr-controllerprocessor",
+      "trust model"
+    ],
+    [
+      "withdrawconsent",
+      "g-controllersig",
+      "checks"
+    ],
+    [
+      "commitrightsrequest",
+      "g-noexistingcommitment",
+      "checks"
+    ],
+    [
+      "gdpr",
+      "tr-controllersa",
+      "trust model"
+    ],
+    [
+      "submitrightsresponse",
       "g-mptproof",
       "checks"
     ],
     [
-      "bat-soh",
-      "commitment-then-submit",
-      "implemented by"
+      "ca-datacadence",
+      "data-cadence",
+      "Pass"
     ],
     [
-      "mpt-per-operator",
+      "ca-fee",
+      "fee-alignment",
+      "Pass"
+    ],
+    [
+      "commitrightsrequest",
+      "g-processsig",
+      "checks"
+    ],
+    [
+      "updateprocessingrecord",
+      "g-identitytrie",
+      "checks"
+    ],
+    [
+      "ca-datacadence",
+      "data-cadence",
+      "Pass"
+    ],
+    [
+      "ca-fee",
+      "fee-alignment",
+      "Pass"
+    ],
+    [
+      "recorddpia",
+      "g-identitytrie",
+      "checks"
+    ],
+    [
+      "gdpr",
+      "ca-sequential",
+      "assessed"
+    ],
+    [
+      "ca-identity",
+      "identity-delegation",
+      "Pass"
+    ],
+    [
+      "recorddpia",
+      "g-controllersig",
+      "checks"
+    ],
+    [
+      "ca-liveness",
+      "liveness",
+      "Pass"
+    ],
+    [
+      "extendrightsdeadline",
+      "g-mptproof",
+      "checks"
+    ],
+    [
+      "gdpr",
+      "commitbreach",
+      "has action"
+    ],
+    [
+      "gdpr",
+      "tr-controllersubject",
+      "trust model"
+    ],
+    [
+      "submitbreachnotification",
+      "g-controllersig",
+      "checks"
+    ],
+    [
+      "gdpr-controller",
+      "tr-controllersa",
+      "trust risk"
+    ],
+    [
+      "gdpr",
+      "tr-subjectcontroller",
+      "trust model"
+    ],
+    [
+      "recordconsent",
+      "g-identitytrie",
+      "checks"
+    ],
+    [
+      "commitrightsrequest",
+      "g-mptproof",
+      "checks"
+    ],
+    [
+      "ca-sequential",
       "sequential-access",
-      "satisfies"
+      "Pass"
+    ],
+    [
+      "recordconsent",
+      "g-consentnotgiven",
+      "checks"
+    ],
+    [
+      "gdpr-controller",
+      "tr-controllerprocessor",
+      "trust risk"
+    ],
+    [
+      "ca-sequential",
+      "sequential-access",
+      "Pass"
+    ],
+    [
+      "gdpr",
+      "tr-sacontroller",
+      "trust model"
+    ],
+    [
+      "gdpr-sa",
+      "tr-sacontroller",
+      "trust risk"
+    ],
+    [
+      "ca-liveness",
+      "liveness",
+      "Pass"
+    ],
+    [
+      "extendrightsdeadline",
+      "g-hashnotempty",
+      "checks"
+    ],
+    [
+      "smart-contract",
+      "identity-trie",
+      "reads"
+    ],
+    [
+      "battery-regulation",
+      "commitment-then-submit",
+      "uses"
+    ],
+    [
+      "bat-consumer",
+      "user-role",
+      "maps to"
+    ],
+    [
+      "user-role",
+      "signing-function",
+      "uses"
     ],
     [
       "operator-role",
@@ -463,43 +473,33 @@
       "manages"
     ],
     [
-      "smart-contract",
-      "regulation-trie",
-      "reads"
-    ],
-    [
-      "identity-provider-role",
-      "identity-trie",
-      "maintains"
-    ],
-    [
-      "gdpr-sa",
-      "regulator-role",
-      "maps to"
-    ],
-    [
-      "bat-manufacturer",
-      "operator-role",
-      "maps to"
-    ],
-    [
-      "regulator-role",
-      "regulation-trie",
-      "maintains"
-    ],
-    [
-      "gdpr",
-      "liveness",
-      "satisfies"
-    ],
-    [
-      "gdpr",
-      "tiered-access",
+      "battery-regulation",
+      "reward-distribution",
       "uses"
     ],
     [
-      "battery-regulation",
-      "commitment-then-submit",
+      "regulator-role",
+      "regulation-trie",
+      "maintains"
+    ],
+    [
+      "gdpr",
+      "lifecycle-state-machine",
+      "uses"
+    ],
+    [
+      "gdpr-subject",
+      "user-role",
+      "maps to"
+    ],
+    [
+      "operator-role",
+      "beacon",
+      "produces"
+    ],
+    [
+      "double-signature",
+      "signing-function",
       "uses"
     ],
     [
@@ -509,38 +509,8 @@
     ],
     [
       "gdpr",
-      "relay-state-machine",
+      "tiered-access",
       "uses"
-    ],
-    [
-      "battery-regulation",
-      "baton-pattern",
-      "uses"
-    ],
-    [
-      "gdpr-rights-1m",
-      "commitment-then-submit",
-      "implemented by"
-    ],
-    [
-      "gdpr",
-      "commitment-then-submit",
-      "uses"
-    ],
-    [
-      "gdpr",
-      "lifecycle-state-machine",
-      "uses"
-    ],
-    [
-      "gdpr",
-      "fee-alignment",
-      "satisfies"
-    ],
-    [
-      "user-role",
-      "beacon",
-      "signs over"
     ],
     [
       "upstream-verification",
@@ -548,33 +518,13 @@
       "reads across"
     ],
     [
-      "smart-contract",
-      "identity-trie",
-      "reads"
+      "gdpr",
+      "fee-alignment",
+      "satisfies"
     ],
     [
-      "double-signature",
-      "signing-function",
-      "uses"
-    ],
-    [
-      "signing-function",
-      "identity-delegation",
-      "implements"
-    ],
-    [
+      "bat-manufacturer",
       "operator-role",
-      "signing-function",
-      "mints"
-    ],
-    [
-      "smart-contract",
-      "process-trie",
-      "governs"
-    ],
-    [
-      "gdpr-subject",
-      "user-role",
       "maps to"
     ],
     [
@@ -584,32 +534,32 @@
     ],
     [
       "user-role",
-      "signing-function",
-      "uses"
-    ],
-    [
-      "operator-role",
       "beacon",
-      "produces"
+      "signs over"
     ],
     [
-      "mpt-per-operator",
-      "data-cadence",
-      "satisfies"
+      "smart-contract",
+      "regulation-trie",
+      "reads"
     ],
     [
-      "gdpr-controller",
-      "operator-role",
+      "gdpr-sa",
+      "regulator-role",
       "maps to"
     ],
     [
-      "battery-regulation",
-      "reward-distribution",
-      "uses"
+      "beacon-gated-attestation",
+      "beacon",
+      "defines"
     ],
     [
-      "battery-regulation",
-      "cross-operator-handoff",
+      "smart-contract",
+      "process-trie",
+      "governs"
+    ],
+    [
+      "gdpr",
+      "commitment-then-submit",
       "uses"
     ],
     [
@@ -618,9 +568,14 @@
       "publishes"
     ],
     [
-      "gdpr-breach-72h",
-      "commitment-then-submit",
-      "implemented by"
+      "battery-regulation",
+      "cross-operator-handoff",
+      "uses"
+    ],
+    [
+      "gdpr-controller",
+      "operator-role",
+      "maps to"
     ],
     [
       "gdpr-consent",
@@ -628,14 +583,59 @@
       "implemented by"
     ],
     [
-      "beacon-gated-attestation",
-      "beacon",
-      "defines"
+      "mpt-per-operator",
+      "data-cadence",
+      "satisfies"
     ],
     [
-      "bat-consumer",
-      "user-role",
-      "maps to"
+      "gdpr-rights-1m",
+      "commitment-then-submit",
+      "implemented by"
+    ],
+    [
+      "battery-regulation",
+      "baton-pattern",
+      "uses"
+    ],
+    [
+      "bat-soh",
+      "commitment-then-submit",
+      "implemented by"
+    ],
+    [
+      "gdpr",
+      "liveness",
+      "satisfies"
+    ],
+    [
+      "operator-role",
+      "signing-function",
+      "mints"
+    ],
+    [
+      "mpt-per-operator",
+      "sequential-access",
+      "satisfies"
+    ],
+    [
+      "signing-function",
+      "identity-delegation",
+      "implements"
+    ],
+    [
+      "gdpr",
+      "relay-state-machine",
+      "uses"
+    ],
+    [
+      "gdpr-breach-72h",
+      "commitment-then-submit",
+      "implemented by"
+    ],
+    [
+      "identity-provider-role",
+      "identity-trie",
+      "maintains"
     ]
   ]
 }
