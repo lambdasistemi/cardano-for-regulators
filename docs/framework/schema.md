@@ -866,6 +866,25 @@ the actual data behind the leaves is verified off-chain by the operator.
 The on-chain proofs (signatures, trie membership) establish *that* the
 right things happened without revealing *what* the actual content is.
 
+### Unlinkability
+
+The privacy model above prevents the operator from knowing real identities,
+but does not prevent correlation. When the same public key appears across
+multiple transactions, the operator can link all actions from that user —
+building activity profiles, identifying patterns, inferring behavior.
+
+For regulations that forbid this (e.g., GDPR Art. 5(1)(b) purpose limitation),
+structural privacy is insufficient. The *unlinkable authorization* pattern
+(see [Architecture Patterns](patterns.md#unlinkable-authorization-via-anonymous-credentials))
+closes this gap: the identity provider issues BBS+ credentials, and the user
+derives a fresh zero-knowledge proof for each interaction. The operator
+verifies authorization without being able to correlate submissions from the
+same user.
+
+This strengthens the privacy table: the operator not only doesn't know
+identities — they cannot even tell whether two authorized actions came from
+the same person.
+
 ## Data availability and the burden of proof
 
 The tries store hashes on-chain, not full content. There is no guarantee

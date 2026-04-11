@@ -206,6 +206,74 @@ sequenceDiagram
 expiry has passed or whose standing hash doesn't match the regulation trie
 at mint time.
 
+## Unlinkable authorization via anonymous credentials
+
+**When:** The regulation requires proof of authorization but forbids the
+operator from correlating a user's actions across interactions.
+
+```mermaid
+sequenceDiagram
+    participant R as Regulator / IdP
+    participant U as User
+    participant O as Operator
+    participant C as Chain
+
+    R->>U: Issue BBS+ credential (attests: real user)
+    Note over U: Credential stored locally
+    U->>U: Derive ZK proof from credential
+    U->>O: Submit data + ZK proof (no identity revealed)
+    O->>O: Verify proof: "a real attested user"
+    O->>C: Submit batch (proof as redeemer)
+    Note over O: Cannot link this submission<br/>to any previous one
+```
+
+**Properties:**
+
+- The regulator (or identity provider) issues a BBS+ credential attesting the
+  user is real and authorized
+- The user derives a fresh zero-knowledge proof for each interaction — each
+  proof is unlinkable to previous ones
+- The operator verifies the user is authorized without learning *which* user
+- The operator cannot correlate multiple submissions from the same user
+- The operator cannot fabricate fake users — only the regulator can issue
+  credentials
+- The chain carries the proof as redeemer — publicly verifiable authorization
+  without public identity
+
+**Why this requires pairings:**
+
+BBS+ signatures have algebraic structure (three group elements, pairing-based
+verification) that allows selective disclosure and proof derivation. Standard
+signatures (Ed25519, ECDSA) are opaque blobs — you either reveal the full
+signature or nothing. There is no way to prove "I hold a valid signature from
+authority X" without showing the signature itself, which links you.
+
+Plutus V3 provides BLS12-381 curve primitives (pairing, G1/G2 operations,
+hash-to-curve) which make on-chain BBS+ proof verification feasible.
+
+**Constraint fit:**
+
+- Identity delegation: the credential replaces the public key as proof of
+  authorization — the user still never needs a wallet
+- Fee alignment: operator pays, as before
+- Sequential access: unchanged — operator batches submissions
+
+**When it matters:**
+
+Some regulations explicitly require unlinkability — GDPR's purpose limitation
+(Art. 5(1)(b)) forbids accumulating behavioral profiles from rights exercise.
+Other regulations may not require it, and users may even prefer linkability
+(e.g., battery rewards). This pattern applies when the regulation demands that
+the operator process authorized data without being able to build per-user
+activity profiles.
+
+**Regulatory differentiator:** This pattern can determine feasibility. When a
+regulation mandates both verifiable authorization and user unlinkability, plain
+public-key schemes fail — the operator can always correlate by key. Anonymous
+credentials make the regulation tractable on-chain. Without them, the only
+alternative is trusting the operator not to correlate — which is policy, not
+construction.
+
 ## Identity delegation via hardware
 
 **When:** Non-crypto actors must make on-chain state transitions.
